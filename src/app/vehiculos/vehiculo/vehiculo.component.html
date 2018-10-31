@@ -1,0 +1,117 @@
+<ng-template [ngIf]="vehiculo != null">  
+    
+<div class="modal-content">
+<div class="modal-header">
+<button type="button" class="close" data-dismiss="modal" aria-label="Fechar" #closeBtn ><span aria-hidden="true">&times;</span></button>
+<h4 class="modal-title" id="modalLabel">{{nuevo?'Creando Vehiculo':'Modificando Vehiculo: Interno '+ vehiculo.vehiculoPK.vehInterno }}</h4>
+</div>
+<div class="modal-body">  
+
+<section class="sample-app-content">
+<form novalidate (ngSubmit)="onSubmit()" [formGroup]="vehiculoForm">  
+  <!--<tabs>
+       <tab [tabTitle]="'Datos del Vehiculo'"> -->
+           <div class="col-xs-12 col-md-6">
+
+           <div formGroupName="vehiculoPK">  
+               <div class="form-group">                        
+                  <input type="text" data-toggle="tooltip" animation="true" data-placement="top"
+                  onmouseenter="$(this).tooltip('show')" title="Empresa"  placeholder="Empresa" class="form-control" 
+                            formControlName="vehEmpCodigo" [readonly]="true" >   
+               </div>
+               <control-mensajes [errores]="errMsgsPK.vehEmpCodigo"></control-mensajes>                         
+                 <div class="form-group">                     
+                   <input type="text"  class="form-control"data-toggle="tooltip" animation="true" data-placement="top"
+                   onmouseenter="$(this).tooltip('show')" title="Interno" 
+                   placeholder="Interno" formControlName="vehInterno" [readonly]="!nuevo" >   
+                 </div>
+                 <control-mensajes [errores]="errMsgsPK.vehInterno"></control-mensajes>
+           </div>     
+                <div class="form-group">                                                            
+                        <select class="form-control"  
+                        data-toggle="tooltip" animation="true" data-placement="top" title="Estado" 
+                        onmouseenter="$(this).tooltip('show')"
+                        formControlName="vehEstado" placeholder="Estado">                                            
+                            <option [selected]="vehiculoForm.controls.vehEstado.value == null" value="null" >-- Seleccionar --</option>                                         
+                            <option *ngFor="let opt of comboEstados"  [value]="opt.codigo">
+                                {{opt.descripcion}}
+                            </option>          	
+                        </select>                            
+                </div> 
+                <control-mensajes [errores]="errMsgs.vehEstado"></control-mensajes>  
+               <div class="form-group">
+                 <input type="text"  class="form-control" data-toggle="tooltip" animation="true" data-placement="top"
+                 onmouseenter="$(this).tooltip('show')" title="Patente" 
+                   placeholder="Patente" formControlName="vehPatente">   
+               </div>
+               <control-mensajes [errores]="errMsgs.vehPatente"></control-mensajes>
+               <div class="form-group">                       
+                   <input type="text"  class="form-control" data-toggle="tooltip" animation="true" data-placement="top"
+                   onmouseenter="$(this).tooltip('show')" title="Motor" 
+                       placeholder="Motor" formControlName="vehMotor">   
+               </div>
+               <control-mensajes [errores]="errMsgs.vehMotor"></control-mensajes>
+              
+           </div>
+           <div class="col-xs-12 col-md-6"> 
+                <div class="form-group">                          
+                        <input type="text"  class="form-control" data-toggle="tooltip" animation="true" data-placement="top"
+                        onmouseenter="$(this).tooltip('show')" title="Chasis" placeholder="Chasis" 
+                        formControlName="vehChasis">                               
+                </div> 
+                <control-mensajes [errores]="errMsgs.vehChasis"></control-mensajes>
+                <div class="form-group">                                          
+                   <input type="text"  class="form-control" data-toggle="tooltip" animation="true" data-placement="top"
+                   onmouseenter="$(this).tooltip('show')"  title="Carrocería" 
+                   placeholder="Carrocería" formControlName="vehCarroceria">   
+                 </div>
+                 <control-mensajes [errores]="errMsgs.vehCarroceria"></control-mensajes>
+                 <div class="form-group">                        
+                   <input type="number"  class="form-control" data-toggle="tooltip" animation="true" data-placement="top"
+                   onmouseenter="$(this).tooltip('show')" title="Móvil GPS" 
+                       placeholder="Móvil GPS" formControlName="vehMovilGps">   
+                  </div>
+                  <control-mensajes [errores]="errMsgs.vehMovilGps"></control-mensajes>                                 
+                <div class="form-group">                                                            
+                    <select class="form-control" formControlName="vehMpaCodigo" data-toggle="tooltip" animation="true" data-placement="top"
+                    onmouseenter="$(this).tooltip('show')" title="Mapa" placeholder="Mapa">   
+                        <option [selected]="vehiculoForm.controls.vehMpaCodigo.value == null"  [value]="null" >--Seleccionar--</option>                                         
+                        <option *ngFor="let opt of comboVeh"  [value]="opt.codigo" [selected]="opt.codigo == vehMpaCodigo" >
+                                {{opt.descripcion}}
+                        </option>          	
+                    </select>                            
+                </div>   
+                <control-mensajes [errores]="errMsgs.vehMpaCodigo"></control-mensajes>                                                             
+                                      
+                <div class="form-group" >
+                    <input type="date" class="form-control" placeholder="Última Verificación Técnica" 
+                    title="Última Verificación Técnica" formControlName="vehVerificacionTecnica" 
+                    data-toggle="tooltip" animation="true" data-placement="top" onmouseenter="$(this).tooltip('show')" >                            
+                </div>
+                
+                <control-mensajes [errores]="errMsgs.vehVerificacionTecnica"></control-mensajes>                
+
+
+                <control-mensajes [errores]="erroresGrales"></control-mensajes>                                                    
+           </div>
+  <!--     </tab>
+   </tabs> -->
+             
+</form>
+
+<!--<p> {{vehiculoForm.getRawValue() | json }} </p> -->
+
+<!--<p>DDD {{ vehiculoForm.controls.vehMpaCodigo.value  }} </p> 
+<p> {{vehiculoForm.valid }} </p>-->  
+
+</section>
+
+
+</div>
+<div class="modal-footer">
+<button type="button" (click)="salvarVehiculo()" class="btn btn-primary" >Guardar</button>
+<button type="button" class="btn btn-default" data-dismiss="modal" data-dismiss="modal">Volver</button>
+</div>
+</div>   
+</ng-template>
+

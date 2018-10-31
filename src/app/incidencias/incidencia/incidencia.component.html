@@ -1,0 +1,91 @@
+
+<div *ngIf="incidencia != null">  
+    <div class="modal fade" id="nuevo-modal" tabindex="-1" role="dialog" aria-labelledby="modalLabel"
+    data-backdrop="static" data-keyboard="false"  (finalizarEventEmitter)="finalizar($event)" >
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Fechar"
+                         #closeBtn >
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                        <h4 class="modal-title" id="modalLabel">{{nuevo?'Creando Incidencia':'Modificando Incidencia: '+incidencia.codigo}}</h4>
+                    </div>
+                <div class="modal-body">    
+                        <section class="sample-app-content">
+                            <form [formGroup]="incidenciaForm" (ngSubmit)="onSubmitTemplateBased()" novalidate > 
+                            <!-- <tabs>
+                                    <tab [tabTitle]="'Datos de la incidencia'">  -->
+                                    <div class="form-group">
+                                                <input type="text" 
+                                                data-toggle="tooltip" animation="true" data-placement="top"
+                                                onmouseenter="$(this).tooltip('show')"   title="Empresa" 
+                                                placeholder="Empresa" class="form-control"
+                                                formControlName="in_empresa" [readonly]=true >                                
+                                    </div>                                 
+                                    <control-mensajes [errores]="errMsgs.in_empresa"></control-mensajes>                             
+                                    
+                                        <div *ngIf="data.nuevo">
+                                            <div class="form-group">                                                            
+                                                <select class="form-control" formControlName="in_tipo"
+                                                data-toggle="tooltip" animation="true" data-placement="top"
+                                                onmouseenter="$(this).tooltip('show')" title="Tipo" 
+                                                placeholder="Tipo">   
+                                                    <option [selected]="incidenciaForm.controls.in_tipo.value == null" value="null" >-- Seleccionar --</option>                                         
+                                                    <option *ngFor="let opt of comboTipos"  [value]="opt.codigo"  [selected]="opt.codigo == in_tipo"  >
+                                                        {{opt.descripcion}}
+                                                    </option>          	
+                                                </select>                            
+                                            </div> 
+                                        </div>   
+                                        <div *ngIf="!data.nuevo">
+                                                <div class="form-group">
+                                                        <input data-toggle="tooltip" animation="true" data-placement="top"
+                                                        onmouseenter="$(this).tooltip('show')" title="Tipo"
+                                                        [readonly] ="true" type="text" placeholder="Tipo" class="form-control" 
+                                                        [value]="getDescripcion()" >
+                                                </div>
+                                        </div>
+                                        <control-mensajes [errores]="errMsgs.in_tipo"></control-mensajes> 
+
+                                        <div class="form-group">
+                                                <input type="text" 
+                                                data-toggle="tooltip" animation="true" data-placement="top"
+                                                onmouseenter="$(this).tooltip('show')"  title="Codigo"  
+                                                placeholder="Codigo" class="form-control" formControlName="codigo" 
+                                                [readonly]="!nuevo">
+                                            </div>                                 
+                                        <control-mensajes [errores]="errMsgs.codigo"></control-mensajes>                       
+                                    
+                                        <div class="form-group">
+                                            <input data-toggle="tooltip" animation="true" data-placement="top"
+                                            onmouseenter="$(this).tooltip('show')" title="Descripción"
+                                            type="text" placeholder="Descripcion" 
+                                            formControlName = "in_descripcion"  class="form-control" >
+                                        </div>                                 
+                                        <control-mensajes [errores]="errMsgs.in_descripcion"></control-mensajes>   
+
+                                        <div class="form-group">                   
+                                            <input data-toggle="tooltip" animation="true" data-placement="top"
+                                            onmouseenter="$(this).tooltip('show')"  title="Color" name="color"
+                                            type="color" class="form-control"
+                                                formControlName = "in_color"  value="#f3f3f3"/>
+                                        </div>                                
+                                        <control-mensajes [errores]="errMsgs.in_color"></control-mensajes>       
+                                        <control-mensajes [errores]="erroresGrales"></control-mensajes>                 
+
+                            <!--     </tab>
+                                </tabs>-->
+                            </form>
+                        </section>               
+                </div>
+                    <div class="modal-footer">
+                    <!--<button type="button" (click)="createIncidencia()" class="btn btn-primary" 
+                                    [disabled]="!incidenciaForm.valid" >Guardar</button> -->
+                        <button type="button" (click)="createIncidencia()" class="btn btn-primary"  >Guardar</button> 
+                        <button type="button" (click)="soloCerrar()" class="btn btn-default" data-dismiss="modal" data-dismiss="modal">Volver</button>
+                    </div> 
+                </div>       
+        </div>        
+   </div>     
+</div>

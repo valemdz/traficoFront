@@ -1,0 +1,11 @@
+@media(max-width:400px ){
+    .col-xs-6{
+        width: auto;
+        float: none;
+    }
+    
+}
+/*
+ESTOE S PARA Q QUEDE EL FORM PARA ABAJO Y NO EN DOS COLUMNAS
+*/
+  

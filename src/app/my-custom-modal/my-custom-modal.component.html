@@ -1,0 +1,41 @@
+<!--<h1>Modal (todo)</h1>
+<button (click)="onCancel()">×</button>
+<ul>
+  <li *ngFor="let snack of snacks">{{snack}}</li>
+</ul>
+<div>
+    <button (click)="onCancel()">
+        <span>Cancel</span>
+    </button>
+    <button (click)="onOk()">
+        <span>Ok</span>
+    </button>
+</div>-->
+
+
+<div class="modal fade" id="ejemplo" tabindex="-1" role="dialog" aria-labelledby="modalLabel"
+         data-backdrop="static" data-keyboard="false" >
+        <div class="modal-dialog" role="document" id="nuevo-incidencia">        
+            
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Fechar" #closeBtn >
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    <h4 class="modal-title" id="modalLabel">asdadada</h4>
+                </div>
+            <div class="modal-body">    
+                    <section class="sample-app-content">
+                        
+                    </section>
+                 
+            </div>
+                <div class="modal-footer">
+                    <button type="button" (click)="onOk()" class="btn btn-primary" >Guardar</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal" (click)="onCancel()">Volver</button>
+                </div> 
+            </div>       
+
+
+        </div>    
+  </div>

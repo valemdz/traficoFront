@@ -1,0 +1,40 @@
+<form novalidate (ngSubmit)="onSubmit()" [formGroup]="loginForm">
+<div class="container">
+    <div class="row">
+        <div class="col-md-8">
+            <div class="form-login">
+                <h4 class="text-center">¡Bienvenido! </h4>
+                <br>
+                <input type="text"  class="form-control" placeholder="Usuario" formControlName="username">                
+                 <br>                 
+                 <control-mensajes [errores]="errMsgs.username"></control-mensajes> 
+
+                <div class="input-group mb-2 mr-sm-2 mb-sm-0">
+                     <input type="password"  class="form-control" placeholder="Contraseña"
+                      formControlName="password" #input>                                                        
+                    <div class="input-group-addon" #toggler><i class="fa fa-eye"></i>
+                    </div>
+                </div>                                
+                <control-mensajes [errores]="errMsgs.password"></control-mensajes> 
+                <br>
+                <div class="wrapper">
+                    <span class="group-btn">     
+                <a  class="btn btn-primary btn-md" 
+                 (click)="login(usuario)" >Entrar 
+                  <i class="glyphicon glyphicon-log-in" ></i>
+                   </a>
+                  </span>
+                </div>   
+            </div>
+            <control-mensajes [errores]="erroresGrales"></control-mensajes>            
+        </div>
+    </div>
+</div>
+</form>
+
+
+
+
+
+<!--<p>Form value: {{ loginForm.value | json }}</p>
+<p>Form status: {{ loginForm.status | json }}</p>-->

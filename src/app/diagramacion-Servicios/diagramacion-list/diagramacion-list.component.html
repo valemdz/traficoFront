@@ -1,0 +1,182 @@
+<navegacion-component></navegacion-component>
+<br>
+<br>
+
+<div class="container">
+    <form [formGroup]="formDiag" class="form-inline" novalidate>
+
+        <div class="row panel panel-default">
+
+            <div class="panel-heading">
+                <span>Busqueda Servicios </span>
+            </div>
+
+            <div class="panel-body">
+                <div class="form-group my-col-sm-2 fecha">
+                    <input type="date" class="form-control" placeholder="Fecha Inicio" title="Fecha Inicio" formControlName="fInicio" data-toggle="tooltip" animation="true" data-placement="top" onmouseenter="$(this).tooltip('show')">
+                    <div class="romi">
+                        <!-- <control-mensajes [errores]="todosErrores[i].fInicio"></control-mensajes> -->
+                    </div>
+                </div>
+
+
+                <div class="form-group my-col-sm-2 fecha">
+                    <input type="date" class="form-control" placeholder="Fecha Fin" title="Fecha Fin" formControlName="fFin" data-toggle="tooltip" animation="true" data-placement="top" onmouseenter="$(this).tooltip('show')">
+                    <div class="romi">
+                        <!--<control-mensajes [errores]="todosErrores[i].fFin"></control-mensajes>-->
+                    </div>
+                </div>
+                <div class="form-group  my-col-sm-3">
+                    <select class="form-control " formControlName="lineaId" title="Linea" placeholder="Linea" data-toggle="tooltip" animation="true" data-placement="top" onmouseenter="$(this).tooltip('show')">
+                        <option [selected]="lineaId == null" value="">-- Seleccionar Linea --</option>
+                        <option *ngFor="let opt of comboLineas" [selected]="opt.codigo == lineaId" [value]="opt.codigo">
+                            {{opt.descripcion}}
+                        </option>
+                    </select>
+                </div>
+                <div class="form-group my-col-sm-3">
+                    <select class="form-control" formControlName="estadoId" title="Estado" placeholder="Estado" data-toggle="tooltip" animation="true" data-placement="top" onmouseenter="$(this).tooltip('show')">
+                        <option [selected]="estadoId == null" value="">-- Seleccionar Estado--</option>
+                        <option *ngFor="let opt of combitoMio" [selected]="opt.codigo == estadoId" [value]="opt.codigo">
+                            {{opt.descripcion}}
+                        </option>
+                    </select>
+                </div>
+                <div class="form-group my-col-sm-1">
+                    <a class="btn btn-primary btn-ms" (click)="buscarServicios()">Buscar </a>
+                </div>
+            </div>
+        </div>
+    </form>
+    <ng-container *ngIf="servPage != null">
+        <div id="list" class="row" style="margin-top: 10pt;">
+            <div class="table-responsive col-md-12">
+                <table class="table table-striped table-hover" cellspacing="0" cellpadding="0">
+                    <thead>
+                        <tr>
+                            <th>
+                                <!--app-table-sort [table]="self" [page]="servPage" [label]="'Linea'" [property]="'serLinCodigo'"></app-table-sort-->
+                                Linea
+                            </th>
+                            <th>
+                                <!--app-table-sort [table]="self" [page]="servPage" [label]="'Fecha'" [property]="'serFechaHora'"></app-table-sort-->
+                                Fecha
+                            </th>
+                            <th>
+                                <!--app-table-sort [table]="self" [page]="servPage" [label]="'Refuerzo'" [property]="'serRefuerzo'"></app-table-sort-->
+                                Ref
+                            </th>
+                            <th class="actions"> </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let serv of servPage">
+                            <td>{{serv.servicioPK.serLinCodigo}} </td>
+                            <td>{{serv.servicioPK.serFechaHora | date:'EEE dd/MM/yyyy HH:mm' }} </td>
+                            <td>{{serv.servicioPK.serRefuerzo}} </td>
+                            <td>
+
+                                <!-- <table class="table table-striped table-hover" cellspacing="0" cellpadding="0" style="margin-top: 0pt;" >
+                                    <tr *ngIf="viaje.vehiculo != null" 
+                                         [style.backgroundColor] = "viaje.vehiculo.vehEstado==1 ?  '#ff8000' : '#88bdea'" >                                  
+                                        <td [style.font-size]="'9px'" >                                        
+                                            {{viaje.vehiculo.vehiculoPK.vehInterno }} 
+                                        </td>
+                                    </tr> 
+                                    
+                                    <tr *ngIf="viaje.vehiculo == null"  [style.backgroundColor] = "'#f1f144'">
+                                            <td [style.font-size]="'9px'">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>                                    
+                                    </tr>
+                                    
+                                </table>  -->
+                            </td>
+
+                            <td>
+                                <!--<span  [style.backgroundColor] = "true ?  'gray' : 'gray'">  {{ unChofer.cho_nombre }} </span>-->
+                                <!--  <table class="table table-striped table-hover" cellspacing="0" cellpadding="0" style="margin-top: 0pt;" >
+                                        
+                                        <tr *ngFor="let unChofer of viaje.choferes" 
+                                            [style.backgroundColor] = "unChofer.cho_estado==1 ?  '#ff8000' : '#88bdea'">                                      
+                                            <td  [style.font-size]="'9px'" >{{ unChofer.cho_nombre }}</td>                                    
+                                        </tr>     
+                                        
+                                        <tr *ngIf="viaje.choferes.length==0"  [style.backgroundColor] = "'#f1f144'">
+                                                <td [style.font-size]="'9px'">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>                                    
+                                        </tr>
+                                        
+                                    </table>-->
+                            </td>
+                            <td class="actions">
+                                <a class="btn btn-success btn-xs" (click)="servicioInterno=servicio;clearAlert()" data-toggle="modal" data-target="#details-interno">Interno</a>
+                                <a class="btn btn-success btn-xs" data-toggle="modal" (click)="openModalChoferes(servicio)" data-target="#details-modal">Choferes</a>
+
+
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <alert></alert>
+
+
+
+        <app-table-pagination class="text-center" [table]="self" [page]="servPage"></app-table-pagination>
+    </ng-container>
+
+    <!--Interno-->
+    <ng-container *ngIf="servicioInterno != null">
+        <div class="modal fade" id="details-interno" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false" aria-labelledby="modalLabel">
+            <div class="modal-dialog" role="document">
+                <app-diagramacion-internos [servicio]="servicioInterno">
+                </app-diagramacion-internos>
+            </div>
+        </div>
+    </ng-container>
+
+
+
+
+
+
+
+
+
+
+
+    <!--<button (click)="openModal()">Open modal</button>-->
+    <!--
+ <div id="actions" class="row">
+    <div class="col-md-12">
+        <a class="btn btn-primary btn-xs" data-toggle="modal"  (click)="openModal()"        
+           data-target="#ejemplo">Crear</a>
+    </div>
+</div>
+ <modal-placeholder></modal-placeholder>
+ <ng-container *ngComponentOutlet="modal;injector: myInjector;" >DDDDDD</ng-container>
+
+ <br>
+ <div id="actions" class="row">
+    <div class="col-md-12">
+        <a class="btn btn-primary btn-xs" data-toggle="modal"  (click)="openModal5()"        
+           data-target="#ejemplo">Crear Modal 5</a>
+    </div>
+  </div>
+ </div>
+ <div>
+    <app-add-banner [ads]="ads">YYYY</app-add-banner>
+  </div>
+
+  <br>
+  <div id="actions" class="row">
+    <div class="col-md-12">
+        <a class="btn btn-primary btn-xs"  (click)="openUno()"  >Crear Uno</a>
+    </div>
+  </div>
+<br>
+  <div id="actions" class="row">
+    <div class="col-md-12">
+        <a class="btn btn-primary btn-xs"  (click)="openDos()" >Crear Dos</a>
+    </div>
+  </div>
+-->

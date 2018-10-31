@@ -1,0 +1,42 @@
+.romi{
+    
+  }
+  
+  /* Tablets en horizonal y escritorios normales*/
+  
+  @media (min-width: 768px) and (max-width: 1199px) { 
+    .form-control{
+      margin: 1px;
+      width: 217px;
+      margin-right: 0;
+      margin-left: 0;
+    }
+    .modal-dialog{
+        width: 500px;
+    }
+    .form-group{
+        margin-bottom: 4px;
+        padding-left: 15px;
+    }
+    .fecha{
+        margin-left: 1px;        
+    }
+   }
+
+   @media(max-width:768px){
+       .fecha{
+        margin-right:0px;
+       }
+   }
+  @media(min-width: 992px){
+    .form-control{
+    width: auto;
+    }
+  }
+
+  /* Móviles en horizontal o tablets en vertical*/
+  @media (max-width: 767px) {  }
+  
+  /* Móviles en vertical*/
+  @media (max-width: 480px) {  }
+

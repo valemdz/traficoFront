@@ -23,14 +23,14 @@
                             "src/assets"
                         ],
                         "styles": [
-                            "src/styles.css",
-                            "src/assets/b4.1.3/css/bootstrap.min.css",
-                            "src/assets/font-awesome/css/font-awesome.min.css"
+                            "node_modules/bootstrap/dist/css/bootstrap.css",
+                            "src/assets/font-awesome/css/font-awesome.min.css",
+                            "src/styles.css"
                         ],
                         "scripts": [
                             "src/assets/jquery/jquery-3.3.1.slim.min.js",
                             "src/assets/tether/tether.min.js",
-                            "src/assets/b4.1.3/js/bootstrap.min.js"
+                            "node_modules/bootstrap/dist/js/bootstrap.min.js"
                         ]
                     },
                     "configurations": {

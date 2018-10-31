@@ -1,0 +1,60 @@
+<br>
+
+<div class="modal-content">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Fechar" #closeBtn>
+            <span aria-hidden="true">&times;</span>
+        </button>
+        <h4 class="modal-title" id="modalLabel">Interno</h4>
+    </div>
+    <div class="modal-body">      
+
+    <form novalidate [formGroup]="internoByViajeForm" class="form-inline" novalidate>
+      <div class=".container-fluid">    
+            <div class="well well-lg">    
+                    <div class="row">      
+                        <div class="panel-heading">
+                                <span>Interno</span>
+                                <span class="glyphicon glyphicon-remove pull-right" (click)="borrarForm()"></span>
+                        </div>
+                        <div class="panel-body" > 
+                        
+                                <div *ngIf="!tieneDetalle()" class="form-group col-md-4">
+                                        <select class="form-control" formControlName="vehiculoPK" title="Interno" placeholder="Interno"
+                                        data-toggle="tooltip" animation="true" data-placement="top" onmouseenter="$(this).tooltip('show')" >
+                                            <option [selected]="internoByViajeForm.controls.vehiculoPK == null" value="null">-- Seleccionar --</option>
+                                            <option *ngFor="let opt of comboVehiculos" [selected]="opt.vehiculoPK == vehiculoPK" [value]="opt.vehiculoPK">
+                                                {{opt.interno}}
+                                            </option>
+                                        </select>
+                                        <div class="romi">
+                                            <control-mensajes [errores]="errMsgs.vehiculoPK"></control-mensajes>
+                                        </div> 
+                                </div>   
+                                
+                                <div *ngIf="tieneDetalle()" >
+                                      <label>Interno  {{detalleInterno()}} </label>
+                                </div>
+                                
+                                <div *ngIf="tieneDetalle()" ng-reflect-class-name="alert alert-danger alert-dismissable" 
+                                        class="alert alert-danger alert-dismissable" >
+                                        <p  *ngFor="let detalle of detalleByIndex()"  >{{detalle}} </p>                                                   
+                                    <a class="close">×</a>
+                                </div>  
+                        </div>             
+                        
+                    </div>   
+          </div>          
+      </div>  
+    </form>                                 
+                               
+        <!--    {{ internoByViajeForm.value | json }} 
+            {{internoByViajeForm.valid  }} -->
+               
+        
+    </div>
+    <div class="modal-footer">            
+        <button type="button" (click)="salvarInternoByViaje()" class="btn btn-primary">Guardar</button>
+        <button type="button" class="btn btn-default" data-dismiss="modal" data-dismiss="modal">Volver</button>
+    </div>
+</div>

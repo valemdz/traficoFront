@@ -1,0 +1,143 @@
+
+  <div class="modal-content">
+      <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Fechar" #closeBtn >
+              <span aria-hidden="true">&times;</span>
+          </button>
+          <h4 class="modal-title" id="modalLabel">Viaje Especial </h4>
+      </div>
+  <div class="modal-body">    
+          <section class="sample-app-content">
+              <form    [formGroup]="viajeForm"  novalidate  > 
+
+                <div class="row">
+                        <div class="form-group col-md-2">
+                                <input type="tetx" class="form-control" placeholder="Empresa" title="Empresa" formControlName="empCodigo" 
+                                data-toggle="tooltip" animation="true" data-placement="top" onmouseenter="$(this).tooltip('show')" [readonly] ="true" >                               
+                        </div>
+                        <div class="form-group col-md-10">
+                                <input type="tetx" class="form-control" placeholder="Ag Contratante" title="Ag Contratante" formControlName="agenciaContratante" 
+                                data-toggle="tooltip" animation="true" data-placement="top" onmouseenter="$(this).tooltip('show')" >
+                                <div class="romi">
+                                     <control-mensajes [errores]="errMsgs.agenciaContratante"></control-mensajes>
+                                </div>
+                        </div>                           
+                        
+                </div>                      
+
+                <div class="row">
+
+                    <div class="form-group col-md-6">
+                         <select  class="form-control" formControlName="provOrigen" title="Prov Origen" placeholder="Prov Origen"
+                            data-toggle="tooltip" animation="true" data-placement="top" onmouseenter="$(this).tooltip('show')"
+                            #t (change)="onChangeProvOrigen(t.value)" >
+                                <option [selected]="t.value == null" value="null">-- Seleccionar --</option>
+                                <option *ngFor="let opt of comboProvincias" [selected]="opt.codigo == provOrigen" [value]="opt.codigo">
+                                    {{opt.descripcion}}
+                                </option>
+                            </select>
+                            
+                      </div>
+                      <div class="form-group col-md-6">
+                            <select class="form-control" formControlName="origen" title="Origen" placeholder="Origen"
+                            data-toggle="tooltip" animation="true" data-placement="top" onmouseenter="$(this).tooltip('show')" >
+                                <option [selected]="viajeForm.controls.origen.value == null" value="null">-- Seleccionar --</option>
+                                <option *ngFor="let opt of comboEscalasOrigen" [selected]="opt.codigo == origen" [value]="opt.codigo">
+                                    {{opt.descripcion}}
+                                </option>
+                            </select>
+                            <div class="romi">
+                                    <control-mensajes [errores]="errMsgs.origen"></control-mensajes>
+                                </div>
+                      </div>
+                </div>      
+
+                <div class="row">
+                      <div class="form-group col-md-6">
+                            <input type="date" class="form-control" placeholder="Fecha Salida" title="Fecha Salida" formControlName="fSalida"
+                            data-toggle="tooltip" animation="true" data-placement="top" onmouseenter="$(this).tooltip('show')" >
+                            <div class="romi">
+                                    <control-mensajes [errores]="errMsgs.fSalida"></control-mensajes>
+                                </div>  
+                        </div>
+                        
+                        <div class="form-group col-md-6">
+                            <input type="time" class="form-control" placeholder="Hora Salida" title="Hora Salida" formControlName="hSalida"
+                            data-toggle="tooltip" animation="true" data-placement="top" onmouseenter="$(this).tooltip('show')" >
+                            <div class="romi">
+                                    <control-mensajes [errores]="errMsgs.hSalida"></control-mensajes>
+                                </div>    
+                        </div>
+                        
+                </div>       
+
+                <div class="row">
+                      <div class="form-group col-md-6">
+                            <select  class="form-control" formControlName="provDestino" title="Prov Destino" placeholder="Prov Destino"
+                               data-toggle="tooltip" animation="true" data-placement="top" onmouseenter="$(this).tooltip('show')"
+                               #p (change)="onChangeProvDestino(p.value)" >
+                                   <option [selected]="p.value == null" value="null">-- Seleccionar --</option>
+                                   <option *ngFor="let opt of comboProvincias" [selected]="opt.codigo == provDestino" [value]="opt.codigo">
+                                       {{opt.descripcion}}
+                                   </option>
+                               </select>
+                             <!--  <div class="romi">
+                                   <control-mensajes [errores]="todosErrores[i].idIncidencia"></control-mensajes>
+                               </div>-->
+                         </div>
+                         <div class="form-group col-md-6">
+                               <select class="form-control" formControlName="destino" title="Destino" placeholder="Destino"
+                               data-toggle="tooltip" animation="true" data-placement="top" onmouseenter="$(this).tooltip('show')" >
+                                   <option [selected]="viajeForm.controls.destino == null" value="null">-- Seleccionar --</option>
+                                   <option *ngFor="let opt of comboEscalasDestino" [selected]="opt.codigo == destino" [value]="opt.codigo">
+                                       {{opt.descripcion}}
+                                   </option>
+                               </select>
+                               <div class="romi">
+                                    <control-mensajes [errores]="errMsgs.destino"></control-mensajes>
+                                </div> 
+                         </div>
+                </div> 
+                
+                <div class="row">
+                         <div class="form-group col-md-6">
+                                <input type="date" class="form-control" placeholder="Fecha Regreso" title="Fecha Regreso" formControlName="fRegreso"
+                                data-toggle="tooltip" animation="true" data-placement="top" onmouseenter="$(this).tooltip('show')" >
+                                <div class="romi">
+                                        <control-mensajes [errores]="errMsgs.fRegreso"></control-mensajes>
+                                    </div>    
+                            </div>
+                           
+                            <div class="form-group col-md-6">
+                                <input type="time" class="form-control" placeholder="Hora Regreso" title="Hora Regreso" formControlName="hRegreso" 
+                                data-toggle="tooltip" animation="true" data-placement="top" onmouseenter="$(this).tooltip('show')" >
+                                <div class="romi">
+                                        <control-mensajes [errores]="errMsgs.hRegreso"></control-mensajes>
+                                    </div>    
+                            </div>
+                  </div>     
+                  
+                  <div class="row">
+                        <div class="form-group col-md-12">
+                          <textarea uppercase class="form-control" placeholder="Observaciones" title="Observaciones" formControlName="observaciones" 
+                                 data-toggle="tooltip" animation="true" data-placement="top" onmouseenter="$(this).tooltip('show')" >
+                          </textarea>
+                                <div class="romi">
+                                        <control-mensajes [errores]="errMsgs.observaciones"></control-mensajes>
+                                </div>   
+                         </div>
+                  </div>    
+                  
+              </form> 
+
+           <!-- <p>{{viajeForm.value|json}}</p>-->
+          </section>
+        
+  </div>
+      <div class="modal-footer">
+          <button type="button" (click)="createViaje()" class="btn btn-primary" >Guardar</button>
+          <button type="button" class="btn btn-default" data-dismiss="modal" data-dismiss="modal">Volver</button>
+      </div> 
+  </div>       
+
+

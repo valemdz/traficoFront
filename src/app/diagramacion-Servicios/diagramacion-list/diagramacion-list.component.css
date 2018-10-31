@@ -1,0 +1,8 @@
+.my-col-sm-2,
+.my-col-sm-3,
+.my-col-sm-1{
+    position: relative;
+    min-height: 1px;
+    padding-left: 5px !important;
+    padding-right: 5px !important;
+}

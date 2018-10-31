@@ -1,0 +1,19 @@
+/*@media screen and (max-width : 480px) {
+.table-responsive > .table {
+    margin-bottom: 0;
+    width: 20%;
+  float: left;
+   font-size: 9px;
+}
+ .btn-xs  {
+      font-size: 12px;
+      float: left;
+      padding: 1px 2x;
+      margin: 1px;
+ }
+}
+*/
+
+.table-responsive{
+margin-top:  11px !important;
+}

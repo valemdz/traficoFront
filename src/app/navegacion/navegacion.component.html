@@ -1,0 +1,48 @@
+<!-- Navigation -->
+<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+    <div class="container">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>                  
+                </button>
+            <a class="navbar-brand" href="#">
+                <img src="/img/150x59.png" alt=""width="150" height="59">
+            </a>
+        </div>
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav">              
+                <li><a routerLink="/chofer">Chofer</a></li>
+                <li><a routerLink="/incidencia">Incidencias</a></li>
+                <li><a routerLink="/vehiculo">Unidades</a></li>                                
+                <li><a routerLink="/viajesEspeciales">Viajes Especiales</a></li>                                
+                <li><a routerLink="/diagramacion">Diagramacion</a></li>
+                <ng-template [ngIf]="yo != null">
+                     <li><a><span class="glyphicon glyphicon-user"></span></a></li>                     
+                 </ng-template>    
+                <li><a [routerLink]="['/login']">Salir <span class="glyphicon glyphicon-log-out"></span> </a></li>
+<!-- vale, mira que buenos estan estos iconos:
+        <li><a href="#"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>-->
+ 
+        <router-outlet>
+                <loader></loader>
+        </router-outlet>  
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                    <span class="glyphicon glyphicon-user"></span> Administrador</a>
+                    <ul class="dropdown-menu">
+                        <li><a href="#">Empresa IMQ</a></li>
+                        <li><a href="#">Agencia 45</a></li>
+                        <li><a [routerLink]="['/login']">Salir <span class="glyphicon glyphicon-log-out"></span> </a></li> 
+                    </ul>
+                </li>            
+            </ul>    
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+</nav>

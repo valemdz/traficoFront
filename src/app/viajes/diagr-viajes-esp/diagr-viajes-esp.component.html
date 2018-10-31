@@ -1,0 +1,61 @@
+<br>
+
+    <div class="modal-content">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Fechar" #closeBtn>
+                <span aria-hidden="true">&times;</span>
+            </button>
+            <h4 class="modal-title" id="modalLabel">Choferes</h4>
+        </div>
+        <div class="modal-body">
+
+            <form novalidate [formGroup]="choferesByViajeForm" class="form-inline" novalidate>
+                    <div class=".container-fluid">
+                            <div formArrayName="choferes" class="well well-lg">
+                                <div *ngFor="let chofer of choferes.controls; let i=index">
+                                    <div class="row">
+                                        <div class="panel-heading">
+                                            <span>Chofer {{i+1}} </span>
+                                            <span class="glyphicon glyphicon-remove pull-right" (click)="borrarChofer(i)"></span>
+                                        </div>
+                                        <div class="panel-body" [formGroupName]="i">                                    
+        
+                                            
+                                                <div *ngIf="!tieneDetalleByIndex(i)" class="form-group col-md-3">
+                                                    <select class="form-control" formControlName="choferPK" title="Tipo" placeholder="Tipo"
+                                                    data-toggle="tooltip" animation="true" data-placement="top" onmouseenter="$(this).tooltip('show')" >
+                                                        <option [selected]="tipoByIndex(i) == null" value="">-- Seleccionar --</option>
+                                                        <option *ngFor="let opt of comboChoferes" [selected]="opt.choferPK == tipoByIndex(i)" [value]="opt.choferPK">
+                                                            {{opt.nombreChofer}}
+                                                        </option>
+                                                    </select> 
+                                                    <div class="romi">
+                                                            <control-mensajes [errores]="todosErrores[i].choferPK"></control-mensajes>
+                                                    </div>                                                                                                                                                                                                   
+                                                </div>
+                                                <div *ngIf="tieneDetalleByIndex(i)" >
+                                                    <label>{{nombreChoferByIndex(i)}} </label>
+                                                </div>
+                                                
+                                                <div *ngIf="tieneDetalleByIndex(i)" ng-reflect-class-name="alert alert-danger alert-dismissable" 
+                                                        class="alert alert-danger alert-dismissable" >
+                                                        <p  *ngFor="let detalle of detalleByIndex(i)"  >{{detalle}} </p>                                                   
+                                                    <a class="close">×</a>
+                                                </div>                                                        
+                                                                                       
+                                           
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+         <!--    {{ choferesByViajeForm.value | json }} 
+        {{choferesByViajeForm.valid  }} -->
+            </form>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-primary" (click)="addNuevoChofer()">Agregar</button>
+            <button type="button" (click)="salvarChoferesByViaje()" class="btn btn-primary">Guardar</button>
+            <button type="button" class="btn btn-default" data-dismiss="modal" data-dismiss="modal">Volver</button>
+        </div>
+    </div>

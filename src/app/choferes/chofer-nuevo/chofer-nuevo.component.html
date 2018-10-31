@@ -1,0 +1,127 @@
+<div *ngIf="chofer != null">    
+    <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Fechar" #closeBtn >
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title" id="modalLabel">{{nuevo?'Creando Chofer' :'Modificando Chofer: Legajo '+ chofer.cho_legajo}}</h4>
+            </div>
+     <div class="modal-body">
+            <section class="sample-app-content">
+                <form [formGroup] = 'choferForm' novalidate> 
+                    <tabs>
+                        <tab [tabTitle]="'Datos Personales'">
+                             <div class="col-xs-12 col-md-6">                                      
+                            <div formGroupName = 'choferPK' > 
+                                <div class="form-group"> 
+                                    <input type="text"  data-toggle="tooltip" animation="true" data-placement="top" title="Empresa" 
+                                    onmouseenter="$(this).tooltip('show')"
+                                    class="form-control" formControlName='cho_emp_codigo' [readonly]="true" >
+                                 </div>
+                            </div>
+                            <control-mensajes [errores]="errMsgsPK.cho_emp_codigo"></control-mensajes> 
+                            <div class="form-group">                                                            
+                                    <select class="form-control"  
+                                    data-toggle="tooltip" animation="true" data-placement="top" title="Estado" 
+                                    onmouseenter="$(this).tooltip('show')"
+                                     formControlName="cho_estado" placeholder="Estado">                                            
+                                        <option [selected]="choferForm.controls.cho_estado.value == null" value="null" >-- Seleccionar --</option>                                         
+                                        <option *ngFor="let opt of comboEstados"  [value]="opt.codigo">
+                                            {{opt.descripcion}}
+                                        </option>          	
+                                    </select>                            
+                            </div> 
+                            <control-mensajes [errores]="errMsgsResto.cho_estado"></control-mensajes>
+                            <div class="form-group">                       
+                                <input type="text" placeholder="Legajo" formControlName="cho_legajo"  class="form-control" 
+                                data-toggle="tooltip" animation="true" data-placement="top" title="Legajo" 
+                                onmouseenter="$(this).tooltip('show')"
+                                >
+                            </div>
+                            <control-mensajes [errores]="errMsgsResto.cho_legajo"></control-mensajes>
+                            <div class="form-group ">
+                                <input type="text" placeholder="Nombre" formControlName="cho_nombre" class="form-control" 
+                                data-toggle="tooltip" animation="true" data-placement="top" title="Nombre"
+                                onmouseenter="$(this).tooltip('show')">
+                            </div>                                   
+                            <control-mensajes [errores]="errMsgsResto.cho_nombre"></control-mensajes>    
+                            <div class="form-group">                                                            
+                                    <select class="form-control" formControlName="cho_doc_codigo"   placeholder="Tipo de documento"
+                                    data-toggle="tooltip" animation="true" data-placement="top" title="Tipo de documento"
+                                    onmouseenter="$(this).tooltip('show')">                                            
+                                        <option [selected]="choferForm.controls.cho_doc_codigo.value == null" value="null" >-- Seleccionar --</option>                                         
+                                        <option *ngFor="let opt of comboDocumentos"  [value]="opt.codigo">
+                                            {{opt.descripcion}}
+                                        </option>          	
+                                    </select>                            
+                            </div> 
+                            <control-mensajes [errores]="errMsgsResto.cho_doc_codigo"></control-mensajes>
+                            <div class="form-group">                       
+                                <input type="text" 
+                                data-toggle="tooltip" animation="true" data-placement="top" title="Numero de documento"
+                                onmouseenter="$(this).tooltip('show')"  placeholder="Numero documento" 
+                                formControlName="cho_documento" class="form-control" >
+                            </div>  
+                            <control-mensajes [errores]="errMsgsResto.cho_documento"></control-mensajes>                 
+                        </div>
+                          <div class="col-xs-12 col-md-6">                       
+
+
+                            <div class="form-group" >
+                                <input type="date" class="form-control" placeholder="Fecha de nacimiento" 
+                                title="Fecha de nacimiento" formControlName="cho_fecha_nacimiento" 
+                                data-toggle="tooltip" animation="true" data-placement="top" onmouseenter="$(this).tooltip('show')" >                            
+                            </div>
+                            
+                            <control-mensajes [errores]="errMsgsResto.cho_fecha_nacimiento"></control-mensajes> 
+
+
+                            <div class="form-group">                                                            
+                                    <select class="form-control" formControlName="cho_grupo_sanguineo" 
+                                    data-toggle="tooltip" animation="true" data-placement="top" onmouseenter="$(this).tooltip('show')"
+                                    title="Grupo sanguíneo" placeholder="Grupo sanguíneo">                                            
+                                            <option [selected]="choferForm.controls.cho_grupo_sanguineo.value == null" value="null" >-- Seleccionar --</option>                                         
+                                        <option *ngFor="let opt of comboSanguineo"  [value]="opt.codigo">
+                                            {{opt.descripcion}}
+                                        </option>          	
+                                    </select>                            
+                            </div> 
+                            <control-mensajes [errores]="errMsgsResto.cho_grupo_sanguineo"></control-mensajes>
+                            <div class="form-group">                            
+                                <textarea data-toggle="tooltip" animation="true" data-placement="top" onmouseenter="$(this).tooltip('show')"
+                                 title="Observaciones" placeholder="Observaciones" formControlName="cho_observaciones"  class="form-control"  >
+                                    </textarea>
+                            </div>
+                            <control-mensajes [errores]="errMsgsResto.cho_observaciones"></control-mensajes>
+                                                
+                                           
+                                                        
+                            <div class="form-group">                       
+                                <input placeholder="Teléfono" onmouseenter="$(this).tooltip('show')"
+                                data-toggle="tooltip" animation="true" data-placement="top" title="Telefono" 
+                                 type="tel" class="form-control"  formControlName = "cho_telefono" >
+                            </div>
+                            <control-mensajes [errores]="errMsgsResto.cho_telefono"></control-mensajes>
+                            <div class="form-group">
+                            
+                                <input type="tel"  data-toggle="tooltip" animation="true" data-placement="top"
+                                 title="Telefono de emergencia" onmouseenter="$(this).tooltip('show')" placeholder="Teléfono de emergencia" 
+                                    class="form-control"  formControlName="cho_telefono_emergencia" >
+                            </div>                   
+                            <control-mensajes [errores]="errMsgsResto.cho_telefono_emergencia"></control-mensajes>
+                            <control-mensajes [errores]="erroresGrales"></control-mensajes>   
+                       <!--</tab>-->
+                    </div>
+                        </tab>
+                    </tabs>
+                </form>
+               <!-- <p>{{choferForm.value|json}}</p>-->
+            </section>
+     </div>
+        <div class="modal-footer">
+            <button type="button" (click)="salvarChofer()" class="btn btn-primary" >Guardar</button>
+            <button type="button" class="btn btn-default" data-dismiss="modal" data-dismiss="modal">Volver</button>
+        </div> 
+    </div> 
+
+</div>
