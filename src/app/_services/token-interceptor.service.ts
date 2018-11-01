@@ -27,15 +27,12 @@ export class TokenInterceptorService implements HttpInterceptor {
     const currentUser = JSON.parse(localStorage.getItem('currentUser'));
     if ( currentUser ) {
         token = currentUser.token;
-        console.log('token');
-        console.log(token);
     }
     return token;
   }
 
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    console.log('ooooooooooooooooooooooooooo');
     const authorizationReq = this.setAuthHeader(req);
     const handledRequest = next.handle(authorizationReq);
     return handledRequest;

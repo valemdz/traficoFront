@@ -7,60 +7,58 @@ import 'rxjs/add/operator/publish';
 import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { FuncionesGrales } from '../utiles/funciones.grales';
+import { environment } from 'src/environments/environment';
 
 
 @Injectable()
-export class IncidenciaService{
+export class IncidenciaService {
 
-    //private headers = new Headers({'Content-Type': 'application/json', 'Access-Control-Allow-Origin':'*'});
+    private urlBase = environment.origin;
 
     constructor( private http: HttpClient ) {
     }
 
     findIncidencias( page: number, pageSize: number, sort: PaginationPropertySort, idEmpresa: String ): Observable<any> {
+      const url = this.urlBase + `/incidencias/empresa/${idEmpresa}`;
       const params = FuncionesGrales.toParams( page, pageSize, sort );
-      return this.http.get(`/incidencias/empresa/${idEmpresa}`, params);
+      return this.http.get( url, params);
     }
 
-
-//para ver el detalle
-    viewIncidencia(id:number): Observable<any>{
-         return this.http.get(`/incidencias/${id}`);
+    viewIncidencia( id: number ): Observable<any> {
+      const url = this.urlBase + `/incidencias/${id}`;
+      return this.http.get( url );
     }
 
     getIncidencia(id: number): Observable<any> {
-        return this.http.get(`/incidencias/${id}`);
+      const url = this.urlBase +  `/incidencias/${id}`;
+      return this.http.get( url );
     }
 
-
-    update( incidencia: Incidencia ): Observable<any>{
-        const url = `/incidencias/${incidencia.id}`;
+    update( incidencia: Incidencia ): Observable<any> {
+        const url = this.urlBase + `/incidencias/${incidencia.id}`;
         return this.http
         .put(url, JSON.stringify(incidencia));
     }
 
      create( incidencia: Incidencia ): Observable<any>{
 
-        const url = `/incidencias`;
+        const url = this.urlBase +  `/incidencias`;
         return this.http.post(url, JSON.stringify(incidencia));
 
     }
 
    deleteIncidencia(id: number): Observable<any> {
-        return this.http.delete(`/incidencias/${id}`);
+       const  url = this.urlBase +  `/incidencias/${id}`;
+        return this.http.delete( url );
    }
 
-   findIncidenciasByEmpyTipo( idEmpresa:String, idTipo:number ): Observable<any>{
-        return this.http.get(`/empresa/${idEmpresa}/tipo/${idTipo}/incidencias`);
+   findIncidenciasByEmpyTipo( idEmpresa: string, idTipo: number ): Observable<any> {
+       const url = this.urlBase + `/empresa/${idEmpresa}/tipo/${idTipo}/incidencias`;
+       return this.http.get( url );
    }
 
-   /*checkCodigoIncidencia( idEmpresa:String, idTipo:number, idCodigo:String ): Observable<boolean>{
-        const url = `/checkCodigoIncidencia/empresa/${idEmpresa}/tipo/${idTipo}/codigo/${idCodigo}`;
-        return this.http.get(url).map(this.extractData).publish().refCount();
-   }*/
-
-   checkCodigoIncidencia( idEmpresa:String, idTipo:number, idCodigo:String ): Observable<any>{
-        const url = `/checkCodigoIncidencia/empresa/${idEmpresa}/tipo/${idTipo}/codigo/${idCodigo}`;
+   checkCodigoIncidencia( idEmpresa: string, idTipo:number, idCodigo: string ): Observable<any> {
+        const url = this.urlBase + `/checkCodigoIncidencia/empresa/${idEmpresa}/tipo/${idTipo}/codigo/${idCodigo}`;
         return this.http.get(url);
    }
 
