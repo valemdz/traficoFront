@@ -107,7 +107,7 @@ export class  ErrorService {
 
       erroresGral.length = 0;
 
-      const data = err;
+      const data = err.error;
 
       if( err.status == 500 ){
         erroresGral.push(' Error interno 500 comuniquese con el administrador! ');
@@ -148,7 +148,7 @@ export class  ErrorService {
       }else if ( err.status == 401 ){
         erroresGral.push(' Usuario o contraseña incorrecta ');
       }else if ( err.status == 409 ) {
-          const data = err;
+          const data = err.error;
           if ( form && data ) {
 
             for (let fieldName in data) {
@@ -182,7 +182,7 @@ export class  ErrorService {
 
           let mensajeMostrar = '';
 
-          const data = err;
+          const data = err.error;
 
           if( err.status == 500 ){
             mensajeMostrar = ' Error interno 500 comuniquese con el administrador! ';
@@ -206,6 +206,7 @@ export class  ErrorService {
             }
 
           }else if ( err.status == 409 ) {
+
             if( data['errorCode'] ){
               mensajeMostrar =  data['errorMessage'];
             }
