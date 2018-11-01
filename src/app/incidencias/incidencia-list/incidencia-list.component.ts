@@ -1,14 +1,10 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-
 import { Router } from '@angular/router';
 import * as Rx from 'rxjs/Rx';
-
 import { PaginationPage, PaginationPropertySort } from '../../shared/pagination';
 import { Table } from '../../shared/table';
-import { showLoading, hideLoading, doNothing } from '../../shared/commons'
 import { IncidenciaService } from '../incidencia.service';
 import { Incidencia} from '../../domain';
-
 import {MiUsuarioService} from '../../_services/mi.usuario.service';
 import { AlertService } from '../../_services/alert.service';
 import { Constantes } from '../../utiles/const-data-model';
@@ -27,14 +23,13 @@ import { Observable, Subscription } from 'rxjs';
 })
 export class IncidenciaListComponent implements OnInit, OnDestroy  {
 
-
     subscription: Subscription;
-
-
+    listadoSubcription: Subscription;
+    deleteIncSubscription: Subscription;
     modal = null;
 
-    incidenciaPage: PaginationPage<Incidencia>;
-    self: Table<Incidencia>;
+    incidenciaPage: PaginationPage<any>;
+    self: Table<any>;
 
     incidenciaNuevo: Incidencia;
 
@@ -42,20 +37,18 @@ export class IncidenciaListComponent implements OnInit, OnDestroy  {
 
     constructor( private incidenciaService: IncidenciaService,
         private router: Router,
-        private yo:MiUsuarioService,
+        private yo: MiUsuarioService,
         private alertService: AlertService,
         private ctrolError: ErrorService,
         private respuestaModalService: RespuestaModalService  ) {
 
         this.subscription = this.respuestaModalService.
         getMessage().
-        subscribe( ( mostrar:boolean) => {
-                                            if( mostrar ){
+        subscribe( ( mostrar: boolean) => {
+                                            if ( mostrar ) {
                                                this.mostrarDetalle();
                                             }
-                                         } );
-
-
+        } );
     }
 
     ngOnInit() {
@@ -64,31 +57,30 @@ export class IncidenciaListComponent implements OnInit, OnDestroy  {
 
     ngOnDestroy() {
         // unsubscribe to ensure no memory leaks
-        console.log( 'Libera la suscrip'  )
-        this.subscription.unsubscribe();
+        if ( this.subscription) { this.subscription.unsubscribe(); }
+        if ( this.listadoSubcription ) { this.listadoSubcription.unsubscribe(); }
+        if ( this.deleteIncSubscription ){ this.deleteIncSubscription.unsubscribe(); }
     }
 
-    mostrarDetalle():void{
-
+    mostrarDetalle(): void {
         this.modal = null;
+        this.fetchPage(0, Constantes.ROWS_BY_PAGE, null);
+    }
 
-        let observable: Observable<any> = this.fetchPage(0, Constantes.ROWS_BY_PAGE, null);
-        showLoading();
-        observable.subscribe( result => {
 
-        }, err => {
-          //this.ctrolError.tratarErrores(err, this.incidenciaForm, this.erroresGrales, this.translations['gral']);
-          //this.ctrolError.checkFormValidity(this.incidenciaForm, this.errMsgs,  this.translations );
-        } );
+    fetchPage(pageNumber: number, pageSize: number, sort: PaginationPropertySort) {
 
+        this.listadoSubcription = this.incidenciaService.findIncidencias$(pageNumber, pageSize, sort, this.yo.getEmpresa())
+        .subscribe( this.okIncidencias.bind( this), this.erroIncidencias.bind( this ) );
         this.self = this;
     }
 
+    okIncidencias(  incidenciasPage ) {
+       this.incidenciaPage = incidenciasPage;
+    }
 
-    fetchPage(pageNumber: number, pageSize: number, sort: PaginationPropertySort): Observable<any> {
-        let observable: Observable<any> = this.incidenciaService.findIncidencias$(pageNumber, pageSize, sort, this.yo.getEmpresa());
-        observable.subscribe(incidenciaPage => this.incidenciaPage = incidenciaPage);
-        return observable;
+    erroIncidencias( err ) {
+      this.ctrolError.tratarErrores( err, null, null, null );
     }
 
     goToDetails(incidencia) {
@@ -96,31 +88,30 @@ export class IncidenciaListComponent implements OnInit, OnDestroy  {
     }
 
     delete(incidencia) {
-        let observable: Observable<any> = this.incidenciaService.deleteIncidencia$(incidencia.id);
-
-        observable.subscribe( result => {
-            this.mostrarDetalle();
-            this.success('La incidencia se elimino con exito!!!')
-
-        }, err => {
-
-            this.error( this.ctrolError.tratarErroresEliminaciones(err) );
-
-        } );
-
+        this.deleteIncSubscription = this.incidenciaService.deleteIncidencia$(incidencia.id)
+        .subscribe( this.okDeleteInc.bind( this ), this.errorDeleteInc.bind(this) );
     }
 
-    viewDetails(incidencia) {
-        /*let observable: Observable<any> = this.incidenciaService.viewIncidencia(incidencia.id);
+    okDeleteInc( okDelete){
+      this.mostrarDetalle();
+      this.success('La incidencia se elimino con exito!!!')
+    }
+
+    errorDeleteInc( err ) {
+      this.error( this.ctrolError.tratarErroresEliminaciones(err) );
+    }
+
+    /*viewDetails(incidencia) {
+        let observable: Observable<any> = this.incidenciaService.viewIncidencia(incidencia.id);
         showLoading();
         observable.subscribe(() => {
             return this.fetchPage(0, Constantes.ROWS_BY_PAGE, null);
-        }).subscribe(doNothing, hideLoading, hideLoading);*/
-    }
+        }).subscribe(doNothing, hideLoading, hideLoading);
+    }*/
 
-    crearNuevo(){
+    crearNuevo() {
         this.alertService.clear();
-        this.incidenciaNuevo= {
+        this.incidenciaNuevo = {
             id: 0,
             codigo:null,
             in_descripcion: null,
@@ -143,20 +134,20 @@ export class IncidenciaListComponent implements OnInit, OnDestroy  {
         this.alertService.clear();
     }
 
-    crearNuevoDinam(){
+    crearNuevoDinam() {
 
         this.crearNuevo();
         this.ads = this.getComponente(this.incidenciaNuevo, true);
 
     }
 
-    modificarDinam( incidenciaM ){
+    modificarDinam( incidenciaM ) {
         this.ads = this.getComponente( incidenciaM, false );
     }
 
     getComponente( incid, nuev) {
         return [
-          new ComponenteItem(IncidenciaComponent, {incidencia: incid, nuevo: nuev, mensaje:''})
+          new ComponenteItem(IncidenciaComponent, {incidencia: incid, nuevo: nuev, mensaje: ''})
         ];
     }
 

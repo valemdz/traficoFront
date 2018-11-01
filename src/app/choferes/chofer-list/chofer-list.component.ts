@@ -1,7 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import {Router} from '@angular/router';
 import * as Rx from 'rxjs/Rx';
-import { Observable } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import {PaginationPage, PaginationPropertySort} from '../../shared/pagination';
 import {Table} from '../../shared/table';
 import {ChoferService} from '../chofer.service';
@@ -17,10 +17,13 @@ import { Constantes } from '../../utiles/const-data-model';
   templateUrl: './chofer-list.component.html',
   styleUrls: ['./chofer-list.component.css']
 })
-export class ChoferListComponent implements OnInit {
+export class ChoferListComponent implements OnInit, OnDestroy {
+
 
    choferPage: PaginationPage<any>;
    self: Table<any>;
+   listadoSubscription: Subscription;
+   deleteChoferSubscription: Subscription;
 
     choferNuevo: Chofer;
 
@@ -41,10 +44,15 @@ export class ChoferListComponent implements OnInit {
         this.mostrarDetalle();
     }
 
+    ngOnDestroy(): void {
+          if ( this.listadoSubscription ) { this.listadoSubscription.unsubscribe(); }
+          if ( this.deleteChoferSubscription ) { this.deleteChoferSubscription.unsubscribe(); }
+    }
+
     fetchPage(pageNumber: number, pageSize: number, sort: PaginationPropertySort)  {
-        let observable: Observable<any>
-        = this.choferService.findChoferes$( pageNumber, pageSize, sort, this.yo.getEmpresa() );
-        observable.subscribe( this.okChoferes.bind( this), this.errorChoferes.bind( this ) );
+        this.listadoSubscription
+        = this.choferService.findChoferes$( pageNumber, pageSize, sort, this.yo.getEmpresa() )
+        .subscribe( this.okChoferes.bind( this), this.errorChoferes.bind( this ) );
         this.self = this;
     }
 
@@ -53,39 +61,39 @@ export class ChoferListComponent implements OnInit {
     }
 
     errorChoferes( err) {
-
+      this.ctrolError.tratarErrores( err, null, null, null );
     }
 
     mostrarDetalle(): void {
         this.fetchPage(0, Constantes.ROWS_BY_PAGE, null);
     }
 
-
-
     goToDetails( chofer ) {
         this.router.navigate(['chofer', chofer.id]);
     }
 
-    delete(chofer){
-        let observable: Observable<any> = this.choferService.deleteChofer$( chofer.choferPK.cho_emp_codigo, chofer.choferPK.cho_codigo );
-
-        observable.subscribe(result => {
-             this.mostrarDetalle();
-             this.success('El chofer se elimino con exito!!!');
-
-          }, err => {
-            this.error( 'El chofer no se pudo eliminar.' + this.ctrolError.tratarErroresEliminaciones(err) );
-          } );
+    delete( chofer ) {
+        this.deleteChoferSubscription = this.choferService.deleteChofer$( chofer.choferPK.cho_emp_codigo, chofer.choferPK.cho_codigo )
+        .subscribe( this.okDeleteChofer.bind( this), this.errorDeleteChofer.bind( this ) );
 
     }
 
-    viewDetails(chofer) {
-        /* let observable: Observable<any> = this.choferService.viewChofer(chofer.id);
+    okDeleteChofer( ok) {
+      this.mostrarDetalle();
+      this.success('El chofer se elimino con exito!!!');
+    }
+
+    errorDeleteChofer( err ) {
+      this.error( 'El chofer no se pudo eliminar.' + this.ctrolError.tratarErroresEliminaciones(err) );
+    }
+
+    /*viewDetails(chofer) {
+        let observable: Observable<any> = this.choferService.viewChofer(chofer.id);
         showLoading();
         observable.switchMap(() => {
             return this.fetchPage(0, Constantes.ROWS_BY_PAGE, null);
-        }).subscribe(doNothing, hideLoading, hideLoading);*/
-    }
+        }).subscribe(doNothing, hideLoading, hideLoading);
+    }*/
 
     back( ) {
         history.back();

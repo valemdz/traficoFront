@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import{ FormGroup, FormControl, FormArray } from '@angular/forms';
+import { IfStmt } from '@angular/compiler';
 
 
 
@@ -147,27 +148,30 @@ export class  ErrorService {
       }else if ( err.status == 401 ){
         erroresGral.push(' Usuario o contraseña incorrecta ');
       }else if ( err.status == 409 ) {
-        const data = err;
-        for (let fieldName in data) {
+          const data = err;
+          if ( form && data ) {
 
-          const serverErrors = data[fieldName];
-          const errors = {};
+            for (let fieldName in data) {
 
-          for (let serverError of serverErrors) {
-            errors[serverError] = true;
-          }
+              const serverErrors = data[fieldName];
+              const errors = {};
 
-          let control = form.get(fieldName);
-          if( control ){
-            control.setErrors(errors);
-            control.markAsDirty();
-          }else{
-            for (let serverError of serverErrors) {
-              erroresGral.push(translationsGral[serverError]);
+              for (let serverError of serverErrors) {
+                errors[serverError] = true;
+              }
 
+              let control = form.get(fieldName);
+              if( control ){
+                control.setErrors(errors);
+                control.markAsDirty();
+              }else{
+                for (let serverError of serverErrors) {
+                  erroresGral.push(translationsGral[serverError]);
+
+                }
+              }
             }
           }
-        }
       }else{
         erroresGral.push(' Error Desconocido comuniquese con el administrador! ');
       }
