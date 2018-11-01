@@ -52,7 +52,7 @@ export class IncidenciaService {
         return this.http.delete( url );
    }
 
-   findIncidenciasByEmpyTipo( idEmpresa: string, idTipo: number ): Observable<any> {
+   findIncidenciasByEmpyTipo( idEmpresa: String, idTipo: number ): Observable<any> {
        const url = this.urlBase + `/empresa/${idEmpresa}/tipo/${idTipo}/incidencias`;
        return this.http.get( url );
    }
