@@ -12,27 +12,27 @@ import {IncidenciaComponent } from './incidencia/incidencia.component';
 
 export class IncidenciaValidator {
 
-  private timeout;  
+  private timeout;
 
   static createValidator( incidenciaService:IncidenciaService,  incid: IncidenciaComponent) {
 
-    return (AC: AbstractControl) => {          
+    return (AC: AbstractControl) => {
 
         if( AC.get('codigo').value && AC.get('in_empresa').value && AC.get('in_tipo').value
-            && incid.nuevo  ){  
-            
-            incidenciaService.checkCodigoIncidencia( AC.get('in_empresa').value , AC.get('in_tipo').value, AC.get('codigo').value )
+            && incid.nuevo  ){
+
+            incidenciaService.checkCodigoIncidencia$( AC.get('in_empresa').value , AC.get('in_tipo').value, AC.get('codigo').value )
             .subscribe(flag => {
-                if (flag === true) {                    
-                  AC.get('codigo').setErrors( {codigoTomado: true} ); 
-                  AC.get('codigo').markAsDirty();                  
+                if (flag === true) {
+                  AC.get('codigo').setErrors( {codigoTomado: true} );
+                  AC.get('codigo').markAsDirty();
                   incid.checkFormValidity();
                   return ({'codigoTomado': true});
-                } else {                                                
-                  AC.get('codigo').markAsPristine();                                    
-                  AC.get('codigo').setErrors( null );                                    
+                } else {
+                  AC.get('codigo').markAsPristine();
+                  AC.get('codigo').setErrors( null );
                   incid.checkFormValidity();
-                  return null;                  
+                  return null;
                 }
               },
               (err) => {
@@ -41,7 +41,7 @@ export class IncidenciaValidator {
             );
         } else{
             return null;
-        }   
+        }
     }
 
   }

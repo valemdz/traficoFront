@@ -9,17 +9,19 @@ import { Servicios } from '../domain';
 import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { FuncionesGrales } from '../utiles/funciones.grales';
+import { environment } from 'src/environments/environment';
 
 
 @Injectable()
 export class DiagrService {
+
+  private urlBase = environment.origin;
+
   constructor(private http: HttpClient ) {}
 
-
   findLineasByEmp(idEmpresa: String): Observable<any> {
-    const url = `/diagr/empresa/${idEmpresa}/lineas`;
-    return this.http
-      .get(url);
+    const url = this.urlBase + `/diagr/empresa/${idEmpresa}/lineas`;
+    return this.http.get(url);
   }
 
   findServiciosByLineaYfecha(
@@ -29,10 +31,9 @@ export class DiagrService {
 
     const params = FuncionesGrales.toParams( page, pageSize, sort );
 
-    const url = `/diagr/empresa/${idEmpresa}/linea/${idLinea}/fechaInicio/${inicio}/fechaFin/${fin}/servicios`;
+    const url = this.urlBase + `/diagr/empresa/${idEmpresa}/linea/${idLinea}/fechaInicio/${inicio}/fechaFin/${fin}/servicios`;
 
-    return this.http
-               .get(url, params);
+    return this.http.get(url, params);
   }
 
   /*getVehiculosLibres( idViaje: number ): Observable<Response> {

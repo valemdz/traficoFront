@@ -26,55 +26,55 @@ export class ChoferService {
     constructor( private http: HttpClient ) {
     }
 
-    findChoferes( page: number, pageSize: number, sort: PaginationPropertySort, cho_emp_codigo: String ): Observable<any> {
+    findChoferes$( page: number, pageSize: number, sort: PaginationPropertySort, cho_emp_codigo: String ): Observable<any> {
       const url = this.urlBase + `/choferes/empresa/${cho_emp_codigo}`;
       const params = FuncionesGrales.toParams( page, pageSize, sort );
       return this.http.get( url , params);
     }
 
 
-    viewChofer(id: number): Observable<any> {
+    viewChofer$(id: number): Observable<any> {
         const url = this.urlBase + `/chofer/${id}`;
         return this.http.get( url );
     }
 
-    getChofer(id: number): Observable<any> {
+    getChofer$(id: number): Observable<any> {
         const url = this.urlBase + `/chofer/${id}`;
         return this.http.get( url );
     }
 
 
-    update( chofer: Chofer ) {
+    update$( chofer: Chofer ) {
         const url = this.urlBase + `/choferes/empresa/${chofer.choferPK.cho_emp_codigo}/codigo/${chofer.choferPK.cho_codigo}`;
         return this.http.put( url, chofer );
     }
 
-    create( chofer: Chofer ): Observable<any> {
+    create$( chofer: Chofer ): Observable<any> {
         const url = this.urlBase + `/choferes`;
         return this.http.post( url, chofer );
     }
 
-   deleteChofer( cho_emp_codigo: String ,  cho_codigo: number ): Observable<any> {
+   deleteChofer$( cho_emp_codigo: String ,  cho_codigo: number ): Observable<any> {
         const url = this.urlBase + `/choferes/empresa/${cho_emp_codigo}/codigo/${cho_codigo}`;
         return this.http.delete(url);
    }
 
-   saveIncidenciasByChofer( cho_emp_codigo: String, cho_codigo: number, incidencias: any ) {
+   saveIncidenciasByChofer$( cho_emp_codigo: String, cho_codigo: number, incidencias: any ) {
         const url = this.urlBase + `/choferes/empresa/${cho_emp_codigo}/codigo/${cho_codigo}/incidencias`;
         return this.http.put(url, incidencias );
    }
 
-   getIncidenciasByChofer( cho_emp_codigo: String, cho_codigo: number ): Observable<any> {
+   getIncidenciasByChofer$( cho_emp_codigo: String, cho_codigo: number ): Observable<any> {
         const url = this.urlBase + `/choferes/empresa/${cho_emp_codigo}/codigo/${cho_codigo}/incidencias`;
         return this.http.get(url);
    }
 
-   getCarnetsByChofer( cho_emp_codigo: String, cho_codigo: number ): Observable<any> {
+   getCarnetsByChofer$( cho_emp_codigo: String, cho_codigo: number ): Observable<any> {
         const url = this.urlBase + `/choferes/empresa/${cho_emp_codigo}/codigo/${cho_codigo}/carnets`;
         return this.http.get(url);
    }
 
-   saveCarnetsByChofer( cho_emp_codigo: String, cho_codigo: number, listaCarnets: any ){
+   saveCarnetsByChofer$( cho_emp_codigo: String, cho_codigo: number, listaCarnets: any ){
         const url = this.urlBase + `/choferes/empresa/${cho_emp_codigo}/codigo/${cho_codigo}/carnets`;
         return this.http.put( url, listaCarnets);
    }

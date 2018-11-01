@@ -1,5 +1,5 @@
 import { Component, OnInit, OnChanges, Input, ViewChild, ElementRef } from '@angular/core';
-import { FormGroup, FormBuilder, FormArray, Validators } from '@angular/forms'
+import { FormGroup, FormBuilder, FormArray, Validators } from '@angular/forms';
 import * as Rx from 'rxjs/Rx';
 import { IncidenciaService } from '../../incidencias/incidencia.service';
 import { VehiculoService } from '../vehiculo.service';
@@ -50,7 +50,7 @@ export class IncByVehiComponent implements OnInit, OnChanges {
     const TIPO_INCIDENCIA_VEHICULO: number = 0;
 
     let observable: Observable<any> =
-            this.incidenciaService.findIncidenciasByEmpyTipo(this.vehiculo.vehiculoPK.vehEmpCodigo ,
+            this.incidenciaService.findIncidenciasByEmpyTipo$(this.vehiculo.vehiculoPK.vehEmpCodigo ,
                                                                TIPO_INCIDENCIA_VEHICULO);
     observable.subscribe( data => {
         this.comboTipos = data;
@@ -80,7 +80,7 @@ export class IncByVehiComponent implements OnInit, OnChanges {
 
   getIncidenciasByVehiculo(){
         let incObservable :Observable<any> =
-        this.vehiculoService.getIncidenciasByVehiculo( this.vehiculo.vehiculoPK.vehEmpCodigo ,
+        this.vehiculoService.getIncidenciasByVehiculo$( this.vehiculo.vehiculoPK.vehEmpCodigo ,
                                                        this.vehiculo.vehiculoPK.vehInterno );
          incObservable.subscribe( data => {
             this.vehiculoIndicencias = data;
@@ -225,7 +225,7 @@ export class IncByVehiComponent implements OnInit, OnChanges {
 
       let incidenciasDeepCopy:any =
 
-      this.vehiculoService.saveIncidenciasByVehiculo(  this.vehiculo.vehiculoPK.vehEmpCodigo ,
+      this.vehiculoService.saveIncidenciasByVehiculo$(  this.vehiculo.vehiculoPK.vehEmpCodigo ,
                                                    this.vehiculo.vehiculoPK.vehInterno,
                                                    lista ).subscribe(result => {
         //this.parent.mostrarDetalle();

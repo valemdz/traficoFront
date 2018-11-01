@@ -8,68 +8,67 @@ import 'rxjs/add/operator/publish';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { FuncionesGrales } from '../utiles/funciones.grales';
-
-
+import { environment } from 'src/environments/environment';
 
 
 
 @Injectable()
-export class VehiculoService{
+export class VehiculoService {
 
-    //private headers = new Headers({'Content-Type': 'application/json', 'Access-Control-Allow-Origin':'*'});
+    private urlBase = environment.origin;
+
+    /*private headers = new Headers({'Content-Type': 'application/json',
+      'Access-Control-Allow-Origin':'*'});*/
 
     constructor(private http: HttpClient ) {
     }
 
-    findVehiculos(page: number, pageSize: number, sort: PaginationPropertySort, vehEmpCodigo: String ): Observable<any> {
-
+    findVehiculos$(page: number, pageSize: number, sort: PaginationPropertySort, vehEmpCodigo: String ): Observable<any> {
+      const url = this.urlBase + `/vehiculos/empresa/${vehEmpCodigo}`;
       const params = FuncionesGrales.toParams( page, pageSize, sort );
-      return this.http.get(`/vehiculos/empresa/${vehEmpCodigo}`, params);
+      return this.http.get( url, params );
     }
 
-
-    //para ver el detalle
-    viewVehiculo(id:number): Observable<any>{
-         return this.http.get(`/vehiculo/${id}`);
+    viewVehiculo$( id: number ): Observable<any> {
+        const url =  this.urlBase + `/vehiculo/${id}`;
+        return this.http.get( url );
     }
 
-    getVehiculo(id: number): Observable<any> {
-        return this.http.get(`/vehiculo/${id}`);
+    getVehiculo$(id: number): Observable<any> {
+      const url = this.urlBase + `/vehiculo/${id}`;
+      return this.http.get( url );
     }
 
-    update( vehiculo: Vehiculo ): Observable<any> {
-        const url = `/vehiculos/empresa/${vehiculo.vehiculoPK.vehEmpCodigo}/interno/${vehiculo.vehiculoPK.vehInterno}`;
+    update$( vehiculo: Vehiculo ): Observable<any> {
+        const url = this.urlBase + `/vehiculos/empresa/${vehiculo.vehiculoPK.vehEmpCodigo}/interno/${vehiculo.vehiculoPK.vehInterno}`;
         return this.http
-        .put(url, JSON.stringify(vehiculo));
+        .put( url, vehiculo );
     }
 
-     create( vehiculo: Vehiculo ): Observable<any>{
-        const url = `/vehiculos`;
-        return this.http.post(url, JSON.stringify(vehiculo));
-
+     create$( vehiculo: Vehiculo ): Observable<any>{
+        const url = this.urlBase + `/vehiculos`;
+        return this.http.post( url, vehiculo );
     }
 
-   private handleError(error: any): Promise<any> {
-        return Promise.reject(error.message || error);
-   }
-
-   deleteVehiculo( vehEmpCodigo:String,  vehInterno:number): Observable<any> {
-        const url = `/vehiculos/empresa/${vehEmpCodigo}/interno/${vehInterno}`
+   deleteVehiculo$( vehEmpCodigo: String,  vehInterno: number): Observable<any> {
+        const url = this.urlBase + `/vehiculos/empresa/${vehEmpCodigo}/interno/${vehInterno}`
         return this.http.delete(url);
    }
 
-    getOpcionesVeh( vehEmpCodigo): Observable<any> {
-        return this.http.get(`/empresa/${vehEmpCodigo}/vehiculosCb`);
+    getOpcionesVeh$( vehEmpCodigo): Observable<any> {
+        const url = this.urlBase + `/empresa/${vehEmpCodigo}/vehiculosCb`;
+        return this.http.get( url );
     }
 
-    getIncidenciasByVehiculo( idEmpresa:String, idInterno:number ):Observable<any>{
-      return this.http.get(`/vehiculos/empresa/${idEmpresa}/interno/${idInterno}/incidencias`);
+    getIncidenciasByVehiculo$( idEmpresa: String, idInterno: number ): Observable<any> {
+      const url = this.urlBase + `/vehiculos/empresa/${idEmpresa}/interno/${idInterno}/incidencias`;
+      return this.http.get( url );
     }
 
-    saveIncidenciasByVehiculo(  vehEmpCodigo:String, vehInterno:number, incidenciasDeepCopy ){
-        const url = `/vehiculos/empresa/${vehEmpCodigo}/interno/${vehInterno}/incidencias`;
-        return this.http.put(url, JSON.stringify(incidenciasDeepCopy));
-     }
+    saveIncidenciasByVehiculo$(  vehEmpCodigo: String, vehInterno: number, incidenciasDeepCopy ) {
+        const url = this.urlBase + `/vehiculos/empresa/${vehEmpCodigo}/interno/${vehInterno}/incidencias`;
+        return this.http.put(url, incidenciasDeepCopy );
+    }
 
 
 }

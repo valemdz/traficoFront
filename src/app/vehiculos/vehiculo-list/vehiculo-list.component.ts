@@ -55,7 +55,7 @@ export class VehiculoListComponent implements OnInit  {
 
    fetchPage(pageNumber: number, pageSize: number, sort: PaginationPropertySort): Observable<PaginationPage<any>> {
         let observable: Observable<any> =
-        this.vehiculoService.findVehiculos(pageNumber, pageSize, sort, this.yo.getEmpresa());
+        this.vehiculoService.findVehiculos$(pageNumber, pageSize, sort, this.yo.getEmpresa());
         observable.subscribe(vehiculoPage =>
          { this.vehiculoPage = vehiculoPage;
           for (let _i = 0; _i < this.vehiculoPage.content.length; _i++) {
@@ -73,7 +73,7 @@ export class VehiculoListComponent implements OnInit  {
 
     delete(vehiculo) {
         let observable: Observable<any> =
-        this.vehiculoService.deleteVehiculo( vehiculo.vehiculoPK.vehEmpCodigo, vehiculo.vehiculoPK.vehInterno );
+        this.vehiculoService.deleteVehiculo$( vehiculo.vehiculoPK.vehEmpCodigo, vehiculo.vehiculoPK.vehInterno );
         observable.subscribe(result => {
             this.mostrarDetalle();
             this.success('El Vehiculo se elimino con exito!!!');
@@ -125,7 +125,7 @@ export class VehiculoListComponent implements OnInit  {
 
     cambiarEstado(vehiculo){
 
-        this.vehiculoService.update( vehiculo ).subscribe( result => {
+        this.vehiculoService.update$( vehiculo ).subscribe( result => {
             //nada solo cambia el color del boton
           }, err => {
             this.error( this.ctrolError.tratarErroresEliminaciones(err) );

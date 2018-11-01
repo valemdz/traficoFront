@@ -20,28 +20,28 @@ import { RespuestaModalService } from '../../_services/respuesta.modal.service';
 @Component({
  selector: 'app-incidencia',
  templateUrl: './incidencia.component.html',
- styleUrls: ['./incidencia.component.css']  
+ styleUrls: ['./incidencia.component.css']
 })
 export class IncidenciaComponent implements  ComponenteBaseComponent, OnInit,  OnChanges, OnDestroy {
 
- @Input() data:any;  
+ @Input() data:any;
 
  incidencia: Incidencia;
  nuevo:boolean;
- incidenciaForm; FormGroup;    
- comboTipos: any=[]; 
+ incidenciaForm; FormGroup;
+ comboTipos: any=[];
 
  @ViewChild('closeBtn') closeBtn: ElementRef;
 
- 
+
 
  constructor( private incidenciaService:IncidenciaService,
-              private fb: FormBuilder,               
+              private fb: FormBuilder,
               private ctrolError: ErrorService,
-              private alertService: AlertService, 
-              private respuestaModalService: RespuestaModalService ) {           
-     this.crearForm();                 
-     console.log('constructor Incid' );	      
+              private alertService: AlertService,
+              private respuestaModalService: RespuestaModalService ) {
+     this.crearForm();
+     console.log('constructor Incid' );
   }
 
   isNuevo():boolean{
@@ -53,25 +53,25 @@ export class IncidenciaComponent implements  ComponenteBaseComponent, OnInit,  O
   }
 
   getDescripcion(){
-     let object:any;      
-     for (var i = 0; i <  this.comboTipos.length; i++) {  
+     let object:any;
+     for (var i = 0; i <  this.comboTipos.length; i++) {
        object = this.comboTipos[i];
        if( object.codigo == this.incidencia.in_tipo){
          return  object.descripcion;
        }
-     }   
+     }
   }
 
    crearComboTipos(){
      this.comboTipos.push({ codigo:0, descripcion:'Unidades'});
-     this.comboTipos.push({ codigo:1, descripcion: 'Choferes'});      
-   } 
+     this.comboTipos.push({ codigo:1, descripcion: 'Choferes'});
+   }
 
 
-  crearForm(){ 
-   
-    this.incidenciaForm = this.fb.group({  
-       codigo: [ '', [ Validators.required,  Validators.maxLength(10)]],      
+  crearForm(){
+
+    this.incidenciaForm = this.fb.group({
+       codigo: [ '', [ Validators.required,  Validators.maxLength(10)]],
        in_descripcion: ['', [ Validators.required,  Validators.maxLength(60) ] ],
        in_tipo:[ '', [ Validators.required, Validators.maxLength(1) ] ], /*0 unidades , 1 choferes */
        in_color:['', [Validators.required, Validators.maxLength(60)]],
@@ -81,26 +81,26 @@ export class IncidenciaComponent implements  ComponenteBaseComponent, OnInit,  O
      this.incidenciaForm.controls.in_empresa.disabled;
 
      this.incidenciaForm.valueChanges
-         .subscribe( data => this.checkFormValidity() );         
+         .subscribe( data => this.checkFormValidity() );
 
-  } 
+  }
 
  erroresGrales:any=[];
 
- errMsgs: any = {  
-   codigo: [],   
+ errMsgs: any = {
+   codigo: [],
    in_descripcion: [],
    in_tipo: [],
    in_color: [],
    in_empresa:[]
  };
 
- translations: any = { 
+ translations: any = {
    codigo:{
      required: 'Por favor especifique un codigo.',
      maxlength:'La longitud maxima del campo es 10',
-     codigoTomado: 'El codigo especificado ya ha sido ocupado'       
-   },  
+     codigoTomado: 'El codigo especificado ya ha sido ocupado'
+   },
    in_descripcion: {
      required: 'Por favor especifique una descripcion.'
    },
@@ -118,8 +118,8 @@ export class IncidenciaComponent implements  ComponenteBaseComponent, OnInit,  O
      codigoTomado: 'el codigo especificado ya ha sido ocupado'
    }
  };
- 
- limpiarMensajes(){   
+
+ limpiarMensajes(){
 
    this.errMsgs.codigo.length =0;
    this.errMsgs.in_descripcion.length =0;
@@ -131,46 +131,46 @@ export class IncidenciaComponent implements  ComponenteBaseComponent, OnInit,  O
 
  ngOnInit() {
    this.incidencia = this.data.incidencia;
-   this.nuevo = this.data.nuevo;    
-   this.crearComboTipos();        
-   console.log('ngOnInit****************** Inci ' );  
+   this.nuevo = this.data.nuevo;
+   this.crearComboTipos();
+   console.log('ngOnInit****************** Inci ' );
    this.cargarValores();
-   
- } 
 
- ngOnChanges() {           
+ }
 
-    console.log('ngOnChanges');	 
-    this.limpiarMensajes();     
+ ngOnChanges() {
+
+    console.log('ngOnChanges');
+    this.limpiarMensajes();
 
     this.incidencia = this.data.incidencia;
-    this.nuevo = this.data.nuevo;    
+    this.nuevo = this.data.nuevo;
 
-    this.incidenciaForm.reset({ 
-       codigo: this.incidencia.codigo,       
+    this.incidenciaForm.reset({
+       codigo: this.incidencia.codigo,
        in_descripcion: this.incidencia.in_descripcion,
        in_tipo: this.incidencia.in_tipo,
        in_color: this.incidencia.in_color,
        in_empresa: this.incidencia.in_empresa
 
-    }) 
-    
+    })
+
     //mejor lo manejamos con el [readonly]="!nuevo"
     /*const method = this.nuevo ? 'enable':'disable';
     this.incidenciaForm.controls['codigo'][method]();*/
-    
- }  
 
- cargarValores(){   
+ }
 
-   this.incidenciaForm.reset({ 
-     codigo: this.incidencia.codigo,       
+ cargarValores(){
+
+   this.incidenciaForm.reset({
+     codigo: this.incidencia.codigo,
      in_descripcion: this.incidencia.in_descripcion,
      in_tipo: this.incidencia.in_tipo,
      in_color: this.incidencia.in_color,
      in_empresa: this.incidencia.in_empresa
 
-   }) 
+   })
 
  }
 
@@ -178,54 +178,54 @@ export class IncidenciaComponent implements  ComponenteBaseComponent, OnInit,  O
    this.ctrolError.checkFormValidity(this.incidenciaForm, this.errMsgs,  this.translations);
  }
 
- createIncidencia(){         
+ createIncidencia(){
 
      this.ctrolError.validateAllFormFields( this.incidenciaForm) ;
      this.checkFormValidity();
 
      if (this.incidenciaForm.valid ) {
        this.salvarIncidencia();
-     }      
- } 
+     }
+ }
 
- salvarIncidencia(){      
+ salvarIncidencia(){
     this.erroresGrales = [];
-    const  incid: Incidencia = this.prepararSaveIncidencia();     
+    const  incid: Incidencia = this.prepararSaveIncidencia();
 
-    if( this.nuevo ){        
-       this.incidenciaService.create(incid).subscribe( result => {
+    if( this.nuevo ){
+       this.incidenciaService.create$(incid).subscribe( result => {
            //this.parent.mostrarDetalle();
            //this.parent.success('La incidencia se agrego con exito!!!')
            this.alertService.success('La incidencia se agrego con exito!!!');
            this.closeModalYMostrarGrilla();
        }, err => {
-         
-         this.limpiarMensajes(); 
+
+         this.limpiarMensajes();
          this.ctrolError.tratarErroresBackEnd(err, this.incidenciaForm, this.erroresGrales, this.errMsgs );
-         
+
        } );
 
     } else{
-       this.incidenciaService.update(incid).subscribe( result => {
+       this.incidenciaService.update$(incid).subscribe( result => {
            //this.parent.mostrarDetalle();
            //this.parent.success('La incidencia se actualizo con exito!!!')
            this.alertService.success('La incidencia se actualizo con exito!!!');
            this.closeModalYMostrarGrilla();
          }, err => {
-           this.limpiarMensajes(); 
+           this.limpiarMensajes();
            this.ctrolError.tratarErroresBackEnd(err, this.incidenciaForm, this.erroresGrales, this.errMsgs );
-           
+
          }
       );
-    }  
+    }
 
  }
 
- prepararSaveIncidencia(): Incidencia{   
+ prepararSaveIncidencia(): Incidencia{
 
    //const form = this.incidenciaForm.value;
-   const form = this.incidenciaForm.getRawValue();  
-   
+   const form = this.incidenciaForm.getRawValue();
+
    const incid: Incidencia = {
      id: this.incidencia.id,
      codigo: form.codigo,
@@ -233,7 +233,7 @@ export class IncidenciaComponent implements  ComponenteBaseComponent, OnInit,  O
      in_tipo: form.in_tipo,
      in_color: form.in_color,
      in_empresa: form.in_empresa,
-   }    
+   }
 
    return incid;
 
@@ -246,22 +246,22 @@ export class IncidenciaComponent implements  ComponenteBaseComponent, OnInit,  O
  }
 
  closeModalYMostrarGrilla(){
-     
+
      this.sendMessage(true);
-     this.ngOnDestroy();         
-     this.closeBtn.nativeElement.click();    
- }    
+     this.ngOnDestroy();
+     this.closeBtn.nativeElement.click();
+ }
 
- soloCerrar(){    
+ soloCerrar(){
    this.ngOnDestroy();
-   this.closeBtn.nativeElement.click();  
+   this.closeBtn.nativeElement.click();
  }
 
- ngOnDestroy() { 
-   console.log('ngOnDestroy Incid');	
+ ngOnDestroy() {
+   console.log('ngOnDestroy Incid');
  }
 
- 
+
 
 ngAfterContentInit(){
    //console.log('ngAfterContentInit Incid');
@@ -275,11 +275,11 @@ ngAfterContentChecked(){
 
 
 ngAfterViewInit(){
-   //console.log('ngAfterViewInit Incid');			
+   //console.log('ngAfterViewInit Incid');
 }
 
 ngAfterViewChecked(){
-   //console.log('ngAfterViewChecked Incid');	
+   //console.log('ngAfterViewChecked Incid');
 }
 
 

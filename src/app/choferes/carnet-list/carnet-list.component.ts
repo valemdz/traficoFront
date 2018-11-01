@@ -170,7 +170,7 @@ export class CarnetListComponent implements OnInit, OnChanges {
   getCarnetsByChofer( cho_emp_codigo:String, cho_codigo: number ){
 
     let incObservable:Observable<Response> =
-    this.choferService.getCarnetsByChofer( cho_emp_codigo, cho_codigo);
+    this.choferService.getCarnetsByChofer$( cho_emp_codigo, cho_codigo);
 
     incObservable.subscribe( data =>{
       this.carnetsChofer = data;
@@ -245,7 +245,7 @@ export class CarnetListComponent implements OnInit, OnChanges {
           carnets: this.prepararSalvarCarnet()
         }
 
-        this.choferService.saveCarnetsByChofer( this.chofer.choferPK.cho_emp_codigo,
+        this.choferService.saveCarnetsByChofer$( this.chofer.choferPK.cho_emp_codigo,
                                                 this.chofer.choferPK.cho_codigo,  listaCarnet )
         .subscribe(result => {
           //this.parent.mostrarDetalle();

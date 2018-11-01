@@ -65,7 +65,7 @@ export class IncByChoferComponent implements OnInit, OnChanges {
   ngOnInit() {
 
     let observable: Observable<any> =
-              this.incidenciaService.findIncidenciasByEmpyTipo(this.chofer.choferPK.cho_emp_codigo,1);
+              this.incidenciaService.findIncidenciasByEmpyTipo$(this.chofer.choferPK.cho_emp_codigo,1);
     observable.subscribe( data => {
         this.comboTipos = data;
 
@@ -80,7 +80,7 @@ export class IncByChoferComponent implements OnInit, OnChanges {
 
   getIncidenciasByChofer(){
     let incObservable :Observable<any> =
-    this.choferService.getIncidenciasByChofer(  this.chofer.choferPK.cho_emp_codigo,
+    this.choferService.getIncidenciasByChofer$(  this.chofer.choferPK.cho_emp_codigo,
                                                 this.chofer.choferPK.cho_codigo );
      incObservable.subscribe( data => {
         this.choferIndicencias = data;
@@ -229,7 +229,7 @@ export class IncByChoferComponent implements OnInit, OnChanges {
       choferIncidencias: this. prepararSalvarChoferIncid()
     }
 
-    this.choferService.saveIncidenciasByChofer(  this.chofer.choferPK.cho_emp_codigo,
+    this.choferService.saveIncidenciasByChofer$(  this.chofer.choferPK.cho_emp_codigo,
                                                  this.chofer.choferPK.cho_codigo,
                                                  lista).subscribe(result => {
       //this.parent.mostrarDetalle();

@@ -86,7 +86,7 @@ export class IncidenciaListComponent implements OnInit, OnDestroy  {
 
 
     fetchPage(pageNumber: number, pageSize: number, sort: PaginationPropertySort): Observable<any> {
-        let observable: Observable<any> = this.incidenciaService.findIncidencias(pageNumber, pageSize, sort, this.yo.getEmpresa());
+        let observable: Observable<any> = this.incidenciaService.findIncidencias$(pageNumber, pageSize, sort, this.yo.getEmpresa());
         observable.subscribe(incidenciaPage => this.incidenciaPage = incidenciaPage);
         return observable;
     }
@@ -96,7 +96,7 @@ export class IncidenciaListComponent implements OnInit, OnDestroy  {
     }
 
     delete(incidencia) {
-        let observable: Observable<any> = this.incidenciaService.deleteIncidencia(incidencia.id);
+        let observable: Observable<any> = this.incidenciaService.deleteIncidencia$(incidencia.id);
 
         observable.subscribe( result => {
             this.mostrarDetalle();

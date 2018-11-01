@@ -164,7 +164,7 @@ export class VehiculoComponent implements OnChanges, OnInit {
     const vehi:Vehiculo = this.prepararSaveVehiculo();
 
     if( this.nuevo ){
-      this.vehiculoService.create(vehi).subscribe(result => {
+      this.vehiculoService.create$(vehi).subscribe(result => {
           this.parent.mostrarDetalle();
           this.parent.success('El vehiculo se agrego con exito');
           this.closeModal();
@@ -178,7 +178,7 @@ export class VehiculoComponent implements OnChanges, OnInit {
       );
     }else{
 
-        this.vehiculoService.update( vehi ).subscribe( result => {
+        this.vehiculoService.update$( vehi ).subscribe( result => {
             this.parent.mostrarDetalle();
             this.parent.success('El vehiculo se actualizo con exito');
             this.closeModal();
@@ -218,7 +218,7 @@ export class VehiculoComponent implements OnChanges, OnInit {
 
     let opcionesVehArray:VehiculosArray;
     let observable: Observable<VehiculosArray>
-            = this.vehiculoService.getOpcionesVeh( this.me.user.empresa);
+            = this.vehiculoService.getOpcionesVeh$( this.me.user.empresa);
 
     observable.subscribe( data => {
         opcionesVehArray =  data;
