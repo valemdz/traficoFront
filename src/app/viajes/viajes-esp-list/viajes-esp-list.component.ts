@@ -1,16 +1,14 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormGroup, FormBuilder, FormArray, Validators, FormControl } from '@angular/forms';
-import * as moment from 'moment';
 import * as Rx from "rxjs/Rx";
 import { ViajeEspServive } from '../viajeEsp.service';
-import {Response} from '@angular/http';
 import { MiUsuarioService } from '../../_services/mi.usuario.service';
 import { Table } from '../../shared/table';
 import { ViajeEspecial, ViajeEspecialList, VehiculoPK, ChoferPK } from '../../domain';
 import { PaginationPage, PaginationPropertySort } from '../../shared/pagination';
 import { AlertService } from '../../_services/alert.service';
 import { ModalService } from '../../ventanas-modales/modal.service';
-import { Observable} from 'rxjs';
+import { Subscription } from 'rxjs';
 import { DiagrChoferesComponent } from '../diagr-choferes/diagr-choferes.component';
 import { VentanasModalesModule } from '../../ventanas-modales/ventanas-modales.module';
 
@@ -22,38 +20,36 @@ import { VentanasModalesModule } from '../../ventanas-modales/ventanas-modales.m
   templateUrl: './viajes-esp-list.component.html',
   styleUrls: ['./viajes-esp-list.component.css']
 })
-export class ViajesEspListComponent implements OnInit {
-
-  viajePage: PaginationPage<ViajeEspecialList>;
-  self: Table<ViajeEspecialList>;
-  viajeForm:FormGroup;
-
-  comboVehiculos:any=[];
-
-  viajeNuevo:ViajeEspecial;
+export class ViajesEspListComponent implements OnInit, OnDestroy {
 
 
+  viajePage: PaginationPage<any>;
+  self: Table<any>;
+  viajeForm: FormGroup;
+  comboVehiculos: any = [];
+  viajeNuevo: ViajeEspecial;
+
+  listadoSubs: Subscription;
 
   constructor(  private fb: FormBuilder,
                 private viajeServ: ViajeEspServive,
                 private alertService: AlertService,
-                private yo:MiUsuarioService,
+                private yo: MiUsuarioService,
                 private modalService: ModalService  ) {
       this.crearForm();
   }
 
 
-  crearForm(){
+  crearForm() {
    /* this.viajeForm = this.fb.group({
       fInicio: [null,  [ Validators.required ]],
       hInicio:[null,  [ Validators.required ]],
       fFin:[null, [ Validators.required ]],
       hFin:[null , [ Validators.required ] ] }) ;*/
 
-
       this.viajeForm = this.fb.group({
         fInicio: ['2017-12-01',  [ Validators.required ]],
-        fFin:['2017-12-31', [ Validators.required ]] });
+        fFin: ['2017-12-31', [ Validators.required ]] });
 
    };
 
@@ -61,13 +57,13 @@ export class ViajesEspListComponent implements OnInit {
 
   }
 
+  ngOnDestroy(): void {
+      if ( this.listadoSubs ) { this.listadoSubs.unsubscribe(); }
+  }
+
 
   buscarViajesEspeciales(){
-
     this.mostrarDetalle();
-
-    //this.getViajesEspeciales( this.yo.getEmpresa(), this.getInicio(), this.getFin() );
-
   }
 
   getInicio():any{
@@ -75,12 +71,12 @@ export class ViajesEspListComponent implements OnInit {
     return  formModel.fInicio;
   }
 
-  getFin():any{
+  getFin(): any {
     const formModel = this.viajeForm.value;
     return  formModel.fFin;
   }
 
-  getViajesEspeciales( empresa:String, inicio:any, fin:any ){
+  /*getViajesEspeciales( empresa:String, inicio:any, fin:any ){
 
     let observable: Observable<Response> =
     this.viajeServ.getViajesEspeciales( empresa, this.getInicio(),  this.getFin() );
@@ -88,32 +84,27 @@ export class ViajesEspListComponent implements OnInit {
       //this.comboEscalasDestino = data;
 
     });
+  }*/
+
+  mostrarDetalle(): void {
+    this.fetchPage(0, 10, null);
   }
 
-  mostrarDetalle():void{
-    let observable: Observable<PaginationPage<any>> = this.fetchPage(0, 10, null);
 
-    observable.subscribe( result => {
-
-    }, err => {
-      //this.ctrolError.tratarErrores(err, this.incidenciaForm, this.erroresGrales, this.translations['gral']);
-      //this.ctrolError.checkFormValidity(this.incidenciaForm, this.errMsgs,  this.translations );
-    } );
-
+fetchPage(pageNumber: number, pageSize: number, sort: PaginationPropertySort) {
+    this.listadoSubs =
+    this.viajeServ.findViajes(pageNumber, pageSize, sort, this.yo.getEmpresa(), this.getInicio(), this.getFin() )
+    .subscribe( this.okViajesEsp.bind( this ), this.errorViajeEsp.bind( this ) );
     this.self = this;
 }
 
-
-
-
-
-fetchPage(pageNumber: number, pageSize: number, sort: PaginationPropertySort): Observable<PaginationPage<ViajeEspecialList>> {
-    let observable: Observable<PaginationPage<ViajeEspecialList>> =
-    this.viajeServ.findViajes(pageNumber, pageSize, sort, this.yo.getEmpresa(), this.getInicio(), this.getFin() );
-    observable.subscribe(viajePage => this.viajePage = viajePage);
-    return observable;
+okViajesEsp( viajePage ) {
+  this.viajePage = viajePage;
 }
 
+errorViajeEsp( err ) {
+
+}
 
 delete( viaje: ViajeEspecial){
 

@@ -54,7 +54,7 @@ export class VehiculoListComponent implements OnInit, OnDestroy  {
     }
 
    fetchPage(pageNumber: number, pageSize: number, sort: PaginationPropertySort) {
-        this.listadoSubscripcion =
+        this.listadoSubs =
         this.vehiculoService.findVehiculos$(pageNumber, pageSize, sort, this.yo.getEmpresa())
         .subscribe( this.okVehiculo.bind( this), this.errorVehiculo.bind( this) );
         this.self = this;

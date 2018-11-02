@@ -1,13 +1,13 @@
 <!--<navegacion-component></navegacion-component>-->
-<div *ngIf="incidenciaPage != null">   
-    <div id="list" class="row" >
+<div *ngIf="incidenciaPage != null">
+    <div id="list" class="row animated fadeIn">
         <div class="table-responsive col-md-12">
             <table class="table table-striped table-hover" cellspacing="0" cellpadding="0">
                 <thead>
                     <tr>
                         <th>
-                           <app-table-sort [table]="self" [page]="incidenciaPage" [label]="'Codigo'" [property]="'codigo'">Codigo</app-table-sort>
-                                </th>
+                            <app-table-sort [table]="self" [page]="incidenciaPage" [label]="'Codigo'" [property]="'codigo'">Codigo</app-table-sort>
+                        </th>
                         <th>
                             <app-table-sort [table]="self" [page]="incidenciaPage" [label]="'Nombre'" [property]="'in_descripcion'"></app-table-sort>
                         </th>
@@ -26,13 +26,10 @@
                         <td>{{incidencia.in_descripcion}}</td>
                         <td>{{incidencia.in_tipoString}}</td>
                         <td>
-                            <input name="color" type="color" 
-                                   style="height: 25px"  
-                                   value={{incidencia.in_color}}  />
-                                </td>
+                            <input name="color" type="color" style="height: 25px" value={{incidencia.in_color}} />
+                        </td>
                         <td class="actions">
-                            <a class="btn btn-success btn-xs" (click)="modificarDinam(incidencia);clearAlert()" 
-                            data-toggle="modal" data-target="#nuevo-modal"  >Modificar</a>
+                            <a class="btn btn-success btn-xs" (click)="modificarDinam(incidencia);clearAlert()" data-toggle="modal" data-target="#nuevo-modal">Modificar</a>
                             <a class="btn btn-danger  btn-xs" (click)="currentIncidencia=incidencia;clearAlert()" data-toggle="modal" data-target="#delete-modal">Eliminar</a>
                         </td>
                     </tr>
@@ -41,38 +38,37 @@
         </div>
 
     </div>
-    <alert></alert>   
-    
+    <alert></alert>
+
     <div id="actions" class="row">
         <div class="col-md-12 text-left">
-            <a class="btn btn-primary"   data-target="#nuevo-modal"
-               (click)="crearNuevoDinam()" data-toggle="modal" >Crear</a>
+            <a class="btn btn-primary" data-target="#nuevo-modal" (click)="crearNuevoDinam()" data-toggle="modal">Crear</a>
         </div>
-    </div>    
+    </div>
 
     <app-table-pagination class="text-center" [table]="self" [page]="incidenciaPage"></app-table-pagination>
 </div>
 
 
 <!-- Modal Delete -->
-<div *ngIf="currentIncidencia" >
-<div class="modal fade" id="delete-modal" tabindex="-1" role="dialog" aria-labelledby="modalLabel">
-    <div class="modal-dialog modal-sm" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Fechar"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title" id="modalLabel"></h4>
-            </div>
-            <div class="modal-body">
-                Desea eliminar esta incidencia?
-            </div>
-            <div class="modal-footer">
-                <button type="button" (click)="delete(currentIncidencia)" class="btn btn-primary" data-dismiss="modal">Si</button>
-                <button type="button" class="btn btn-default" data-dismiss="modal" data-dismiss="modal">No</button>
+<div *ngIf="currentIncidencia">
+    <div class="modal fade" id="delete-modal" tabindex="-1" role="dialog" aria-labelledby="modalLabel">
+        <div class="modal-dialog modal-sm" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Fechar"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="modalLabel"></h4>
+                </div>
+                <div class="modal-body">
+                    Desea eliminar esta incidencia?
+                </div>
+                <div class="modal-footer">
+                    <button type="button" (click)="delete(currentIncidencia)" class="btn btn-primary" data-dismiss="modal">Si</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal" data-dismiss="modal">No</button>
+                </div>
             </div>
         </div>
     </div>
-</div>
 </div>
 
 
@@ -80,4 +76,3 @@
 <div>
     <app-place-holder [ads]="ads"></app-place-holder>
 </div>
-
