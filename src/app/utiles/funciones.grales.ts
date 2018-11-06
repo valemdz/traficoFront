@@ -7,7 +7,7 @@ export class FuncionesGrales{
 
     public static toFecha( fecha ){
         let f = null;
-        if( !( fecha === null || fecha === '' ) ){
+        if ( !( fecha == null || fecha === '' ) ) {
           f = moment( fecha,  'YYYY-MM-DD' ).format() as any;
         }
         return f;
@@ -17,6 +17,11 @@ export class FuncionesGrales{
       let dp = new DatePipe( locale );
       let f = dp.transform( fecha, 'yyyy-MM-dd');
       return f;
+    }
+
+    public static formatearFecha( locale: string, valueFecha: any,  pattern: string ): string {
+      const dp = new DatePipe( locale );
+      return dp.transform( valueFecha, pattern );
     }
 
     public static getMes(  locale: string, fecha ){

@@ -5,14 +5,12 @@ import {Tabs} from '../../shared/tabs/tabs';
 import {Tab} from '../../shared/tabs/tab';
 import {TabChild} from '../../shared/tabs/tab-child';
 import {ChoferService} from '../chofer.service';
-import * as Rx from "rxjs/Rx";
-
 import {FormGroup, FormBuilder, Validators } from '@angular/forms';
 import {ChoferListComponent} from '../chofer-list/chofer-list.component';
 import { ErrorService } from '../../_services/error.service';
-
 import * as moment from 'moment';
 import {DatePipe} from '@angular/common';
+import { DOCUMENTOS, ESTADOS, GRUPOS_SANGUINEOS } from './constantes-chofer';
 
 
 @Component({
@@ -28,9 +26,9 @@ export class ChoferNuevoComponent implements OnInit, OnChanges, TabChild {
   @Input()
   nuevo:boolean;
 
-  comboDocumentos:any=[];
-  comboEstados:any=[];
-  comboSanguineo:any=[];
+  comboDocumentos: any = [];
+  comboEstados: any = [];
+  comboSanguineo: any = [];
 
   choferForm: FormGroup;
 
@@ -46,9 +44,9 @@ export class ChoferNuevoComponent implements OnInit, OnChanges, TabChild {
 
 
   ngOnInit() {
-    this.crearComboDocumentos();
-    this.crearComboEstados();
-    this.crearComboSanguineo();
+    this.comboDocumentos = DOCUMENTOS;
+    this.comboEstados = ESTADOS;
+    this.comboSanguineo = GRUPOS_SANGUINEOS;
   }
 
   tabActivated():void{
@@ -149,96 +147,58 @@ export class ChoferNuevoComponent implements OnInit, OnChanges, TabChild {
         cho_telefono:this.chofer.cho_telefono,
         cho_telefono_emergencia:  this.chofer.cho_telefono_emergencia
       });
-
-
    }
 
-  crearComboDocumentos(){
-    this.comboDocumentos.push({ codigo:1, descripcion:'Dni'});
-    this.comboDocumentos.push({ codigo:2, descripcion:'Cedula Federal'})
-    this.comboDocumentos.push({ codigo:3, descripcion:'Cedula Provincial'});
-    this.comboDocumentos.push({ codigo:4, descripcion:'Pasaporte'});
-    this.comboDocumentos.push({ codigo:5, descripcion:'Cedula de Extranjeria'});
-    this.comboDocumentos.push({ codigo:6, descripcion:'Libreta Enrolamiento'});
-    this.comboDocumentos.push({ codigo:7, descripcion:'Documento Unico'});
-    this.comboDocumentos.push({ codigo:8, descripcion:'Cedula de Chile'});
-    this.comboDocumentos.push({ codigo:9, descripcion:'Salvoconducto'});
-    this.comboDocumentos.push({ codigo:10, descripcion:'Cedula de Identidad'});
-    this.comboDocumentos.push({ codigo:11, descripcion:'Sin Doc'});
-    this.comboDocumentos.push({ codigo:12, descripcion:'Libreta Civica<'});
-    this.comboDocumentos.push({ codigo:13, descripcion:'Cedula de Identidad Uruguaya'});
-    this.comboDocumentos.push({ codigo:14, descripcion:'Carnet de Conducir'});
-  }
 
-  crearComboEstados(){
-    this.comboEstados.push({codigo:0, descripcion:'HABILITADO'});
-    this.comboEstados.push({codigo:1, descripcion:'DESHABILITADO'});
-  }
-
-  crearComboSanguineo(){
-    this.comboSanguineo.push({codigo:1, descripcion:'A+'});
-    this.comboSanguineo.push({codigo:2, descripcion:'A-'});
-    this.comboSanguineo.push({codigo:3, descripcion:'B+'});
-    this.comboSanguineo.push({codigo:4, descripcion:'B-'});
-    this.comboSanguineo.push({codigo:5, descripcion:'AB+'});
-    this.comboSanguineo.push({codigo:6, descripcion:'AB-'});
-    this.comboSanguineo.push({codigo:7, descripcion:'0+'});
-    this.comboSanguineo.push({codigo:8, descripcion:'0-'});
-  }
-
-
-
-  checkTodoFormValidity( data?: any ){
+  checkTodoFormValidity( data?: any ) {
     let pk:any =  this.choferForm.get('choferPK');
     this.ctrolError.checkFormValidity( pk, this.errMsgsPK,  this.translations );
     this.ctrolError.checkFormValidity( this.choferForm, this.errMsgsResto,  this.translations );
   }
 
-  salvarChofer(){
+  salvarChofer() {
 
     this.ctrolError.validateAllFormFields( this.choferForm) ;
     this.checkTodoFormValidity();
 
-    if( this.choferForm.valid ){
+    if( this.choferForm.valid ) {
         this. salvar();
     }
 
   }
 
-  salvar(){
+  salvar() {
     // this.create(chofer);
 
-    const cho:Chofer = this.prepararSalvar();
+    const cho: Chofer = this.prepararSalvar();
 
     if( this.nuevo ){
-
-        this.choferService.create$(cho).subscribe(result => {
-          this.parent.mostrarDetalle();
-          this.parent.success('El chofer se agrego con exito!!!')
-          this.closeModal();
-
-        }, err => {
-          this.limpiarMensajes();
-          this.ctrolError.tratarErroresBackEnd(err, this.choferForm, this.erroresGrales, this.errMsgsResto );
-          //this.checkTodoFormValidity();
-        } );
-
-
+        this.choferService.create$(cho)
+        .subscribe( this.okChoferSave.bind( this ), this.errorChofer.bind(this) );
     }else{
 
-        this.choferService.update$(cho).subscribe(result => {
-          this.parent.mostrarDetalle();
-          this.parent.success('El chofer se actualizo con exito!!!')
-          this.closeModal();
-
-        }, err => {
-          this.limpiarMensajes();
-          this.ctrolError.tratarErroresBackEnd(err, this.choferForm, this.erroresGrales, this.errMsgsResto );
-          //this.checkTodoFormValidity();
-        } );
+        this.choferService.update$(cho)
+        .subscribe( this.okChoferUpdate.bind( this ), this.errorChofer.bind(this) );
 
     }
 
+  }
+
+  okChoferSave( ) {
+    this.parent.mostrarDetalle();
+    this.parent.success('El chofer se agrego con exito!!!');
+    this.closeModal();
+  }
+
+  okChoferUpdate() {
+    this.parent.mostrarDetalle();
+    this.parent.success('El chofer se actualizo con exito!!!')
+    this.closeModal();
+  }
+
+  errorChofer( err ) {
+    this.limpiarMensajes();
+    this.ctrolError.tratarErroresBackEnd(err, this.choferForm, this.erroresGrales, this.errMsgsResto );
   }
 
 
