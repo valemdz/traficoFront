@@ -1,4 +1,7 @@
 <!--<navegacion-component></navegacion-component>-->
+<div class="col-md-12 text-left">
+    <a class="btn btn-primary  crearbtn btnMarginTop" data-target="#nuevo-modal" (click)="crearNuevoDinam()" data-toggle="modal">Crear</a>
+</div>
 <div *ngIf="incidenciaPage != null">
     <div id="list" class="row animated fadeIn">
         <div class="table-responsive col-md-12">
@@ -29,8 +32,12 @@
                             <input name="color" type="color" style="height: 25px" value={{incidencia.in_color}} />
                         </td>
                         <td class="actions">
-                            <a class="btn btn-success btn-xs" (click)="modificarDinam(incidencia);clearAlert()" data-toggle="modal" data-target="#nuevo-modal">Modificar</a>
-                            <a class="btn btn-danger  btn-xs" (click)="currentIncidencia=incidencia;clearAlert()" data-toggle="modal" data-target="#delete-modal">Eliminar</a>
+                            <a class="btn btn-xs" (click)="modificarDinam(incidencia);clearAlert()" data-toggle="modal" data-target="#nuevo-modal">
+                                <i title="Editar" data-toggle="tooltip" animation="true" data-placement="top" onmouseenter="$(this).tooltip('show')" class="fa fa-pencil fa-2x green" aria-hidden="true"></i>
+                            </a>
+                            <a class="btn btn-xs" (click)="currentIncidencia=incidencia;clearAlert()" data-toggle="modal" data-target="#delete-modal">
+                                <i title="Eliminar" data-toggle="tooltip" animation="true" data-placement="top" onmouseenter="$(this).tooltip('show')" class="fa fa-trash-o fa-2x red" aria-hidden="true"></i>
+                            </a>
                         </td>
                     </tr>
                 </tbody>
@@ -40,12 +47,12 @@
     </div>
     <alert></alert>
 
-    <div id="actions" class="row">
+    <!--  <div id="actions" class="row">
         <div class="col-md-12 text-left">
             <a class="btn btn-primary" data-target="#nuevo-modal" (click)="crearNuevoDinam()" data-toggle="modal">Crear</a>
         </div>
     </div>
-
+  -->
     <app-table-pagination class="text-center" [table]="self" [page]="incidenciaPage"></app-table-pagination>
 </div>
 
