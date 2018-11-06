@@ -1,13 +1,13 @@
-import { Component, OnInit, Input, OnChanges, ViewChild, ElementRef  } from '@angular/core';
+import { Component, OnInit, Input, OnChanges, ViewChild, ElementRef, Inject, LOCALE_ID  } from '@angular/core';
 import {Chofer, Carnet, ListaCarnet} from '../../domain';
-import { FormArray , FormBuilder, FormGroup, Validators, FormGroupName} from '@angular/forms';
+import { FormArray , FormBuilder, FormGroup, Validators, FormGroupName, FormControl} from '@angular/forms';
 import {ChoferService} from '../chofer.service';
 import * as moment from 'moment';
 import {Response} from '@angular/http';
 import * as Rx from 'rxjs/Rx';
-import {DatePipe} from '@angular/common';
 import { ErrorService } from '../../_services/error.service';
 import { Observable } from 'rxjs';
+import { FuncionesGrales } from 'src/app/utiles/funciones.grales';
 
 
 @Component({
@@ -18,9 +18,9 @@ export class CarnetListComponent implements OnInit, OnChanges {
 
    @Input() chofer: Chofer;
    formCarnet: FormGroup;
-   carnetsChofer: any =[];
-   comboTipos:any=[];
-   todosErrores:any=[];
+   carnetsChofer: any = [];
+   comboTipos: any = [];
+   todosErrores: any = [];
 
 
    @ViewChild('closeBtn') closeBtn: ElementRef;
@@ -28,7 +28,8 @@ export class CarnetListComponent implements OnInit, OnChanges {
 
   constructor(  private choferService: ChoferService,
                 private ctrolError: ErrorService,
-                private  fb: FormBuilder  ) {
+                private  fb: FormBuilder,
+                @Inject(LOCALE_ID) public locale: string  ) {
     this.crearForm();
   }
 
@@ -49,13 +50,13 @@ export class CarnetListComponent implements OnInit, OnChanges {
   }
 
   validateAllFormFields(){
-    for (var i = 0; i < this.carnets.controls.length; i++) {
+    for (let i = 0; i < this.carnets.controls.length; i++) {
       this.ctrolError.validateAllFormFields( this.formCarnet);
     }
   }
 
    checkFormValidity(){
-    for( var i:number=0; i < this.carnets.length; i++ ){
+    for( let i:number=0; i < this.carnets.length; i++ ){
       this.ctrolError.checkFormValidity(<FormGroup>this.carnets.controls[i], this.todosErrores[i],  this.translations );
     }
   }
@@ -82,15 +83,13 @@ export class CarnetListComponent implements OnInit, OnChanges {
     const tipo = formModel.carnets[ index ].tipo;
 
     let object:any;
-    for (var i = 0; i <  this.comboTipos.length; i++) {
+    for (let i = 0; i <  this.comboTipos.length; i++) {
       object = this.comboTipos[i];
       if( object.codigo == tipo){
         return  object.descripcion;
       }
     }
  }
-
-
   erroresGrales:any=[];
 
     translations: any = {
@@ -101,7 +100,8 @@ export class CarnetListComponent implements OnInit, OnChanges {
         required: 'requerido.'
       },
       fechaVenc: {
-       required: 'requerido.'
+       required: 'requerido.',
+       noMayor:'La F Venc debe ser Mayor que F Emision'
      },
      numeroCarnet: {
        required: 'requerido.'
@@ -137,23 +137,40 @@ export class CarnetListComponent implements OnInit, OnChanges {
     this.formCarnet.setControl('carnets', carnetFormArray);
   }
 
-  crearGroupForm( carnet: Carnet ):FormGroup{
+  crearGroupForm( carnet: Carnet ): FormGroup {
 
-    let dp = new DatePipe(navigator.language);
-    let fEmi = dp.transform( carnet.fechaEmision, 'yyyy-MM-dd');
-    let fVenc = dp.transform( carnet.fechaVenc, 'yyyy-MM-dd');
+    const fEmi = FuncionesGrales.formatearFecha( this.locale, carnet.fechaEmision, 'yyyy-MM-dd' );
+    const fVenc = FuncionesGrales.formatearFecha( this.locale, carnet.fechaVenc, 'yyyy-MM-dd');
 
-    let carnetForm = this.fb.group({
-      id:[carnet.id] ,
-      tipo:[ carnet.tipo ,Validators.required],
-      fechaEmision: [fEmi,Validators.required],
-      fechaVenc:[fVenc,Validators.required],
-      numeroCarnet:[carnet.numeroCarnet ,[Validators.required, Validators.maxLength(40)]],
-      observaciones:[carnet.observaciones]
+    let carnetForm: FormGroup = this.fb.group({
+      id: [ carnet.id ] ,
+      tipo:[ carnet.tipo , Validators.required],
+      fechaEmision: [fEmi, Validators.required],
+      fechaVenc: [ fVenc ] ,
+      numeroCarnet: [ carnet.numeroCarnet, [ Validators.required, Validators.maxLength(40)] ],
+      observaciones: [ carnet.observaciones ]
     });
+
+    let noMayorFn = ( control: FormControl ) => this.noMayor( control, carnetForm );
+
+    carnetForm.controls['fechaVenc'].setValidators([
+      Validators.required, noMayorFn
+    ]);
 
     return carnetForm;
   }
+
+  noMayor( formControl: FormControl, form: FormGroup ): { [ s: string ]: boolean } {
+    if (  formControl.value &&  form.controls['fechaEmision']  ) {
+      const fechaE =  moment( form.controls['fechaEmision'].value, 'YYYY-MM-DD');
+      const fechaV = moment(formControl.value, 'YYYY-MM-DD');
+      if ( fechaE > fechaV ) {
+          return { noMayor: true};
+      }
+    }
+    return null;
+  }
+
 
   get carnets(): FormArray {
     return this.formCarnet.get('carnets') as FormArray;
@@ -187,10 +204,16 @@ export class CarnetListComponent implements OnInit, OnChanges {
       id:[0] ,
       tipo:[ null ,Validators.required],
       fechaEmision: [ null ,Validators.required],
-      fechaVenc:[ null ,Validators.required],
+      fechaVenc:[ null ],
       numeroCarnet:[ null ,[Validators.required, Validators.maxLength(40)]],
       observaciones:[ null ]
     });
+
+    let noMayorFn = ( control: FormControl ) => this.noMayor( control, carnetForm );
+
+    carnetForm.controls['fechaVenc'].setValidators([
+      Validators.required, noMayorFn
+    ]);
 
     this.carnets.push( carnetForm );
 
@@ -226,12 +249,12 @@ export class CarnetListComponent implements OnInit, OnChanges {
 
 
 
-  salvarCarnet(){
+  salvarCarnet() {
 
     this.validateAllFormFields();
     this.checkFormValidity();
 
-    if( this.formCarnet.valid ){
+    if ( this.formCarnet.valid ) {
       this.salvar();
     }
 
@@ -301,7 +324,7 @@ export class CarnetListComponent implements OnInit, OnChanges {
       this.erroresGrales.length = 0;
       const formModel = this.formCarnet.value;
 
-      for( var i:number=0; i < this.carnets.length; i++ ){
+      for( let i: number= 0; i < this.carnets.length; i++ ){
         if( formModel.carnets[ i ].tipo == value
             && indice != i ) {
             this.erroresGrales.push('No pueden existir choferes repetidos');
