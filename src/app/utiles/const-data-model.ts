@@ -1,5 +1,5 @@
 export class Constantes {
-    public static ROWS_BY_PAGE = 2;
+    public static ROWS_BY_PAGE = 10;
     static readonly DATE_FMT = 'dd/MMM/yyyy';
     static readonly DATE_TIME_FMT = `${Constantes.DATE_FMT} hh:mm:ss`;
 }
