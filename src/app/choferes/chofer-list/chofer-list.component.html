@@ -1,4 +1,9 @@
 <!--<navegacion-component></navegacion-component>-->
+
+<div class="col-md-12 text-left">
+    <a class="btn btn-primary crearbtn btnMarginTop" (click)="crearNuevo()" data-toggle="modal" data-target="#nuevo-modal">Crear</a>
+</div>
+
 <ng-container *ngIf="choferPage != null">
     <div id="list" class="row animated fadeIn">
         <div class="table-responsive col-md-12">
@@ -38,10 +43,19 @@
                         </td>
                         <td>{{chofer.cho_telefono_emergencia}}</td>
                         <td class="actions">
-                            <a class="btn btn-success btn-xs" (click)="currentChofer=chofer;clearAlert()" data-toggle="modal" data-target="#details-modal">Modificar</a>
-                            <a class="btn btn-success btn-xs" (click)="carnetChofer=chofer;clearAlert()" data-toggle="modal" data-target="#details-carnet">Carnets</a>
-                            <a class="btn btn-success btn-xs" (click)="incidenciaChofer=chofer;clearAlert()" data-toggle="modal" data-target="#details-Incidencias">Incidencias</a>
-                            <a class="btn btn-danger btn-xs" (click)="currentChofer=chofer;clearAlert()" data-toggle="modal" data-target="#delete-modal">Eliminar</a>
+                            <a class="btn btn-xs" (click)="currentChofer=chofer;clearAlert()" data-toggle="modal" data-target="#details-modal">
+                                <i title="Editar" data-toggle="tooltip" animation="true" data-placement="top" onmouseenter="$(this).tooltip('show')" class="fa fa-pencil fa-2x green" aria-hidden="true"></i>
+                            </a>
+                            <a class="btn btn-xs" (click)="carnetChofer=chofer;clearAlert()" data-toggle="modal" data-target="#details-carnet">
+                                <i title="Carnets" data-toggle="tooltip" animation="true" data-placement="top" onmouseenter="$(this).tooltip('show')" class="fa fa-id-card-o fa-2x green" aria-hidden="true"></i>
+                            </a>
+                            <a class="btn btn-xs" (click)="incidenciaChofer=chofer;clearAlert()" data-toggle="modal" data-target="#details-Incidencias">
+                                <i title="Incidencias" data-toggle="tooltip" animation="true" data-placement="top" onmouseenter="$(this).tooltip('show')" class="fa fa-calendar fa-2x red" aria-hidden="true"></i>
+
+                            </a>
+                            <a class="btn btn-xs" (click)="currentChofer=chofer;clearAlert()" data-toggle="modal" data-target="#delete-modal">
+                                <i title="Eliminar" data-toggle="tooltip" animation="true" data-placement="top" onmouseenter="$(this).tooltip('show')" class="fa fa-trash-o fa-2x red" aria-hidden="true"></i>
+                            </a>
                         </td>
                     </tr>
                 </tbody>
@@ -52,11 +66,11 @@
 
     <alert></alert>
 
-    <div id="actions" class="row">
+    <!--<div id="actions" class="row">
         <div class="col-md-12 text-left">
             <a class="btn btn-primary" (click)="crearNuevo()" data-toggle="modal" data-target="#nuevo-modal">Crear</a>
         </div>
-    </div>
+    </div>-->
     <app-table-pagination class="text-center" [table]="self" [page]="choferPage"></app-table-pagination>
 </ng-container>
 <!-- Modal Delete-->

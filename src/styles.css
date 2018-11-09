@@ -1,6 +1,10 @@
 /* You can add global styles to this file,
 and also import other style files */
 
+body {
+    font-size: 12px;
+}
+
 .navbar {
     min-height: 65px;
     /*50 */
@@ -91,11 +95,11 @@ th {
 */
 
 div#delete-modal>.modal-body {
-    padding-bottom: 0px;
+    padding-bottom: 0px !important;
 }
 
 .table-responsive {
-    margin-top: 11px !important;
+    margin-top: -45px !important;
 }
 
 .combosForm {
@@ -107,6 +111,14 @@ div#delete-modal>.modal-body {
 .form-group {
     font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
     font-size: 9px;
+}
+
+.crearbtn {
+    float: right !important;
+}
+
+.btnMarginTop {
+    margin-top: 23px !important;
 }
 
 .form-group ::-webkit-option-placeholder {
@@ -174,6 +186,10 @@ div#delete-modal>.modal-body {
 .fecha {
     margin-right: 30px;
     margin-left: 2px;
+}
+
+input[type=date] {
+    vertical-align: middle !important;
 }
 
 
