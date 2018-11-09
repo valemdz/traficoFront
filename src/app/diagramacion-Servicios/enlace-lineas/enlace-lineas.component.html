@@ -1,0 +1,33 @@
+<form [formGroup]="formIdaVuelta">
+    <div class="row">
+        <div class="panel-heading">
+            <span>Enlace Lineas </span>
+            <span class="glyphicon glyphicon-remove pull-right"></span>
+        </div>
+        <div class="panel-body">
+            <div class="col-md-6">
+                <select class="form-control" formControlName="lineaPKIda" title="Vta" placeholder="Vta" data-toggle="tooltip" animation="true" data-placement="top" onmouseenter="$(this).tooltip('show')">
+                    <option [selected]="formIdaVuelta.controls.lineaPKIda.value == null" value="null" >-- Seleccionar --</option>
+                    <option *ngFor="let opt of comboLineas" [value]="opt.lineaPK">{{ opt.linNombre }}</option>
+                </select>
+                <div class="romi">
+                    <control-mensajes [errores]="errMsgs.lineaPKIda"></control-mensajes>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <select class="form-control col-md-6" formControlName="lineaPKVta" title="Vta" placeholder="Vta" data-toggle="tooltip" animation="true" data-placement="top" onmouseenter="$(this).tooltip('show')">
+                    <option [selected]="formIdaVuelta.controls.lineaPKVta.value == null" value="null" >-- Seleccionar --</option>
+                    <option *ngFor="let opt of comboLineas" [value]="opt.lineaPK">{{ opt.linNombre }}</option>
+                </select>
+                <div class="romi">
+                    <control-mensajes [errores]="errMsgs.lineaPKVta"></control-mensajes>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button type="button" (click)="salvarEnlaceLineas()" class="btn btn-primary">Guardar</button>
+            <button type="button" class="btn btn-default" (click)="volver()" data-dismiss="modal" data-dismiss="modal">Volver</button>
+        </div>
+    </div>
+    <!-- <pre>{{formIdaVuelta.value|json}} {{  formIdaVuelta.valid }}</pre> -->
+</form>
