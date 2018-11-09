@@ -1,17 +1,11 @@
-import { Component, Input, OnInit, Output, OnChanges, OnDestroy,
+import { Component, Input, OnInit, OnChanges, OnDestroy,
   ViewChild, ElementRef } from '@angular/core';
-import {Router, ActivatedRoute, Params} from '@angular/router';
-import {Response} from '@angular/http';
-import * as Rx from 'rxjs/Rx';
 import 'rxjs/add/operator/toPromise';
 import {IncidenciaService} from '../incidencia.service';
-import {Incidencia, OpcCombo} from '../../domain';
-import { FormBuilder, FormGroup, Validators, FormControl  } from '@angular/forms';
-import {showLoading, hideLoading, doNothing} from '../../shared/commons';
-import { Ng2DatetimePickerModule } from 'ng2-datetime-picker';
+import {Incidencia } from '../../domain';
+import { FormBuilder,  Validators } from '@angular/forms';
 import { ErrorService } from '../../_services/error.service';
 import { IncidenciaValidator } from '../incidencia-validator';
-import { IncidenciaInyector } from '../IncidenciaInyector';
 import { ComponenteBaseComponent } from '../../shared/componente.base.component';
 
 import { AlertService } from '../../_services/alert.service';
@@ -85,8 +79,6 @@ export class IncidenciaComponent implements  ComponenteBaseComponent, OnInit,  O
 
   }
 
- erroresGrales:any=[];
-
  errMsgs: any = {
    codigo: [],
    in_descripcion: [],
@@ -126,7 +118,6 @@ export class IncidenciaComponent implements  ComponenteBaseComponent, OnInit,  O
    this.errMsgs.in_tipo.length =0;
    this.errMsgs.in_color.length =0;
    this.errMsgs.in_empresa.length =0;
-   this.erroresGrales.length=0;
  }
 
  ngOnInit() {
@@ -153,7 +144,7 @@ export class IncidenciaComponent implements  ComponenteBaseComponent, OnInit,  O
        in_color: this.incidencia.in_color,
        in_empresa: this.incidencia.in_empresa
 
-    })
+    });
 
     //mejor lo manejamos con el [readonly]="!nuevo"
     /*const method = this.nuevo ? 'enable':'disable';
@@ -161,7 +152,7 @@ export class IncidenciaComponent implements  ComponenteBaseComponent, OnInit,  O
 
  }
 
- cargarValores(){
+ cargarValores() {
 
    this.incidenciaForm.reset({
      codigo: this.incidencia.codigo,
@@ -170,7 +161,7 @@ export class IncidenciaComponent implements  ComponenteBaseComponent, OnInit,  O
      in_color: this.incidencia.in_color,
      in_empresa: this.incidencia.in_empresa
 
-   })
+   });
 
  }
 
@@ -189,10 +180,9 @@ export class IncidenciaComponent implements  ComponenteBaseComponent, OnInit,  O
  }
 
  salvarIncidencia(){
-    this.erroresGrales = [];
     const  incid: Incidencia = this.prepararSaveIncidencia();
 
-    if( this.nuevo ){
+    if ( this.nuevo ) {
        this.incidenciaService.create$(incid).subscribe( result => {
            //this.parent.mostrarDetalle();
            //this.parent.success('La incidencia se agrego con exito!!!')
@@ -201,11 +191,11 @@ export class IncidenciaComponent implements  ComponenteBaseComponent, OnInit,  O
        }, err => {
 
          this.limpiarMensajes();
-         this.ctrolError.tratarErroresBackEnd(err, this.incidenciaForm, this.erroresGrales, this.errMsgs );
+         this.ctrolError.tratarErroresBackEnd(err, this.incidenciaForm, this.errMsgs );
 
        } );
 
-    } else{
+    } else {
        this.incidenciaService.update$(incid).subscribe( result => {
            //this.parent.mostrarDetalle();
            //this.parent.success('La incidencia se actualizo con exito!!!')
@@ -213,7 +203,7 @@ export class IncidenciaComponent implements  ComponenteBaseComponent, OnInit,  O
            this.closeModalYMostrarGrilla();
          }, err => {
            this.limpiarMensajes();
-           this.ctrolError.tratarErroresBackEnd(err, this.incidenciaForm, this.erroresGrales, this.errMsgs );
+           this.ctrolError.tratarErroresBackEnd(err, this.incidenciaForm, this.errMsgs );
 
          }
       );

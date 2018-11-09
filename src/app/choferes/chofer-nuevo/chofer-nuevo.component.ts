@@ -78,8 +78,6 @@ export class ChoferNuevoComponent implements OnInit, OnChanges, TabChild {
 
   }
 
-  erroresGrales:any=[];
-
   errMsgsPK: any = {
     cho_emp_codigo:[],
   };
@@ -109,8 +107,6 @@ export class ChoferNuevoComponent implements OnInit, OnChanges, TabChild {
     this.errMsgsResto.cho_observaciones.length =0;
     this.errMsgsResto.cho_telefono.length =0;
     this.errMsgsResto.cho_telefono_emergencia.length =0;
-
-    this.erroresGrales.length=0;
   }
 
   translations: any = {
@@ -198,7 +194,7 @@ export class ChoferNuevoComponent implements OnInit, OnChanges, TabChild {
 
   errorChofer( err ) {
     this.limpiarMensajes();
-    this.ctrolError.tratarErroresBackEnd(err, this.choferForm, this.erroresGrales, this.errMsgsResto );
+    this.ctrolError.tratarErroresBackEnd(err, this.choferForm, this.errMsgsResto );
   }
 
 

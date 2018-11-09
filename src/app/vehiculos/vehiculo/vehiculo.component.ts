@@ -1,9 +1,6 @@
 import { Component, Input, Output,
   OnInit, OnChanges, ViewChild, ElementRef } from '@angular/core';
 import { FormBuilder, FormGroup, Validators  } from '@angular/forms';
-
-import * as Rx from 'rxjs/Rx';
-
 import {VehiculoService} from '../vehiculo.service';
 import {Vehiculo} from '../../domain';
 import {VehiculoOp, VehiculosArray} from '../../domain';
@@ -71,7 +68,6 @@ export class VehiculoComponent implements OnChanges, OnInit {
     this.comboEstados.push({codigo:1, descripcion:'DESHABILITADO'});
   }
 
-  erroresGrales:any=[];
 
   errMsgsPK: any = {
     vehEmpCodigo:[],
@@ -172,7 +168,7 @@ export class VehiculoComponent implements OnChanges, OnInit {
         }, err => {
 
           //this.limpiarMensajes();
-          this.ctrolError.tratarErroresBackEnd(err, this.vehiculoForm, this.erroresGrales, this.errMsgs );
+          this.ctrolError.tratarErroresBackEnd(err, this.vehiculoForm, this.errMsgs );
 
         }
       );
@@ -185,7 +181,7 @@ export class VehiculoComponent implements OnChanges, OnInit {
           }, err => {
 
             //this.limpiarMensajes();
-            this.ctrolError.tratarErroresBackEnd(err, this.vehiculoForm, this.erroresGrales, this.errMsgs );
+            this.ctrolError.tratarErroresBackEnd(err, this.vehiculoForm, this.errMsgs );
 
           }
         );

@@ -98,7 +98,7 @@ export class IncidenciaListComponent implements OnInit, OnDestroy  {
     }
 
     errorDeleteInc( err ) {
-      this.error( this.ctrolError.tratarErroresEliminaciones(err) );
+       this.ctrolError.tratarErroresEliminaciones(err);
     }
 
     /*viewDetails(incidencia) {
@@ -124,10 +124,6 @@ export class IncidenciaListComponent implements OnInit, OnDestroy  {
 
     success(message: string) {
         this.alertService.success(message);
-    }
-
-    error(message: string) {
-        this.alertService.error(message);
     }
 
     clearAlert() {
