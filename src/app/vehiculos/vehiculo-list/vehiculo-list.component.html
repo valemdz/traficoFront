@@ -1,10 +1,3 @@
-<!--<navegacion-component></navegacion-component>-->
-
-<!--crear-->
-<div id="actions" class="form-group col-md-12 ">
-    <a class="btn btn-primary crearbtn btnMarginTop" data-toggle="modal" (click)="crearNuevo()" data-target="#nuevo-modal">Crear</a>
-</div>
-
 <ng-container *ngIf="vehiculoPage != null">
     <div id="list" class="row animated fadeIn">
         <div class="table-responsive col-md-12">
@@ -72,11 +65,11 @@
     <!-- /#list -->
     <alert></alert>
     <!--boton crear-->
-    <!--div id="actions" class="row">
+    <div id="actions" class="row">
         <div class="col-md-12 text-left">
             <a class="btn btn-primary" data-toggle="modal" (click)="crearNuevo()" data-target="#nuevo-modal">Crear</a>
         </div>
-    </div-->
+    </div>
     <app-table-pagination class="text-center" [table]="self" [page]="vehiculoPage"></app-table-pagination>
 </ng-container>
 
@@ -91,7 +84,7 @@
                     <h4 class="modal-title" id="modalLabel"></h4>
                 </div>
                 <div class="modal-body">
-                    Desea eliminar el Vehiculo?
+                    Desea eliminar el Vehiculo interno {{currentVehiculo.vehiculoPK.vehInterno}}?
                 </div>
                 <div class="modal-footer">
                     <button type="button" (click)="delete(currentVehiculo)" class="btn btn-primary" data-dismiss="modal">Si</button>

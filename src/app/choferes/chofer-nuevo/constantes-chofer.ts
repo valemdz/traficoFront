@@ -21,6 +21,11 @@ export const ESTADOS: any = [
   {codigo: 1, descripcion: 'DESHABILITADO'}
 ];
 
+export const FUNCION: any = [
+  {codigo: 0, descripcion: 'CONDUCTOR'},
+  {codigo: 1, descripcion: 'AUXILIAR'}
+];
+
 export const GRUPOS_SANGUINEOS = [
   {codigo: 1, descripcion: 'A+'},
   {codigo: 2, descripcion: 'A-'},

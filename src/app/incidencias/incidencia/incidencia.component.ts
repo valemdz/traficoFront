@@ -64,7 +64,7 @@ export class IncidenciaComponent implements  ComponenteBaseComponent, OnInit,  O
 
    crearComboTipos(){
      this.comboTipos.push({ codigo:0, descripcion:'Unidades'});
-     this.comboTipos.push({ codigo:1, descripcion: 'Choferes'});
+     this.comboTipos.push({ codigo:1, descripcion: 'Personal'});
    }
 
 
@@ -73,7 +73,7 @@ export class IncidenciaComponent implements  ComponenteBaseComponent, OnInit,  O
     this.incidenciaForm = this.fb.group({
        codigo: [ '', [ Validators.required,  Validators.maxLength(10)]],
        in_descripcion: ['', [ Validators.required,  Validators.maxLength(60) ] ],
-       in_tipo:[ '', [ Validators.required, Validators.maxLength(1) ] ], /*0 unidades , 1 choferes */
+       in_tipo:[ '', [ Validators.required, Validators.maxLength(1) ] ], /*0 unidades , 1 personal */
        in_color:['', [Validators.required, Validators.maxLength(60)]],
        in_empresa: ['', [Validators.required, Validators.maxLength(4) ]]
      }, {validator: IncidenciaValidator.createValidator( this.incidenciaService, this ) });
@@ -133,7 +133,6 @@ export class IncidenciaComponent implements  ComponenteBaseComponent, OnInit,  O
    this.incidencia = this.data.incidencia;
    this.nuevo = this.data.nuevo;
    this.crearComboTipos();
-   console.log('ngOnInit****************** Inci ' );
    this.cargarValores();
 
  }

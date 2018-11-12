@@ -5,7 +5,7 @@
             <button type="button" class="close" data-dismiss="modal" aria-label="Fechar" #closeBtn>
                 <span aria-hidden="true">&times;</span>
             </button>
-            <h4 class="modal-title" id="modalLabel">Incidencias para chofer legajo : {{chofer.cho_legajo}}</h4>
+            <h4 class="modal-title" id="modalLabel">Incidencias para {{chofer.cho_nombre}}</h4>
         </div>
         <div class="modal-body">
 
@@ -19,11 +19,10 @@
                                     <span class="glyphicon glyphicon-remove pull-right" (click)="borrarIncidencia(i)"></span>
                                 </div>
                                 <div class="panel-body" [formGroupName]="i">
-                                    
-                                <div *ngIf="isNuevo(i)">
+
+                                    <div *ngIf="isNuevo(i)">
                                         <div class="form-group col-md-3">
-                                            <select class="form-control" formControlName="idIncidencia" title="Tipo" placeholder="Tipo"
-                                            data-toggle="tooltip" animation="true" data-placement="top" onmouseenter="$(this).tooltip('show')" >
+                                            <select class="form-control" formControlName="idIncidencia" title="Tipo" placeholder="Tipo" data-toggle="tooltip" animation="true" data-placement="top" onmouseenter="$(this).tooltip('show')">
                                                 <option [selected]="tipoByIndex(i) == null" value="">-- Seleccionar --</option>
                                                 <option *ngFor="let opt of comboTipos" [selected]="opt.codigo == tipoByIndex(i)" [value]="opt.codigo">
                                                     {{opt.descripcion}}
@@ -33,58 +32,51 @@
                                                 <control-mensajes [errores]="todosErrores[i].idIncidencia"></control-mensajes>
                                             </div>
                                         </div>
-                                    </div>   
+                                    </div>
                                     <div *ngIf="!isNuevo(i)">
-                                            <div class="form-group col-md-3">
-                                                    <input data-toggle="tooltip" animation="true" data-placement="top"
-                                                    onmouseenter="$(this).tooltip('show')" title="Tipo"
-                                                    [readonly] ="true" type="text" placeholder="Tipo" class="form-control" 
-                                                    [value]="getDescripcion(i)" >
-                                            </div>
-                                    </div>                         
+                                        <div class="form-group col-md-3">
+                                            <input data-toggle="tooltip" animation="true" data-placement="top" onmouseenter="$(this).tooltip('show')" title="Tipo" [readonly]="true" type="text" placeholder="Tipo" class="form-control" [value]="getDescripcion(i)">
+                                        </div>
+                                    </div>
 
                                     <div class="form-group col-md-2 fecha">
-                                        <input type="date" class="form-control" placeholder="Fecha Inicio" title="Fecha Inicio" formControlName="fInicio"
-                                        data-toggle="tooltip" animation="true" data-placement="top" onmouseenter="$(this).tooltip('show')" >
+                                        <input type="date" class="form-control" placeholder="Fecha Inicio" title="Fecha Inicio" formControlName="fInicio" data-toggle="tooltip" animation="true" data-placement="top" onmouseenter="$(this).tooltip('show')">
                                         <div class="romi">
                                             <control-mensajes [errores]="todosErrores[i].fInicio"></control-mensajes>
-                                        </div>   
+                                        </div>
                                     </div>
-                                    
+
                                     <div class="form-group col-md-2">
-                                        <input type="time" class="form-control" placeholder="Hora Inicio" title="Hora Inicio" formControlName="hInicio"
-                                        data-toggle="tooltip" animation="true" data-placement="top" onmouseenter="$(this).tooltip('show')" >
+                                        <input type="time" class="form-control" placeholder="Hora Inicio" title="Hora Inicio" formControlName="hInicio" data-toggle="tooltip" animation="true" data-placement="top" onmouseenter="$(this).tooltip('show')">
                                         <div class="romi">
                                             <control-mensajes [errores]="todosErrores[i].hInicio"></control-mensajes>
-                                        </div>    
+                                        </div>
                                     </div>
-                                    
+
                                     <div class="form-group col-md-2 fecha">
-                                        <input type="date" class="form-control" placeholder="Fecha Fin" title="Fecha Fin" formControlName="fFin"
-                                        data-toggle="tooltip" animation="true" data-placement="top" onmouseenter="$(this).tooltip('show')" >
+                                        <input type="date" class="form-control" placeholder="Fecha Fin" title="Fecha Fin" formControlName="fFin" data-toggle="tooltip" animation="true" data-placement="top" onmouseenter="$(this).tooltip('show')">
                                         <div class="romi">
                                             <control-mensajes [errores]="todosErrores[i].fFin"></control-mensajes>
-                                        </div>    
+                                        </div>
                                     </div>
-                                   
+
                                     <div class="form-group col-md-2">
-                                        <input type="time" class="form-control" placeholder="Hora Fin" title="Hora Fin" formControlName="hFin" 
-                                        data-toggle="tooltip" animation="true" data-placement="top" onmouseenter="$(this).tooltip('show')" >
+                                        <input type="time" class="form-control" placeholder="Hora Fin" title="Hora Fin" formControlName="hFin" data-toggle="tooltip" animation="true" data-placement="top" onmouseenter="$(this).tooltip('show')">
                                         <div class="romi">
                                             <control-mensajes [errores]="todosErrores[i].hFin"></control-mensajes>
                                         </div>
                                     </div>
-                                    
+
                                 </div>
                             </div>
                         </div>
-                        <control-mensajes [errores]="erroresGrales"></control-mensajes>   
+                        <control-mensajes [errores]="erroresGrales"></control-mensajes>
                     </div>
 
                 </div>
-                 <!--p>{{ incByChoferForm.value | json }} </p-->  
-                 <!--p>{{incByChoferForm.valid}} </p--> 
-                 
+                <!--p>{{ incByChoferForm.value | json }} </p-->
+                <!--p>{{incByChoferForm.valid}} </p-->
+
             </form>
 
 

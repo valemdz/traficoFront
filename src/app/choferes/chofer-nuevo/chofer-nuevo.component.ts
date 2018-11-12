@@ -10,7 +10,7 @@ import {ChoferListComponent} from '../chofer-list/chofer-list.component';
 import { ErrorService } from '../../_services/error.service';
 import * as moment from 'moment';
 import {DatePipe} from '@angular/common';
-import { DOCUMENTOS, ESTADOS, GRUPOS_SANGUINEOS } from './constantes-chofer';
+import { DOCUMENTOS, ESTADOS, GRUPOS_SANGUINEOS, FUNCION } from './constantes-chofer';
 
 
 @Component({
@@ -27,6 +27,7 @@ export class ChoferNuevoComponent implements OnInit, OnChanges, TabChild {
   nuevo:boolean;
 
   comboDocumentos: any = [];
+  comboFuncion: any = [];
   comboEstados: any = [];
   comboSanguineo: any = [];
 
@@ -45,6 +46,7 @@ export class ChoferNuevoComponent implements OnInit, OnChanges, TabChild {
 
   ngOnInit() {
     this.comboDocumentos = DOCUMENTOS;
+    this.comboFuncion = FUNCION;
     this.comboEstados = ESTADOS;
     this.comboSanguineo = GRUPOS_SANGUINEOS;
   }
@@ -61,6 +63,7 @@ export class ChoferNuevoComponent implements OnInit, OnChanges, TabChild {
 
     this.choferForm = this.fb.group({
       choferPK: this.fb.group({ cho_emp_codigo:['', Validators.required ] }),
+      cho_chofer: ['', Validators.required],
       cho_estado:['',Validators.required],
       cho_legajo:['',Validators.required],
       cho_nombre:['',[Validators.required, Validators.maxLength(40)]],
@@ -86,6 +89,7 @@ export class ChoferNuevoComponent implements OnInit, OnChanges, TabChild {
 
   errMsgsResto: any = {
     cho_estado: [],
+    cho_chofer: [],
     cho_legajo: [],
     cho_nombre: [],
     cho_doc_codigo: [],
@@ -100,6 +104,7 @@ export class ChoferNuevoComponent implements OnInit, OnChanges, TabChild {
   limpiarMensajes(){
 
     this.errMsgsResto.cho_estado.length =0;
+    this.errMsgsResto.cho_chofer.length =0;
     this.errMsgsResto.cho_legajo.length =0;
     this.errMsgsResto.cho_nombre.length =0;
     this.errMsgsResto.cho_doc_codigo.length =0;
@@ -115,6 +120,7 @@ export class ChoferNuevoComponent implements OnInit, OnChanges, TabChild {
 
   translations: any = {
     cho_emp_codigo:{ required: 'Por favor especifique una Empresa' },
+  cho_chofer: { required: 'Debe escificar la funcion del Personal'},
     cho_estado: { required: 'Por favor especifique una estado'},
     cho_legajo: { required: 'Por favor especifique el legajo' },
     cho_nombre: { required: 'Por favor especifique el nombre'},
@@ -137,6 +143,7 @@ export class ChoferNuevoComponent implements OnInit, OnChanges, TabChild {
       this.choferForm.reset({
         choferPK:{ cho_emp_codigo: this.chofer.choferPK.cho_emp_codigo },
         cho_estado: this.chofer.cho_estado,
+        cho_chofer: this.chofer.cho_chofer,
         cho_legajo:this.chofer.cho_legajo,
         cho_nombre:this.chofer.cho_nombre,
         cho_doc_codigo:this.chofer.cho_doc_codigo,
@@ -186,13 +193,13 @@ export class ChoferNuevoComponent implements OnInit, OnChanges, TabChild {
 
   okChoferSave( ) {
     this.parent.mostrarDetalle();
-    this.parent.success('El chofer se agrego con exito!!!');
+    this.parent.success('El Personal se agrego con exito!!!');
     this.closeModal();
   }
 
   okChoferUpdate() {
     this.parent.mostrarDetalle();
-    this.parent.success('El chofer se actualizo con exito!!!')
+    this.parent.success('El Personal se actualizo con exito!!!')
     this.closeModal();
   }
 
@@ -213,6 +220,7 @@ export class ChoferNuevoComponent implements OnInit, OnChanges, TabChild {
           choferPK:{  cho_emp_codigo:form.choferPK.cho_emp_codigo ,
                       cho_codigo:this.chofer.choferPK.cho_codigo},
           cho_estado: form.cho_estado,
+          cho_chofer: form.cho_chofer,
           cho_legajo: form.cho_legajo,
           cho_nombre: form.cho_nombre,
           cho_doc_codigo: form.cho_doc_codigo,

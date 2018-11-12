@@ -1,24 +1,25 @@
 export interface Person {
-    id : number;    
+    id : number;
 }
 
-export interface Chofer {   
+export interface Chofer {
     choferPK: ChoferPK,
     cho_estado: number,
+    cho_chofer: number,
     cho_legajo: number,
     cho_nombre: String,
     cho_doc_codigo: number,
-    cho_documento: String,    
+    cho_documento: String,
     cho_grupo_sanguineo: String,
     cho_observaciones: String,
     cho_telefono: String,
     cho_telefono_emergencia: String,
-    cho_fecha_nacimiento:Date                              
-    //carnets:Array<Carnet>;    
-    //choferIncidencias:Array<ChoferIndicencia>;        
+    cho_fecha_nacimiento:Date
+    //carnets:Array<Carnet>;
+    //choferIncidencias:Array<ChoferIndicencia>;
 }
 
-export interface ChoferPK{    
+export interface ChoferPK{
     cho_emp_codigo:String;
     cho_codigo:number;
 }
@@ -41,7 +42,7 @@ export interface Vehiculo{
 }
 
 export interface UsuarioPk{
-    empresa: String; 
+    empresa: String;
     legajo:number;
 }
 /*
@@ -53,9 +54,9 @@ export interface UsuarioPk{
     nombre: String;
 }*/
 
-export interface Usuario{    
+export interface Usuario{
     username: string;
-    password: string;    
+    password: string;
 }
 
 export interface Me{
@@ -70,7 +71,7 @@ export interface UserLogueado{
     username:string;
 }
 
-export interface Incidencia {       
+export interface Incidencia {
     id: number;
     codigo:String;
     in_descripcion: String;
@@ -84,7 +85,7 @@ export interface VehiculosArray{
 
 }
 
-export interface VehiculoOp{    
+export interface VehiculoOp{
     int:number;
     escripcion: String;
 }
@@ -99,7 +100,7 @@ export interface OpcCombo{
     message: String; // Invalid Username
     errorCode: number; // 	10 codigo interno
     timestamp:	Date;
- }   
+ }
 
  export interface Error500 {
     timestamp: Date;
@@ -107,15 +108,15 @@ export interface OpcCombo{
     error:String;
     exception:String;
     message: String;
-    path: String;	
+    path: String;
  }
 
  export interface Carnet{
     id : number;
     tipo: number,
     fechaEmision: Date;
-    fechaVenc: Date;   
-    numeroCarnet: String;   
+    fechaVenc: Date;
+    numeroCarnet: String;
     observaciones: String;
 }
 
@@ -134,44 +135,44 @@ export interface VehiculoIndicencia{
 }
 
 export interface ViajeEspecial{
-    id: number, 
+    id: number,
     agenciaContratante: String,
     fechaHoraSalida: Date,
     origen: String,
     destino: String,
-    fechaHoraRegreso: Date,    
+    fechaHoraRegreso: Date,
     observaciones:String
-    empCodigo:String,        
+    empCodigo:String,
 }
 
 export interface ViajeEspecialList{
-    id: number, 
+    id: number,
     agenciaContratante: String,
     fechaHoraSalida: Date,
     origen: String,
     destino: String,
-    fechaHoraRegreso: Date,    
+    fechaHoraRegreso: Date,
     observaciones:String
-    empCodigo:String,    
+    empCodigo:String,
     choferes: Array<ChoferMinDTO>,
-    vehiculo: VehiculoMinDTO 
+    vehiculo: VehiculoMinDTO
 }
 
 
-export interface ChoferPKConDet{    
+export interface ChoferPKConDet{
     choferPK: ChoferPK;
     nombreChofer:String;
     detalles:Array<String>;
 }
 
-export interface VehiculoPKConDet{    
+export interface VehiculoPKConDet{
     vehiculoPK: VehiculoPK;
     interno:String;
     detalles:Array<String>;
 }
 
 
-export interface ChoferMinDTO{    
+export interface ChoferMinDTO{
     choferPK: ChoferPK;
     cho_nombre:String;
     cho_estado: number;
@@ -200,7 +201,7 @@ export interface ListaVehiculoIncidencia{
 }
 
 export interface Servicios {
-    servicioPK: ServicioPK; 
+    servicioPK: ServicioPK;
     serEsrCodigo: number;
 }
 export interface ServicioPK {

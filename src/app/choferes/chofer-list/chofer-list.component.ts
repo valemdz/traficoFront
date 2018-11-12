@@ -80,11 +80,11 @@ export class ChoferListComponent implements OnInit, OnDestroy {
 
     okDeleteChofer( ok) {
       this.mostrarDetalle();
-      this.success('El chofer se elimino con exito!!!');
+      this.success('El personal se elimino con exito!!!');
     }
 
     errorDeleteChofer( err ) {
-      this.error( 'El chofer no se pudo eliminar.' + this.ctrolError.tratarErroresEliminaciones(err) );
+      this.error( 'El personal no se pudo eliminar.' + this.ctrolError.tratarErroresEliminaciones(err) );
     }
 
     /*viewDetails(chofer) {
@@ -103,8 +103,9 @@ export class ChoferListComponent implements OnInit, OnDestroy {
     crearNuevo() {
         this.clearAlert();
         this.choferNuevo = {
-            choferPK: { cho_emp_codigo: this.yo.user.empresa, cho_codigo:0},
+            choferPK: { cho_emp_codigo: this.yo.user.empresa, cho_codigo: 0 },
             cho_estado: null,
+            cho_chofer: null,
             cho_legajo: null,
             cho_nombre: null,
             cho_doc_codigo: null,
@@ -132,7 +133,7 @@ export class ChoferListComponent implements OnInit, OnDestroy {
     cambiarEstado(chofer) {
 
         this.choferService.update$(chofer).subscribe(result => {
-            //nada solo cambiar el color del boton
+            // nada solo cambiar el color del boton
         }, err => {
             this.error(  this.ctrolError.tratarErroresEliminaciones(err) );
         } );

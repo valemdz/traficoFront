@@ -1,7 +1,3 @@
-<!--<navegacion-component></navegacion-component>-->
-<div class="col-md-12 text-left">
-    <a class="btn btn-primary  crearbtn btnMarginTop" data-target="#nuevo-modal" (click)="crearNuevoDinam()" data-toggle="modal">Crear</a>
-</div>
 <div *ngIf="incidenciaPage != null">
     <div id="list" class="row animated fadeIn">
         <div class="table-responsive col-md-12">
@@ -47,12 +43,12 @@
     </div>
     <alert></alert>
 
-    <!--  <div id="actions" class="row">
+    <div id="actions" class="row">
         <div class="col-md-12 text-left">
             <a class="btn btn-primary" data-target="#nuevo-modal" (click)="crearNuevoDinam()" data-toggle="modal">Crear</a>
         </div>
     </div>
-  -->
+
     <app-table-pagination class="text-center" [table]="self" [page]="incidenciaPage"></app-table-pagination>
 </div>
 
@@ -67,7 +63,7 @@
                     <h4 class="modal-title" id="modalLabel"></h4>
                 </div>
                 <div class="modal-body">
-                    Desea eliminar esta incidencia?
+                    Desea eliminar la incidencia {{currentIncidencia.in_descripcion}}?
                 </div>
                 <div class="modal-footer">
                     <button type="button" (click)="delete(currentIncidencia)" class="btn btn-primary" data-dismiss="modal">Si</button>
