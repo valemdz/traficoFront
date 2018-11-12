@@ -84,7 +84,7 @@ export class VehiculoListComponent implements OnInit, OnDestroy  {
     }
 
     errorDeleteVehiculo( err ) {
-      this.error( this.ctrolError.tratarErroresEliminaciones(err) );
+       this.ctrolError.tratarErroresEliminaciones(err);
     }
 
     /*viewDetails(vehiculo) {
@@ -129,8 +129,7 @@ export class VehiculoListComponent implements OnInit, OnDestroy  {
         this.vehiculoService.update$( vehiculo ).subscribe( result => {
             //nada solo cambia el color del boton
           }, err => {
-            this.error( this.ctrolError.tratarErroresEliminaciones(err) );
-
+             this.ctrolError.tratarErroresEliminaciones(err) ;
           }
         );
 

@@ -1,0 +1,33 @@
+<br>
+<ng-container *ngIf="IdaVueltaPage != null">
+    <div id="list" class="row animated fadeIn">
+        <div class="table-responsive col-md-12">
+            <table class="table table-striped table-hover" cellspacing="0" cellpadding="0">
+                <thead>
+                    <tr>
+                        <th>
+                            Ida
+                        </th>
+                        <th>
+                            Vuelta
+                        </th>
+                        <th class="actions"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let enlace of IdaVueltaPage.content">
+                        <td>[ {{ enlace.ida.lineaPK.linCodigo }} ] - {{ enlace.ida.linNombre }}</td>
+                        <td>[ {{ enlace.vuelta.lineaPK.linCodigo }} ] - {{enlace.vuelta.linNombre}}</td>
+                        <td class="actions">
+                            <a class="btn btn-success btn-xs" (click)="currentChofer=chofer;clearAlert()" data-toggle="modal" data-target="#details-modal">Modificar</a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <app-table-pagination class="text-center" [table]="self" [page]="IdaVueltaPage"></app-table-pagination>
+</ng-container>
+<br>
+<app-enlace-lineas (actualizarPadre)="mostrarDetalle()"></app-enlace-lineas>

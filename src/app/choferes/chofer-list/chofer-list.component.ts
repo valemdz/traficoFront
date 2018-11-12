@@ -1,6 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import {Router} from '@angular/router';
-import * as Rx from 'rxjs/Rx';
 import { Observable, Subscription } from 'rxjs';
 import {PaginationPage, PaginationPropertySort} from '../../shared/pagination';
 import {Table} from '../../shared/table';
@@ -84,7 +83,7 @@ export class ChoferListComponent implements OnInit, OnDestroy {
     }
 
     errorDeleteChofer( err ) {
-      this.error( 'El personal no se pudo eliminar.' + this.ctrolError.tratarErroresEliminaciones(err) );
+       this.ctrolError.tratarErroresEliminaciones(err);
     }
 
     /*viewDetails(chofer) {
@@ -103,7 +102,7 @@ export class ChoferListComponent implements OnInit, OnDestroy {
     crearNuevo() {
         this.clearAlert();
         this.choferNuevo = {
-            choferPK: { cho_emp_codigo: this.yo.user.empresa, cho_codigo: 0 },
+            choferPK: { cho_emp_codigo: this.yo.user.empresa, cho_codigo:0},
             cho_estado: null,
             cho_chofer: null,
             cho_legajo: null,
@@ -122,10 +121,6 @@ export class ChoferListComponent implements OnInit, OnDestroy {
         this.alertService.success(message);
     }
 
-    error(message: string) {
-        this.alertService.error(message);
-    }
-
     clearAlert() {
         this.alertService.clear();
     }
@@ -133,9 +128,9 @@ export class ChoferListComponent implements OnInit, OnDestroy {
     cambiarEstado(chofer) {
 
         this.choferService.update$(chofer).subscribe(result => {
-            // nada solo cambiar el color del boton
+            //nada solo cambiar el color del boton
         }, err => {
-            this.error(  this.ctrolError.tratarErroresEliminaciones(err) );
+              this.ctrolError.tratarErroresEliminaciones( err );
         } );
 
     }

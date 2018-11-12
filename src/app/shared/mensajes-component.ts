@@ -3,7 +3,7 @@ import { FormGroup, FormControl } from '@angular/forms';
 
 @Component({
   selector: 'control-mensajes',
-  template: `<div *ngIf="errores.length" class="alert alert-danger">
+  template: `<div *ngIf="errores?.length" class="alert alert-danger">
                 <ul>
                     <li *ngFor="let error of errores">
                     {{error}}
@@ -12,6 +12,6 @@ import { FormGroup, FormControl } from '@angular/forms';
                 </div>`
 })
 export class MensajesComponent {
-  @Input() errores:any=[];    
+  @Input() errores:any=[];
 
 }

@@ -14,6 +14,8 @@ import { HeroJobAdComponent } from './hero-job-ad.component';
 import { HeroProfileComponent } from './hero-profile.component';
 import { DiagramacionChoferesComponent } from './diagramacion-choferes/diagramacion-choferes.component';
 import { DiagramacionInternosComponent } from './diagramacion-internos/diagramacion-internos.component';
+import { IdaVtaListComponent } from '../diagramacion-Servicios/ida-vta-list/ida-vta-list.component';
+import { EnlaceLineasComponent } from '../diagramacion-Servicios/enlace-lineas/enlace-lineas.component';
 
 @NgModule({
   imports: [
@@ -27,7 +29,9 @@ import { DiagramacionInternosComponent } from './diagramacion-internos/diagramac
               HeroJobAdComponent, 
               HeroProfileComponent, 
               DiagramacionChoferesComponent,
-              DiagramacionInternosComponent ],
+              DiagramacionInternosComponent,
+              IdaVtaListComponent,
+              EnlaceLineasComponent ],
   entryComponents: [ModalConDetalleComponent, HeroJobAdComponent, HeroProfileComponent],
     providers:[ DiagrService, AdService ],
   schemas: [
