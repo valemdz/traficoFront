@@ -102,7 +102,7 @@ export class DiagrInternoComponent implements OnInit {
 
   }
 
-  getVehiculos( empCodigo: String ){
+  getVehiculos( empCodigo: String ) {
 
       let observable: Observable<Response> =
       this.viajeServ.getVehiculos( this.viajeEspecial.id );
