@@ -67,7 +67,7 @@
                         </th>
                         <th>
                             <!-- <app-table-sort [table]="self" [page]="viajePage" [label]="'Choferes'" [property]="choferes"></app-table-sort>-->
-                            Choferes
+                            Personal
                         </th>
                         <th class="actions">
                         </th>
@@ -76,6 +76,7 @@
                 </thead>
                 <tbody>
                     <tr *ngFor="let viaje of viajePage.content">
+
                         <!--  <td>{{viaje.id}}</td> -->
                         <td>{{viaje.fechaHoraSalida | date:'EEE dd/MM/yyyy HH:mm' }}</td>
                         <td>{{viaje.origen}}</td>
@@ -106,9 +107,17 @@
                                 </tr>
 
                                 <tr *ngIf="viaje.choferes.length==0" [style.backgroundColor]="'#f1f144'">
-                                    <td [style.font-size]="'9px'">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                                    <td [style.font-size]="'9px'">&nbsp;&nbsp;&nbsp;CHO&nbsp;&nbsp;&nbsp;</td>
                                 </tr>
 
+                                <!--agregar auxiliares-->
+                                <tr *ngFor="let unAuxliar of viaje.auxiliares" [style.backgroundColor]="unAuxliar.cho_estado==1 ?  '#ff8000' : '#88bdea'">
+                                    <td [style.font-size]="'9px'">{{ unAuxliar.cho_nombre }}</td>
+                                </tr>
+
+                                <tr *ngIf="viaje.auxiliares.length==0 ||viaje.auxiliares == null" [style.backgroundColor]="'#f1f144'">
+                                    <td [style.font-size]="'9px'">&nbsp;&nbsp;&nbsp;AUX&nbsp;&nbsp;&nbsp;</td>
+                                </tr>
                             </table>
                         </td>
                         <td class="actions">
@@ -116,8 +125,11 @@
                                 <i title="Interno" data-toggle="tooltip" animation="true" data-placement="top" onmouseenter="$(this).tooltip('show')" class="fa fa-bus fa-2x blue"></i>
                             </a>
                             <a class="btn  btn-xs" data-toggle="modal" (click)="openModalChoferes(viaje)" data-target="#details-modal">
-                                <i title="Chofer" data-toggle="tooltip" animation="true" data-placement="top" onmouseenter="$(this).tooltip('show')" class="fa fa-user-o fa-2x green" aria-hidden="true"></i>
-
+                                <i title="Conductores" data-toggle="tooltip" animation="true" data-placement="top" onmouseenter="$(this).tooltip('show')" class="fa fa-user-o fa-2x green" aria-hidden="true"></i>
+                            </a>
+                            <!--auxliar-->
+                            <a class="btn  btn-xs" data-toggle="modal" (click)="openModalAuxiliares(viaje)" data-target="#details-modal">
+                                <i title="Auxiliares" data-toggle="tooltip" animation="true" data-placement="top" onmouseenter="$(this).tooltip('show')" class="fa fa-user-o fa-2x violet" aria-hidden="true"></i>
                             </a>
                             <a class="btn  btn-xs" data-toggle="modal" (click)="viajeComent=viaje;clearAlert();" data-target="#details-coment">
                                 <i title="Comentarios" data-toggle="tooltip" animation="true" data-placement="top" onmouseenter="$(this).tooltip('show')" class="fa fa-comment fa-2x green"></i>

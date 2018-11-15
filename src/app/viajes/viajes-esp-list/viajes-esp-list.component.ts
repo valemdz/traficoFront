@@ -1,6 +1,7 @@
+import { DiagrAuxiliaresComponent } from './../diagr-auxiliares/diagr-auxiliares.component';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormGroup, FormBuilder, FormArray, Validators, FormControl } from '@angular/forms';
-import * as Rx from "rxjs/Rx";
+// import * as Rx from "rxjs/Rx";
 import { ViajeEspServive } from '../viajeEsp.service';
 import { MiUsuarioService } from '../../_services/mi.usuario.service';
 import { Table } from '../../shared/table';
@@ -51,7 +52,7 @@ export class ViajesEspListComponent implements OnInit, OnDestroy {
         fInicio: ['2017-12-01',  [ Validators.required ]],
         fFin: ['2017-12-31', [ Validators.required ]] });
 
-   };
+   }
 
   ngOnInit() {
 
@@ -62,11 +63,11 @@ export class ViajesEspListComponent implements OnInit, OnDestroy {
   }
 
 
-  buscarViajesEspeciales(){
+  buscarViajesEspeciales() {
     this.mostrarDetalle();
   }
 
-  getInicio():any{
+  getInicio(): any {
     const formModel = this.viajeForm.value;
     return  formModel.fInicio;
   }
@@ -106,7 +107,7 @@ errorViajeEsp( err ) {
 
 }
 
-delete( viaje: ViajeEspecial){
+delete( viaje: ViajeEspecial) {
 
   this.viajeServ.deleteViaje( viaje.id ).subscribe( data => {
 
@@ -114,8 +115,8 @@ delete( viaje: ViajeEspecial){
     this.success('El Viaje se elimino con exito!!!');
 
   }, err => {
-    //this.ctrolError.tratarErrores(err, this.choferForm, this.erroresGrales, this.translations['gral']);
-    //this.checkTodoFormValidity();
+    // this.ctrolError.tratarErrores(err, this.choferForm, this.erroresGrales, this.translations['gral']);
+    // this.checkTodoFormValidity();
   } );
 
 }
@@ -133,7 +134,7 @@ clearAlert() {
   this.alertService.clear();
 }
 
-crearNuevo(){
+crearNuevo() {
   this.clearAlert();
   this.viajeNuevo = {
     id: null,
@@ -142,28 +143,31 @@ crearNuevo(){
     origen: null,
     destino: null,
     fechaHoraRegreso: null,
-    observaciones:null,
-    empCodigo:null
+    observaciones: null,
+    empCodigo: null
 
-   }
+   };
 
 }
 
-openModalChoferes( viajeEspecial:ViajeEspecial ){
+openModalChoferes( viajeEspecial: ViajeEspecial ) {
 
    let modal$ = this.modalService.create( VentanasModalesModule,
                                           DiagrChoferesComponent,
-                                          {"viajeEspecial": viajeEspecial,
-                                            ok:() => {
+                                          {'viajeEspecial': viajeEspecial,
+                                            ok: () => {
                                               this.mostrarDetalle();
                                             } } ) ;
 
-    /*modal$.subscribe((ref) => {
-      setTimeout(() => {
-        // close the modal after 5 seconds
-        //ref.destroy();
-      }, 500000000000000)
-    })*/
+}
+
+openModalAuxiliares(viajeEspecial: ViajeEspecial) {
+  let modal$ = this.modalService.create(
+                                        VentanasModalesModule,
+                                        DiagrAuxiliaresComponent,
+                                        {'viajeEspecial': viajeEspecial,
+                                      ok: () => { this.mostrarDetalle();
+                                      } } ) ;
 }
 
 }

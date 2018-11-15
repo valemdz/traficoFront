@@ -9,26 +9,26 @@
                 <button type="button" (click)="onCancel()" class="close" data-dismiss="modal" aria-label="Fechar" #closeBtn>
                 <span aria-hidden="true">&times;</span>
             </button>
-                <h4 class="modal-title" id="modalLabel">Conductores</h4>
+                <h4 class="modal-title" id="modalLabel">Auxiliares</h4>
             </div>
             <div class="modal-body">
 
-                <form novalidate [formGroup]="choferesByViajeForm" class="form-inline" novalidate>
+                <form novalidate [formGroup]="auxiliaresByViajeForm" class="form-inline" novalidate>
                     <div class=".container-fluid">
-                        <div formArrayName="choferes" class="well well-lg">
-                            <div *ngFor="let chofer of choferes.controls; let i=index">
+                        <div formArrayName="auxiliares" class="well well-lg">
+                            <div *ngFor="let auxiliar of auxiliares.controls; let i=index">
                                 <div class="row">
                                     <div class="panel-heading">
-                                        <span>Conductor {{i+1}} </span>
-                                        <span class="glyphicon glyphicon-remove pull-right" (click)="borrarChofer(i)"></span>
+                                        <span>Auxiliar {{i+1}} </span>
+                                        <span class="glyphicon glyphicon-remove pull-right" (click)="borrarAuxiliar(i)"></span>
                                     </div>
                                     <div class="panel-body" [formGroupName]="i">
 
 
                                         <div *ngIf="!tieneDetalleByIndex(i)" class="form-group col-md-3">
-                                            <select class="form-control" formControlName="choferPK" title="Tipo" placeholder="Tipo" #t (change)="onChangeChofer(t.value, i)" data-toggle="tooltip" animation="true" data-placement="top" onmouseenter="$(this).tooltip('show')">
+                                            <select class="form-control" formControlName="choferPK" title="Tipo" placeholder="Tipo" #t (change)="onChangeAuxiliar(t.value, i)" data-toggle="tooltip" animation="true" data-placement="top" onmouseenter="$(this).tooltip('show')">
                                                         <option [selected]="tipoByIndex(i) == null" value="">-- Seleccionar --</option>
-                                                        <option *ngFor="let opt of comboChoferes" [selected]="opt.choferPK == tipoByIndex(i)" [value]="opt.choferPK">
+                                                        <option *ngFor="let opt of comboAuxiliares" [selected]="opt.choferPK == tipoByIndex(i)" [value]="opt.choferPK">
                                                             {{opt.nombreChofer}}
                                                         </option>
                                                     </select>
@@ -61,5 +61,6 @@
                 <button type="button" (click)="onCancel()" class="btn btn-default" data-dismiss="modal" data-dismiss="modal">Volver</button>
             </div>
         </div>
+
     </div>
 </div>

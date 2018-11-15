@@ -1,22 +1,19 @@
 import { Component, OnInit, Input, OnChanges, OnDestroy, ViewChild, ElementRef, AfterContentChecked } from '@angular/core';
 import { FormGroup, FormBuilder, FormArray, Validators } from '@angular/forms';
-import {ChoferPK, ViajeEspecial, ChoferPKConDet, VehiculoPK, ListaChoferPK} from '../../domain';
+import { ChoferPK, ViajeEspecial, ChoferPKConDet, VehiculoPK, ListaChoferPK } from '../../domain';
 import { ViajeEspServive } from '../viajeEsp.service';
-// import * as Rx from "rxjs/Rx";
 import {Response} from '@angular/http';
-import { ErrorService } from '../../_services/error.service';
-// import { ViajesEspListComponent } from  '../viajes-esp-list/viajes-esp-list.component';
 import {LoaderService} from '../../_services/loader.service';
 import { Observable} from 'rxjs';
 import {Modal} from '../../ventanas-modales/modal.utilidades';
+import { ErrorService } from '../../_services/error.service';
 
 @Component({
-  selector: 'app-diagr-choferes',
-  templateUrl: './diagr-choferes.component.html',
-  styleUrls: ['./diagr-choferes.component.css']
+  selector: 'app-diagr-auxiliares',
+  templateUrl: './diagr-auxiliares.component.html'
 })
 @Modal()
-export class DiagrChoferesComponent implements OnInit, OnChanges, OnDestroy,
+export class DiagrAuxiliaresComponent implements OnInit, OnChanges, OnDestroy,
 AfterContentChecked {
 
   ok: Function;
@@ -26,14 +23,14 @@ AfterContentChecked {
   @Input()
   viajeEspecial: ViajeEspecial;
   @ViewChild('closeBtn') closeBtn: ElementRef;
-  choferesByViajeForm: FormGroup;
-  comboChoferes: any = [];
+  auxiliaresByViajeForm: FormGroup;
+  comboAuxiliares: any = [];
   todosErrores: any = [];
 
-  chofs: any = [];
+  auxs: any = [];
 
-  terminoChoByViajes = false;
-  terminoChoferes = false;
+  terminoAuxByViajes = false;
+  terminoAuxiliares = false;
 
   showLoader = false;
 
@@ -46,7 +43,6 @@ AfterContentChecked {
 
   erroresGrales: any = [];
 
-
   translations: any = {
     choferPK: {
       required: 'requerido.'
@@ -55,68 +51,60 @@ AfterContentChecked {
 
   crearForm() {
 
-     this.choferesByViajeForm = this.fb.group(
+     this.auxiliaresByViajeForm = this.fb.group(
        {
-         choferes : this.fb.array([])
+        auxiliares : this.fb.array([])
        }) ;
 
-       this.choferesByViajeForm.valueChanges
+       this.auxiliaresByViajeForm.valueChanges
        .subscribe( data => this.checkFormValidity( ) );
   }
 
   checkFormValidity() {
-    for ( let i = 0; i < this.choferes.length; i++ ) {
-      this.ctrolError.checkFormValidity(<FormGroup>this.choferes.controls[i], this.todosErrores[i],  this.translations );
+    for ( let i = 0; i < this.auxiliares.length; i++ ) {
+      this.ctrolError.checkFormValidity(<FormGroup>this.auxiliares.controls[i], this.todosErrores[i],  this.translations );
     }
   }
 
-  get choferes(): FormArray {
-    return this.choferesByViajeForm.get('choferes') as FormArray;
+  get auxiliares(): FormArray {
+    return this.auxiliaresByViajeForm.get('auxiliares') as FormArray;
   }
 
   ngOnInit() {
 
     this.showLoader = true;
 
-    if ( this.choferesByViajeForm ) {
-
-      /*let timeoutId = setTimeout(() => {
-        this.getChoferesByViaje();
-      }, 5000);*/
-
-      this.getChoferesByViaje();
-      this.getChoferesCombo();
-
-      // this.getChoferesLibresCombo();
+    if ( this.auxiliaresByViajeForm ) {
+      this.getAuxiliaresByViaje();
+      this.getAuxiliaresCombo();
     }
   }
 
   ngOnChanges() {
-    console.log('ngOnChanges k');
+    console.log('ngOnChanges auxiliares');
   }
 
   ngOnDestroy() {
 
   }
 
-  setChoferes(choferes: ChoferPKConDet[]) {
-    this.setErrores( choferes.length );
-    const choferesFGS = choferes.map( chof => this.crearGroupForm(chof));
+  setAuxiliares(auxiliares: ChoferPKConDet[]) {
+    this.setErrores( auxiliares.length );
+    const choferesFGS = auxiliares.map( auxs => this.crearGroupForm(auxs));
     const choferesFormArray = this.fb.array(choferesFGS);
-    this.choferesByViajeForm.setControl('choferes', choferesFormArray);
+    this.auxiliaresByViajeForm.setControl('auxiliares', choferesFormArray);
   }
 
- getChoferesByViaje() {
-    const choObservable: Observable<Response> =
-    this.viajeEspServive.getChoferesByViaje( this.viajeEspecial.id );
-    choObservable.subscribe( data => {
-        this.chofs = data;
-        this.setChoferes(this.chofs);
-        this.terminoChoByViajes = true;
+  getAuxiliaresByViaje() {
+    const auxObservable: Observable<Response> =
+    this.viajeEspServive.getAuxiliaresByViaje( this.viajeEspecial.id );
+    auxObservable.subscribe( data => {
+        this.auxs = data;
+        this.setAuxiliares(this.auxs);
+        this.terminoAuxByViajes = true;
     });
 
   }
-
 
   crearError(): any {
     const errMsgs: any = {
@@ -134,7 +122,7 @@ AfterContentChecked {
 
  crearGroupForm( chofer: ChoferPKConDet ): FormGroup {
 
-  const choForm = this.fb.group({
+        const choForm = this.fb.group({
           choferPK: [JSON.stringify( chofer.choferPK ), [ Validators.required ]] ,
           nombreChofer: [chofer.nombreChofer],
           detalleCho: [chofer.detalles]
@@ -143,27 +131,28 @@ AfterContentChecked {
         return choForm;
    }
 
-  getChoferesCombo() {
-    const observable: Observable<Response> = this.viajeEspServive.getChoferes( this.viajeEspecial.empCodigo );
+
+  getAuxiliaresCombo() {
+    const observable: Observable<Response> = this.viajeEspServive.getAuxiliares( this.viajeEspecial.empCodigo );
     observable.subscribe( data => {
-          this.comboChoferes = data;
+          this.comboAuxiliares = data;
           // Serializo el objeto clave
-          // tslint:disable-next-line:no-shadowed-variable
-          for ( let i = 0; i < this.comboChoferes.length; i++ ) {
-            this.comboChoferes[i].choferPK = JSON.stringify( this.comboChoferes[i].choferPK );
-            this.terminoChoferes =  true;
+          for ( let i = 0; i < this.comboAuxiliares.length; i++ ) {
+            this.comboAuxiliares[i].choferPK = JSON.stringify( this.comboAuxiliares[i].choferPK );
+            this.terminoAuxiliares =  true;
           }
       });
   }
 
-   getChoferesLibresCombo() {
-    const observable: Observable<Response> = this.viajeEspServive.getChoferesLibres( this.viajeEspecial.id );
+
+  getAuxiliaresLibresCombo() {
+    const observable: Observable<Response> = this.viajeEspServive.getAuxiliaresLibres( this.viajeEspecial.id );
     observable.subscribe( data => {
-          this.comboChoferes = data;
+          this.comboAuxiliares = data;
           // Serializo el objeto clave
-          for ( let i = 0; i < this.comboChoferes.length; i++ ) {
-            this.comboChoferes[i].choferPK = JSON.stringify( this.comboChoferes[i].choferPK );
-            this.terminoChoferes =  true;
+          for ( let i = 0; i < this.comboAuxiliares.length; i++ ) {
+            this.comboAuxiliares[i].choferPK = JSON.stringify( this.comboAuxiliares[i].choferPK );
+            this.terminoAuxiliares =  true;
           }
 
       });
@@ -172,43 +161,41 @@ AfterContentChecked {
   addNuevoChofer() {
 
     this.todosErrores.push( this.crearError());
-
-    this.choferes.push( this.fb.group({
+    this.auxiliares.push( this.fb.group({
       choferPK: [null, [ Validators.required ]],
       nombreChofer: [null],
       detalleCho: [null]
-    } ) );
-
+    }));
   }
 
 
   tipoByIndex( index: number ): any {
-    const formModel = this.choferesByViajeForm.value;
-    return formModel.choferes[ index ].choferPK;
+    const formModel = this.auxiliaresByViajeForm.value;
+    return formModel.auxiliares[ index ].choferPK;
   }
 
   tieneDetalleByIndex( index: number ): any {
-    const formModel = this.choferesByViajeForm.value;
-    return formModel.choferes[ index ].detalleCho != null && formModel.choferes[ index ].detalleCho.length > 0;
+    const formModel = this.auxiliaresByViajeForm.value;
+    return formModel.auxiliares[ index ].detalleCho != null &&
+     formModel.auxiliares[ index ].detalleCho.length > 0;
   }
 
   detalleByIndex( index: number ): any {
-    const formModel = this.choferesByViajeForm.value;
+    const formModel = this.auxiliaresByViajeForm.value;
     return formModel.choferes[ index ].detalleCho;
   }
 
   nombreChoferByIndex( index: number ): any {
-    const formModel = this.choferesByViajeForm.value;
+    const formModel = this.auxiliaresByViajeForm.value;
     return formModel.choferes[ index ].nombreChofer;
   }
 
-  borrarChofer( index: number) {
+  borrarAuxiliar( index: number) {
     if (index > -1) {
       this.todosErrores.splice(index, 1);
     }
-    this.choferes.removeAt(index);
+    this.auxiliares.removeAt(index);
   }
-
 
   getIndexFromArray( formA: FormArray, campo, valorCampo): number {
       let indice;
@@ -220,11 +207,10 @@ AfterContentChecked {
       return indice;
   }
 
-
   onOk() {
       this.validateAllFormFields();
       this.checkFormValidity();
-      if ( this.choferesByViajeForm.valid ) {
+      if ( this.auxiliaresByViajeForm.valid ) {
           this.salvar();
       }
   }
@@ -232,24 +218,21 @@ AfterContentChecked {
   salvar() {
 
     this.showLoader = true;
-    let listaChoferPK:ListaChoferPK = {
-        choferesPK: this.prepararSalvarChoferes()
+    let listaAuxPK: ListaChoferPK = {
+      choferesPK: this.prepararSalvarAuxiliares()
     };
 
-    let observable : Observable<Response> = this.viajeEspServive.saveChoferes( this.viajeEspecial.id , listaChoferPK);
+    const observable: Observable<Response> = this.viajeEspServive.saveAuxiliares( this.viajeEspecial.id , listaAuxPK);
 
-    observable.subscribe( data =>{
+    observable.subscribe( result => {
       this.ok();
       this.cerrarModal();
       this.closeModal();
       this.destroy();
 
     }, err => {
-
         const data = err.json();
-
         let mensajeMostrar = '';
-
         if ( err.status === 500 ) {
           mensajeMostrar = ' Error interno 500 comuniquese con el administrador! ';
         } else if ( err.status === 0) {
@@ -257,60 +240,46 @@ AfterContentChecked {
         } else if (  err.status === 401 ) {
           mensajeMostrar = ' Usuario o contraseña incorrecta ';
         } else if ( err.status === 409 ) {
-          const data = err.json();
+         // const data = err.json();
 
-          for (let fieldName in data) {
+          for (const fieldName in data) {
             const serverErrors = data[fieldName];
             serverErrors.forEach((item, index) => {
-
               if( item.cho_codigo.length != 0){
                 this.todosErrores[index].choferPK.push( item.cho_codigo );
               }
               if( item.cho_emp_codigo.length !=0 ){
                 this.todosErrores[index].choferPK.push( item.cho_emp_codigo );
               }
-
             });
           }
 
         } else {
           mensajeMostrar = ' Error Desconocido comuniquese con el administrador!';
         }
-
         return mensajeMostrar;
-
-
-
       },
       () => { this.showLoader = false; } );
 
 
   }
 
-  /*onOk(): void{
-    this.cerrarModal();
-    this.closeModal();
-    this.destroy();
-    //this.ok(this.snacks);
-  } */
-
-
-  prepararSalvarChoferes(): any {
-    const formModel = this.choferesByViajeForm.value;
+  prepararSalvarAuxiliares(): any {
+    const formModel = this.auxiliaresByViajeForm.value;
     // deep copy of form model incidencias
-    const choferesDeepCopy: any = [];
+    const auxiliaresDeepCopy: any = [];
 
-    for (let i = 0; i < formModel.choferes.length; i++) {
-        const choferPk: ChoferPK = JSON.parse(  formModel.choferes[i].choferPK);
-        choferesDeepCopy.push(choferPk);
+    for (let i = 0; i < formModel.auxiliares.length; i++) {
+        const choferPk: ChoferPK = JSON.parse(  formModel.auxiliares[i].choferPK);
+        auxiliaresDeepCopy.push(choferPk);
     }
-    return choferesDeepCopy;
+    return auxiliaresDeepCopy;
 
   }
 
   validateAllFormFields() {
-    for (let i = 0; i < this.choferes.controls.length; i++) {
-      this.ctrolError.validateAllFormFields( this.choferesByViajeForm);
+    for (let i = 0; i < this.auxiliares.controls.length; i++) {
+      this.ctrolError.validateAllFormFields( this.auxiliaresByViajeForm);
     }
   }
 
@@ -326,25 +295,25 @@ AfterContentChecked {
   }
 
 
-  ngAfterContentChecked() {
+  ngAfterContentChecked(): void {
 
-    if ( this.terminoChoByViajes
-        && this.terminoChoferes ) {
+    if ( this.terminoAuxByViajes
+        && this.terminoAuxiliares ) {
           this.showLoader = false;
-          this.terminoChoByViajes = false;
-          this.terminoChoferes = false;
+          this.terminoAuxByViajes = false;
+          this.terminoAuxiliares = false;
     }
 
   }
 
-  onChangeChofer( value, indice ) {
+  onChangeAuxiliar( value, indice ) {
     this.erroresGrales.length = 0;
-    const formModel = this.choferesByViajeForm.value;
+    const formModel = this.auxiliaresByViajeForm.value;
 
-    for ( let i = 0; i < this.choferes.length; i++ ) {
-      if ( formModel.choferes[ i ].choferPK === value
+    for ( let i = 0; i < this.auxiliares.length; i++ ) {
+      if ( formModel.auxiliares[ i ].choferPK === value
           && indice !== i ) {
-          this.erroresGrales.push('No pueden existir conductores repetidos');
+          this.erroresGrales.push('No pueden existir auxiliares repetidos');
       }
     }
 

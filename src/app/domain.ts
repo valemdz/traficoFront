@@ -184,10 +184,19 @@ export interface VehiculoMinDTO{
 
 }
 
-export interface ListaChoferPK{
+export interface ListaChoferPK {
     choferesPK: Array<ChoferPK>;
 }
 
+/*export interface AuxiliarPK {
+  cho_emp_codigo: String;
+  cho_codigo: number;
+}
+
+export interface ListaAuxPK {
+  auxiliaresPK: Array<AuxiliarPK>;
+}
+*/
 export interface ListaCarnet{
     carnets: Array<Carnet>;
 }
