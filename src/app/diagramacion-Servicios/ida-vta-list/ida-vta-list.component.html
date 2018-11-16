@@ -1,26 +1,36 @@
 <br>
-<ng-container *ngIf="IdaVueltaPage != null">
+<app-enlace-lineas (actualizarPadre)="mostrarDetalle()"></app-enlace-lineas>
+
+<ng-container *ngIf="IdaVueltaPage !== null">
+    <div class="panel-heading">
+        <span>Lineas Enlazadas</span>
+    </div>
     <div id="list" class="row animated fadeIn">
         <div class="table-responsive col-md-12">
             <table class="table table-striped table-hover" cellspacing="0" cellpadding="0">
                 <thead>
                     <tr>
-                        <th>
-                            Ida
+                        <th class="col-md-6"><strong>Linea de Ida</strong>
                         </th>
-                        <th>
-                            Vuelta
+                        <th class="col-md-6"><strong>Linea de Regreso</strong>
                         </th>
                         <th class="actions"></th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr *ngFor="let enlace of IdaVueltaPage.content">
-                        <td>[ {{ enlace.ida.lineaPK.linCodigo }} ] - {{ enlace.ida.linNombre }}</td>
-                        <td>[ {{ enlace.vuelta.lineaPK.linCodigo }} ] - {{enlace.vuelta.linNombre}}</td>
+                        <td class="col-md-6">[ {{ enlace.ida.lineaPK.linCodigo }} ] - {{ enlace.ida.linNombre }}</td>
+                        <td class="col-md-6">[ {{ enlace.vuelta.lineaPK.linCodigo }} ] - {{enlace.vuelta.linNombre}}</td>
                         <td class="actions">
-                            <a class="btn btn-success btn-xs" (click)="currentChofer=chofer;clearAlert()" data-toggle="modal" data-target="#details-modal">Modificar</a>
+                            <a class="btn btn-xs" (click)="currentEnlace=enlace;clearAlert()" data-toggle="modal" data-target="#details-modal">
+                                <i title="Editar" data-toggle="tooltip" animation="true" data-placement="top" onmouseenter="$(this).tooltip('show')" class="fa fa-pencil fa-2x green" aria-hidden="true"></i>
+                            </a>
                         </td>
+                    </tr>
+                    <tr *ngIf="IdaVueltaPage.content.length == 0">
+                        <td class="col-md-6">Aún no ha enlazado ninguna linea</td>
+                        <td class="col-md-6">Aún no ha enlazado ninguna linea</td>
+
                     </tr>
                 </tbody>
             </table>
@@ -29,5 +39,3 @@
 
     <app-table-pagination class="text-center" [table]="self" [page]="IdaVueltaPage"></app-table-pagination>
 </ng-container>
-<br>
-<app-enlace-lineas (actualizarPadre)="mostrarDetalle()"></app-enlace-lineas>
