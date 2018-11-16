@@ -3,19 +3,19 @@ import { DatePipe } from '@angular/common';
 import { HttpParams } from '../../../node_modules/@angular/common/http';
 import { PaginationPropertySort } from '../shared/pagination';
 
-export class FuncionesGrales{
+export class FuncionesGrales {
 
-    public static toFecha( fecha ){
+    public static toFecha( fecha: string, pattern: string ): Date {
         let f = null;
         if ( !( fecha == null || fecha === '' ) ) {
-          f = moment( fecha,  'YYYY-MM-DD' ).format() as any;
+          f = moment( fecha, pattern ).toDate();
         }
         return f;
     }
 
-    public static fromFecha(  locale: string, fecha ){
+    public static fromFecha(  locale: string, fecha: Date, pattern: string ): string {
       let dp = new DatePipe( locale );
-      let f = dp.transform( fecha, 'yyyy-MM-dd');
+      let f = dp.transform( fecha, pattern);
       return f;
     }
 

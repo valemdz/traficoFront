@@ -477,3 +477,14 @@ input:checked+.slider:before {
 .fadeIn {
     animation-name: fadeIn;
 }
+
+.pseudoBot {
+    text-decoration: none;
+    color: white !important;
+}
+
+.pseudoBot:hover,
+.pseudoBot:focus {
+    color: white !important;
+    text-decoration: none;
+}

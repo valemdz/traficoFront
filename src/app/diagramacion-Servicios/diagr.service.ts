@@ -1,11 +1,7 @@
-// import { ServiciosList } from './../domain';
 import { PaginationPropertySort, PaginationPage } from './../shared/pagination';
 import { Injectable } from '@angular/core';
-import { Response, RequestOptions } from '@angular/http';
-import * as Rx from 'rxjs/Rx';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/publish';
-import { Servicios } from '../domain';
 import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { FuncionesGrales } from '../utiles/funciones.grales';
@@ -36,10 +32,28 @@ export class DiagrService {
     return this.http.get(url, params);
   }
 
+  findSerConHorariosByLineaYfecha( idEmpresa: String, idLinea: String, inicio: any, fin: any): Observable<any> {
+    const url = this.urlBase + `/diagr/empresa/${idEmpresa}/linea/${idLinea}/fechaInicio/${inicio}/fechaFin/${fin}/serviciosConHorarios`;
+    return this.http.get( url );
+  }
+
+
   /*getVehiculosLibres( idViaje: number ): Observable<Response> {
    //  const url = `/ViajesEspeciales/${idViaje}/vehiculosDisp`;
    // return this.http.get( url ).map(this.extractData).publish().refCount();
   }  */
+
+  // Esto dede reverse
+
+  finChoferes ( idEmpresa: string ) {
+    const url = this.urlBase + `/diagr/empresa/${idEmpresa}/choferes`;
+    return this.http.get( url );
+  }
+
+  findVehiculos( idEmpresa: string ) {
+    const url = this.urlBase + `/diagr/empresa/${idEmpresa}/internos`;
+    return this.http.get( url );
+  }
 
 
 }

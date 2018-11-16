@@ -16,26 +16,34 @@ import { DiagramacionChoferesComponent } from './diagramacion-choferes/diagramac
 import { DiagramacionInternosComponent } from './diagramacion-internos/diagramacion-internos.component';
 import { IdaVtaListComponent } from '../diagramacion-Servicios/ida-vta-list/ida-vta-list.component';
 import { EnlaceLineasComponent } from '../diagramacion-Servicios/enlace-lineas/enlace-lineas.component';
+import { VueltasComponent } from '../diagramacion-Servicios/vueltas/vueltas.component';
+import { FormsModule } from '@angular/forms';
+import { FilterByFechaPipe } from '../pipes/filter-by-fecha.pipe';
+import { SerMayoIgualPipe } from '../pipes/ser-mayo-igual.pipe';
 
 @NgModule({
   imports: [
     SharedModule,
     VentanasModalesModule,
+    FormsModule,
     DiagramacionServicioRoutingModule
   ],
-  declarations: [ 
-              DiagramacionListComponent, 
+  declarations: [
+              DiagramacionListComponent,
               ModalConDetalleComponent,
-              HeroJobAdComponent, 
-              HeroProfileComponent, 
+              HeroJobAdComponent,
+              HeroProfileComponent,
               DiagramacionChoferesComponent,
               DiagramacionInternosComponent,
               IdaVtaListComponent,
-              EnlaceLineasComponent ],
+              EnlaceLineasComponent,
+              VueltasComponent,
+              FilterByFechaPipe,
+              SerMayoIgualPipe ],
   entryComponents: [ModalConDetalleComponent, HeroJobAdComponent, HeroProfileComponent],
     providers:[ DiagrService, AdService ],
   schemas: [
       CUSTOM_ELEMENTS_SCHEMA
-  ]  
+  ]
 })
 export class DiagramacionServicioModule { }

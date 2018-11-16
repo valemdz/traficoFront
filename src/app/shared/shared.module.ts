@@ -22,16 +22,18 @@ import{ UpperCaseText } from './UpperCaseText';
 
 import { PlaceHolderComponent } from './place.holder.component';
 import { AddComponenteDirective } from './add.componente.directive';
+import { SearchByFechaComponent } from './search-by-fecha/search-by-fecha.component';
+import { PruebaComponent } from './prueba/prueba.component';
 
 
 @NgModule({
   imports: [
     CommonModule,
-    ReactiveFormsModule,   
+    ReactiveFormsModule,
   ],
-  declarations: [ MensajesComponent, 
+  declarations: [ MensajesComponent,
                   AlertComponent,
-                  Tabs, 
+                  Tabs,
                   Tab,
                   TabChild,
                   TableElementsCountComponent,
@@ -40,13 +42,15 @@ import { AddComponenteDirective } from './add.componente.directive';
                   LoaderComponent,
                   UpperCaseText,
                   PlaceHolderComponent,
-                  AddComponenteDirective ],
-  exports:[ 
+                  AddComponenteDirective,
+                  SearchByFechaComponent,
+                  PruebaComponent ],
+  exports:[
     CommonModule,
     ReactiveFormsModule,
     MensajesComponent,
     AlertComponent,
-    Tabs, 
+    Tabs,
     Tab,
     TabChild,
     LoaderComponent,
@@ -55,7 +59,9 @@ import { AddComponenteDirective } from './add.componente.directive';
     TablePaginationComponent,
     UpperCaseText,
     PlaceHolderComponent,
-    AddComponenteDirective    
+    AddComponenteDirective,
+    SearchByFechaComponent,
+    PruebaComponent
   ]
 })
 export class SharedModule { }

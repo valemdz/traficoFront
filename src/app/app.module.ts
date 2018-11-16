@@ -30,13 +30,17 @@ import { DiagramacionServicioModule } from './diagramacion-Servicios/diagramacio
 import { SharedModule } from './shared/shared.module';
 import { AuthenticationService } from './_services/authentication.service';
 import { TokenInterceptorService } from './_services/token-interceptor.service';
-import { RequestInterceptorService } from './_services/request.interceptor.service';
+import { PruebaComponent } from './shared/prueba/prueba.component';
+
+
+
 
 
 const appRoutes: Routes = [
   { path: '', component: HomeComponent, canActivate: [AuthGuard] },
   { path: 'login', component: LoginComponent },
   { path: 'home', component: HomeComponent },
+  { path: 'prueba', component: PruebaComponent }
 ];
 
 

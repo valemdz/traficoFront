@@ -4,6 +4,12 @@ export class Constantes {
     static readonly DATE_TIME_FMT = `${Constantes.DATE_FMT} hh:mm:ss`;
 }
 
+export const FECHA_PATTERN = 'yyyy-MM-dd';
+export const FECHA_PATTERN_MOMENT = 'YYYY-MM-DD';
+export const FECHA_HORA_MOSTRAR_PATTERN = 'dd/MM/yyyy HH:mm';
+export const CANTIDAD_DIAS_DIAGR_DEFAULT = 3;
+
+
 /*
 
 type MyType = {
