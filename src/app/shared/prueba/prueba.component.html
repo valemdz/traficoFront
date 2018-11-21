@@ -2,3 +2,22 @@
 <div *ngFor="let f of fechas">
     <span>{{f|date:'dd EEEE' }}</span>
 </div>
+
+
+<div *ngFor="let cho of choferesOcupacion|choferesConEstado:inicioB:finB">
+    <span>{{ cho.choferPK.cho_emp_codigo }} </span>
+    <span>{{ cho.choferPK.cho_codigo }} </span>
+</div>
+
+<div class="row">
+    <div class="col-md-2">
+        <select class="form-control">
+              <option  value="null">-- Seleccionar --</option>
+              <option
+               *ngFor="let opt of choferesOcupacion|choferesConEstado:inicioB:finB"  [value]="opt.choferPKStr"
+               [ngClass]="opt.classCho" >
+                  {{opt.nombre}}
+              </option>
+        </select>
+    </div>
+</div>

@@ -1,7 +1,5 @@
 import { Component, OnInit, Input, ViewChild, ElementRef, OnChanges } from '@angular/core';
 import { IncidenciaService } from '../../incidencias/incidencia.service';
-import {Response} from '@angular/http';
-import * as Rx from 'rxjs/Rx';
 import { FormGroup, FormBuilder, FormArray, Validators } from '@angular/forms';
 import {Chofer, ChoferIndicencia, Incidencia, ListaChoferIncidencia} from '../../domain';
 import {ChoferService} from '../chofer.service';

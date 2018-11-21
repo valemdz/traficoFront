@@ -36,6 +36,7 @@ import { PruebaComponent } from './shared/prueba/prueba.component';
 
 
 
+
 const appRoutes: Routes = [
   { path: '', component: HomeComponent, canActivate: [AuthGuard] },
   { path: 'login', component: LoginComponent },
@@ -49,7 +50,7 @@ const appRoutes: Routes = [
     AppComponent,
     FileUploaderComponent,
     HomeComponent,
-    LoginComponent
+    LoginComponent,
   ],
   imports: [
     BrowserModule,

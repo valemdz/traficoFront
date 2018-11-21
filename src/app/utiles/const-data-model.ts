@@ -10,6 +10,19 @@ export const FECHA_HORA_MOSTRAR_PATTERN = 'dd/MM/yyyy HH:mm';
 export const CANTIDAD_DIAS_DIAGR_DEFAULT = 3;
 
 
+////////////// Para el combo de Choferes /////////////
+
+export const CHOFER_CON_SERVICIOS = 1;
+export const CHOFER_CON_INCIDENCIAS = 2;
+export const CHOFER_CON_VIAJES = 3;
+export const CHOFER_LIBRE = 4;
+
+export const CHOFER_CON_SERVICIOS_STR = 'alert alert-danger';
+export const CHOFER_CON_INCIDENCIAS_STR = 'alert alert-warning';
+export const CHOFER_CON_VIAJES_STR = 'alert alert-danger';
+export const CHOFER_LIBRE_STR = 'alert alert-success';
+
+
 /*
 
 type MyType = {
