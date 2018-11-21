@@ -1,14 +1,26 @@
 <br>
 <br>
 <app-search-by-fecha [fechaInicio]="_vs.inicio" [fechaFin]="_vs.fin" (buscarByFecha)="buscar($event)"></app-search-by-fecha>
-
+<!--
+  https://getbootstrap.com/docs/3.3/components/#badges
+-->
 <br>
 <div *ngFor="let f of _vs.fechas">
-    <span>{{f|date:'dd EEEE' }} Lineas [ {{_vs.idLinIda}} - {{_vs.idLinVta}} ] {{f|date:'MMMM yyyy' }}</span>
-
+    <span><strong>{{f|date:'EEEE dd' }} {{f|date:'MMMM yyyy' }} Lineas [ {{_vs.idLinIda}} - {{_vs.idLinVta}} ] </strong></span>
+    <hr class="style13">
+    <div class="row">
+        <div class="col-md-2"><strong>F. Serv</strong></div>
+        <div class="col-md-1"><strong>Desde</strong></div>
+        <div class="col-md-1"><strong>Salida</strong></div>
+        <div class="col-md-1"><strong>Hasta</strong></div>
+        <div class="col-md-1"><strong>LLegada</strong></div>
+        <div class="col-md-2"><strong>Conductor</strong></div>
+        <div class="col-md-2"><strong>Interno</strong></div>
+        <div class="col-md-2"><strong>Ser. Regreso</strong></div>
+    </div>
     <div *ngFor="let serv of _vs.serviciosIda|filterByFecha:f">
         <div class="row">
-            <div class="col-md-1">{{ serv.servicioPK.serFechaHora | date:'EE HH:mm' }} </div>
+            <div class="col-md-2">{{ serv.servicioPK.serFechaHora | date:'EE HH:mm' }} </div>
             <div class="col-md-1">{{ serv.escalaSalida }}</div>
             <div class="col-md-1">{{ serv.fechaHoraSalida | date:'HH:mm' }}</div>
             <div class="col-md-1">{{ serv.escalaLlegada }}</div>
@@ -89,3 +101,5 @@ data-toggle="tooltip" animation="true" data-placement="top" onmouseenter="$(this
     </div>
     - <pre>{{formVuelta.value|json}} {{  formVuelta.valid }}</pre>
 </form> -->
+</div>
+<button type="button" class="btn btn-default" (click)="volver()" data-dismiss="modal" data-dismiss="modal">Volver</button>

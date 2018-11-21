@@ -488,3 +488,16 @@ input:checked+.slider:before {
     color: white !important;
     text-decoration: none;
 }
+
+hr.style13 {
+    height: 10px;
+    border: 0;
+    box-shadow: 0 10px 10px -10px #8c8b8b inset;
+}
+
+hr.style14 {
+    border: 0;
+    height: 2px;
+    text-align: center;
+    background-image: linear-gradient(to left, #fff, #000, #fff);
+}
