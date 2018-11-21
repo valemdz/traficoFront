@@ -192,6 +192,21 @@ input[type=date] {
     vertical-align: middle !important;
 }
 
+.red {
+    color: red;
+    opacity: 0.7;
+}
+
+.green {
+    color: green;
+    opacity: 0.7;
+}
+
+.blue {
+    color: blue;
+    opacity: 0.7;
+}
+
 
 /*/////////////*/
 
@@ -461,4 +476,28 @@ input:checked+.slider:before {
 
 .fadeIn {
     animation-name: fadeIn;
+}
+
+.pseudoBot {
+    text-decoration: none;
+    color: white !important;
+}
+
+.pseudoBot:hover,
+.pseudoBot:focus {
+    color: white !important;
+    text-decoration: none;
+}
+
+hr.style13 {
+    height: 10px;
+    border: 0;
+    box-shadow: 0 10px 10px -10px #8c8b8b inset;
+}
+
+hr.style14 {
+    border: 0;
+    height: 2px;
+    text-align: center;
+    background-image: linear-gradient(to left, #fff, #000, #fff);
 }

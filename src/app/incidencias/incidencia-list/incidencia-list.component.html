@@ -13,9 +13,9 @@
                         <th>
                             <app-table-sort [table]="self" [page]="incidenciaPage" [label]="'Tipo'" [property]="'in_tipo'"></app-table-sort>
                         </th>
-                        <th>
+                        <!--th>
                             <app-table-sort [table]="self" [page]="incidenciaPage" [label]="''" [property]="'in_color'"></app-table-sort>
-                        </th>
+                        </th-->
                         <th class="actions"></th>
                     </tr>
                 </thead>
@@ -24,9 +24,9 @@
                         <td>{{incidencia.codigo}}</td>
                         <td>{{incidencia.in_descripcion}}</td>
                         <td>{{incidencia.in_tipoString}}</td>
-                        <td>
+                        <!--td>
                             <input name="color" type="color" style="height: 25px" value={{incidencia.in_color}} />
-                        </td>
+                        </td-->
                         <td class="actions">
                             <a class="btn btn-xs" (click)="modificarDinam(incidencia);clearAlert()" data-toggle="modal" data-target="#nuevo-modal">
                                 <i title="Editar" data-toggle="tooltip" animation="true" data-placement="top" onmouseenter="$(this).tooltip('show')" class="fa fa-pencil fa-2x green" aria-hidden="true"></i>

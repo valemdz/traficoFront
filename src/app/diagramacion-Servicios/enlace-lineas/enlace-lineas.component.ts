@@ -51,8 +51,8 @@ export class EnlaceLineasComponent implements OnInit, OnDestroy {
     lineaPKVta: []
   };
 
-  translations: any = { lineaPKIda:{ required: 'Por favor especifique un Linea Ida.' },
-                        lineaPKVta: { required: 'Por favor especifique una Linea Vta.' },
+  translations: any = { lineaPKIda:{ required: 'Por favor especifique un Linea de ida.' },
+                        lineaPKVta: { required: 'Por favor especifique una Linea de regreso.' },
                         gral:{}};
 
   ngOnDestroy(): void {
