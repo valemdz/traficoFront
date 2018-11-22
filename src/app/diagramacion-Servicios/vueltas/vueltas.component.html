@@ -3,7 +3,7 @@
 <app-search-by-fecha [fechaInicio]="_vs.inicio" [fechaFin]="_vs.fin" (buscarByFecha)="buscar($event)"></app-search-by-fecha>
 <br>
 <div *ngFor="let f of _vs.fechas">
-    <span><strong>{{f|date:'EEEE dd' }} {{f|date:'MMMM yyyy' }} Lineas [ {{_vs.idLinIda}} - {{_vs.idLinVta}} ] </strong></span>
+    <span><strong>{{f|date:'EEEE dd'}} {{f|date:'MMMM yyyy' }} Lineas [ {{_vs.idLinIda}} - {{_vs.idLinVta}} ] </strong></span>
     <hr class="style13">
     <div class="row">
         <div class="col-md-1"><strong>Hs Serv</strong></div>
@@ -14,14 +14,17 @@
         <div class="col-md-2"><strong>Conductor</strong></div>
         <div class="col-md-2"><strong>Interno</strong></div>
         <div class="col-md-2"><strong>Ser. Regreso</strong></div>
+        <div class="col-md-1"></div>
+
     </div>
+    <br>
     <div *ngFor="let serv of _vs.serviciosIda|filterByFecha:f">
         <div class="row">
-            <div class="col-md-1">{{ serv.servicioPK.serFechaHora | date:'HH:mm' }} </div>
+            <div class="col-md-1">{{ serv.servicioPK.serFechaHora | date:'EE HH:mm' }} </div>
             <div class="col-md-1">{{ serv.escalaSalida }}</div>
-            <div class="col-md-1">{{ serv.fechaHoraSalida | date:'HH:mm' }}</div>
+            <div class="col-md-1">{{ serv.fechaHoraSalida | date:'EE HH:mm' }}</div>
             <div class="col-md-1">{{ serv.escalaLlegada }}</div>
-            <div class="col-md-1">{{ serv.fechaHoraLlegada | date:'HH:mm' }}</div>
+            <div class="col-md-1">{{ serv.fechaHoraLlegada | date:'EE HH:mm' }}</div>
             <div class="col-md-2">
                 <!-- <select class="form-control">
                       <option value="">-- Seleccionar --</option>
@@ -52,9 +55,9 @@
                   <option *ngFor="let opt of _vs.serviciosVta|serMayoIgual:serv.fechaHoraLlegada" [value]="opt.servicioPKStr">{{ opt.detalle }}</option>
                 </select>
             </div>
-            <div class="col-md-2">
+            <div class="col-md-1">
                 <a class="btn btn-xs" data-toggle="modal">
-                    <i title="Editar" data-toggle="tooltip" animation="true" data-placement="top" onmouseenter="$(this).tooltip('show')" class="fa fa-pencil fa-2x green" aria-hidden="true"></i>
+                    <i title="Guardar" data-toggle="tooltip" animation="true" data-placement="top" onmouseenter="$(this).tooltip('show')" class="fa fa-floppy-o fa-2x green" aria-hidden="true"></i>
                 </a>
             </div>
         </div>

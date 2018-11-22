@@ -1,9 +1,10 @@
+<br>
 <div class="row">
-    <div class="col-md-2">{{ servicio.servicioPK.serFechaHora | date:'EE HH:mm' }} </div>
+    <div class="col-md-1">{{ servicio.servicioPK.serFechaHora | date:'EE HH:mm' }} </div>
     <div class="col-md-1">{{ servicio.escalaSalida }}</div>
-    <div class="col-md-1">{{ servicio.fechaHoraSalida | date:'HH:mm' }}</div>
+    <div class="col-md-1">{{ servicio.fechaHoraSalida | date:'EE HH:mm' }}</div>
     <div class="col-md-1">{{ servicio.escalaLlegada }}</div>
-    <div class="col-md-1">{{ servicio.fechaHoraLlegada | date:'HH:mm' }}</div>
+    <div class="col-md-1">{{ servicio.fechaHoraLlegada | date:'EE HH:mm' }}</div>
     <div class="col-md-2">
         <!-- <select class="form-control">
             <option value="">-- Seleccionar --</option>
