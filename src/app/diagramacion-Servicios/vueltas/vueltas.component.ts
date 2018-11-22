@@ -7,8 +7,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 @Component({
   selector: 'app-vueltas',
   templateUrl: './vueltas.component.html',
-  styleUrls: [],
-  providers: [ VueltasService ]
+  styleUrls: []
 })
 export class VueltasComponent implements OnInit, OnDestroy {
 
@@ -30,6 +29,8 @@ export class VueltasComponent implements OnInit, OnDestroy {
   }
 
   buscar( formFechas ) {
+    //Traigo las fechas del buscador
+
     this._vs.setFechas( formFechas );
     // this.filter( new Date() );
   }
@@ -38,6 +39,7 @@ export class VueltasComponent implements OnInit, OnDestroy {
   volver() {
     this.router.navigate(['idaVtaList']);
   }
+
 
 
 }

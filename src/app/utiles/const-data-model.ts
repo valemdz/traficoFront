@@ -8,6 +8,7 @@ export const FECHA_PATTERN = 'yyyy-MM-dd';
 export const FECHA_PATTERN_MOMENT = 'YYYY-MM-DD';
 export const FECHA_HORA_MOSTRAR_PATTERN = 'dd/MM/yyyy HH:mm';
 export const CANTIDAD_DIAS_DIAGR_DEFAULT = 3;
+export const CANTIDAD_DIAS_DIAGR_ADICIONALES_VTA = 3;
 
 
 ////////////// Para el combo de Choferes /////////////

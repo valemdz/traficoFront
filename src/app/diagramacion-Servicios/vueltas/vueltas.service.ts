@@ -1,5 +1,7 @@
 import { Injectable, Inject, LOCALE_ID } from '@angular/core';
-import { FECHA_PATTERN_MOMENT, FECHA_PATTERN, CANTIDAD_DIAS_DIAGR_DEFAULT, FECHA_HORA_MOSTRAR_PATTERN } from 'src/app/utiles/const-data-model';
+import { FECHA_PATTERN_MOMENT, FECHA_PATTERN, CANTIDAD_DIAS_DIAGR_DEFAULT,
+         FECHA_HORA_MOSTRAR_PATTERN, CANTIDAD_DIAS_DIAGR_ADICIONALES_VTA }
+         from 'src/app/utiles/const-data-model';
 import { DiagrService } from '../diagr.service';
 import { FuncionesGrales } from 'src/app/utiles/funciones.grales';
 import { MiUsuarioService } from 'src/app/_services/mi.usuario.service';
@@ -10,6 +12,7 @@ export class VueltasService {
 
   inicio: Date;
   fin: Date;
+  finVuelta: Date;
   fechas: any = [];
 
   idLinIda: string;
@@ -21,17 +24,25 @@ export class VueltasService {
   choferes: any = [];
   vehiculos: any = [];
 
+  choferesOcupacion: any;
+
+
   constructor( private _ds: DiagrService,
                private yo: MiUsuarioService,
                @Inject(LOCALE_ID) public locale: string   ) {
 
     this.inicio = new Date();
+
     this.fin = new Date();
     this.fin.setDate( this.fin.getDate() + CANTIDAD_DIAS_DIAGR_DEFAULT - 1 );
+
+    this.finVuelta = new Date();
+    this.finVuelta.setDate( this.finVuelta.getDate()
+                      + CANTIDAD_DIAS_DIAGR_DEFAULT
+                      + CANTIDAD_DIAS_DIAGR_ADICIONALES_VTA );
+
     this.generarFechas();
   }
-
-
 
   generarFechas() {
     this.fechas = [];
@@ -54,6 +65,8 @@ export class VueltasService {
     this.getChoferes();
     this.getVehiculos();
 
+    this.getChoferesOcupacion();
+
   }
 
   setLineas( lineas ) {
@@ -72,17 +85,20 @@ export class VueltasService {
   okServiciosIda( serviciosIda ) {
 
       this.serviciosIda = serviciosIda;
-      this.serviciosIda.forEach( serv  => {
-         serv.servicioPK.serFechaHora = new Date( serv.servicioPK.serFechaHora );
-         serv.fechaHolaLlegada = new Date( serv.fechaHolaLlegada );
-         serv.fechaHoraSalida = new Date( serv.fechaHoraSalida );
-      });
-
-      this.ordenamientoIdaAscendente();
+      this.formatearFecha( this.serviciosIda );
+      this.ordenamientoServiciosAscendente(  this.serviciosIda );
   }
 
-  ordenamientoIdaAscendente() {
-    this.serviciosIda.sort(function (a, b) {
+  formatearFecha( servicios ) {
+        servicios.forEach( serv  => {
+        serv.servicioPK.serFechaHora = new Date( serv.servicioPK.serFechaHora );
+        serv.fechaHoraLlegada = new Date( serv.fechaHoraLlegada );
+        serv.fechaHoraSalida = new Date( serv.fechaHoraSalida );
+     });
+  }
+
+  ordenamientoServiciosAscendente( servicios ) {
+    servicios.sort(function (a, b) {
       if ( a.servicioPK.serFechaHora > b.servicioPK.serFechaHora ) {
         return 1;
       }
@@ -94,8 +110,8 @@ export class VueltasService {
     });
   }
 
-  ordenamientoIdaDescendente() {
-    this.serviciosIda.sort(function (a, b) {
+  ordenamientoServiciosDescendente( servicios ) {
+      servicios.sort(function (a, b) {
       if ( a.servicioPK.serFechaHora < b.servicioPK.serFechaHora ) {
         return 1;
       }
@@ -115,26 +131,26 @@ export class VueltasService {
       this._ds.findSerConHorariosByLineaYfecha( this.yo.getEmpresa(),
       this.idLinVta,
       FuncionesGrales.fromFecha( this.locale, this.inicio, FECHA_PATTERN),
-      FuncionesGrales.fromFecha( this.locale, this.fin, FECHA_PATTERN)   )
+      FuncionesGrales.fromFecha( this.locale, this.finVuelta, FECHA_PATTERN)   )
       .subscribe( this.okServiciosVta.bind( this ), this.errorServiciosIda.bind( this ) );
   }
 
   okServiciosVta( serviciosVta) {
 
     this.serviciosVta = serviciosVta;
-    console.log( this.serviciosVta );
+
     this.serviciosVta.forEach( serv  => {
         serv.servicioPK.serFechaHora = new Date( serv.servicioPK.serFechaHora );
-        serv.fechaHolaLlegada = new Date( serv.fechaHolaLlegada );
+        serv.fechaHoraLlegada = new Date( serv.fechaHoraLlegada );
         serv.fechaHoraSalida = new Date( serv.fechaHoraSalida );
         serv.servicioPKStr  = JSON.stringify( serv.servicioPK );
         serv.detalle  = FuncionesGrales.formatearFecha( this.locale, serv.fechaHoraSalida, FECHA_HORA_MOSTRAR_PATTERN );
     });
 
-      console.log('SERV vta');
-      console.log( this.serviciosVta );
+    this.ordenamientoServiciosAscendente( this.serviciosVta );
 
-      //this.ordenamientoIdaAscendente();
+    console.log( 'Servicios Vta' );
+    console.log( this.serviciosVta );
   }
 
 
@@ -153,6 +169,38 @@ export class VueltasService {
 
   }
 
+  getChoferesOcupacion() {
+         this._ds.findChoresOcupacion( this.yo.getEmpresa(),
+                          FuncionesGrales.fromFecha( this.locale, this.inicio, FECHA_PATTERN),
+                          FuncionesGrales.fromFecha( this.locale, this.finVuelta, FECHA_PATTERN) )
+        .subscribe( this.okChoferes.bind( this ) );
+
+  }
+
+  okChoferes( data ) {
+    this.choferesOcupacion = data;
+    for ( let cho of this.choferesOcupacion) {
+       for ( let serv of  cho.servicios ) {
+         serv.servicioPK.serFechaHora = new Date( serv.servicioPK.serFechaHora );
+         serv.fechaHoraSalida = new Date( serv.fechaHoraSalida );
+         serv.fechaHoraLlegada = new Date( serv.fechaHoraLlegada );
+       }
+       for ( let inc of cho.incidencias ) {
+           inc.inicio = new Date( inc.inicio );
+           inc.fin = new Date( inc.fin );
+       }
+       for ( let v of cho.viajes ) {
+         v.inicio = new Date( v.inicio );
+         v.fin = new Date( v.fin );
+       }
+    }
+
+  }
+
+  onChangeServRetorno( servicioIda,  idServRetorno ) {
+    let retorno = this.serviciosVta.filter( ret => ret.servicioPKStr === idServRetorno )[0];
+    servicioIda.servicioRetorno = retorno;
+  }
 
 
 

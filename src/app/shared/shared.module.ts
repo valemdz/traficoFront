@@ -63,7 +63,8 @@ import { ChoferesConEstadoPipe } from '../pipes/choferes-con-estado.pipe';
     PlaceHolderComponent,
     AddComponenteDirective,
     SearchByFechaComponent,
-    PruebaComponent
+    PruebaComponent,
+    ChoferesConEstadoPipe
   ]
 })
 export class SharedModule { }

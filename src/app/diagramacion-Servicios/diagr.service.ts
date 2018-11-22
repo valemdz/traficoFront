@@ -50,6 +50,12 @@ export class DiagrService {
     return this.http.get( url );
   }
 
+  findChoresOcupacion( idEmpresa, inicio, fin ) {
+    const url = this.urlBase + `/diagr/empresa/${idEmpresa}/fechaInicio/${inicio}/fechaFin/${fin}/choferesOcupacion`;
+    return  this.http.get( url );
+  }
+
+
   findVehiculos( idEmpresa: string ) {
     const url = this.urlBase + `/diagr/empresa/${idEmpresa}/internos`;
     return this.http.get( url );

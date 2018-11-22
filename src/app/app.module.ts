@@ -33,10 +33,6 @@ import { TokenInterceptorService } from './_services/token-interceptor.service';
 import { PruebaComponent } from './shared/prueba/prueba.component';
 
 
-
-
-
-
 const appRoutes: Routes = [
   { path: '', component: HomeComponent, canActivate: [AuthGuard] },
   { path: 'login', component: LoginComponent },

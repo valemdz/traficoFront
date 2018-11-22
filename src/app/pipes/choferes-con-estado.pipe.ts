@@ -10,8 +10,8 @@ export class ChoferesConEstadoPipe implements PipeTransform {
 
   transform( choferes: any, inicio?: Date, fin?: Date ): any {
 
-    console.log( 'inicio', inicio );
-    console.log( 'fin', fin );
+    //console.log( 'inicioT', inicio );
+    //console.log( 'finT', fin );
 
     let choferesOcup: any = [];
     let classCho = CHOFER_LIBRE_STR;
