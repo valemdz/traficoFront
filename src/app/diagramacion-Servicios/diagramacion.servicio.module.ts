@@ -20,6 +20,8 @@ import { VueltasComponent } from '../diagramacion-Servicios/vueltas/vueltas.comp
 import { FormsModule } from '@angular/forms';
 import { FilterByFechaPipe } from '../pipes/filter-by-fecha.pipe';
 import { SerMayoIgualPipe } from '../pipes/ser-mayo-igual.pipe';
+import { VueltaDeVueltaComponent } from '../diagramacion-Servicios/vuelta-de-vuelta/vuelta-de-vuelta.component';
+import { VueltasService } from './vueltas/vueltas.service';
 
 @NgModule({
   imports: [
@@ -39,9 +41,10 @@ import { SerMayoIgualPipe } from '../pipes/ser-mayo-igual.pipe';
               EnlaceLineasComponent,
               VueltasComponent,
               FilterByFechaPipe,
-              SerMayoIgualPipe ],
+              SerMayoIgualPipe,
+              VueltaDeVueltaComponent ],
   entryComponents: [ModalConDetalleComponent, HeroJobAdComponent, HeroProfileComponent],
-    providers:[ DiagrService, AdService ],
+    providers:[ DiagrService, AdService, VueltasService],
   schemas: [
       CUSTOM_ELEMENTS_SCHEMA
   ]

@@ -24,6 +24,7 @@ import { PlaceHolderComponent } from './place.holder.component';
 import { AddComponenteDirective } from './add.componente.directive';
 import { SearchByFechaComponent } from './search-by-fecha/search-by-fecha.component';
 import { PruebaComponent } from './prueba/prueba.component';
+import { ChoferesConEstadoPipe } from '../pipes/choferes-con-estado.pipe';
 
 
 @NgModule({
@@ -44,7 +45,8 @@ import { PruebaComponent } from './prueba/prueba.component';
                   PlaceHolderComponent,
                   AddComponenteDirective,
                   SearchByFechaComponent,
-                  PruebaComponent ],
+                  PruebaComponent,
+                  ChoferesConEstadoPipe ],
   exports:[
     CommonModule,
     ReactiveFormsModule,
@@ -61,7 +63,8 @@ import { PruebaComponent } from './prueba/prueba.component';
     PlaceHolderComponent,
     AddComponenteDirective,
     SearchByFechaComponent,
-    PruebaComponent
+    PruebaComponent,
+    ChoferesConEstadoPipe
   ]
 })
 export class SharedModule { }

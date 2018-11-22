@@ -23,12 +23,20 @@
             <div class="col-md-1">{{ serv.escalaLlegada }}</div>
             <div class="col-md-1">{{ serv.fechaHoraLlegada | date:'HH:mm' }}</div>
             <div class="col-md-2">
-                <select class="form-control">
+                <!-- <select class="form-control">
                       <option value="">-- Seleccionar --</option>
                       <option *ngFor="let opt of _vs.choferes" [value]="opt.choferPK">
                           {{opt.nombreChofer}}
                       </option>
-                </select>
+                </select>-->
+                <select class="form-control">
+                  <option  value="null">-- Seleccionar --</option>
+                  <option
+                   *ngFor="let opt of _vs.choferesOcupacion|choferesConEstado:serv.fechaHoraSalida:serv.fechaHoraLlegada"  [value]="opt.choferPKStr"
+                   [ngClass]="opt.classCho" >
+                      {{opt.nombre}}
+                  </option>
+            </select>
             </div>
             <div class="col-md-2">
                 <select class="form-control">
@@ -39,12 +47,21 @@
                 </select>
             </div>
             <div class="col-md-2">
-                <select class="form-control" title="Servicio Vta" placeholder="Servicio Vta" data-toggle="tooltip" animation="true" data-placement="top" onmouseenter="$(this).tooltip('show')">
+                <select class="form-control" #t (change)="_vs.onChangeServRetorno(serv, t.value)" title="Servicio Vta" placeholder="Servicio Vta" data-toggle="tooltip" animation="true" data-placement="top" onmouseenter="$(this).tooltip('show')">
                   <option  value="null" >-- Seleccionar --</option>
-                  <option *ngFor="let opt of _vs.serviciosVta|serMayoIgual:f" [value]="opt.servicioPKStr">{{ opt.detalle }}</option>
+                  <option *ngFor="let opt of _vs.serviciosVta|serMayoIgual:serv.fechaHoraLlegada" [value]="opt.servicioPKStr">{{ opt.detalle }}</option>
                 </select>
             </div>
+            <div class="col-md-2">
+                <a class="btn btn-xs" data-toggle="modal">
+                    <i title="Editar" data-toggle="tooltip" animation="true" data-placement="top" onmouseenter="$(this).tooltip('show')" class="fa fa-pencil fa-2x green" aria-hidden="true"></i>
+                </a>
+            </div>
         </div>
+        <ng-container *ngIf="serv.servicioRetorno">
+            <app-vuelta-de-vuelta [servicio]="serv.servicioRetorno"></app-vuelta-de-vuelta>
+        </ng-container>
+        <hr>
 
     </div>
 

@@ -1,0 +1,32 @@
+<div class="row">
+    <div class="col-md-2">{{ servicio.servicioPK.serFechaHora | date:'EE HH:mm' }} </div>
+    <div class="col-md-1">{{ servicio.escalaSalida }}</div>
+    <div class="col-md-1">{{ servicio.fechaHoraSalida | date:'HH:mm' }}</div>
+    <div class="col-md-1">{{ servicio.escalaLlegada }}</div>
+    <div class="col-md-1">{{ servicio.fechaHoraLlegada | date:'HH:mm' }}</div>
+    <div class="col-md-2">
+        <!-- <select class="form-control">
+            <option value="">-- Seleccionar --</option>
+            <option *ngFor="let opt of _vs.choferes" [value]="opt.choferPK">
+                {{opt.nombreChofer}}
+            </option>
+      </select>-->
+        <select class="form-control">
+        <option  value="null">-- Seleccionar --</option>
+        <option
+         *ngFor="let opt of _vs.choferesOcupacion|choferesConEstado:servicio.fechaHoraSalida:servicio.fechaHoraLlegada"  [value]="opt.choferPKStr"
+         [ngClass]="opt.classCho" >
+            {{opt.nombre}}
+        </option>
+  </select>
+    </div>
+    <div class="col-md-2">
+        <select class="form-control">
+            <option  value="null">-- Seleccionar --</option>
+            <option *ngFor="let opt of _vs.vehiculos"  [value]="opt.vehiculoPK">
+                {{opt.interno}}
+            </option>
+      </select>
+    </div>
+
+</div>
