@@ -7,66 +7,21 @@
     <hr class="style13">
     <div class="row">
         <div class="col-md-1"><strong>Hs Serv</strong></div>
+        <div class="col-md-1"><strong>Peli</strong></div>
+        <div class="col-md-1"><strong>Video</strong></div>
         <div class="col-md-1"><strong>Desde</strong></div>
-        <div class="col-md-1"><strong>Salida</strong></div>
         <div class="col-md-1"><strong>Hasta</strong></div>
-        <div class="col-md-1"><strong>LLegada</strong></div>
         <div class="col-md-2"><strong>Conductor</strong></div>
-        <div class="col-md-2"><strong>Interno</strong></div>
-        <div class="col-md-2"><strong>Ser. Regreso</strong></div>
+        <div class="col-md-1"><strong>Interno</strong></div>
+        <div class="col-md-3"><strong>Ser. Regreso</strong></div>
         <div class="col-md-1"></div>
 
     </div>
     <br>
     <div *ngFor="let serv of _vs.serviciosIda|filterByFecha:f">
-        <div class="row">
-            <div class="col-md-1">{{ serv.servicioPK.serFechaHora | date:'EE HH:mm' }} </div>
-            <div class="col-md-1">{{ serv.escalaSalida }}</div>
-            <div class="col-md-1">{{ serv.fechaHoraSalida | date:'EE HH:mm' }}</div>
-            <div class="col-md-1">{{ serv.escalaLlegada }}</div>
-            <div class="col-md-1">{{ serv.fechaHoraLlegada | date:'EE HH:mm' }}</div>
-            <div class="col-md-2">
-                <!-- <select class="form-control">
-                      <option value="">-- Seleccionar --</option>
-                      <option *ngFor="let opt of _vs.choferes" [value]="opt.choferPK">
-                          {{opt.nombreChofer}}
-                      </option>
-                </select>-->
-                <select class="form-control">
-                  <option  value="null">-- Seleccionar --</option>
-                  <option
-                   *ngFor="let opt of _vs.choferesOcupacion|choferesConEstado:serv.fechaHoraSalida:serv.fechaHoraLlegada"  [value]="opt.choferPKStr"
-                   [ngClass]="opt.classCho" >
-                      {{opt.nombre}}
-                  </option>
-            </select>
-            </div>
-            <div class="col-md-2">
-                <select class="form-control">
-                      <option  value="null">-- Seleccionar --</option>
-                      <option *ngFor="let opt of _vs.vehiculos"  [value]="opt.vehiculoPK">
-                          {{opt.interno}}
-                      </option>
-                </select>
-            </div>
-            <div class="col-md-2">
-                <select class="form-control" #t (change)="_vs.onChangeServRetorno(serv, t.value)" title="Servicio Vta" placeholder="Servicio Vta" data-toggle="tooltip" animation="true" data-placement="top" onmouseenter="$(this).tooltip('show')">
-                  <option  value="null" >-- Seleccionar --</option>
-                  <option *ngFor="let opt of _vs.serviciosVta|serMayoIgual:serv.fechaHoraLlegada" [value]="opt.servicioPKStr">{{ opt.detalle }}</option>
-                </select>
-            </div>
-            <div class="col-md-1">
-                <a class="btn btn-xs" data-toggle="modal">
-                    <i title="Guardar" data-toggle="tooltip" animation="true" data-placement="top" onmouseenter="$(this).tooltip('show')" class="fa fa-floppy-o fa-2x green" aria-hidden="true"></i>
-                </a>
-            </div>
-        </div>
-        <ng-container *ngIf="serv.servicioRetorno">
-            <app-vuelta-de-vuelta [servicio]="serv.servicioRetorno"></app-vuelta-de-vuelta>
-        </ng-container>
+        <app-vuelta-de-vuelta [serv]="serv"></app-vuelta-de-vuelta>
+        <!-- <pre>{{ serv | json }}</pre> -->
         <hr>
-
     </div>
-
 </div>
 <button type="button" class="btn btn-default" (click)="volver()" data-dismiss="modal" data-dismiss="modal">Volver</button>

@@ -24,6 +24,11 @@ export const CHOFER_CON_VIAJES_STR = 'alert alert-danger';
 export const CHOFER_LIBRE_STR = 'alert alert-success';
 
 
+export const CHOFER = 0;
+export const AUXILIAR = 1;
+
+
+
 /*
 
 type MyType = {

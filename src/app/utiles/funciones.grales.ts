@@ -2,6 +2,7 @@ import * as moment from 'moment';
 import { DatePipe } from '@angular/common';
 import { HttpParams } from '../../../node_modules/@angular/common/http';
 import { PaginationPropertySort } from '../shared/pagination';
+import { CHOFER } from './const-data-model';
 
 export class FuncionesGrales {
 
@@ -46,6 +47,13 @@ export class FuncionesGrales {
           params = params.append('sort', `${sort.property},${sort.direction}`);
       }
       return {params};
+  }
+
+  public static getTipoChoferStr( tipoChofer ): string {
+     if ( tipoChofer === CHOFER ) {
+        return 'CHO';
+     }
+     return 'AUX';
   }
 
 

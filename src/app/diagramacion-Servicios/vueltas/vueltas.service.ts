@@ -1,7 +1,7 @@
 import { Injectable, Inject, LOCALE_ID } from '@angular/core';
 import { FECHA_PATTERN_MOMENT, FECHA_PATTERN, CANTIDAD_DIAS_DIAGR_DEFAULT,
          FECHA_HORA_MOSTRAR_PATTERN, CANTIDAD_DIAS_DIAGR_ADICIONALES_VTA }
-         from 'src/app/utiles/const-data-model';
+          from 'src/app/utiles/const-data-model';
 import { DiagrService } from '../diagr.service';
 import { FuncionesGrales } from 'src/app/utiles/funciones.grales';
 import { MiUsuarioService } from 'src/app/_services/mi.usuario.service';
@@ -85,17 +85,18 @@ export class VueltasService {
   okServiciosIda( serviciosIda ) {
 
       this.serviciosIda = serviciosIda;
-      this.formatearFecha( this.serviciosIda );
+
+      serviciosIda.forEach( serv  => {
+      serv.servicioPK.serFechaHora = new Date( serv.servicioPK.serFechaHora );
+      serv.fechaHoraLlegada = new Date( serv.fechaHoraLlegada );
+      serv.fechaHoraSalida = new Date( serv.fechaHoraSalida );
+      //Por ahora
+      serv.choferes = [];
+      });
       this.ordenamientoServiciosAscendente(  this.serviciosIda );
   }
 
-  formatearFecha( servicios ) {
-        servicios.forEach( serv  => {
-        serv.servicioPK.serFechaHora = new Date( serv.servicioPK.serFechaHora );
-        serv.fechaHoraLlegada = new Date( serv.fechaHoraLlegada );
-        serv.fechaHoraSalida = new Date( serv.fechaHoraSalida );
-     });
-  }
+
 
   ordenamientoServiciosAscendente( servicios ) {
     servicios.sort(function (a, b) {
@@ -144,6 +145,7 @@ export class VueltasService {
         serv.fechaHoraLlegada = new Date( serv.fechaHoraLlegada );
         serv.fechaHoraSalida = new Date( serv.fechaHoraSalida );
         serv.servicioPKStr  = JSON.stringify( serv.servicioPK );
+        serv.choferes = [];
         serv.detalle  = FuncionesGrales.formatearFecha( this.locale, serv.fechaHoraSalida, FECHA_HORA_MOSTRAR_PATTERN );
     });
 
@@ -193,14 +195,34 @@ export class VueltasService {
          v.inicio = new Date( v.inicio );
          v.fin = new Date( v.fin );
        }
-    }
 
+       cho.descTipo = FuncionesGrales.getTipoChoferStr(  cho.tipo );
+    }
+    console.log( this.choferesOcupacion );
   }
 
   onChangeServRetorno( servicioIda,  idServRetorno ) {
     let retorno = this.serviciosVta.filter( ret => ret.servicioPKStr === idServRetorno )[0];
-    servicioIda.servicioRetorno = retorno;
+    servicioIda.servRetorno = retorno;
   }
+
+  addChofer( servicio, choferSel ) {
+
+      const chofer = this.choferesOcupacion.filter( cho => JSON.stringify( cho.choferPK ) == choferSel )[0];
+
+      const cho = {
+        choferPK : chofer.choferPK,
+        nombre: '(' + chofer.descTipo + ') ' + chofer.nombre,
+      };
+      servicio.choferes.push( cho );
+
+  }
+
+  removeChofer( servicio, index ) {
+    servicio.choferes.splice(index, 1);
+  }
+
+
 
 
 

@@ -1,5 +1,6 @@
 import { Pipe, PipeTransform } from '@angular/core';
 import { CHOFER_LIBRE_STR, CHOFER_CON_VIAJES_STR, CHOFER_CON_INCIDENCIAS_STR, CHOFER_CON_SERVICIOS_STR } from '../utiles/const-data-model';
+import { FuncionesGrales } from '../utiles/funciones.grales';
 
 
 
@@ -42,7 +43,7 @@ export class ChoferesConEstadoPipe implements PipeTransform {
               choferesOcup.push ( {
                   choferPK: cho.choferPK,
                   choferPKStr: JSON.stringify( cho.choferPK ),
-                  nombre: cho.nombre,
+                  nombre: '(' + cho.descTipo + ') ' + cho.nombre,
                   classCho: classCho });
           }
     }
