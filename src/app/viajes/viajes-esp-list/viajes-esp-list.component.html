@@ -35,11 +35,6 @@
 </form>
 
 
-<!--crear-->
-<div id="actions" class="form-group col-md-12 animated fadeIn">
-    <a class="btn btn-primary crearbtn" data-toggle="modal" (click)="crearNuevo()" data-target="#nuevo-modal">Crear</a>
-</div>
-
 <ng-container *ngIf="viajePage != null">
     <div id="list animated fadeIn" class="row ">
         <div class="table-responsive table-responsive-ve col-md-12 subirTablaVE">
@@ -82,62 +77,71 @@
                         <td>{{viaje.origen}}</td>
                         <td>{{viaje.fechaHoraRegreso | date:'EEE dd/MM/yyyy HH:mm' }}</td>
                         <td>{{viaje.destino}}</td>
+                        <!--interno-->
                         <td>
+                            <table>
+                                <tr *ngIf="viaje.vehiculo !== null">
+                                    <td> <span class="badge badge-pill" [ngClass]="viaje.vehiculo.vehEstado === 1 ?
+                                      'badge-warning' : 'badge-success'"> {{viaje.vehiculo.vehiculoPK.vehInterno }}</span>
+                                    </td>
+                                </tr>
+                                <tr *ngIf="viaje.vehiculo===null ">
+                                    <td>
+                                        <span class="badge badge-pill badge-yellow">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
 
-                            <table class="table table-striped table-hover" cellspacing="0" cellpadding="0" style="margin-top: 0pt;">
-                                <tr class="tr-redondeado" *ngIf="viaje.vehiculo != null" [style.backgroundColor]="viaje.vehiculo.vehEstado==1 ?  '#ff8000' : '#88bdea'">
-                                    <td [style.font-size]="'9px'">
-                                        {{viaje.vehiculo.vehiculoPK.vehInterno }}
+                        <td>
+                            <table>
+                                <tr *ngFor="let unChofer of viaje.choferes ">
+                                    <td><span class="badge badge-pill" [ngClass]="unChofer.cho_estado === 1 ?
+                                      'badge-warning' : 'badge-primary'">
+                                      {{ unChofer.cho_nombre }}</span></td>
+                                </tr>
+                                <tr *ngIf="viaje.choferes.length==0 ">
+                                    <td><span class="badge badge-pill badge-yellow">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></td>
+                                </tr>
+                                <!--agregar auxiliares-->
+                                <tr *ngFor="let unAuxliar of viaje.auxiliares ">
+                                    <td><span class="badge badge-pill" [ngClass]="unAuxliar.cho_estado === 1 ?
+                                        'badge-warning' : 'badge-primary'">
+                                      {{ unAuxliar.cho_nombre }}</span></td>
+
+                                </tr>
+                                <tr *ngIf="viaje.auxiliares.length==0 ||viaje.auxiliares==null ">
+                                    <td><span class="badge badge-pill badge-yellow">
+                                      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></td>
+                                </tr>
+                            </table>
+                        </td>
+                        <!--actions-->
+                        <td class="actions">
+                            <table>
+                                <tr>
+                                    <td>
+                                        <a class="btn btn-xs" data-toggle="modal" (click)="viajeInterno=viaje;clearAlert()" data-target="#details-interno">
+                                            <i title="Interno" data-toggle="tooltip" animation="true" data-placement="button" onmouseenter="$(this).tooltip( 'show')" class="fa fa-bus fa-2x blue" aria-hidden="true"></i>
+                                        </a>
+                                        <a class="btn btn-xs" data-toggle="modal" (click)="openModalChoferes(viaje)" data-target="#details-modal">
+                                            <i title="Conductores" data-toggle="tooltip" animation="true" data-placement="button" onmouseenter="$(this).tooltip( 'show')" class="fa fa-user-o fa-2x green" aria-hidden="true"></i>
+                                        </a>
+                                        <!--auxliar-->
+                                        <a class="btn btn-xs" data-toggle="modal" (click)="openModalAuxiliares(viaje)" data-target="#details-modal">
+                                            <i title="Auxiliares" data-toggle="tooltip" animation="true" data-placement="button" onmouseenter="$(this).tooltip( 'show')" class="fa fa-user-o fa-2x violet" aria-hidden="true"></i>
+                                        </a>
+                                        <a class="btn btn-xs" data-toggle="modal" (click)="viajeComent=viaje;clearAlert();" data-target="#details-coment">
+                                            <i title="Comentarios" data-toggle="tooltip" animation="true" data-placement="button" onmouseenter="$(this).tooltip( 'show')" class="fa fa-comment fa-2x green" aria-hidden="true"></i>
+                                        </a>
+                                        <a class="btn btn-xs" (click)="currentViaje=viaje;clearAlert()" data-toggle="modal" data-target="#delete-modal">
+                                            <i title="Eliminar" data-toggle="tooltip" animation="true" data-placement="button" onmouseenter="$(this).tooltip( 'show')" class="fa fa-trash-o fa-2x red" aria-hidden="true"></i>
+
+                                        </a>
                                     </td>
                                 </tr>
 
-                                <tr *ngIf="viaje.vehiculo == null" [style.backgroundColor]="'#f1f144'">
-                                    <td class="tr-redondeado" [style.font-size]="'9px'">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
-                                </tr>
-
                             </table>
-                        </td>
-
-                        <td>
-                            <!--<span  [style.backgroundColor] = "true ?  'gray' : 'gray'">  {{ unChofer.cho_nombre }} </span>-->
-                            <table class="table table-striped table-hover" cellspacing="0" cellpadding="0" style="margin-top: 0pt;">
-
-                                <tr *ngFor="let unChofer of viaje.choferes" [style.backgroundColor]="unChofer.cho_estado==1 ?  '#ff8000' : '#88bdea'">
-                                    <td [style.font-size]="'9px'">{{ unChofer.cho_nombre }}</td>
-                                </tr>
-
-                                <tr *ngIf="viaje.choferes.length==0" [style.backgroundColor]="'#f1f144'">
-                                    <td [style.font-size]="'9px'">&nbsp;&nbsp;&nbsp;CHO&nbsp;&nbsp;&nbsp;</td>
-                                </tr>
-
-                                <!--agregar auxiliares-->
-                                <tr *ngFor="let unAuxliar of viaje.auxiliares" [style.backgroundColor]="unAuxliar.cho_estado==1 ?  '#ff8000' : '#88bdea'">
-                                    <td [style.font-size]="'9px'">{{ unAuxliar.cho_nombre }}</td>
-                                </tr>
-
-                                <tr *ngIf="viaje.auxiliares.length==0 ||viaje.auxiliares == null" [style.backgroundColor]="'#f1f144'">
-                                    <td [style.font-size]="'9px'">&nbsp;&nbsp;&nbsp;AUX&nbsp;&nbsp;&nbsp;</td>
-                                </tr>
-                            </table>
-                        </td>
-                        <td class="actions">
-                            <a class="btn btn-xs" (click)="viajeInterno=viaje;clearAlert()" data-toggle="modal" data-target="#details-interno">
-                                <i title="Interno" data-toggle="tooltip" animation="true" data-placement="top" onmouseenter="$(this).tooltip('show')" class="fa fa-bus fa-2x blue"></i>
-                            </a>
-                            <a class="btn  btn-xs" data-toggle="modal" (click)="openModalChoferes(viaje)" data-target="#details-modal">
-                                <i title="Conductores" data-toggle="tooltip" animation="true" data-placement="top" onmouseenter="$(this).tooltip('show')" class="fa fa-user-o fa-2x green" aria-hidden="true"></i>
-                            </a>
-                            <!--auxliar-->
-                            <a class="btn  btn-xs" data-toggle="modal" (click)="openModalAuxiliares(viaje)" data-target="#details-modal">
-                                <i title="Auxiliares" data-toggle="tooltip" animation="true" data-placement="top" onmouseenter="$(this).tooltip('show')" class="fa fa-user-o fa-2x violet" aria-hidden="true"></i>
-                            </a>
-                            <a class="btn  btn-xs" data-toggle="modal" (click)="viajeComent=viaje;clearAlert();" data-target="#details-coment">
-                                <i title="Comentarios" data-toggle="tooltip" animation="true" data-placement="top" onmouseenter="$(this).tooltip('show')" class="fa fa-comment fa-2x green"></i>
-                            </a>
-                            <a class="btn  btn-xs" (click)="currentViaje=viaje;clearAlert()" data-toggle="modal" data-target="#delete-modal">
-                                <i title="Eliminar" data-toggle="tooltip" animation="true" data-placement="top" onmouseenter="$(this).tooltip('show')" class="fa fa-trash-o fa-2x red" aria-hidden="true"></i>
-
-                            </a>
                         </td>
                     </tr>
                 </tbody>
@@ -150,6 +154,11 @@
 
 
 
+
+<!--crear-->
+<div id="actions" class="form-group col-md-12 animated fadeIn">
+    <a class="btn btn-primary crearbtn subirBtn" data-toggle="modal" (click)="crearNuevo()" data-target="#nuevo-modal">Crear</a>
+</div>
 
 
 <!-- Modal Crear-->
@@ -175,7 +184,7 @@
 
 
 <!-- Modal Details Interno-->
-<ng-container *ngIf="viajeInterno!=null">
+<ng-container *ngIf="viajeInterno !== null">
     <div class="modal fade" id="details-interno" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false" aria-labelledby="modalLabel">
         <div class="modal-dialog" role="document">
             <app-diagr-interno [viajeEspecial]="viajeInterno">
