@@ -56,5 +56,12 @@ export class FuncionesGrales {
      return 'AUX';
   }
 
+  public static diffDias( inicio: Date, fin: Date ) {
+    const fechaInicio = inicio.getTime();
+    const fechaFin = fin.getTime();
+    const diff = fechaFin - fechaInicio;
+    return (diff / ( 1000 * 60 * 60 * 24 ));
+  }
+
 
 }

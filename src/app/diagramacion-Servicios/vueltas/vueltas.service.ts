@@ -46,7 +46,8 @@ export class VueltasService {
 
   generarFechas() {
     this.fechas = [];
-    const DIAS = this.fin.getDate() - this.inicio.getDate() + 1;
+    //const DIAS = this.fin.getDate() - this.inicio.getDate() + 1;
+    const DIAS = FuncionesGrales.diffDias( this.inicio, this.fin ) + 1 ;
     for ( let i = 0; i < DIAS; i++ ) {
       const fecha = new Date( this.inicio.getTime() );
       fecha.setDate( fecha.getDate() + i );
@@ -90,8 +91,6 @@ export class VueltasService {
       serv.servicioPK.serFechaHora = new Date( serv.servicioPK.serFechaHora );
       serv.fechaHoraLlegada = new Date( serv.fechaHoraLlegada );
       serv.fechaHoraSalida = new Date( serv.fechaHoraSalida );
-      //Por ahora
-      serv.choferes = [];
       });
       this.ordenamientoServiciosAscendente(  this.serviciosIda );
   }
@@ -145,7 +144,6 @@ export class VueltasService {
         serv.fechaHoraLlegada = new Date( serv.fechaHoraLlegada );
         serv.fechaHoraSalida = new Date( serv.fechaHoraSalida );
         serv.servicioPKStr  = JSON.stringify( serv.servicioPK );
-        serv.choferes = [];
         serv.detalle  = FuncionesGrales.formatearFecha( this.locale, serv.fechaHoraSalida, FECHA_HORA_MOSTRAR_PATTERN );
     });
 
@@ -167,7 +165,13 @@ export class VueltasService {
   getVehiculos() {
 
     this._ds.findVehiculos( this.yo.getEmpresa())
-    .subscribe( v => { this.vehiculos = v; console.log( this.vehiculos ); });
+    .subscribe( v => {
+                         this.vehiculos = v;
+                         this.vehiculos.forEach( v => {
+                             v.vehiculoPKStr = JSON.stringify( v.vehiculoPK );
+                         });
+                         console.log( this.vehiculos );
+                     });
 
   }
 
@@ -201,12 +205,15 @@ export class VueltasService {
     console.log( this.choferesOcupacion );
   }
 
-  onChangeServRetorno( servicioIda,  idServRetorno ) {
-    let retorno = this.serviciosVta.filter( ret => ret.servicioPKStr === idServRetorno )[0];
-    servicioIda.servRetorno = retorno;
+  getServRetorno( idServRetorno ) {
+    return  this.serviciosVta.filter( ret => ret.servicioPKStr === idServRetorno )[0];
   }
 
-  addChofer( servicio, choferSel ) {
+  getChofer( choferSel ) {
+      return this.choferesOcupacion.filter( cho => JSON.stringify( cho.choferPK ) == choferSel )[0];
+  }
+
+  /*addChofer( servicio, choferSel ) {
 
       const chofer = this.choferesOcupacion.filter( cho => JSON.stringify( cho.choferPK ) == choferSel )[0];
 
@@ -216,15 +223,10 @@ export class VueltasService {
       };
       servicio.choferes.push( cho );
 
-  }
+  }*/
 
-  removeChofer( servicio, index ) {
+  /*removeChofer( servicio, index ) {
     servicio.choferes.splice(index, 1);
-  }
-
-
-
-
-
+  }*/
 
 }
