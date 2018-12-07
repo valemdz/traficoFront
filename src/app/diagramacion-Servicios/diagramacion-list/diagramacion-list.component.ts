@@ -65,7 +65,7 @@ export class DiagramacionListComponent implements OnInit {
 
   getLIneas() {
     let observable: Observable<Response> =
-    this.diagrService.findLineasByEmp(this.yo.getEmpresa());
+    this.diagrService.findLineasByEmp$(this.yo.getEmpresa());
       observable.subscribe( data => {
       this.comboLineas = data;
     });
@@ -89,7 +89,7 @@ success(message: string) {
 fetchPage(pageNumber: number, pageSize: number, sort: PaginationPropertySort):
   Observable<PaginationPage<Servicios>> {
   let observable: Observable<PaginationPage<Servicios>> =
-  this.diagrService.findServiciosByLineaYfecha(pageNumber, pageSize, sort,
+  this.diagrService.findServiciosByLineaYfecha$(pageNumber, pageSize, sort,
     this.yo.getEmpresa(), this.getLinea(), this.getInicio(), this.getFin() );
   observable.subscribe(servPage => this.servPage = servPage);
   return observable;
