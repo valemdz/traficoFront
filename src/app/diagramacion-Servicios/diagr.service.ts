@@ -35,7 +35,17 @@ export class DiagrService {
 
   findSerConHorariosByLineaYfecha$( idEmpresa: String, idLinea: String, inicio: any, fin: any): Observable<any> {
     const url = this.urlBase + `/diagr/empresa/${idEmpresa}/linea/${idLinea}/fechaInicio/${inicio}/fechaFin/${fin}/serviciosConHorarios`;
-    return this.http.get( url );
+    return this.http.get( url ).pipe(
+      map( (  v :any ) =>{
+              v.forEach(serv => {
+                  serv.servicioPK.serFechaHora = new Date( serv.servicioPK.serFechaHora );
+                  serv.fechaHoraLlegada = new Date( serv.fechaHoraLlegada );
+                  serv.fechaHoraSalida = new Date( serv.fechaHoraSalida ); 
+              });
+              return v;
+        }
+      )
+    );
   }
 
 
@@ -53,7 +63,32 @@ export class DiagrService {
 
   findChoresOcupacion$( idEmpresa, inicio, fin ) {
     const url = this.urlBase + `/diagr/empresa/${idEmpresa}/fechaInicio/${inicio}/fechaFin/${fin}/choferesOcupacion`;
-    return  this.http.get( url );
+    return  this.http.get( url )
+            .pipe(
+              map( ( choferes: any ) =>{
+
+                choferes.forEach(cho => {
+                    cho.servicios.forEach( serv =>{
+                      serv.servicioPK.serFechaHora = new Date( serv.servicioPK.serFechaHora );
+                      serv.fechaHoraSalida = new Date( serv.fechaHoraSalida );
+                      serv.fechaHoraLlegada = new Date( serv.fechaHoraLlegada );
+                    });
+
+                    cho.incidencias.forEach( inc => {
+                        inc.inicio = new Date( inc.inicio );
+                        inc.fin = new Date( inc.fin );
+                    });
+
+                    cho.viajes.forEach( v => {
+                      v.inicio = new Date( v.inicio );
+                      v.fin = new Date( v.fin );
+                    });
+                });               
+                
+                return choferes;
+
+              })
+            );
   }
 
 

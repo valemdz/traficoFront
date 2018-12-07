@@ -65,7 +65,7 @@ export class VueltasService {
     this.generarFechas();
     this.getServiciosIda();
     this.getServiciosVta();
-    //this.getChoferes();
+    
     this.getVehiculos();
     this.getChoferesOcupacion();
     this.getVueltas();
@@ -85,19 +85,10 @@ export class VueltasService {
       .subscribe( this.okServiciosIda.bind( this ), this.errorServiciosIda.bind( this ) );
   }
 
-  okServiciosIda( serviciosIda ) {     
-
-      this.serviciosIda = serviciosIda;
-
-      serviciosIda.forEach( serv  => {
-      serv.servicioPK.serFechaHora = new Date( serv.servicioPK.serFechaHora );
-      serv.fechaHoraLlegada = new Date( serv.fechaHoraLlegada );
-      serv.fechaHoraSalida = new Date( serv.fechaHoraSalida );
-      });
+  okServiciosIda( serviciosIda ) { 
+      this.serviciosIda = serviciosIda;     
       this.ordenamientoServiciosAscendente(  this.serviciosIda );
-
-      
-      console.log(' serv Ida');
+      console.log('Serv Ida');                  
       console.log(this.serviciosIda);      
   }
 
@@ -144,29 +135,14 @@ export class VueltasService {
   okServiciosVta( serviciosVta) {
 
     this.serviciosVta = serviciosVta;
-
-    this.serviciosVta.forEach( serv  => {
-        serv.servicioPK.serFechaHora = new Date( serv.servicioPK.serFechaHora );
-        serv.fechaHoraLlegada = new Date( serv.fechaHoraLlegada );
-        serv.fechaHoraSalida = new Date( serv.fechaHoraSalida );
+    this.serviciosVta.forEach( serv  => {      
         serv.servicioPKStr  = JSON.stringify( serv.servicioPK );
         serv.detalle  = FuncionesGrales.formatearFecha( this.locale, serv.fechaHoraSalida, FECHA_HORA_MOSTRAR_PATTERN );
     });
-
     this.ordenamientoServiciosAscendente( this.serviciosVta );
-
     console.log( 'Servicios Vta' );
     console.log( this.serviciosVta );
-  }
-
-
-  getChoferes() {
-    this._ds.finChoferes$( this.yo.getEmpresa() )
-    .subscribe( cho => {
-                          this.choferes =  cho;
-                          console.log( this.choferes );
-                        } );
-  }
+  } 
 
   getVehiculos() {
 
@@ -190,22 +166,7 @@ export class VueltasService {
   }
 
   okChoferes( data ) {
-    this.choferesOcupacion = data;
-    for ( let cho of this.choferesOcupacion) {
-       for ( let serv of  cho.servicios ) {
-         serv.servicioPK.serFechaHora = new Date( serv.servicioPK.serFechaHora );
-         serv.fechaHoraSalida = new Date( serv.fechaHoraSalida );
-         serv.fechaHoraLlegada = new Date( serv.fechaHoraLlegada );
-       }
-       for ( let inc of cho.incidencias ) {
-           inc.inicio = new Date( inc.inicio );
-           inc.fin = new Date( inc.fin );
-       }
-       for ( let v of cho.viajes ) {
-         v.inicio = new Date( v.inicio );
-         v.fin = new Date( v.fin );
-       }       
-    }
+    this.choferesOcupacion = data;    
     console.log( this.choferesOcupacion );
   }
 

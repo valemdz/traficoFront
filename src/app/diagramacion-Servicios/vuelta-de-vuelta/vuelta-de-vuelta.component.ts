@@ -82,26 +82,7 @@ export class VueltaDeVueltaComponent implements OnInit {
           videoVta: form.videoVta,
           servRet: this.servRet
     };
-
-    /*return {
-          empresa: this.yo.getEmpresa(),
-          peliIda: form.peliIda,
-          videoIda: form.videoIda,
-          servIda: {
-            servicioPK: this.serv.servicioPK,
-            etaInicio: this.serv.etaInicio,
-            etaFin: this.serv.etaFin,
-            choferes: this.choferesIda,
-            vehiculos: this.getVehiculoIda() 
-           },
-           peliVta: form.peliVta,
-           videoVta: form.videoVta,
-           servRet: {
-              servicioPK: this.servRet.servicioPK,
-              choferes: this.choferesVta,
-              vehiculos: this.getVehiculoVta()
-           }
-    };*/
+    
   }
 
   getVehiculoIda(){
