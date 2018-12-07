@@ -42,13 +42,24 @@ export class SearchByFechaComponent implements OnInit {
 
   ngOnInit() {
 
-    this.fInicio = new Date();
-    this.fFin = new Date();
 
-    if ( this.fechaInicio && this.fechaFin ) {
-      this.fInicio = this.fechaInicio;
-      this.fFin = this.fechaFin;
-    }
+    // =====Sacar =============
+    this.fInicio = FuncionesGrales.formatearFecha( this.locale, '2018/11/30', FECHA_PATTERN ),
+    this.fFin = FuncionesGrales.formatearFecha( this.locale, '2018/12/02', FECHA_PATTERN ),
+    // ===============================
+
+
+    // ===== Dejar esto =============
+    //this.fInicio = new Date();
+    //this.fFin = new Date();
+    
+
+    // if ( this.fechaInicio && this.fechaFin ) {
+    //   this.fInicio = this.fechaInicio;
+    //   this.fFin = this.fechaFin;
+    // }
+
+    // ===============================
 
     this.searchForm.reset({
       fInicio: FuncionesGrales.formatearFecha( this.locale, this.fInicio, FECHA_PATTERN ),

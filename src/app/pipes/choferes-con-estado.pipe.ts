@@ -43,9 +43,10 @@ export class ChoferesConEstadoPipe implements PipeTransform {
               choferesOcup.push ( {
                   choferPK: cho.choferPK,
                   choferPKStr: JSON.stringify( cho.choferPK ),
-                  nombre: '(' + cho.descTipo + ') ' + cho.nombre,
+                  nombre: cho.nombre,
+                  nombreConTipo: cho.nombreConTipo,
                   classCho: classCho });
-          }
+              }
     }
 
     return choferesOcup;

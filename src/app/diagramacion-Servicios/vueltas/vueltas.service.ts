@@ -26,6 +26,8 @@ export class VueltasService {
 
   choferesOcupacion: any;
 
+  vueltas:any = [];
+
 
   constructor( private _ds: DiagrService,
                private yo: MiUsuarioService,
@@ -63,10 +65,10 @@ export class VueltasService {
     this.generarFechas();
     this.getServiciosIda();
     this.getServiciosVta();
-    this.getChoferes();
+    //this.getChoferes();
     this.getVehiculos();
-
     this.getChoferesOcupacion();
+    this.getVueltas();
 
   }
 
@@ -76,14 +78,14 @@ export class VueltasService {
   }
 
   getServiciosIda( ) {
-      this._ds.findSerConHorariosByLineaYfecha( this.yo.getEmpresa(),
+      this._ds.findSerConHorariosByLineaYfecha$( this.yo.getEmpresa(),
                                           this.idLinIda,
                                           FuncionesGrales.fromFecha( this.locale, this.inicio, FECHA_PATTERN),
                                           FuncionesGrales.fromFecha( this.locale, this.fin, FECHA_PATTERN)   )
       .subscribe( this.okServiciosIda.bind( this ), this.errorServiciosIda.bind( this ) );
   }
 
-  okServiciosIda( serviciosIda ) {
+  okServiciosIda( serviciosIda ) {     
 
       this.serviciosIda = serviciosIda;
 
@@ -93,6 +95,10 @@ export class VueltasService {
       serv.fechaHoraSalida = new Date( serv.fechaHoraSalida );
       });
       this.ordenamientoServiciosAscendente(  this.serviciosIda );
+
+      
+      console.log(' serv Ida');
+      console.log(this.serviciosIda);      
   }
 
 
@@ -128,7 +134,7 @@ export class VueltasService {
   }
 
   getServiciosVta() {
-      this._ds.findSerConHorariosByLineaYfecha( this.yo.getEmpresa(),
+      this._ds.findSerConHorariosByLineaYfecha$( this.yo.getEmpresa(),
       this.idLinVta,
       FuncionesGrales.fromFecha( this.locale, this.inicio, FECHA_PATTERN),
       FuncionesGrales.fromFecha( this.locale, this.finVuelta, FECHA_PATTERN)   )
@@ -155,7 +161,7 @@ export class VueltasService {
 
 
   getChoferes() {
-    this._ds.finChoferes( this.yo.getEmpresa() )
+    this._ds.finChoferes$( this.yo.getEmpresa() )
     .subscribe( cho => {
                           this.choferes =  cho;
                           console.log( this.choferes );
@@ -164,7 +170,7 @@ export class VueltasService {
 
   getVehiculos() {
 
-    this._ds.findVehiculos( this.yo.getEmpresa())
+    this._ds.findVehiculos$( this.yo.getEmpresa())
     .subscribe( v => {
                          this.vehiculos = v;
                          this.vehiculos.forEach( v => {
@@ -176,7 +182,7 @@ export class VueltasService {
   }
 
   getChoferesOcupacion() {
-         this._ds.findChoresOcupacion( this.yo.getEmpresa(),
+         this._ds.findChoresOcupacion$( this.yo.getEmpresa(),
                           FuncionesGrales.fromFecha( this.locale, this.inicio, FECHA_PATTERN),
                           FuncionesGrales.fromFecha( this.locale, this.finVuelta, FECHA_PATTERN) )
         .subscribe( this.okChoferes.bind( this ) );
@@ -198,9 +204,7 @@ export class VueltasService {
        for ( let v of cho.viajes ) {
          v.inicio = new Date( v.inicio );
          v.fin = new Date( v.fin );
-       }
-
-       cho.descTipo = FuncionesGrales.getTipoChoferStr(  cho.tipo );
+       }       
     }
     console.log( this.choferesOcupacion );
   }
@@ -213,20 +217,23 @@ export class VueltasService {
       return this.choferesOcupacion.filter( cho => JSON.stringify( cho.choferPK ) == choferSel )[0];
   }
 
-  /*addChofer( servicio, choferSel ) {
 
-      const chofer = this.choferesOcupacion.filter( cho => JSON.stringify( cho.choferPK ) == choferSel )[0];
+  getVueltas(){
 
-      const cho = {
-        choferPK : chofer.choferPK,
-        nombre: '(' + chofer.descTipo + ') ' + chofer.nombre,
-      };
-      servicio.choferes.push( cho );
+    this._ds.getVueltas$( this.yo.getEmpresa(),
+                          this.idLinIda,
+                          FuncionesGrales.fromFecha( this.locale, this.inicio, FECHA_PATTERN),
+                          FuncionesGrales.fromFecha( this.locale, this.fin, FECHA_PATTERN) )
+                          .subscribe( this.okVueltas.bind( this) );
+  }
 
-  }*/
+  okVueltas( vueltas ){
+    console.log( vueltas );
+    this.vueltas = vueltas;
+  }
 
-  /*removeChofer( servicio, index ) {
-    servicio.choferes.splice(index, 1);
-  }*/
+  errorVueltas( err ){
+    console.log( err );
+  }
 
 }
