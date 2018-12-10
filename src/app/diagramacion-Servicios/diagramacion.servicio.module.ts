@@ -1,6 +1,6 @@
 import { NgModule, CUSTOM_ELEMENTS_SCHEMA, forwardRef } from '@angular/core';
 import { SharedModule } from './../shared/shared.module';
-import {RouterModule} from '@angular/router';
+
 
 import { VentanasModalesModule } from '../ventanas-modales/ventanas-modales.module';
 
@@ -18,17 +18,17 @@ import { IdaVtaListComponent } from '../diagramacion-Servicios/ida-vta-list/ida-
 import { EnlaceLineasComponent } from '../diagramacion-Servicios/enlace-lineas/enlace-lineas.component';
 import { VueltasComponent } from '../diagramacion-Servicios/vueltas/vueltas.component';
 import { FormsModule } from '@angular/forms';
-import { FilterByFechaPipe } from '../pipes/filter-by-fecha.pipe';
-import { SerMayoIgualPipe } from '../pipes/ser-mayo-igual.pipe';
 import { VueltaDeVueltaComponent } from '../diagramacion-Servicios/vuelta-de-vuelta/vuelta-de-vuelta.component';
 import { VueltasService } from './vueltas/vueltas.service';
+import { PipesModule } from '../pipes/pipes.module';
 
 @NgModule({
   imports: [
     SharedModule,
     VentanasModalesModule,
     FormsModule,
-    DiagramacionServicioRoutingModule
+    DiagramacionServicioRoutingModule,
+    PipesModule
   ],
   declarations: [
               DiagramacionListComponent,
@@ -40,8 +40,7 @@ import { VueltasService } from './vueltas/vueltas.service';
               IdaVtaListComponent,
               EnlaceLineasComponent,
               VueltasComponent,
-              FilterByFechaPipe,
-              SerMayoIgualPipe,
+              
               VueltaDeVueltaComponent ],
   entryComponents: [ModalConDetalleComponent, HeroJobAdComponent, HeroProfileComponent],
     providers:[ DiagrService, AdService, VueltasService],

@@ -19,7 +19,7 @@
             <button *ngFor="let c of choferesIda;let i=index" type="button" class="btn btn-primary btn-xs"><span (click)="removeChofer( choferesIda, i)" class="badge">x</span>{{c.nombreConTipo}}</button>
 
             <select class="form-control" #ch (change)="addChoferIda(choferesIda, ch.value, serv)" formControlName="choferIda" >
-                  <option  value="null">-- Seleccionar --</option>
+                  <option  value="null">-- Seleccionar --</option>                  
                   <option
                   *ngFor="let opt of _vs.choferesOcupacion|choferesConEstado:serv.fechaHoraSalida:serv.fechaHoraLlegada"  [value]="opt.choferPKStr"
                   [ngClass]="opt.classCho" >
@@ -36,8 +36,8 @@
         </select>
         </div>
         <div class="col-md-3">
-            <select class="form-control" #t (change)="onChangeServRetorno( t.value)" title="Servicio Vta" placeholder="Servicio Vta" data-toggle="tooltip" animation="true" data-placement="top" onmouseenter="$(this).tooltip('show')" required>
-              <option  value="null" >-- Seleccionar --</option>
+            <select class="form-control" formControlName = "servRetorno" #t (change)="onChangeServRetorno( t.value)" title="Servicio Vta" placeholder="Servicio Vta" data-toggle="tooltip" animation="true" data-placement="top" onmouseenter="$(this).tooltip('show')" required>
+              <option [selected]="formVueltas.controls.servRetorno.value == null"  >-- Seleccionar --</option>
               <option *ngFor="let opt of _vs.serviciosVta|serMayoIgual:serv.fechaHoraLlegada" [value]="opt.servicioPKStr">{{ opt.detalle }}</option>
             </select>
         </div>

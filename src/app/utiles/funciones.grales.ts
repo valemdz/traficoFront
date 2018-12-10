@@ -64,4 +64,23 @@ export class FuncionesGrales {
   }
 
 
+  //No compara Objetos en profundidad
+  public static compareObj(a, b) {
+    var aKeys = Object.keys(a).sort();
+    var bKeys = Object.keys(b).sort();
+    if (aKeys.length !== bKeys.length) {
+        return false;
+    }
+    if (aKeys.join('') !== bKeys.join('')) {
+        return false;
+    }
+    for (var i = 0; i < aKeys.length; i++) {
+        if ( a[aKeys[i]]  !== b[bKeys[i]]) {
+            return false;
+        }
+    }
+    return true;
+  }
+
+
 }

@@ -3,6 +3,8 @@ import { VueltasService } from '../vueltas/vueltas.service';
 import { FormGroup, FormBuilder, Validators, NgForm } from '@angular/forms';
 import { MiUsuarioService } from 'src/app/_services/mi.usuario.service';
 import { DiagrService } from '../diagr.service';
+import { Vuelta } from 'src/app/models/vuelta.model';
+import { Servicio } from 'src/app/models/servicio.model';
 
 @Component({
   selector: 'app-vuelta-de-vuelta',
@@ -11,11 +13,13 @@ import { DiagrService } from '../diagr.service';
 })
 export class VueltaDeVueltaComponent implements OnInit {
 
-  @Input() serv;
+  @Input() serv: Servicio;
 
-  servRet;
+  servRet: Servicio;
   choferesIda = [];  
   choferesVta = []; 
+
+  vuelta: Vuelta;
 
   formVueltas: FormGroup;
 
@@ -36,17 +40,43 @@ export class VueltaDeVueltaComponent implements OnInit {
       videoVta: [ null, [ Validators.required ]],
       choferVta: [ null],
       internoVta: [ null, [ Validators.required ]],
+      servRetorno: [ null, [Validators.required]]
     });
   }
 
   ngOnInit() {
-    console.log('Paso por ngOnInit');
+    
     if ( this.serv ) {
        // clona los choferes de otra manera modificarias los del servicio
-       this.choferesIda = this.serv.choferes.slice();
-       console.log( this.serv );
-       console.log( this.choferesIda );
+       console.log('Paso por ngOnInit');
+       this.choferesIda = this.serv.choferes.slice();     
+       this.vuelta = this._vs.getVuelta( this.serv.servicioPK );
+       this.setVuelta();
+       console.log('vuelta ', this.vuelta );
+       console.log( 'Fin ngOnInit');      
+
     }
+  }
+
+  setVuelta() {
+    if ( this.vuelta ) {         
+      //Traer el retorno 
+      this.onChangeServRetorno( JSON.stringify( this.vuelta.servicioRet.servicioPK ) );      
+
+      this.formVueltas.reset({
+        peliIda: this.vuelta.peliIda,
+        videoIda: this.vuelta.videoIda,
+        //choferIda:  null,
+        internoIda: (this.serv.vehiculos.length>0 )? JSON.stringify(this.serv.vehiculos[0].vehiculoPK ):null,
+        peliVta: this.vuelta.peliVta,
+        videoVta: this.vuelta.videoVta,
+        //choferVta: null ,
+        internoVta: (this.servRet.vehiculos.length>0)? JSON.stringify( this.servRet.vehiculos[0].vehiculoPK ): null ,
+        servRetorno: this.servRet.servicioPKStr
+      });      
+
+    }   
+
   }
 
 
@@ -105,7 +135,7 @@ export class VueltaDeVueltaComponent implements OnInit {
     this.servRet = this._vs.getServRetorno( idServRetorno );
     if ( this.servRet ) {
       this.choferesVta = this.servRet.choferes.slice();
-      console.log( this.choferesVta );
+      console.log('aja', this.choferesVta );
     }
   }
 

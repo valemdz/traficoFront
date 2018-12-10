@@ -25,12 +25,14 @@ import { AddComponenteDirective } from './add.componente.directive';
 import { SearchByFechaComponent } from './search-by-fecha/search-by-fecha.component';
 import { PruebaComponent } from './prueba/prueba.component';
 import { ChoferesConEstadoPipe } from '../pipes/choferes-con-estado.pipe';
+import { PipesModule } from '../pipes/pipes.module';
 
 
 @NgModule({
   imports: [
     CommonModule,
     ReactiveFormsModule,
+    PipesModule
   ],
   declarations: [ MensajesComponent,
                   AlertComponent,
@@ -45,8 +47,7 @@ import { ChoferesConEstadoPipe } from '../pipes/choferes-con-estado.pipe';
                   PlaceHolderComponent,
                   AddComponenteDirective,
                   SearchByFechaComponent,
-                  PruebaComponent,
-                  ChoferesConEstadoPipe ],
+                  PruebaComponent  ],
   exports:[
     CommonModule,
     ReactiveFormsModule,

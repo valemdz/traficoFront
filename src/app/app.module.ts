@@ -31,6 +31,7 @@ import { SharedModule } from './shared/shared.module';
 import { AuthenticationService } from './_services/authentication.service';
 import { TokenInterceptorService } from './_services/token-interceptor.service';
 import { PruebaComponent } from './shared/prueba/prueba.component';
+import { ViewVueltaDeVueltaComponent } from './diagramacion-Servicios/vuelta-de-vuelta/view-vuelta-de-vuelta.component';
 
 
 const appRoutes: Routes = [
@@ -47,6 +48,7 @@ const appRoutes: Routes = [
     FileUploaderComponent,
     HomeComponent,
     LoginComponent,
+    ViewVueltaDeVueltaComponent,
   ],
   imports: [
     BrowserModule,
