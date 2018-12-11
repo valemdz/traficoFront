@@ -222,6 +222,27 @@ input[type=date] {
     flex: 1 1 auto;
 }
 
+.badge-success {
+    background-color: #4BA54B !important;
+}
+
+.badge-warning {
+    background-color: #FCBF07 !important;
+}
+
+.badge-yellow {
+    background-color: #fdfd96 !important;
+}
+
+.badge-primary {
+    background-color: #007BFF !important;
+}
+
+.badge {
+    margin-bottom: 1% !important;
+    font-size: 9px !important;
+}
+
 
 /* Absolute Center Spinner */
 

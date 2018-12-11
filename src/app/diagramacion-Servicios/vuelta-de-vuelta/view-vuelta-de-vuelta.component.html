@@ -1,7 +1,69 @@
-<br>
-<br>
- <br>
-
-<p>
-  view-vuelta-de-vuelta works!
-</p>
+<div class="table-responsive">
+    <table class="table">
+        <thead>
+            <tr>
+                <th><strong>Hs Serv</strong></th>
+                <th><strong>Pelicula</strong></th>
+                <th><strong>Video</strong></th>
+                <th><strong>Desde</strong></th>
+                <th><strong>Hasta</strong></th>
+                <th><strong>Personal</strong></th>
+                <th><strong>Interno</strong></th>
+                <th><strong>Ser. Regreso</strong></th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr class="success">
+                <td>{{ serv.servicioPK.serFechaHora | date:'EE HH:mm' }} </td>
+                <td *ngIf="vuelta">{{vuelta.peliIda}}</td>
+                <td *ngIf="vuelta">{{vuelta.videoIda}}</td>
+                <td *ngIf="vuelta == null "></td>
+                <td *ngIf="vuelta == null"></td>
+                <td>{{ serv.escSalida }}<br>{{ serv.fechaHoraSalida | date:'EE HH:mm' }}</td>
+                <td>{{ serv.escLlegada }}<br>{{ serv.fechaHoraLlegada | date:'EE HH:mm' }}</td>
+                <td>
+                    <table>
+                        <tr *ngFor="let c of choferesIda;let i=index">
+                            <td><span class="badge badge-pill" [ngClass]="c.cho_estado === 1 ?
+                          'badge-warning' : 'badge-primary'">
+                                    {{ c.nombreConTipo }}</span></td>
+                        </tr>
+                    </table>
+                </td>
+                <td> {{internoIda}}</td>
+                <td *ngIf="servRet">{{servRet.servicioPK.serFechaHora | date:'EE HH:mm' }}</td>
+                <td class="actions">
+                    <!--  <a class="btn btn-xs" (click)="modificarDinam(incidencia);clearAlert()" data-toggle="modal" data-target="#nuevo-modal">
+                        <i title="Editar" data-toggle="tooltip" animation="true" data-placement="top" onmouseenter="$(this).tooltip('show')" class="fa fa-pencil fa-2x green" aria-hidden="true"></i>
+                    </a>
+                 <a class="btn btn-xs" (click)="currentIncidencia=incidencia;clearAlert()" data-toggle="modal" data-target="#delete-modal">
+                                <i title="Eliminar" data-toggle="tooltip" animation="true" data-placement="top" onmouseenter="$(this).tooltip('show')" class="fa fa-trash-o fa-2x red" aria-hidden="true"></i>
+                            </a>
+                -->
+                </td>
+            </tr>
+            <tr *ngIf="servRet" class="success">
+                <td>{{ servRet.servicioPK.serFechaHora | date:'EE HH:mm' }}</td>
+                <td *ngIf="vuelta">{{vuelta.peliVta}}</td>
+                <td *ngIf="vuelta">{{vuelta.videoVta}}</td>
+                <td *ngIf="vuelta == null"></td>
+                <td *ngIf="vuelta == null"></td>
+                <td>{{ servRet.escSalida }}<br>{{ servRet.fechaHoraSalida | date:'EE HH:mm' }}</td>
+                <td>{{ servRet.escLlegada }}<br>{{ servRet.fechaHoraLlegada | date:'EE HH:mm' }}</td>
+                <td>
+                    <table>
+                        <tr *ngFor="let c of choferesVta;let i=index">
+                            <td><span class="badge badge-pill" [ngClass]="c.cho_estado === 1 ?
+                          'badge-warning' : 'badge-primary'">
+                                    {{ c.nombreConTipo }}</span></td>
+                        </tr>
+                    </table>
+                </td>
+                <td>{{internoVta}}</td>
+                <td></td>
+                <td></td>
+            </tr>
+        </tbody>
+    </table>
+</div>

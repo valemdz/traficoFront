@@ -37,12 +37,13 @@
                                 {{opt.interno}}
                             </option>
                         </select></td>
-                    <td> <select formControlName="servRetorno" class="input-sm form-control" #t (change)="onChangeServRetorno( t.value)" title="Servicio Vta" placeholder="Servicio Vta" data-toggle="tooltip" animation="true" data-placement="top" onmouseenter="$(this).tooltip('show')" required>
+                    <td> <select formControlName="servRetorno" class="input-sm form-control" #t (change)="onChangeServRetorno( t.value)" title="Servicio Vta" placeholder="Servicio Vta" data-toggle="tooltip" animation="true" data-placement="top" onmouseenter="$(this).tooltip('show')"
+                            required>
                             <option [selected]="formVueltas.controls.servRetorno.value == null"  >-- Seleccionar --</option>
                             <option *ngFor="let opt of _vs.serviciosVta|serMayoIgual:serv.fechaHoraLlegada" [value]="opt.servicioPKStr">{{
                                 opt.detalle }}</option>
                         </select></td>
-                    <td><button type="submit"  class="btn btn-xs botonVuelta">
+                    <td><button type="submit" class="btn btn-xs botonVuelta">
                           <i title="Guardar" data-toggle="tooltip" animation="true" data-placement="top" onmouseenter="$(this).tooltip('show')"
                                 class="fa fa-floppy-o fa-2x green" aria-hidden="true"></i>
                        </button>
