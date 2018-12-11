@@ -44,21 +44,24 @@ export class VueltaDeVueltaComponent implements OnInit {
     });
   }
 
-  ngOnInit() {
-    
+  ngOnInit() {      
     if ( this.serv ) {
        // clona los choferes de otra manera modificarias los del servicio
        console.log('Paso por ngOnInit');
-       this.choferesIda = this.serv.choferes.slice();     
+       this.choferesIda = this.serv.choferes.slice();  
+        //Solo reseteo el valor de su internoIda
+      const internoIda= (this.serv.vehiculos.length > 0 ) ? JSON.stringify(this.serv.vehiculos[0].vehiculoPK ): null;
+      this.formVueltas.get('internoIda').setValue(internoIda);  
+   
        this.vuelta = this._vs.getVuelta( this.serv.servicioPK );
-       this.setVuelta();
+       this.resetVuelta();
        console.log('vuelta ', this.vuelta );
-       console.log( 'Fin ngOnInit');      
-
+       console.log( 'Fin ngOnInit'); 
     }
   }
 
-  setVuelta() {
+  resetVuelta() {
+
     if ( this.vuelta ) {         
       //Traer el retorno 
       this.onChangeServRetorno( JSON.stringify( this.vuelta.servicioRet.servicioPK ) );      
@@ -73,10 +76,8 @@ export class VueltaDeVueltaComponent implements OnInit {
         //choferVta: null ,
         internoVta: (this.servRet.vehiculos.length>0)? JSON.stringify( this.servRet.vehiculos[0].vehiculoPK ): null ,
         servRetorno: this.servRet.servicioPKStr
-      });      
-
-    }   
-
+      });
+    }
   }
 
 
@@ -135,7 +136,9 @@ export class VueltaDeVueltaComponent implements OnInit {
     this.servRet = this._vs.getServRetorno( idServRetorno );
     if ( this.servRet ) {
       this.choferesVta = this.servRet.choferes.slice();
-      console.log('aja', this.choferesVta );
+      const internoVta = (this.servRet.vehiculos.length>0)? JSON.stringify( this.servRet.vehiculos[0].vehiculoPK ): null; 
+      this.formVueltas.get('internoVta').setValue(internoVta );
+      console.log('chovuelta', this.choferesVta );
     }
   }
 

@@ -7,7 +7,9 @@ import { FuncionesGrales } from 'src/app/utiles/funciones.grales';
 import { MiUsuarioService } from 'src/app/_services/mi.usuario.service';
 import { Vuelta } from 'src/app/models/vuelta.model';
 import { Servicio } from 'src/app/models/servicio.model';
-
+import { Observable, Subscription } from 'rxjs';
+import 'rxjs/add/observable/forkJoin';
+import { LoaderService } from 'src/app/_services/loader.service';
 
 @Injectable()
 export class VueltasService {
@@ -21,17 +23,17 @@ export class VueltasService {
   idLinVta: string;
 
   serviciosIda: Servicio[] = [];
-  serviciosVta: Servicio[] = [];
-
-  choferes: any = [];
+  serviciosVta: Servicio[] = [];  
   vehiculos: any = [];
-
   choferesOcupacion: any;
-
   vueltas:Vuelta[] = [];
 
+  datosVueltasSubs:Subscription;
 
-  constructor( private _ds: DiagrService,
+  loaded = false;
+
+
+  constructor( private _ds: DiagrService,  private loaderService: LoaderService,
                private yo: MiUsuarioService,
                @Inject(LOCALE_ID) public locale: string   ) {
 
@@ -44,31 +46,46 @@ export class VueltasService {
     this.finVuelta.setDate( this.finVuelta.getDate()
                       + CANTIDAD_DIAS_DIAGR_DEFAULT
                       + CANTIDAD_DIAS_DIAGR_ADICIONALES_VTA );
-
-    this.generarFechas();
+    
   }
 
-  OnInit(){
+  OnInit( formFechas ){
+
+      this.loaderService.displayConjunto(true);
+      this.loaded = false;
+
+
+      this.inicio = FuncionesGrales.toFecha( formFechas.fInicio ,  FECHA_PATTERN_MOMENT );
+      this.fin = FuncionesGrales.toFecha( formFechas.fFin ,  FECHA_PATTERN_MOMENT );
+
+      this.generarFechas();
 
       const servIda$ = this.getServiciosIda$();
-      //const servIda$ = 
+      const servVta$ = this.getServiciosVta$();
+      const vehiculos$ = this.getVehiculos$();
+      const choOcupacion$ = this.getChoferesOcupacion$(); 
+      const vueltas$ = this.getVueltas$();
 
-
+      this.datosVueltasSubs = Observable.forkJoin([ servIda$, 
+                                                 servVta$, 
+                                                 vehiculos$, 
+                                                 choOcupacion$,
+                                                 vueltas$])
+          .subscribe( this.okParalelo.bind(this));
+                                                 
   } 
 
-  setFechas( formFechas ) {
+  okParalelo( respuesta ){
 
-    this.inicio = FuncionesGrales.toFecha( formFechas.fInicio ,  FECHA_PATTERN_MOMENT );
-    this.fin = FuncionesGrales.toFecha( formFechas.fFin ,  FECHA_PATTERN_MOMENT );
+    this.okServiciosIda( respuesta[0] );
+    this.okServiciosVta( respuesta[1] );
+    this.okVehiculos( respuesta[2] );
+    this.okChoferes( respuesta[3] ) ;
+    this.okVueltas( respuesta[4] );
 
-    this.generarFechas();
-    //this.getServiciosIda();
-    this.getServiciosVta();
-    
-    this.getVehiculos();
-    this.getChoferesOcupacion();
-    this.getVueltas();
-  }
+    this.loaded = true;
+    this.loaderService.displayConjunto(false);
+  }  
 
   generarFechas() {
     this.fechas = [];
@@ -134,12 +151,13 @@ export class VueltasService {
 
   }
 
-  getServiciosVta() {
-      this._ds.findSerConHorariosByLineaYfecha$( this.yo.getEmpresa(),
-      this.idLinVta,
-      FuncionesGrales.fromFecha( this.locale, this.inicio, FECHA_PATTERN),
-      FuncionesGrales.fromFecha( this.locale, this.finVuelta, FECHA_PATTERN)   )
-      .subscribe( this.okServiciosVta.bind( this ), this.errorServiciosIda.bind( this ) );
+  getServiciosVta$() {
+      return this._ds.findSerConHorariosByLineaYfecha$( this.yo.getEmpresa(),
+                  this.idLinVta,
+                  FuncionesGrales.fromFecha( this.locale, this.inicio, FECHA_PATTERN),
+                  FuncionesGrales.fromFecha( this.locale, this.finVuelta, FECHA_PATTERN)   );
+
+      //.subscribe( this.okServiciosVta.bind( this ), this.errorServiciosIda.bind( this ) );
   }
 
   okServiciosVta( serviciosVta) {
@@ -154,24 +172,24 @@ export class VueltasService {
     console.log( this.serviciosVta );
   } 
 
-  getVehiculos() {
-
-    this._ds.findVehiculos$( this.yo.getEmpresa())
-    .subscribe( v => {
-                         this.vehiculos = v;
-                         this.vehiculos.forEach( v => {
-                             v.vehiculoPKStr = JSON.stringify( v.vehiculoPK );
-                         });
-                         console.log( this.vehiculos );
-                     });
-
+  getVehiculos$() {
+     return this._ds.findVehiculos$( this.yo.getEmpresa());
   }
 
-  getChoferesOcupacion() {
-         this._ds.findChoresOcupacion$( this.yo.getEmpresa(),
+  okVehiculos( v ){      
+    this.vehiculos = v;
+    this.vehiculos.forEach( v => {
+        v.vehiculoPKStr = JSON.stringify( v.vehiculoPK );
+    });
+    console.log( this.vehiculos );  
+  }
+
+  getChoferesOcupacion$() {
+        return  this._ds.findChoresOcupacion$( this.yo.getEmpresa(),
                           FuncionesGrales.fromFecha( this.locale, this.inicio, FECHA_PATTERN),
-                          FuncionesGrales.fromFecha( this.locale, this.finVuelta, FECHA_PATTERN) )
-        .subscribe( this.okChoferes.bind( this ) );
+                          FuncionesGrales.fromFecha( this.locale, this.finVuelta, FECHA_PATTERN) );
+
+        //.subscribe( this.okChoferes.bind( this ) );
 
   }
 
@@ -189,13 +207,14 @@ export class VueltasService {
   }
 
 
-  getVueltas(){
+  getVueltas$(){
 
-    this._ds.getVueltas$( this.yo.getEmpresa(),
+    return this._ds.getVueltas$( this.yo.getEmpresa(),
                           this.idLinIda,
                           FuncionesGrales.fromFecha( this.locale, this.inicio, FECHA_PATTERN),
-                          FuncionesGrales.fromFecha( this.locale, this.fin, FECHA_PATTERN) )
-                          .subscribe( this.okVueltas.bind( this) );
+                          FuncionesGrales.fromFecha( this.locale, this.fin, FECHA_PATTERN) );
+
+      //.subscribe( this.okVueltas.bind( this) );
   }
 
   getVuelta( idaPK ){
@@ -210,6 +229,12 @@ export class VueltasService {
 
   errorVueltas( err ){
     console.log( err );
+  }
+
+  OnDestroy() {
+    if( this.datosVueltasSubs ){ 
+      this.datosVueltasSubs.unsubscribe();
+    }
   }
 
 }
