@@ -21,6 +21,7 @@ import { FormsModule } from '@angular/forms';
 import { VueltaDeVueltaComponent } from '../diagramacion-Servicios/vuelta-de-vuelta/vuelta-de-vuelta.component';
 import { VueltasService } from './vueltas/vueltas.service';
 import { PipesModule } from '../pipes/pipes.module';
+import { ViewVueltaDeVueltaComponent } from './vuelta-de-vuelta/view-vuelta-de-vuelta.component';
 
 @NgModule({
   imports: [
@@ -39,9 +40,9 @@ import { PipesModule } from '../pipes/pipes.module';
               DiagramacionInternosComponent,
               IdaVtaListComponent,
               EnlaceLineasComponent,
-              VueltasComponent,
-              
-              VueltaDeVueltaComponent ],
+              VueltasComponent,              
+              VueltaDeVueltaComponent,
+              ViewVueltaDeVueltaComponent ],
   entryComponents: [ModalConDetalleComponent, HeroJobAdComponent, HeroProfileComponent],
     providers:[ DiagrService, AdService, VueltasService],
   schemas: [
