@@ -27,6 +27,12 @@
                             <a class="btn btn-xs" routerLink="/vuelta/{{enlace.ida.lineaPK.linCodigo}}/{{enlace.vuelta.lineaPK.linCodigo}}">
                                 <i title="Editar" data-toggle="tooltip" animation="true" data-placement="top" onmouseenter="$(this).tooltip('show')" class="fa fa-cog fa-2x green" aria-hidden="true"></i>
                             </a>
+
+                            <!-- para eliminar
+                            <a class="btn btn-xs" (click)="currentEnlace=enlace;clearAlert()" data-toggle="modal" data-target="#delete-modal">
+                                <i title="Eliminar" data-toggle="tooltip" animation="true" data-placement="top" onmouseenter="$(this).tooltip('show')" class="fa fa-trash-o fa-2x red" aria-hidden="true"></i>
+                            </a>
+                        -->
                         </td>
                     </tr>
                     <tr *ngIf="IdaVueltaPage.content.length == 0">
@@ -40,4 +46,26 @@
     </div>
 
     <app-table-pagination class="text-center" [table]="self" [page]="IdaVueltaPage"></app-table-pagination>
+
+
+    <!-- Modal Delete -->
+    <!-- <div *ngIf="currentEnlace">
+        <div class="modal fade" id="delete-modal" tabindex="-1" role="dialog" aria-labelledby="modalLabel">
+            <div class="modal-dialog modal-sm" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Fechar"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title" id="modalLabel"></h4>
+                    </div>
+                    <div class="modal-body">
+                        Desea eliminar este enlace?
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" (click)="deleteEnlace(currentEnlace)" class="btn btn-primary" data-dismiss="modal">Si</button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal" data-dismiss="modal">No</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>-->
 </ng-container>

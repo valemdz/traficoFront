@@ -47,9 +47,10 @@ export class IdaVtaListComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     if ( this.listEnlacesSubs ) { this.listEnlacesSubs.unsubscribe(); }
   }
-
-
-
-
+/*
+deleteEnlace(enlace) {
+  this._ivs.deleteEnlaceLineas$(enlace);
+}
+*/
 
 }

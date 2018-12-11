@@ -82,7 +82,7 @@
                             <table>
                                 <tr *ngIf="viaje.vehiculo !== null">
                                     <td> <span class="badge badge-pill" [ngClass]="viaje.vehiculo.vehEstado === 1 ?
-                                      'badge-warning' : 'badge-success'"> {{viaje.vehiculo.vehiculoPK.vehInterno }}</span>
+                                      'badge-warning' : 'badge-primary'"> {{viaje.vehiculo.vehiculoPK.vehInterno }}</span>
                                     </td>
                                 </tr>
                                 <tr *ngIf="viaje.vehiculo===null ">

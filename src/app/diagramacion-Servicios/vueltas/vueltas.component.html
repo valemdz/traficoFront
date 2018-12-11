@@ -1,30 +1,16 @@
 <br>
 <br>
-<app-search-by-fecha [fechaInicio]="_vs.inicio" [fechaFin]="_vs.fin" (buscarByFecha)="buscar($event)"></app-search-by-fecha>
-<br>
-
-<div *ngIf="_vs.loaded">
+<div class="container">
+    <app-search-by-fecha [fechaInicio]="_vs.inicio" [fechaFin]="_vs.fin" (buscarByFecha)="buscar($event)"></app-search-by-fecha>
+    <br>
+    <div *ngIf="_vs.loaded">
         <div *ngFor="let f of _vs.fechas">
             <span><strong>{{f|date:'EEEE dd'}} {{f|date:'MMMM yyyy' }} Lineas [ {{_vs.idLinIda}} - {{_vs.idLinVta}} ] </strong></span>
-            <hr class="style13">
-            <div class="row">
-                <div class="col-md-1"><strong>Hs Serv</strong></div>
-                <div class="col-md-1"><strong>Peli</strong></div>
-                <div class="col-md-1"><strong>Video</strong></div>
-                <div class="col-md-1"><strong>Desde</strong></div>
-                <div class="col-md-1"><strong>Hasta</strong></div>
-                <div class="col-md-2"><strong>Conductor</strong></div>
-                <div class="col-md-1"><strong>Interno</strong></div>
-                <div class="col-md-3"><strong>Ser. Regreso</strong></div>
-                <div class="col-md-1"></div>
 
-            </div>
-            <br>
             <div *ngFor="let serv of _vs.serviciosIda|filterByFecha:f">
                 <app-vuelta-de-vuelta [serv]="serv"></app-vuelta-de-vuelta>
-                <!-- <pre>{{ serv | json }}</pre> -->
-                <hr>
             </div>
         </div>
+    </div>
 </div>
 <button type="button" class="btn btn-default" (click)="volver()" data-dismiss="modal" data-dismiss="modal">Volver</button>
