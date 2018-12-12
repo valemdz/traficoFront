@@ -8,12 +8,12 @@
             <span><strong>{{f|date:'EEEE dd'}} {{f|date:'MMMM yyyy' }} Lineas [ {{_vs.idLinIda}} - {{_vs.idLinVta}} ] </strong></span>
 
             <div *ngFor="let serv of _vs.serviciosIda|filterByFecha:f">
-               <!-- <ng-container *ngIf="!tieneVuelta( serv )" > -->
+               <ng-container *ngIf="!tieneVuelta( serv )" > 
                     <app-vuelta-de-vuelta [serv]="serv"></app-vuelta-de-vuelta>
-               <!-- </ng-container> -->
-               <!-- <ng-container *ngIf="tieneVuelta( serv )">
+               </ng-container> 
+               <ng-container *ngIf="tieneVuelta( serv )">
                      <app-view-vuelta-de-vuelta [serv]="serv" ></app-view-vuelta-de-vuelta> 
-               </ng-container>                 -->
+               </ng-container>                 
             </div>
         </div>
     </div>
