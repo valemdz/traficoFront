@@ -5,7 +5,8 @@ import { CANTIDAD_DIAS_DIAGR_DEFAULT } from '../../utiles/const-data-model';
 import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { MiUsuarioService } from 'src/app/_services/mi.usuario.service';
-import { DiagrService } from 'src/app/diagramacion-Servicios/diagr.service';
+import { DiagrService } from 'src/app/services/service.index';
+
 
 @Component({
   selector: 'app-prueba',

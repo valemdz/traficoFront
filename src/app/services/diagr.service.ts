@@ -7,6 +7,7 @@ import { HttpClient } from '@angular/common/http';
 import { FuncionesGrales } from '../utiles/funciones.grales';
 import { environment } from 'src/environments/environment';
 import { map } from 'rxjs/operators';
+import swal from 'sweetalert';
 
 
 @Injectable()
@@ -48,7 +49,6 @@ export class DiagrService {
     );
   }
 
-
   /*getVehiculosLibres( idViaje: number ): Observable<Response> {
    //  const url = `/ViajesEspeciales/${idViaje}/vehiculosDisp`;
    // return this.http.get( url ).map(this.extractData).publish().refCount();
@@ -83,10 +83,8 @@ export class DiagrService {
                       v.inicio = new Date( v.inicio );
                       v.fin = new Date( v.fin );
                     });
-                });               
-                
+                });                
                 return choferes;
-
               })
             );
   }
@@ -112,6 +110,24 @@ export class DiagrService {
                           });                          
                 return v;
               } ));
+  }
+
+  updateVuelta$( idVuelta, vuelta ){
+    const url = this.urlBase + `/diagr/vuelta/${idVuelta}`;
+    return this.http.put( url, vuelta ).pipe( map( resp =>{
+        swal('La vuelta' ,'Fue modificada con exito', 'success' );
+        return resp;
+      }
+    ));
+  }
+
+  deleteVuelta$( idVuelta ){
+    const url = this.urlBase + `/diagr/vuelta/${idVuelta}`;
+    return this.http.delete( url ).pipe( map( resp =>{
+          swal('La vuelta' ,'Fue eliminada con exito', 'success' );
+          return resp;
+      }
+    ));
   }
 
 

@@ -7,7 +7,7 @@ import { Component, OnInit, Injectable, Injector, ReflectiveInjector } from '@an
 import {Response} from '@angular/http';
 import * as Rx from 'rxjs/Rx';
 import {MiUsuarioService} from '../../_services/mi.usuario.service';
-import { DiagrService } from '../diagr.service';
+
 import { FormGroup, FormBuilder, FormArray, Validators } from '@angular/forms';
 import { ModalService } from '../../ventanas-modales/modal.service';
 import { Observable } from 'rxjs';
@@ -17,6 +17,7 @@ import { ModalConDetalleComponent } from '../modal-con-detalle/modal-con-detalle
 import { ComboInyector } from '../ComboInjector';
 import { AdService } from '../ad.service';
 import { ComponenteItem } from '../../shared/componente-item';
+import { DiagrService } from 'src/app/services/service.index';
 
 
 @Component({

@@ -1,4 +1,4 @@
-import { DiagrService } from './../diagr.service';
+
 import { ViajeEspServive } from './../../viajes/viajeEsp.service';
 import { Servicios, VehiculoPK, VehiculoPKConDet, ViajeEspecial } from './../../domain';
 import { OnInit, Component, ViewChild, Input, ElementRef, OnChanges } from '@angular/core';
@@ -8,6 +8,7 @@ import { ErrorService } from '../../_services/error.service';
 import { DiagramacionListComponent } from '../diagramacion-list/diagramacion-list.component';
 import * as Rx from 'rxjs/Rx';
 import { Observable } from 'rxjs';
+import { DiagrService } from 'src/app/services/service.index';
 
 
 @Component({

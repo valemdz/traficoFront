@@ -46,6 +46,10 @@
                           <i title="Guardar" data-toggle="tooltip" animation="true" data-placement="top" onmouseenter="$(this).tooltip('show')"
                                 class="fa fa-floppy-o fa-2x green" aria-hidden="true"></i>
                        </button>
+                       <button *ngIf="vuelta" type="button" (click)="eliminarVta()" class="btn btn-xs botonVuelta">
+                          <i title="Eliminar" data-toggle="tooltip" animation="true" data-placement="top" onmouseenter="$(this).tooltip('show')"
+                                class="fa fa-trash fa-2x green" aria-hidden="true"></i>
+                       </button>
                     </td>
                 </tr>
                 <tr *ngIf="servRet">

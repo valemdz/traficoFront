@@ -2,7 +2,6 @@ import { Injectable, Inject, LOCALE_ID } from '@angular/core';
 import { FECHA_PATTERN_MOMENT, FECHA_PATTERN, CANTIDAD_DIAS_DIAGR_DEFAULT,
          FECHA_HORA_MOSTRAR_PATTERN, CANTIDAD_DIAS_DIAGR_ADICIONALES_VTA }
           from 'src/app/utiles/const-data-model';
-import { DiagrService } from '../diagr.service';
 import { FuncionesGrales } from 'src/app/utiles/funciones.grales';
 import { MiUsuarioService } from 'src/app/_services/mi.usuario.service';
 import { Vuelta } from 'src/app/models/vuelta.model';
@@ -10,6 +9,8 @@ import { Servicio } from 'src/app/models/servicio.model';
 import { Observable, Subscription } from 'rxjs';
 import 'rxjs/add/observable/forkJoin';
 import { LoaderService } from 'src/app/_services/loader.service';
+import { DiagrService } from './diagr.service';
+
 
 @Injectable()
 export class VueltasService {
@@ -235,6 +236,30 @@ export class VueltasService {
     if( this.datosVueltasSubs ){ 
       this.datosVueltasSubs.unsubscribe();
     }
+  }
+
+  ///============== Operaciones sobre array Vueltas ========================
+
+  addVuelta( vuelta: Vuelta ){    
+    this.vueltas.push( vuelta ); 
+  }
+
+  removeVuelta( vuelta: Vuelta ){    
+    if( vuelta ){
+        const idx = this.vueltas.findIndex( (v:any)  => v.id === vuelta.id );
+        if ( idx > -1 ) {
+            this.vueltas.splice( idx, 1);
+        }    
+    }       
+  }
+
+  replaceVuelta( vuelta: Vuelta ){    
+    if( vuelta ){
+        const idx = this.vueltas.findIndex( (v:any)  => v.id === vuelta.id );
+        if ( idx > -1 ) {
+            this.vueltas[ idx ] = vuelta;
+        }        
+    }     
   }
 
 }

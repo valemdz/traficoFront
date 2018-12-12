@@ -4,7 +4,7 @@ import { SharedModule } from './../shared/shared.module';
 
 import { VentanasModalesModule } from '../ventanas-modales/ventanas-modales.module';
 
-import { DiagrService } from './diagr.service';
+
 import { DiagramacionListComponent } from './diagramacion-list/diagramacion-list.component';
 import { DiagramacionServicioRoutingModule } from './diagramacion-servicio-routing.module';
 import { ModalConDetalleComponent } from './modal-con-detalle/modal-con-detalle.component';
@@ -19,7 +19,7 @@ import { EnlaceLineasComponent } from '../diagramacion-Servicios/enlace-lineas/e
 import { VueltasComponent } from '../diagramacion-Servicios/vueltas/vueltas.component';
 import { FormsModule } from '@angular/forms';
 import { VueltaDeVueltaComponent } from '../diagramacion-Servicios/vuelta-de-vuelta/vuelta-de-vuelta.component';
-import { VueltasService } from './vueltas/vueltas.service';
+
 import { PipesModule } from '../pipes/pipes.module';
 import { ViewVueltaDeVueltaComponent } from './vuelta-de-vuelta/view-vuelta-de-vuelta.component';
 
@@ -44,7 +44,7 @@ import { ViewVueltaDeVueltaComponent } from './vuelta-de-vuelta/view-vuelta-de-v
               VueltaDeVueltaComponent,
               ViewVueltaDeVueltaComponent ],
   entryComponents: [ModalConDetalleComponent, HeroJobAdComponent, HeroProfileComponent],
-    providers:[ DiagrService, AdService, VueltasService],
+    providers:[ AdService ],
   schemas: [
       CUSTOM_ELEMENTS_SCHEMA
   ]
