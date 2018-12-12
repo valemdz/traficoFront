@@ -9,7 +9,7 @@ import { Servicio } from 'src/app/models/servicio.model';
 @Component({
   selector: 'app-vuelta-de-vuelta',
   templateUrl: './vuelta-de-vuelta.component.html',
-  styles: []
+  styleUrls: ['./vuelta-de-vuelta.component.css']
 })
 export class VueltaDeVueltaComponent implements OnInit {
 

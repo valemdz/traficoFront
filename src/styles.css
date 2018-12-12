@@ -10,8 +10,16 @@ body {
     /*50 */
 }
 
+.input-sm {
+    padding: 4px 0px !important;
+}
+
 .navbar-brand {
     padding: 7px 15px;
+}
+
+.container {
+    width: 100% !important;
 }
 
 @media screen and (min-width: 768px) {
@@ -241,6 +249,10 @@ input[type=date] {
 .badge {
     margin-bottom: 1% !important;
     font-size: 9px !important;
+}
+
+.badge-white {
+    background-color: white !important;
 }
 
 

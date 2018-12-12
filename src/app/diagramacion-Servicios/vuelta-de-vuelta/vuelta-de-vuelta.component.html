@@ -3,14 +3,14 @@
         <table class="table">
             <thead>
                 <tr>
-                    <th><strong>Hs Serv</strong></th>
-                    <th><strong>Pelicula</strong></th>
-                    <th><strong>Video</strong></th>
-                    <th><strong>Desde</strong></th>
-                    <th><strong>Hasta</strong></th>
-                    <th><strong>Conductor</strong></th>
-                    <th><strong>Interno</strong></th>
-                    <th><strong>Ser. Regreso</strong></th>
+                    <th class="col-xs-1"><strong>Servicio Ida</strong></th>
+                    <th class="col-xs-1"><strong>Pelicula</strong></th>
+                    <th class="col-xs-1"><strong>Video In</strong></th>
+                    <th class="col-xs-1"><strong>Desde</strong></th>
+                    <th class="col-xs-1"><strong>Hasta</strong></th>
+                    <th class="col-xs-2 col-md-3"><strong>Conductor</strong></th>
+                    <th class="col-xs-2"><strong>Interno Veh.</strong></th>
+                    <th class="col-md-2 col-xs-3"><strong>Servicio de Regreso &nbsp; &nbsp;&nbsp;</strong></th>
                     <th></th>
                 </tr>
             </thead>
@@ -21,20 +21,30 @@
                     <td><input type="text" required formControlName="videoIda" data-toggle="tooltip" animation="true" data-placement="top" title="Video" onmouseenter="$(this).tooltip('show')" class="input-sm form-control"></td>
                     <td>{{ serv.escalaSalida }}<br>{{ serv.fechaHoraSalida | date:'EE HH:mm' }}</td>
                     <td>{{ serv.escalaLlegada }}<br>{{ serv.fechaHoraLlegada | date:'EE HH:mm' }}</td>
-                    <td><button *ngFor="let c of choferesIda;let i=index" type="button" class="btn btn-primary btn-xs"><span
-                                (click)="removeChofer( choferesIda, i)" class="badge">x</span>{{c.nombreConTipo}}</button>
+                    <td>
+                        <table>
+                            <tr *ngFor="let c of choferesIda;let i=index">
+                                <td>
+                                    <span role="button" class="badge badge-pill badge-primary">
+                                        {{c.nombreConTipo }}<span (click)="removeChofer( choferesIda, i)" class="badge badge-pill badge-white ">x</span>
+                                    </span>
+                                </td>
+                            </tr>
+                            <tr><select class="input-sm form-control" #ch (change)="addChoferIda(choferesIda, ch.value, serv)" formControlName="choferIda">
+                                    <option value="null">-- Seleccionar --</option>
+                                    <option *ngFor="let opt of _vs.choferesOcupacion|choferesConEstado:serv.fechaHoraSalida:serv.fechaHoraLlegada"
+                                        [value]="opt.choferPKStr" [ngClass]="opt.classCho">
+                                        {{ opt.nombreConTipo }}
+                                    </option>
+                                </select></tr>
+                        </table>
 
-                        <select class="input-sm form-control" #ch (change)="addChoferIda(choferesIda, ch.value, serv)" formControlName="choferIda">
-                            <option value="null">-- Seleccionar --</option>
-                            <option *ngFor="let opt of _vs.choferesOcupacion|choferesConEstado:serv.fechaHoraSalida:serv.fechaHoraLlegada"
-                                [value]="opt.choferPKStr" [ngClass]="opt.classCho">
-                                {{opt.nombreConTipo}}
-                            </option>
-                        </select></td>
+
+                    </td>
                     <td><select class="input-sm form-control" formControlName="internoIda" required>
                             <option value="null">-- Seleccionar --</option>
                             <option *ngFor="let opt of _vs.vehiculos" [value]="opt.vehiculoPKStr">
-                                {{opt.interno}}
+                                {{opt.interno }}
                             </option>
                         </select></td>
                     <td> <select formControlName="servRetorno" class="input-sm form-control" #t (change)="onChangeServRetorno( t.value)" title="Servicio Vta" placeholder="Servicio Vta" data-toggle="tooltip" animation="true" data-placement="top" onmouseenter="$(this).tooltip('show')"
@@ -55,21 +65,29 @@
                     <td><input formControlName="videoVta" type="text" data-toggle="tooltip" animation="true" data-placement="top" title="Pelicula" onmouseenter="$(this).tooltip('show')" class="input-sm form-control" required></td>
                     <td>{{ servRet.escalaSalida }}<br>{{ servRet.fechaHoraSalida | date:'EE HH:mm' }}</td>
                     <td>{{ servRet.escalaLlegada }}<br>{{ servRet.fechaHoraLlegada | date:'EE HH:mm' }}</td>
-                    <td> <button *ngFor="let c of choferesVta;let i=index" type="button" class="btn btn-primary btn-xs"><span
+                    <td>
+                        <!--<button *ngFor="let c of choferesVta;let i=index" type="button" class="btn btn-primary btn-xs"><span
                                 (click)="removeChofer( choferesVta, i)" class="badge">x</span> {{c.nombreConTipo}}</button>
+                    -->
+                        <span *ngFor="let c of choferesVta;let i=index" role="button" class="badge badge-pill badge-primary">
+                            {{ c.nombreConTipo }} <span (click)="removeChofer( choferesVta, i)" class="badge badge-pill badge-white ">x</span>
+                        </span>
+
                         <select class="input-sm form-control" #chR (change)="addChoferVta(choferesVta, chR.value)" formControlName="choferVta">
                             <option value="null">-- Seleccionar --</option>
                             <option *ngFor="let opt of _vs.choferesOcupacion|choferesConEstado:servRet.fechaHoraSalida:servRet.fechaHoraLlegada"
                                 [value]="opt.choferPKStr" [ngClass]="opt.classCho">
-                                {{opt.nombreConTipo}}
+                                {{opt.nombreConTipo }}
                             </option>
                         </select></td>
-                    <td> <select class="input-sm form-control" formControlName="internoVta" required>
+                    <td>
+                        <select class="input-sm form-control" formControlName="internoVta" required>
                             <option value="null">-- Seleccionar --</option>
                             <option *ngFor="let opt of _vs.vehiculos" [value]="opt.vehiculoPKStr">
                                 {{opt.interno}}
                             </option>
-                        </select></td>
+                        </select>
+                    </td>
                 </tr>
             </tbody>
         </table>
