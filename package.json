@@ -27,6 +27,7 @@
         "ng2-datetime-picker": "^0.15.1",
         "rxjs": "~6.2.0",
         "rxjs-compat": "^6.3.3",
+        "sweetalert": "^2.1.2",
         "zone.js": "~0.8.26"
     },
     "devDependencies": {

@@ -1,17 +1,21 @@
-import { Component, OnInit, Input } from '@angular/core';
-import { VueltasService } from '../vueltas/vueltas.service';
+import { Component, OnInit, Input, OnDestroy } from '@angular/core';
+
 import { FormGroup, FormBuilder, Validators, NgForm } from '@angular/forms';
 import { MiUsuarioService } from 'src/app/_services/mi.usuario.service';
-import { DiagrService } from '../diagr.service';
+
 import { Vuelta } from 'src/app/models/vuelta.model';
 import { Servicio } from 'src/app/models/servicio.model';
+import { VueltasService, DiagrService } from 'src/app/services/service.index';
+import { Subscription } from 'rxjs';
+
 
 @Component({
   selector: 'app-vuelta-de-vuelta',
   templateUrl: './vuelta-de-vuelta.component.html',
   styleUrls: ['./vuelta-de-vuelta.component.css']
 })
-export class VueltaDeVueltaComponent implements OnInit {
+export class VueltaDeVueltaComponent implements OnInit, OnDestroy {
+ 
 
   @Input() serv: Servicio;
 
@@ -22,6 +26,10 @@ export class VueltaDeVueltaComponent implements OnInit {
   vuelta: Vuelta;
 
   formVueltas: FormGroup;
+
+  saveVtaSubsc: Subscription;
+  updateVtaSubsc: Subscription;
+  deleteVtaSubsc: Subscription;
 
   constructor(  public _vs: VueltasService,
                 private yo: MiUsuarioService,
@@ -83,11 +91,19 @@ export class VueltaDeVueltaComponent implements OnInit {
 
   salvarForm( f: NgForm) {    
     if ( this.formVueltas.valid ) {
-        //console.log( this.prepararVuelta() );      
-        this._ds.saveVuelta$( this.prepararVuelta() )
-        .subscribe( this.okSaveVuelta.bind( this) );
-    }
-    
+        let id = -1;
+        const vuelta = this._vs.getVuelta( this.serv.servicioPK ); 
+        if( vuelta ){
+          id = vuelta.id;
+        }
+        if (  id < 0 ) {
+            this.saveVtaSubsc= this._ds.saveVuelta$( this.prepararVuelta() )
+            .subscribe( ( vuelta: Vuelta) =>  this._vs.addVuelta( vuelta ) );
+        } else {
+            this.updateVtaSubsc = this._ds.updateVuelta$( id, this.prepararVuelta() )
+            .subscribe( ( vuelta: Vuelta) =>  this._vs.replaceVuelta( vuelta ) );
+        }       
+    }    
   }
 
   okSaveVuelta(){
@@ -182,6 +198,20 @@ export class VueltaDeVueltaComponent implements OnInit {
 
   removeChofer( choferes, index ) {
     choferes.splice(index, 1);
+  }
+
+  eliminarVta(){
+    if( this.vuelta ){
+         this.deleteVtaSubsc = this._ds.deleteVuelta$( this.vuelta.id )
+        .subscribe( ( vuelta: Vuelta) =>  this._vs.removeVuelta( vuelta ) );
+    }
+    console.log('Eliminar Vuelta');
+  }
+
+  ngOnDestroy(): void {
+    if( this.deleteVtaSubsc ){ this.deleteVtaSubsc.unsubscribe(); }     
+    if( this.saveVtaSubsc ){ this.saveVtaSubsc.unsubscribe(); }
+    if( this.updateVtaSubsc ){ this.updateVtaSubsc.unsubscribe(); }
   }
 
 }

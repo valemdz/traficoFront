@@ -1,7 +1,8 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Servicio } from 'src/app/models/servicio.model';
 import { Vuelta } from 'src/app/models/vuelta.model';
-import { VueltasService } from '../vueltas/vueltas.service';
+import { VueltasService } from 'src/app/services/service.index';
+
 
 @Component({
   selector: 'app-view-vuelta-de-vuelta',

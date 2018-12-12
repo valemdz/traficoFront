@@ -1,6 +1,8 @@
 import { Component, OnInit, OnDestroy, Inject, LOCALE_ID } from '@angular/core';
-import { VueltasService } from './vueltas.service';
+
 import { ActivatedRoute, Router } from '@angular/router';
+import { Servicio } from 'src/app/models/servicio.model';
+import { VueltasService } from 'src/app/services/service.index';
 
 
 
@@ -37,9 +39,15 @@ export class VueltasComponent implements OnInit, OnDestroy {
     // this.filter( new Date() );
   }
 
-
   volver() {
     this.router.navigate(['idaVtaList']);
+  }
+
+  tieneVuelta( serv: Servicio ){
+    if (  this._vs.getVuelta( serv.servicioPK ) ) {
+        return true;
+    }    
+    return false;
   }
 
 
