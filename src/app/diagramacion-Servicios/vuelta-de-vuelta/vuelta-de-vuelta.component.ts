@@ -7,31 +7,27 @@ import { Vuelta } from 'src/app/models/vuelta.model';
 import { Servicio } from 'src/app/models/servicio.model';
 import { VueltasService, DiagrService } from 'src/app/services/service.index';
 import { Subscription } from 'rxjs';
+import { VueltaDeVueltaService } from './vuelta-de-vuelta.service';
 
 
 @Component({
   selector: 'app-vuelta-de-vuelta',
   templateUrl: './vuelta-de-vuelta.component.html',
-  styles: []
+  styles: [],
+  providers:[VueltaDeVueltaService]
 })
 export class VueltaDeVueltaComponent implements OnInit, OnDestroy {
  
-
-  @Input() serv: Servicio;
-
-  servRet: Servicio;
-  choferesIda = [];  
-  choferesVta = []; 
-
-  vuelta: Vuelta;
+  @Input("servInput") servInput: Servicio; 
 
   formVueltas: FormGroup;
 
   saveVtaSubsc: Subscription;
   updateVtaSubsc: Subscription;
-  deleteVtaSubsc: Subscription;
+  deleteVtaSubsc: Subscription;  
 
-  constructor(  public _vs: VueltasService,
+  constructor(  public _vv: VueltaDeVueltaService,
+                public _vs: VueltasService,
                 private yo: MiUsuarioService,
                 private fb: FormBuilder,
                 private _ds: DiagrService  ) {
@@ -52,38 +48,32 @@ export class VueltaDeVueltaComponent implements OnInit, OnDestroy {
     });
   }
 
-  ngOnInit() {      
-    if ( this.serv ) {
-       // clona los choferes de otra manera modificarias los del servicio
-       console.log('Paso por ngOnInit');
-       this.choferesIda = this.serv.choferes.slice();  
-        //Solo reseteo el valor de su internoIda
-      const internoIda= (this.serv.vehiculos.length > 0 ) ? JSON.stringify(this.serv.vehiculos[0].vehiculoPK ): null;
-      this.formVueltas.get('internoIda').setValue(internoIda);  
-   
-       this.vuelta = this._vs.getVuelta( this.serv.servicioPK );
-       this.resetVuelta();
-       console.log('vuelta ', this.vuelta );
-       console.log( 'Fin ngOnInit'); 
-    }
+  ngOnInit() {     
+    this._vv.OnInit( this.servInput );    
+    this.resetInternoServicioIda(); 
+    this.resetVuelta();  
+  }
+
+  resetInternoServicioIda(){
+    //Solo reseteo el valor de su internoIda    
+    this.formVueltas.get('internoIda').setValue( this._vv.getVehiculoIdaToForm() );      
   }
 
   resetVuelta() {
 
-    if ( this.vuelta ) {         
+    if ( this._vv.vuelta ) {         
       //Traer el retorno 
-      this.onChangeServRetorno( JSON.stringify( this.vuelta.servicioRet.servicioPK ) );      
-
+      this.onChangeServRetorno( JSON.stringify( this._vv.vuelta.servicioRet.servicioPK ) ); 
       this.formVueltas.reset({
-        peliIda: this.vuelta.peliIda,
-        videoIda: this.vuelta.videoIda,
+        peliIda: this._vv.vuelta.peliIda,
+        videoIda: this._vv.vuelta.videoIda,
         //choferIda:  null,
-        internoIda: (this.serv.vehiculos.length>0 )? JSON.stringify(this.serv.vehiculos[0].vehiculoPK ):null,
-        peliVta: this.vuelta.peliVta,
-        videoVta: this.vuelta.videoVta,
+        internoIda: this._vv.getVehiculoIdaToForm(),
+        peliVta: this._vv.vuelta.peliVta,
+        videoVta: this._vv.vuelta.videoVta,
         //choferVta: null ,
-        internoVta: (this.servRet.vehiculos.length>0)? JSON.stringify( this.servRet.vehiculos[0].vehiculoPK ): null ,
-        servRetorno: this.servRet.servicioPKStr
+        internoVta: this._vv.getVehiculoVtaToForm(),
+        servRetorno: this._vv.servRet.servicioPKStr
       });
     }
   }
@@ -92,108 +82,47 @@ export class VueltaDeVueltaComponent implements OnInit, OnDestroy {
   salvarForm( f: NgForm) {    
     if ( this.formVueltas.valid ) {
         let id = -1;
-        const vuelta = this._vs.getVuelta( this.serv.servicioPK ); 
+        const vuelta = this._vs.getVuelta( this._vv.serv.servicioPK ); 
         if( vuelta ){
           id = vuelta.id;
         }
+
+        const form = this.formVueltas.getRawValue()
+
         if (  id < 0 ) {
-            this.saveVtaSubsc= this._ds.saveVuelta$( this.prepararVuelta() )
-            .subscribe( ( vuelta: Vuelta) =>  this._vs.addVuelta( vuelta ) );
+            this.saveVtaSubsc= this._ds.saveVuelta$( this._vv.prepararVuelta( form ) )
+            .subscribe( ( resp: any)  =>  this._vv.okSaveVuelta( resp ) );
         } else {
-            this.updateVtaSubsc = this._ds.updateVuelta$( id, this.prepararVuelta() )
-            .subscribe( ( vuelta: Vuelta) =>  this._vs.replaceVuelta( vuelta ) );
+            this.updateVtaSubsc = this._ds.updateVuelta$( id, this._vv.prepararVuelta( form ) )
+            .subscribe( ( resp: any)  => this._vv.okModificarVuelta( resp ) );
         }       
     }    
-  }
-
-  okSaveVuelta(){
-    console.log('OK guardamos vuelta ');    
-  }
-
-  prepararVuelta() {
-
-    const form = this.formVueltas.getRawValue();
-
-    this.serv.choferes = this.choferesIda;
-    this.serv.vehiculos = this.getVehiculoIda();
-
-    this.servRet.choferes = this.choferesVta;
-    this.servRet.vehiculos = this.getVehiculoVta();
-    
-    return {
-          empresa: this.yo.getEmpresa(),
-          peliIda: form.peliIda,
-          videoIda: form.videoIda,
-          servIda:this.serv,
-          peliVta: form.peliVta,
-          videoVta: form.videoVta,
-          servRet: this.servRet
-    };
-    
-  }
-
-  getVehiculoIda(){
-    let unidadIda = [];
-    unidadIda.push({  vehiculoPK: JSON.parse( this.formVueltas.getRawValue().internoIda ),   
-                      etaDesde: this.serv.etaInicio,
-                      etaHasta: this.serv.etaFin  } );
-    return unidadIda;
-  }
-
-  getVehiculoVta(){
-    let unidadVta = [];
-    unidadVta.push( {  vehiculoPK: JSON.parse( this.formVueltas.getRawValue().internoVta ),   
-                       etaDesde: this.serv.etaInicio,
-                       etaHasta: this.serv.etaFin } );
-    return unidadVta;
-  }
+  }  
+  
+  
 
   onChangeServRetorno(   idServRetorno ) {
-    this.servRet = this._vs.getServRetorno( idServRetorno );
-    if ( this.servRet ) {
-      this.choferesVta = this.servRet.choferes.slice();
-      const internoVta = (this.servRet.vehiculos.length>0)? JSON.stringify( this.servRet.vehiculos[0].vehiculoPK ): null; 
-      this.formVueltas.get('internoVta').setValue(internoVta );
-      console.log('chovuelta', this.choferesVta );
+    this._vv.onChangeServRetorno(  idServRetorno );
+    if ( this._vv.servRet ) {            
+      this.formVueltas.get('internoVta').setValue(this._vv.getVehiculoVtaToForm() );      
     }
   }
 
-  addChoferIda( choferes, choferSel ) {
-
-    const chofer = this._vs.getChofer( choferSel );   
-
-    const cho = {
-      choferPK : chofer.choferPK,
-      nombre: chofer.nombre,
-      nombreConTipo: chofer.nombreConTipo,
-      tipoChofer : chofer.tipoChofer,
-      etaDesde: this.serv.etaInicio,
-      etaHasta: this.serv.etaFin
-    };    
-
-    choferes.push( cho );
+  addChoferIda( choferes, choferSel ) {    
+    this._vv.addChoferIda( choferes, choferSel )
     //Lo pongo a null para que siga seleccionando
     this.resetComboChofer( 'choferIda' );    
   }  
 
   addChoferVta( choferes, choferSel ) {
 
-    const chofer = this._vs.getChofer( choferSel );
-    const cho = {
-      choferPK : chofer.choferPK,
-      nombre: chofer.nombre,
-      nombreConTipo: chofer.nombreConTipo,
-      tipoChofer : chofer.tipoChofer,
-      etaDesde: this.servRet.etaInicio,
-      etaHasta: this.servRet.etaFin
-    };
-    choferes.push( cho );
+    this._vv.addChoferVta( choferes, choferSel );
     //Lo pongo a null para que siga seleccionando
     this.resetComboChofer( 'choferVta' );   
   }  
   
   resetComboChofer( nombre ){
-     this.formVueltas.get(nombre).setValue(null);
+    this.formVueltas.get(nombre).setValue(null);
   }
 
   removeChofer( choferes, index ) {
@@ -201,11 +130,32 @@ export class VueltaDeVueltaComponent implements OnInit, OnDestroy {
   }
 
   eliminarVta(){
-    if( this.vuelta ){
-         this.deleteVtaSubsc = this._ds.deleteVuelta$( this.vuelta.id )
-        .subscribe( ( vuelta: Vuelta) =>  this._vs.removeVuelta( vuelta ) );
-    }
-    console.log('Eliminar Vuelta');
+    if( this._vv.vuelta ){
+         this.deleteVtaSubsc = this._ds.deleteVuelta$( this._vv.vuelta.id )
+        .subscribe( ( resp: any) => this.okEliminarVta( resp )  );
+    }    
+  }
+
+  okEliminarVta( vuelta: Vuelta ) {
+
+    this._vv.eliminarVuelta( vuelta );
+
+    this.formVueltas.patchValue({
+      peliIda: null,
+      videoIda: null,
+      //choferIda:  null,
+      internoIda: this._vv.getVehiculoIdaToForm(),
+      peliVta: null,
+      videoVta: null,
+      //choferVta: null ,
+      internoVta: null,
+      servRetorno: null
+    });
+
+  }
+
+  cambiarEditable( event:boolean ){
+    this._vv.editable = event;
   }
 
   ngOnDestroy(): void {

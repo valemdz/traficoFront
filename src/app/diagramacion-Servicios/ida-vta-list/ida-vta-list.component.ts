@@ -40,7 +40,7 @@ export class IdaVtaListComponent implements OnInit, OnDestroy {
     this.self = this;
   }
 
-  okListadoEnlaces( enlacesPage ) {
+  okListadoEnlaces( enlacesPage ) {    
     this.IdaVueltaPage = enlacesPage;
   }
 
@@ -52,5 +52,9 @@ deleteEnlace(enlace) {
   this._ivs.deleteEnlaceLineas$(enlace);
 }
 */
+  
+  actualizaPage( event ){
+    this.mostrarDetalle();
+  }
 
 }

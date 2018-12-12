@@ -204,7 +204,7 @@ export class VueltasService {
   }
 
   getChofer( choferSel ) {
-      return this.choferesOcupacion.filter( cho => JSON.stringify( cho.choferPK ) == choferSel )[0];
+      return this.choferesOcupacion.find( cho => JSON.stringify( cho.choferPK ) == choferSel );
   }
 
 

@@ -97,7 +97,11 @@ export class DiagrService {
 
   saveVuelta$( vuelta ){
      const url = this.urlBase + '/diagr/vuelta';
-     return this.http.post( url, vuelta );
+     return this.http.post( url, vuelta ).pipe( map( resp =>{
+          swal('La vuelta' ,'Fue Agregada  con exito', 'success' );
+          return resp;
+        }
+     ));
   }
 
   getVueltas$( idEmpresa: String, idLinea: String, inicio: any, fin: any ){

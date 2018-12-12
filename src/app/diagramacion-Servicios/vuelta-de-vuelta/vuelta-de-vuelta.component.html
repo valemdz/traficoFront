@@ -1,81 +1,88 @@
-<form #f="ngForm" [formGroup]="formVueltas" (ngSubmit)="salvarForm( f )" ngNativeValidate>
-    <div class="table-responsive">
-        <table class="table">
-            <thead>
-                <tr>
-                    <th><strong>Hs Serv</strong></th>
-                    <th><strong>Pelicula</strong></th>
-                    <th><strong>Video</strong></th>
-                    <th><strong>Desde</strong></th>
-                    <th><strong>Hasta</strong></th>
-                    <th><strong>Conductor</strong></th>
-                    <th><strong>Interno</strong></th>
-                    <th><strong>Ser. Regreso</strong></th>
-                    <th></th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>{{ serv.servicioPK.serFechaHora | date:'EE HH:mm' }} </td>
-                    <td><input type="text" required formControlName="peliIda" data-toggle="tooltip" animation="true" data-placement="top" title="Pelicula" onmouseenter="$(this).tooltip('show')" class="input-sm form-control"></td>
-                    <td><input type="text" required formControlName="videoIda" data-toggle="tooltip" animation="true" data-placement="top" title="Video" onmouseenter="$(this).tooltip('show')" class="input-sm form-control"></td>
-                    <td>{{ serv.escalaSalida }}<br>{{ serv.fechaHoraSalida | date:'EE HH:mm' }}</td>
-                    <td>{{ serv.escalaLlegada }}<br>{{ serv.fechaHoraLlegada | date:'EE HH:mm' }}</td>
-                    <td><button *ngFor="let c of choferesIda;let i=index" type="button" class="btn btn-primary btn-xs"><span
-                                (click)="removeChofer( choferesIda, i)" class="badge">x</span>{{c.nombreConTipo}}</button>
+<ng-container *ngIf="!_vv.vuelta||_vv.editable" >
 
-                        <select class="input-sm form-control" #ch (change)="addChoferIda(choferesIda, ch.value, serv)" formControlName="choferIda">
-                            <option value="null">-- Seleccionar --</option>
-                            <option *ngFor="let opt of _vs.choferesOcupacion|choferesConEstado:serv.fechaHoraSalida:serv.fechaHoraLlegada"
-                                [value]="opt.choferPKStr" [ngClass]="opt.classCho">
-                                {{opt.nombreConTipo}}
-                            </option>
-                        </select></td>
-                    <td><select class="input-sm form-control" formControlName="internoIda" required>
-                            <option value="null">-- Seleccionar --</option>
-                            <option *ngFor="let opt of _vs.vehiculos" [value]="opt.vehiculoPKStr">
-                                {{opt.interno}}
-                            </option>
-                        </select></td>
-                    <td> <select formControlName="servRetorno" class="input-sm form-control" #t (change)="onChangeServRetorno( t.value)" title="Servicio Vta" placeholder="Servicio Vta" data-toggle="tooltip" animation="true" data-placement="top" onmouseenter="$(this).tooltip('show')"
-                            required>
-                            <option [selected]="formVueltas.controls.servRetorno.value == null"  >-- Seleccionar --</option>
-                            <option *ngFor="let opt of _vs.serviciosVta|serMayoIgual:serv.fechaHoraLlegada" [value]="opt.servicioPKStr">{{
-                                opt.detalle }}</option>
-                        </select></td>
-                    <td><button type="submit" class="btn btn-xs botonVuelta">
-                          <i title="Guardar" data-toggle="tooltip" animation="true" data-placement="top" onmouseenter="$(this).tooltip('show')"
-                                class="fa fa-floppy-o fa-2x green" aria-hidden="true"></i>
-                       </button>
-                       <button *ngIf="vuelta" type="button" (click)="eliminarVta()" class="btn btn-xs botonVuelta">
-                          <i title="Eliminar" data-toggle="tooltip" animation="true" data-placement="top" onmouseenter="$(this).tooltip('show')"
-                                class="fa fa-trash fa-2x green" aria-hidden="true"></i>
-                       </button>
-                    </td>
-                </tr>
-                <tr *ngIf="servRet">
-                    <td>{{ servRet.servicioPK.serFechaHora | date:'EE HH:mm' }}</td>
-                    <td><input formControlName="peliVta" type="text" data-toggle="tooltip" animation="true" data-placement="top" title="Pelicula" onmouseenter="$(this).tooltip('show')" class="input-sm form-control" required></td>
-                    <td><input formControlName="videoVta" type="text" data-toggle="tooltip" animation="true" data-placement="top" title="Pelicula" onmouseenter="$(this).tooltip('show')" class="input-sm form-control" required></td>
-                    <td>{{ servRet.escalaSalida }}<br>{{ servRet.fechaHoraSalida | date:'EE HH:mm' }}</td>
-                    <td>{{ servRet.escalaLlegada }}<br>{{ servRet.fechaHoraLlegada | date:'EE HH:mm' }}</td>
-                    <td> <button *ngFor="let c of choferesVta;let i=index" type="button" class="btn btn-primary btn-xs"><span
-                                (click)="removeChofer( choferesVta, i)" class="badge">x</span> {{c.nombreConTipo}}</button>
-                        <select class="input-sm form-control" #chR (change)="addChoferVta(choferesVta, chR.value)" formControlName="choferVta">
-                            <option value="null">-- Seleccionar --</option>
-                            <option *ngFor="let opt of _vs.choferesOcupacion|choferesConEstado:servRet.fechaHoraSalida:servRet.fechaHoraLlegada"
-                                [value]="opt.choferPKStr" [ngClass]="opt.classCho">
-                                {{opt.nombreConTipo}}
-                            </option>
-                        </select></td>
-                    <td> <select class="input-sm form-control" formControlName="internoVta" required>
-                            <option value="null">-- Seleccionar --</option>
-                            <option *ngFor="let opt of _vs.vehiculos" [value]="opt.vehiculoPKStr">
-                                {{opt.interno}}
-                            </option>
-                        </select></td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
-</form>
+            <form #f="ngForm" [formGroup]="formVueltas" (ngSubmit)="salvarForm( f )" ngNativeValidate>
+                <div class="table-responsive">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th><strong>Hs Serv</strong></th>
+                                <th><strong>Pelicula</strong></th>
+                                <th><strong>Video</strong></th>
+                                <th><strong>Desde</strong></th>
+                                <th><strong>Hasta</strong></th>
+                                <th><strong>Conductor</strong></th>
+                                <th><strong>Interno</strong></th>
+                                <th><strong>Ser. Regreso</strong></th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>{{ _vv.serv.servicioPK.serFechaHora | date:'EE HH:mm' }} </td>
+                                <td><input type="text" required formControlName="peliIda" data-toggle="tooltip" animation="true" data-placement="top" title="Pelicula" onmouseenter="$(this).tooltip('show')" class="input-sm form-control"></td>
+                                <td><input type="text" required formControlName="videoIda" data-toggle="tooltip" animation="true" data-placement="top" title="Video" onmouseenter="$(this).tooltip('show')" class="input-sm form-control"></td>
+                                <td>{{ _vv.serv.escalaSalida }}<br>{{ _vv.serv.fechaHoraSalida | date:'EE HH:mm' }}</td>
+                                <td>{{ _vv.serv.escalaLlegada }}<br>{{ _vv.serv.fechaHoraLlegada | date:'EE HH:mm' }}</td>
+                                <td><button *ngFor="let c of _vv.choferesIda;let i=index" type="button" class="btn btn-primary btn-xs"><span
+                                            (click)="removeChofer( _vv.choferesIda, i)" class="badge">x</span>{{c.nombreConTipo}}</button>
+
+                                    <select class="input-sm form-control" #ch (change)="addChoferIda(_vv.choferesIda, ch.value, serv)" formControlName="choferIda">
+                                        <option value="null">-- Seleccionar --</option>
+                                        <option *ngFor="let opt of _vs.choferesOcupacion|choferesConEstado:_vv.serv.fechaHoraSalida:_vv.serv.fechaHoraLlegada"
+                                            [value]="opt.choferPKStr" [ngClass]="opt.classCho">
+                                            {{opt.nombreConTipo}}
+                                        </option>
+                                    </select></td>
+                                <td><select class="input-sm form-control" formControlName="internoIda" required>
+                                        <option value="null">-- Seleccionar --</option>
+                                        <option *ngFor="let opt of _vs.vehiculos" [value]="opt.vehiculoPKStr">
+                                            {{opt.interno}}
+                                        </option>
+                                    </select></td>
+                                <td> <select formControlName="servRetorno" class="input-sm form-control" #t (change)="onChangeServRetorno( t.value)" title="Servicio Vta" placeholder="Servicio Vta" data-toggle="tooltip" animation="true" data-placement="top" onmouseenter="$(this).tooltip('show')"
+                                        required>
+                                        <option [selected]="formVueltas.controls.servRetorno.value == null"  >-- Seleccionar --</option>
+                                        <option *ngFor="let opt of _vs.serviciosVta|serMayoIgual:_vv.serv.fechaHoraLlegada" [value]="opt.servicioPKStr">{{
+                                            opt.detalle }}</option>
+                                    </select></td>
+                                <td><button type="submit" class="btn btn-xs botonVuelta">
+                                    <i title="Guardar" data-toggle="tooltip" animation="true" data-placement="top" onmouseenter="$(this).tooltip('show')"
+                                            class="fa fa-floppy-o fa-2x green" aria-hidden="true"></i>
+                                </button>
+                                <button *ngIf="_vv.vuelta" type="button" (click)="eliminarVta()" class="btn btn-xs botonVuelta">
+                                    <i title="Eliminar" data-toggle="tooltip" animation="true" data-placement="top" onmouseenter="$(this).tooltip('show')"
+                                            class="fa fa-trash fa-2x green" aria-hidden="true"></i>
+                                </button>
+                                </td>
+                            </tr>
+                            <tr *ngIf="_vv.servRet">
+                                <td>{{ _vv.servRet.servicioPK.serFechaHora | date:'EE HH:mm' }}</td>
+                                <td><input formControlName="peliVta" type="text" data-toggle="tooltip" animation="true" data-placement="top" title="Pelicula" onmouseenter="$(this).tooltip('show')" class="input-sm form-control" required></td>
+                                <td><input formControlName="videoVta" type="text" data-toggle="tooltip" animation="true" data-placement="top" title="Pelicula" onmouseenter="$(this).tooltip('show')" class="input-sm form-control" required></td>
+                                <td>{{ _vv.servRet.escalaSalida }}<br>{{ _vv.servRet.fechaHoraSalida | date:'EE HH:mm' }}</td>
+                                <td>{{ _vv.servRet.escalaLlegada }}<br>{{ _vv.servRet.fechaHoraLlegada | date:'EE HH:mm' }}</td>
+                                <td> <button *ngFor="let c of _vv.choferesVta;let i=index" type="button" class="btn btn-primary btn-xs"><span
+                                            (click)="removeChofer( _vv.choferesVta, i)" class="badge">x</span> {{c.nombreConTipo}}</button>
+                                    <select class="input-sm form-control" #chR (change)="addChoferVta(_vv.choferesVta, chR.value)" formControlName="choferVta">
+                                        <option value="null">-- Seleccionar --</option>
+                                        <option *ngFor="let opt of _vs.choferesOcupacion|choferesConEstado:_vv.servRet.fechaHoraSalida:_vv.servRet.fechaHoraLlegada"
+                                            [value]="opt.choferPKStr" [ngClass]="opt.classCho">
+                                            {{opt.nombreConTipo}}
+                                        </option>
+                                    </select></td>
+                                <td> <select class="input-sm form-control" formControlName="internoVta" required>
+                                        <option value="null">-- Seleccionar --</option>
+                                        <option *ngFor="let opt of _vs.vehiculos" [value]="opt.vehiculoPKStr">
+                                            {{opt.interno}}
+                                        </option>
+                                    </select></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </form>
+
+</ng-container >
+<ng-container *ngIf="_vv.vuelta&&!_vv.editable">
+        <app-view-vuelta-de-vuelta [serv]="_vv.serv"  (onEditable)="cambiarEditable($event)"  ></app-view-vuelta-de-vuelta> 
+</ng-container>  
