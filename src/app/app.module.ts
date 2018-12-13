@@ -32,6 +32,7 @@ import { AuthenticationService } from './_services/authentication.service';
 import { PruebaComponent } from './shared/prueba/prueba.component';
 import { ServiceModule } from './services/service.module';
 import { TokenInterceptorService, RequestInterceptorService } from './services/service.index';
+import { NavegacionComponent } from './navegacion/navegacion.component';
 
 
 const appRoutes: Routes = [
@@ -48,6 +49,7 @@ const appRoutes: Routes = [
     FileUploaderComponent,
     HomeComponent,
     LoginComponent,
+    NavegacionComponent,
   ],
   imports: [
     BrowserModule,

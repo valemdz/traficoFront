@@ -26,6 +26,11 @@ export class ChoferListComponent implements OnInit, OnDestroy {
 
     choferNuevo: Chofer;
 
+    deleteChofer;
+    currentChofer;
+    carnetChofer;
+    incidenciaChofer;
+
     public estados = [
         { value: '0', display: 'HABILITADO' },
         { value: '1', display: 'DESHABILITADO' },

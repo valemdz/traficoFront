@@ -4,16 +4,12 @@ import { SharedModule } from './../shared/shared.module';
 
 import { VentanasModalesModule } from '../ventanas-modales/ventanas-modales.module';
 
-
-import { DiagramacionListComponent } from './diagramacion-list/diagramacion-list.component';
 import { DiagramacionServicioRoutingModule } from './diagramacion-servicio-routing.module';
 import { ModalConDetalleComponent } from './modal-con-detalle/modal-con-detalle.component';
 import { AdService }         from './ad.service';
 
 import { HeroJobAdComponent } from './hero-job-ad.component';
 import { HeroProfileComponent } from './hero-profile.component';
-import { DiagramacionChoferesComponent } from './diagramacion-choferes/diagramacion-choferes.component';
-import { DiagramacionInternosComponent } from './diagramacion-internos/diagramacion-internos.component';
 import { IdaVtaListComponent } from '../diagramacion-Servicios/ida-vta-list/ida-vta-list.component';
 import { EnlaceLineasComponent } from '../diagramacion-Servicios/enlace-lineas/enlace-lineas.component';
 import { VueltasComponent } from '../diagramacion-Servicios/vueltas/vueltas.component';
@@ -31,13 +27,10 @@ import { ViewVueltaDeVueltaComponent } from './vuelta-de-vuelta/view-vuelta-de-v
     DiagramacionServicioRoutingModule,
     PipesModule
   ],
-  declarations: [
-              DiagramacionListComponent,
+  declarations: [              
               ModalConDetalleComponent,
               HeroJobAdComponent,
-              HeroProfileComponent,
-              DiagramacionChoferesComponent,
-              DiagramacionInternosComponent,
+              HeroProfileComponent,              
               IdaVtaListComponent,
               EnlaceLineasComponent,
               VueltasComponent,              
