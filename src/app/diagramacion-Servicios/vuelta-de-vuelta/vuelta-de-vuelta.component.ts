@@ -12,9 +12,9 @@ import { VueltaDeVueltaService } from './vuelta-de-vuelta.service';
 
 @Component({
   selector: 'app-vuelta-de-vuelta',
-  templateUrl: './vuelta-de-vuelta.component.html',
-  styles: [],
-  providers:[VueltaDeVueltaService]
+  templateUrl: './vuelta-de-vuelta.component.html',  
+  providers:[VueltaDeVueltaService],
+  styleUrls: ['./vuelta-de-vuelta.component.css']
 })
 export class VueltaDeVueltaComponent implements OnInit, OnDestroy {
  
