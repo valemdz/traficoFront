@@ -1,7 +1,7 @@
 <br>
 <app-enlace-lineas (actualizarPadre)="actualizaPage($event)"></app-enlace-lineas>
 
-<ng-container *ngIf="IdaVueltaPage !== null">
+<ng-container *ngIf="IdaVueltaPage != null">
     <div class="panel-heading">
         <span>Lineas Enlazadas</span>
     </div>
@@ -19,21 +19,18 @@
                 </thead>
                 <tbody>
                     <tr *ngFor="let enlace of IdaVueltaPage.content">
-                        <td class="col-md-6">[ {{ enlace.ida.lineaPK.linCodigo }} ] - {{ enlace.ida.linNombre }}</td>
-                        <td class="col-md-6">[ {{ enlace.vuelta.lineaPK.linCodigo }} ] - {{enlace.vuelta.linNombre}}</td>
-                        <td class="actions">
-                            <!--a class="btn btn-success btn-xs pseudoBot" routerLink="/vuelta/{{enlace.ida.lineaPK.linCodigo}}/{{enlace.vuelta.lineaPK.linCodigo}}"> Vueltas</a>-->
-
+                        <td class="col-md-5">[ {{ enlace.ida.lineaPK.linCodigo }} ] - {{ enlace.ida.linNombre }}</td>
+                        <td class="col-md-5">[ {{ enlace.vuelta.lineaPK.linCodigo }} ] - {{enlace.vuelta.linNombre}}</td>
+                        <td class="actions col-md-1">
                             <a class="btn btn-xs" routerLink="/vuelta/{{enlace.ida.lineaPK.linCodigo}}/{{enlace.vuelta.lineaPK.linCodigo}}">
                                 <i title="Editar" data-toggle="tooltip" animation="true" data-placement="top" onmouseenter="$(this).tooltip('show')" class="fa fa-cog fa-2x green" aria-hidden="true"></i>
-                            </a>
-
-                            <!-- para eliminar
-                            <a class="btn btn-xs" (click)="currentEnlace=enlace;clearAlert()" data-toggle="modal" data-target="#delete-modal">
+                            </a>               
+                        </td>                        
+                        <td class="actions col-md-1">                            
+                            <a class="btn btn-xs" (click)="eliminarEnlace( enlace.id)" >
                                 <i title="Eliminar" data-toggle="tooltip" animation="true" data-placement="top" onmouseenter="$(this).tooltip('show')" class="fa fa-trash-o fa-2x red" aria-hidden="true"></i>
                             </a>
-                        -->
-                        </td>
+                        </td>         
                     </tr>
                     <tr *ngIf="IdaVueltaPage.content.length == 0">
                         <td class="col-md-6">Aún no ha enlazado ninguna linea</td>

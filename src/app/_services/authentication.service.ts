@@ -32,7 +32,7 @@ export class AuthenticationService {
     }
 
     login$( username: string, password: string, params ): Observable<any> {
-       return this.http.post(environment.origin + '/auth/login',
+       return this.http.post( environment.originLogin,
         JSON.stringify({ username: username, password: password }));
     }
 

@@ -1,14 +1,17 @@
 import { NgModule } from '@angular/core';
 
 
-import { VueltasService, DiagrService } from './service.index';
+import { VueltasService, DiagrService, RequestInterceptorService, TokenInterceptorService, IdaVtaListService } from './service.index';
 
 @NgModule({
   imports: [],
   declarations: [],
   providers: [
                 VueltasService,
-                DiagrService
+                DiagrService,
+                IdaVtaListService,
+                RequestInterceptorService,
+                TokenInterceptorService
              ]
 })
 export class ServiceModule { }
