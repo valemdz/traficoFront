@@ -32,6 +32,10 @@ export class ViajesEspListComponent implements OnInit, OnDestroy {
 
   listadoSubs: Subscription;
 
+  viajeComent;
+  viajeInterno;
+  currentViaje;
+
   constructor(  private fb: FormBuilder,
                 private viajeServ: ViajeEspServive,
                 private alertService: AlertService,

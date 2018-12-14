@@ -1,10 +1,10 @@
 import { Component, OnInit, OnDestroy, Output, EventEmitter } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { IdaVtaListService } from '../ida-vta-list/ida-vta-list.service';
 import { Subscription } from 'rxjs';
 import { MiUsuarioService } from 'src/app/_services/mi.usuario.service';
 import { ErrorService } from 'src/app/_services/error.service';
 import { Router } from '@angular/router';
+import { IdaVtaListService } from 'src/app/services/service.index';
 
 
 @Component({

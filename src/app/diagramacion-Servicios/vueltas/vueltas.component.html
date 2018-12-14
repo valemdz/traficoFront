@@ -4,13 +4,20 @@
     <app-search-by-fecha [fechaInicio]="_vs.inicio" [fechaFin]="_vs.fin" (buscarByFecha)="buscar($event)"></app-search-by-fecha>
     <br>
     <div *ngIf="_vs.loaded">
-        <div *ngFor="let f of _vs.fechas">
-            <span><strong>{{f|date:'EEEE dd'}} {{f|date:'MMMM yyyy' }} Lineas [ {{_vs.idLinIda}} - {{_vs.idLinVta}} ] </strong></span>
+        <ng-container *ngIf="_vs.serviciosIda.length > 0">
+            <div *ngFor="let f of _vs.fechas">
+                <span><strong>{{f|date:'EEEE dd'}} {{f|date:'MMMM yyyy' }} Lineas [ {{_vs.idLinIda}} - {{_vs.idLinVta}} ] </strong></span>
 
-            <div *ngFor="let serv of _vs.serviciosIda|filterByFecha:f">
-                <app-vuelta-de-vuelta [servInput]="serv"></app-vuelta-de-vuelta>
+                <div *ngFor="let serv of _vs.serviciosIda|filterByFecha:f">
+                    <app-vuelta-de-vuelta [servInput]="serv"></app-vuelta-de-vuelta>
+                </div>
             </div>
-        </div>
+        </ng-container>
+        <ng-container *ngIf="_vs.serviciosIda.length === 0">
+            <div class="alert alert-warning" role="alert">
+                La linea de Ida no tiene Servicios para Diagramar!!!!!
+            </div>
+        </ng-container>
     </div>
 </div>
 <button type="button" class="btn btn-default" (click)="volver()" data-dismiss="modal" data-dismiss="modal">Volver</button>

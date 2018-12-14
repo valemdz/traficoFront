@@ -12,6 +12,7 @@ import { DiagrInternoComponent } from './diagr-interno/diagr-interno.component';
 import { ViajeRoutingModule } from './viaje-routing.module';
 
 import { ViajeEdicionComponent } from './viaje-edicion/viaje-edicion.component';
+import { DiagrViajesEspComponent } from './diagr-viajes-esp/diagr-viajes-esp.component';
 
 @NgModule({
   imports: [
@@ -22,7 +23,8 @@ import { ViajeEdicionComponent } from './viaje-edicion/viaje-edicion.component';
   declarations: [ ViajesEspListComponent, 
                   ViajesEspecialesComponent,  
                   DiagrInternoComponent,
-                  ViajeEdicionComponent ],
+                  ViajeEdicionComponent,
+                  DiagrViajesEspComponent ],
     providers:[ ViajeEspServive ],
   schemas: [
       CUSTOM_ELEMENTS_SCHEMA

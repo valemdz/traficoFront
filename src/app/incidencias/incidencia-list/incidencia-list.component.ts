@@ -35,6 +35,8 @@ export class IncidenciaListComponent implements OnInit, OnDestroy  {
 
     ads: ComponenteItem[];
 
+    currentIncidencia;
+
     constructor( private incidenciaService: IncidenciaService,
         private router: Router,
         private yo: MiUsuarioService,

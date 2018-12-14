@@ -28,6 +28,8 @@ export class VehiculoListComponent implements OnInit, OnDestroy  {
     listadoSubs: Subscription;
     deleteVehiculoSubs: Subscription;
 
+    currentVehiculo;
+
     public estados = [
         { value: '0', display: 'HABILITADO' },
         { value: '1', display: 'DESHABILITADO' },

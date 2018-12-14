@@ -29,9 +29,10 @@ import { ViajesModule } from './viajes/viaje.module';
 import { DiagramacionServicioModule } from './diagramacion-Servicios/diagramacion.servicio.module';
 import { SharedModule } from './shared/shared.module';
 import { AuthenticationService } from './_services/authentication.service';
-import { TokenInterceptorService } from './_services/token-interceptor.service';
 import { PruebaComponent } from './shared/prueba/prueba.component';
 import { ServiceModule } from './services/service.module';
+import { TokenInterceptorService, RequestInterceptorService } from './services/service.index';
+import { NavegacionComponent } from './navegacion/navegacion.component';
 
 
 const appRoutes: Routes = [
@@ -48,6 +49,7 @@ const appRoutes: Routes = [
     FileUploaderComponent,
     HomeComponent,
     LoginComponent,
+    NavegacionComponent,
   ],
   imports: [
     BrowserModule,
@@ -76,6 +78,11 @@ const appRoutes: Routes = [
     AuthenticationService,
     { provide: HTTP_INTERCEPTORS,
       useClass: TokenInterceptorService,
+      multi: true
+    },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: RequestInterceptorService,
       multi: true
     },
     { provide: LOCALE_ID, useValue: 'es'}

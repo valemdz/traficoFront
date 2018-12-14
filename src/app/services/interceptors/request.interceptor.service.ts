@@ -9,7 +9,9 @@ import {
 } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
-import { LoaderService } from './loader.service';
+import { environment } from 'src/environments/environment';
+import { Router } from '@angular/router';
+import { LoaderService } from 'src/app/_services/loader.service';
 
 
 
@@ -17,7 +19,7 @@ import { LoaderService } from './loader.service';
 export class RequestInterceptorService implements HttpInterceptor {
   private started;
 
-  constructor(  private loaderService: LoaderService ){
+  constructor(  private loaderService: LoaderService, private router: Router ){
     console.log('RequestInterceptorService');
   }
 
@@ -54,11 +56,16 @@ export class RequestInterceptorService implements HttpInterceptor {
   }
 
   private catchHttpError(err: HttpErrorResponse) {
-    this.loaderService.display(false);
-    if (err.status === 401) {
-      console.log("Not authorized");
+    this.loaderService.display(false);       
+    if( err.status === 401 ){
+       if( err.url === environment.originLogin ){
+          console.log("Not authorized Por Login");
+       }else{
+          this.router.navigate(['/login']);
+       }
     } else {
       console.warn(err.statusText);
-    }
+    }    
   }
+  
 }

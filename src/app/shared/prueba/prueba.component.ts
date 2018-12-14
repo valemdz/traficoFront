@@ -21,11 +21,11 @@ export class PruebaComponent implements OnInit {
 
   vueltas=[];
 
-  /*inicioB = new Date(2018, 10, 21, 8, 0, 0);
+  inicioB = new Date(2018, 10, 21, 8, 0, 0);
   finB: Date = new Date(2018, 10, 22, 9, 30, 0);
 
   inicio = new Date(2018, 10, 21, 0, 0, 0);
-  fin: Date = new Date(2018, 10, 22, 0, 0, 0);*/
+  fin: Date = new Date(2018, 10, 22, 0, 0, 0);
 
 
   constructor(   @Inject( LOCALE_ID ) public locale,
