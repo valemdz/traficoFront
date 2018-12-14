@@ -22,6 +22,7 @@ import { VueltaDeVueltaComponent } from '../diagramacion-Servicios/vuelta-de-vue
 
 import { PipesModule } from '../pipes/pipes.module';
 import { ViewVueltaDeVueltaComponent } from './vuelta-de-vuelta/view-vuelta-de-vuelta.component';
+import { VencimientoCarnetComponent } from '../vencimiento-carnet/vencimiento-carnet.component';
 
 @NgModule({
   imports: [
@@ -42,7 +43,8 @@ import { ViewVueltaDeVueltaComponent } from './vuelta-de-vuelta/view-vuelta-de-v
               EnlaceLineasComponent,
               VueltasComponent,              
               VueltaDeVueltaComponent,
-              ViewVueltaDeVueltaComponent ],
+              ViewVueltaDeVueltaComponent,
+              VencimientoCarnetComponent ],
   entryComponents: [ModalConDetalleComponent, HeroJobAdComponent, HeroProfileComponent],
     providers:[ AdService ],
   schemas: [

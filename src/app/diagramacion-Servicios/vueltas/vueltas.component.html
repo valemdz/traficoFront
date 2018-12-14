@@ -7,8 +7,8 @@
         <div *ngFor="let f of _vs.fechas">
             <span><strong>{{f|date:'EEEE dd'}} {{f|date:'MMMM yyyy' }} Lineas [ {{_vs.idLinIda}} - {{_vs.idLinVta}} ] </strong></span>
 
-            <div *ngFor="let serv of _vs.serviciosIda|filterByFecha:f">               
-               <app-vuelta-de-vuelta [servInput]="serv"></app-vuelta-de-vuelta>               
+            <div *ngFor="let serv of _vs.serviciosIda|filterByFecha:f">
+                <app-vuelta-de-vuelta [servInput]="serv"></app-vuelta-de-vuelta>
             </div>
         </div>
     </div>

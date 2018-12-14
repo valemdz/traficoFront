@@ -1,0 +1,11 @@
+<div class="alert alert-danger alert-dismissible">
+    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+    <strong>Los siguientes carnets se vencen en los proximos 30 dias</strong>
+    <div *ngFor="let c of vencimientos">
+        <h1>{{carnet.numeroCarnet}}</h1>
+        <p>Carnet {{carnet.tipo}}</p>
+        <p>Vencimiento: {{carnet.fechaVencString}}</p>
+        <p>{{carnet.observaciones}}</p>
+        <p>{{carnet.choferPK.cho_emp_codigo}}</p>
+    </div>
+</div>
