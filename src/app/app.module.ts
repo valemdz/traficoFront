@@ -33,7 +33,6 @@ import { PruebaComponent } from './shared/prueba/prueba.component';
 import { ServiceModule } from './services/service.module';
 import { TokenInterceptorService, RequestInterceptorService } from './services/service.index';
 import { NavegacionComponent } from './navegacion/navegacion.component';
-import { SearchComponent } from './search/search.component';
 
 
 const appRoutes: Routes = [
@@ -50,8 +49,7 @@ const appRoutes: Routes = [
     FileUploaderComponent,
     HomeComponent,
     LoginComponent,
-    NavegacionComponent,
-    SearchComponent,
+    NavegacionComponent
   ],
   imports: [
     BrowserModule,
