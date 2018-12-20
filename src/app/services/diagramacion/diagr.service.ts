@@ -6,7 +6,7 @@ import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 
 import { environment } from 'src/environments/environment';
-import { map } from 'rxjs/operators';
+import { map, filter, concatAll } from 'rxjs/operators';
 import swal from 'sweetalert';
 import { PaginationPropertySort } from 'src/app/shared/pagination';
 import { FuncionesGrales } from 'src/app/utiles/funciones.grales';
@@ -136,6 +136,33 @@ export class DiagrService {
     ));
   }
 
+  findVehiculosOcupacion$( idEmpresa, inicio, fin ) {
+    const url = this.urlBase + `/diagr/empresa/${idEmpresa}/fechaInicio/${inicio}/fechaFin/${fin}/vehiculosOcupacion`;
+    return  this.http.get( url )
+            .pipe(
+              map( ( vehiculos: any ) =>{
+
+                vehiculos.forEach(veh => {
+                    veh.servicios.forEach( serv =>{
+                      serv.servicioPK.serFechaHora = new Date( serv.servicioPK.serFechaHora );
+                      serv.fechaHoraSalida = new Date( serv.fechaHoraSalida );
+                      serv.fechaHoraLlegada = new Date( serv.fechaHoraLlegada );
+                    });
+
+                    veh.incidencias.forEach( inc => {
+                        inc.inicio = new Date( inc.inicio );
+                        inc.fin = new Date( inc.fin );
+                    });
+
+                    veh.viajes.forEach( v => {
+                      v.inicio = new Date( v.inicio );
+                      v.fin = new Date( v.fin );
+                    });
+                });                
+                return vehiculos;
+              })
+            );
+  } 
 
 
 }

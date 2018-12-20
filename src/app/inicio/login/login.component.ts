@@ -159,7 +159,6 @@ export class LoginComponent implements OnInit, AfterViewInit {
         const saveUser: Usuario = {
             username: formModel.username as string,
             password : formModel.password as string
-
         };
         return saveUser;
     }

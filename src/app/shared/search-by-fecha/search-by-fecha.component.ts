@@ -44,20 +44,20 @@ export class SearchByFechaComponent implements OnInit {
 
 
     // =====Sacar =============
-    this.fInicio = FuncionesGrales.formatearFecha( this.locale, '2018/11/30', FECHA_PATTERN ),
-    this.fFin = FuncionesGrales.formatearFecha( this.locale, '2018/12/02', FECHA_PATTERN ),
+    // this.fInicio = FuncionesGrales.formatearFecha( this.locale, '2018/11/30', FECHA_PATTERN ),
+    // this.fFin = FuncionesGrales.formatearFecha( this.locale, '2018/12/02', FECHA_PATTERN ),
     // ===============================
 
 
     // ===== Dejar esto =============
-    //this.fInicio = new Date();
-    //this.fFin = new Date();
+    this.fInicio = new Date();
+    this.fFin = new Date();
     
 
-    // if ( this.fechaInicio && this.fechaFin ) {
-    //   this.fInicio = this.fechaInicio;
-    //   this.fFin = this.fechaFin;
-    // }
+    if ( this.fechaInicio && this.fechaFin ) {
+      this.fInicio = this.fechaInicio;
+      this.fFin = this.fechaFin;
+    }
 
     // ===============================
 

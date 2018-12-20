@@ -23,18 +23,14 @@ export class VueltasComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.activated.params
       .subscribe( lineas => this._vs.setLineas( lineas ));
-
     this._vs.loaded = false;  
-
   }
 
   ngOnDestroy(): void {
-
   }
 
   buscar( formFechas ) {
     //Traigo las fechas del buscador
-
     this._vs.OnInit( formFechas );
     // this.filter( new Date() );
   }

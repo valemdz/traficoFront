@@ -13,21 +13,23 @@ export const CANTIDAD_DIAS_DIAGR_ADICIONALES_VTA = 3;
 
 ////////////// Para el combo de Choferes /////////////
 
-export const CHOFER_CON_SERVICIOS = 1;
-export const CHOFER_CON_INCIDENCIAS = 2;
-export const CHOFER_CON_VIAJES = 3;
-export const CHOFER_LIBRE = 4;
+export const CON_SERVICIOS = 1;
+export const CON_INCIDENCIAS = 2;
+export const CON_VIAJES = 3;
+export const LIBRE = 4;
 
-export const CHOFER_CON_SERVICIOS_STR = 'alert alert-danger';
-export const CHOFER_CON_INCIDENCIAS_STR = 'alert alert-warning';
-export const CHOFER_CON_VIAJES_STR = 'alert alert-danger';
-export const CHOFER_LIBRE_STR = 'alert alert-success';
-
+export const CON_SERVICIOS_STR = 'alert alert-danger';
+export const CON_INCIDENCIAS_STR = 'alert alert-warning';
+export const CON_VIAJES_STR = 'alert alert-danger';
+export const LIBRE_STR = 'alert alert-success';
 
 export const CHOFER = 0;
 export const AUXILIAR = 1;
 
-
+export const HABILITADO = 0;
+export const HABILITADO_STR = 'HABILITADO';
+export const DESHABILITADO = 1;
+export const DESHABILITADO_STR = 'DESHABILITADO';
 
 /*
 

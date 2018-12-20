@@ -1,6 +1,6 @@
 import { Injectable, Inject, LOCALE_ID } from '@angular/core';
 import { FECHA_PATTERN_MOMENT, FECHA_PATTERN, CANTIDAD_DIAS_DIAGR_DEFAULT,
-         FECHA_HORA_MOSTRAR_PATTERN, CANTIDAD_DIAS_DIAGR_ADICIONALES_VTA }
+         FECHA_HORA_MOSTRAR_PATTERN, CANTIDAD_DIAS_DIAGR_ADICIONALES_VTA, HABILITADO }
           from 'src/app/utiles/const-data-model';
 import { FuncionesGrales } from 'src/app/utiles/funciones.grales';
 import { MiUsuarioService } from 'src/app/_services/mi.usuario.service';
@@ -24,10 +24,10 @@ export class VueltasService {
   idLinVta: string;
 
   serviciosIda: Servicio[] = [];
-  serviciosVta: Servicio[] = [];  
-  vehiculos: any = [];
+  serviciosVta: Servicio[] = [];    
   choferesOcupacion: any;
   vueltas:Vuelta[] = [];
+  vehiOcupacion:any;
 
   datosVueltasSubs:Subscription;
 
@@ -39,39 +39,42 @@ export class VueltasService {
                @Inject(LOCALE_ID) public locale: string   ) {
 
     this.inicio = new Date();
-
     this.fin = new Date();
     this.fin.setDate( this.fin.getDate() + CANTIDAD_DIAS_DIAGR_DEFAULT - 1 );
 
-    this.finVuelta = new Date();
-    this.finVuelta.setDate( this.finVuelta.getDate()
-                      + CANTIDAD_DIAS_DIAGR_DEFAULT
-                      + CANTIDAD_DIAS_DIAGR_ADICIONALES_VTA );
-    
+    this.finVuelta = new Date( this.fin.getTime());
+    this.finVuelta.setDate( this.finVuelta.getDate()                     
+                                + CANTIDAD_DIAS_DIAGR_ADICIONALES_VTA );  
+  }
+
+  setFechas( formFechas ){
+    this.inicio = FuncionesGrales.toFecha( formFechas.fInicio ,  FECHA_PATTERN_MOMENT );
+    this.fin = FuncionesGrales.toFecha( formFechas.fFin ,  FECHA_PATTERN_MOMENT );
+    this.finVuelta = new Date( this.fin.getTime());
+    this.finVuelta.setDate( this.finVuelta.getDate()                     
+                                + CANTIDAD_DIAS_DIAGR_ADICIONALES_VTA );    
   }
 
   OnInit( formFechas ){
 
+      this.setFechas( formFechas );
+
       this.loaderService.displayConjunto(true);
       this.loaded = false;
-
-
-      this.inicio = FuncionesGrales.toFecha( formFechas.fInicio ,  FECHA_PATTERN_MOMENT );
-      this.fin = FuncionesGrales.toFecha( formFechas.fFin ,  FECHA_PATTERN_MOMENT );
-
+      
       this.generarFechas();
 
       const servIda$ = this.getServiciosIda$();
-      const servVta$ = this.getServiciosVta$();
-      const vehiculos$ = this.getVehiculos$();
+      const servVta$ = this.getServiciosVta$();      
       const choOcupacion$ = this.getChoferesOcupacion$(); 
       const vueltas$ = this.getVueltas$();
+      const vehOcupacion$ = this.getVehiculosOcupacion$();
 
       this.datosVueltasSubs = Observable.forkJoin([ servIda$, 
-                                                 servVta$, 
-                                                 vehiculos$, 
-                                                 choOcupacion$,
-                                                 vueltas$])
+                                                    servVta$,                                                  
+                                                    choOcupacion$,
+                                                    vueltas$,
+                                                    vehOcupacion$])
           .subscribe( this.okParalelo.bind(this));
                                                  
   } 
@@ -79,10 +82,10 @@ export class VueltasService {
   okParalelo( respuesta ){
 
     this.okServiciosIda( respuesta[0] );
-    this.okServiciosVta( respuesta[1] );
-    this.okVehiculos( respuesta[2] );
-    this.okChoferes( respuesta[3] ) ;
-    this.okVueltas( respuesta[4] );
+    this.okServiciosVta( respuesta[1] );    
+    this.okChoferes( respuesta[2] ) ;
+    this.okVueltas( respuesta[3] );
+    this.okVehiculosOcupacion( respuesta[4] );
 
     this.loaded = true;
     this.loaderService.displayConjunto(false);
@@ -175,15 +178,7 @@ export class VueltasService {
 
   getVehiculos$() {
      return this._ds.findVehiculos$( this.yo.getEmpresa());
-  }
-
-  okVehiculos( v ){      
-    this.vehiculos = v;
-    this.vehiculos.forEach( v => {
-        v.vehiculoPKStr = JSON.stringify( v.vehiculoPK );
-    });
-    console.log( this.vehiculos );  
-  }
+  } 
 
   getChoferesOcupacion$() {
         return  this._ds.findChoresOcupacion$( this.yo.getEmpresa(),
@@ -192,6 +187,13 @@ export class VueltasService {
 
         //.subscribe( this.okChoferes.bind( this ) );
 
+  }
+
+  getVehiculosOcupacion$() {
+     // Trae todos lo vehiculos con ocupacion
+     return  this._ds.findVehiculosOcupacion$( this.yo.getEmpresa(),
+                          FuncionesGrales.fromFecha( this.locale, this.inicio, FECHA_PATTERN),
+                          FuncionesGrales.fromFecha( this.locale, this.finVuelta, FECHA_PATTERN) );                          
   }
 
   okChoferes( data ) {
@@ -226,6 +228,13 @@ export class VueltasService {
   okVueltas( vueltas ){
     console.log( vueltas );
     this.vueltas = vueltas;
+  }
+
+  okVehiculosOcupacion( vehiculos){
+     this.vehiOcupacion = vehiculos;
+     this.vehiOcupacion = this.vehiOcupacion.filter(  v => v.estado === HABILITADO );
+     console.log( 'okVehiculosOcupacion ');
+     console.log( this.vehiOcupacion );
   }
 
   errorVueltas( err ){

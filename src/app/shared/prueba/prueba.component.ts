@@ -39,6 +39,17 @@ export class PruebaComponent implements OnInit {
     //this.getServiciosIda();
     this.getChoferesOcupacion();
 
+    let list=[
+      { name:'Computer Architecture', price:65 }, 
+      { name:'Advanced Composite Materials', price:45 }, 
+      { name:'Stategies Unplugged', price:43 }, 
+      { name:'Teaching Science', price:50 }, 
+      { name:'Challenging Times', price:22 }];
+
+      console.log('list', list );
+
+      console.log( list.filter( t => t.price < 65 ) );
+
   }
 
 

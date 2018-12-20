@@ -82,5 +82,18 @@ export class FuncionesGrales {
     return true;
   }
 
+  public static ordenamientoAscendente( arreglo, propiedad ) {
+    arreglo.sort(function (a, b) {
+      if ( a[propiedad] > b[propiedad] ) {
+        return 1;
+      }
+      if (a[propiedad] < b[propiedad] ) {
+        return -1;
+      }
+      // a must be equal to b
+      return 0;
+    });
+  }
+
 
 }

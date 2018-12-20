@@ -35,7 +35,8 @@
                                 </select></td>
                             <td><select class="input-sm form-control" formControlName="internoIda" required>
                                     <option value="null">-- Seleccionar --</option>
-                                    <option *ngFor="let opt of _vs.vehiculos" [value]="opt.vehiculoPKStr">
+                                    <option *ngFor="let opt of _vs.vehiOcupacion|vehiculosConColores:_vv.serv.fechaHoraSalida:_vv.serv.fechaHoraLlegada" 
+                                        [value]="opt.vehiculoPKStr" [ngClass]="opt.classObj">
                                         {{opt.interno}}
                                     </option>
                                 </select></td>
@@ -72,7 +73,8 @@
                                 </select></td>
                             <td> <select class="input-sm form-control" formControlName="internoVta" required>
                                     <option value="null">-- Seleccionar --</option>
-                                    <option *ngFor="let opt of _vs.vehiculos" [value]="opt.vehiculoPKStr">
+                                    <option *ngFor="let opt of _vs.vehiOcupacion|vehiculosConColores:_vv.servRet.fechaHoraSalida:_vv.servRet.fechaHoraLlegada" 
+                                        [value]="opt.vehiculoPKStr" [ngClass]="opt.classObj">
                                         {{opt.interno}}
                                     </option>
                                 </select></td>
