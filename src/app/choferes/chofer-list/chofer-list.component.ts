@@ -143,6 +143,7 @@ export class ChoferListComponent implements OnInit, OnDestroy {
         }, err => {
               this.ctrolError.tratarErroresEliminaciones( err );
         } );
+        this.clearAlert();
 
     }
 

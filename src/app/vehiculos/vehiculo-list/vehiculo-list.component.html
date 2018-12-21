@@ -36,11 +36,21 @@
                         <td>{{vehiculo.vehCarroceria}}</td>
                         <td>{{vehiculo.vehMpaCodigo}}</td>
                         <td>
-                            <label class="switch">
+                                <div *ngIf="vehiculo.vehEstado == estados[0].value == 1">
+                                        <a  (click)="updateEstvehiculo=vehiculo;" data-toggle="modal" data-target="#update-modal">
+                                            <i class="fa fa-toggle-on fa-2x green" aria-hidden="true"></i>
+                                        </a>
+                                    </div>
+                                    <div *ngIf="vehiculo.vehEstado==estados[0].value == 0">
+                                            <a  (click)="updateEstvehiculo=vehiculo;" data-toggle="modal" data-target="#update-modal"                                        >
+                                                <i class="fa fa-toggle-off fa-2x red" aria-hidden="true"></i>
+                                            </a>
+                                        </div>
+                            <!--label class="switch">
                                 <input type="checkbox" [checked]="vehiculo.vehEstado==estados[0].value"
                                 (change)="$event.target.checked? (vehiculo.vehEstado = estados[0].value) : (vehiculo.vehEstado = estados[1].value);cambiarEstado(vehiculo)"  >
                                 <span class="slider round"></span>
-                            </label>
+                            </label-->
                         </td>
                         <td>{{ vehiculo.vehVerificacionTecnica | date:'dd/MM/yyyy' }}</td>
                         <td class="actions">
@@ -123,3 +133,27 @@
     </div>
 
 </ng-container>
+
+
+<!-- update estado-->
+<ng-container *ngIf="updateEstvehiculo">
+        <div class="modal fade" id="update-modal" tabindex="-1" role="dialog" aria-labelledby="modalLabel">
+            <div class="modal-dialog modal-sm" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Fechar">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                        <h4 class="modal-title" id="modalLabel"></h4>
+                    </div>
+                    <div class="modal-body">
+                        Desea cambiar el estado del interno {{updateEstvehiculo.vehiculoPK.vehInterno}}?
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" (click)="cambiarEstado(updateEstvehiculo)" class="btn btn-primary" data-dismiss="modal">Si</button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal" data-dismiss="modal">No</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </ng-container>
