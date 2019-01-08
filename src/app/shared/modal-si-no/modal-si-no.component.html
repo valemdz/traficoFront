@@ -1,0 +1,50 @@
+
+<div class='fondo-negro animated fadeIn' [ngClass]='_ms.oculto'  >
+  <div class="modal" style='display:block' tabindex="-1" role="dialog">
+      <div class="modal-dialog" role="document">
+          <div class="modal-content">
+              <div class="modal-header">
+                    <div class="swal-icon swal-icon--warning">
+                            <span class="swal-icon--warning__body">
+                              <span class="swal-icon--warning__dot"></span>
+                            </span>
+                    </div>
+              </div>
+              <div *ngIf="_ms.mensaje" class="modal-body" align='center'>
+                    <h3>{{_ms.mensaje.title}}</h3>
+                    <div class="row">
+                        <div class="col-md-12 text-left" *ngFor="let m of _ms.mensaje.messages">
+                             <label>{{m}}</label>
+                        </div>
+                    </div>                  
+              </div>
+              <div class="modal-footer">
+                    <div class="swal-footer">
+                        <div class="swal-button-container">
+
+                            <button (click)="_ms.notificarCancelar()" class="swal-button swal-button--cancel" tabindex="0">Cancelar</button>
+                        
+                            <div class="swal-button__loader">
+                              <div></div>
+                              <div></div>
+                              <div></div>
+                            </div>
+                        
+                        </div>
+                        <div class="swal-button-container">
+                        
+                            <button (click)="_ms.notificarSi()" class="swal-button swal-button--confirm swal-button--danger">OK</button>
+                        
+                            <div class="swal-button__loader">
+                              <div></div>
+                              <div></div>
+                              <div></div>
+                            </div>
+                        
+                        </div>
+                    </div>
+              </div>
+          </div>
+      </div>
+  </div>
+</div>

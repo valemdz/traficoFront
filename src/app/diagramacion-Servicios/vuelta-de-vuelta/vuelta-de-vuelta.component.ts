@@ -1,36 +1,49 @@
 import { Component, OnInit, Input, OnDestroy } from '@angular/core';
-
-import { FormGroup, FormBuilder, Validators, NgForm } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators, NgForm, FormControl } from '@angular/forms';
 import { MiUsuarioService } from 'src/app/_services/mi.usuario.service';
-
 import { Vuelta } from 'src/app/models/vuelta.model';
 import { Servicio } from 'src/app/models/servicio.model';
-import { VueltasService, DiagrService } from 'src/app/services/service.index';
-import { Subscription } from 'rxjs';
+import { VueltasService, DiagrService, ModalSiNoService } from 'src/app/services/service.index';
+import { Subscription, Observable } from 'rxjs';
 import { VueltaDeVueltaService } from './vuelta-de-vuelta.service';
+import { startWith, map } from 'rxjs/operators';
+import { ChoferesConEstadoPipe } from 'src/app/pipes/choferes-con-estado.pipe';
+import { ComboCho } from 'src/app/models/comboCho';
+import { ModalSiNo } from 'src/app/models/modalSiNo.model';
 
 
 @Component({
   selector: 'app-vuelta-de-vuelta',
   templateUrl: './vuelta-de-vuelta.component.html',  
-  providers:[VueltaDeVueltaService],
+  providers:[VueltaDeVueltaService, ChoferesConEstadoPipe],
   styleUrls: ['./vuelta-de-vuelta.component.css']
 })
 export class VueltaDeVueltaComponent implements OnInit, OnDestroy {
  
   @Input("servInput") servInput: Servicio; 
-
+  
   formVueltas: FormGroup;
 
+  checkVtaSubsc: Subscription;
   saveVtaSubsc: Subscription;
   updateVtaSubsc: Subscription;
-  deleteVtaSubsc: Subscription;  
+  deleteVtaSubsc: Subscription;    
+
+  ////////////////////////  
+  choOcupIdaCombo=[]; 
+  choOcupVtaCombo=[]; 
+
+  filteredChoferesIda: Observable<ComboCho[]>;
+  filteredChoferesVta: Observable<ComboCho[]>;
+  ////////////////////////
 
   constructor(  public _vv: VueltaDeVueltaService,
                 public _vs: VueltasService,
                 private yo: MiUsuarioService,
                 private fb: FormBuilder,
-                private _ds: DiagrService  ) {
+                private _ds: DiagrService,
+                private pipeChofer: ChoferesConEstadoPipe,
+                public _ms: ModalSiNoService   ) {
       this.crearForm();
   }
 
@@ -52,7 +65,32 @@ export class VueltaDeVueltaComponent implements OnInit, OnDestroy {
     this._vv.OnInit( this.servInput );    
     this.resetInternoServicioIda(); 
     this.resetVuelta();  
+
+    /////////////////////////
+
+    this.choOcupIdaCombo = this.pipeChofer.transform( this._vs.choferesOcupacion,
+                                                      this._vv.serv.fechaHoraSalida,
+                                                      this._vv.serv.fechaHoraLlegada );
+    
+    this.escucharChoferesIda();   
+    //////////////////////////////////////    
+
   }
+
+  
+
+  private escucharChoferesIda(){
+    this.filteredChoferesIda =  this.formVueltas.get('choferIda').valueChanges
+      .pipe(
+        startWith(''),
+        map(value => this._filterChoferesIda(value))
+    );     
+  }
+
+  private _filterChoferesIda(value: string): ComboCho[]{   
+    const filterValue = value.toLowerCase();
+    return this.choOcupIdaCombo.filter( ( option:any ) => option.nombreConTipo.toLowerCase().includes(filterValue));
+  }  
 
   resetInternoServicioIda(){
     //Solo reseteo el valor de su internoIda    
@@ -60,7 +98,6 @@ export class VueltaDeVueltaComponent implements OnInit, OnDestroy {
   }
 
   resetVuelta() {
-
     if ( this._vv.vuelta ) {         
       //Traer el retorno 
       this.onChangeServRetorno( JSON.stringify( this._vv.vuelta.servicioRet.servicioPK ) ); 
@@ -81,36 +118,87 @@ export class VueltaDeVueltaComponent implements OnInit, OnDestroy {
 
   salvarForm( f: NgForm) {    
     if ( this.formVueltas.valid ) {
+        let idLlamada ='nuevo'; 
         let id = -1;
         const vuelta = this._vs.getVuelta( this._vv.serv.servicioPK ); 
         if( vuelta ){
-          id = vuelta.id;
+          id = vuelta.id;          
         }
-
-        const form = this.formVueltas.getRawValue()
-
-        if (  id < 0 ) {
-            this.saveVtaSubsc= this._ds.saveVuelta$( this._vv.prepararVuelta( form ) )
-            .subscribe( ( resp: any)  =>  this._vv.okSaveVuelta( resp ) );
-        } else {
-            this.updateVtaSubsc = this._ds.updateVuelta$( id, this._vv.prepararVuelta( form ) )
-            .subscribe( ( resp: any)  => this._vv.okModificarVuelta( resp ) );
-        }       
+        const form = this.formVueltas.getRawValue();
+        this.checkVueltas( this._vv.prepararVuelta( form ), id );                
     }    
-  }  
+  } 
   
+  checkVueltas(  vuelta, id: number  ) {
+    this._ds.checkVueltas$( vuelta ).subscribe( ( resp:any)  =>{
+        let mensajes = []    ;
+        for ( let clave in resp ) {           
+            mensajes.push( clave + ":");
+            for( let mje of resp[ clave] ){
+                mensajes.push( `     ${mje}` );
+            }
+        }
+        
+        if ( mensajes.length > 0   ){
+            let mensaje: ModalSiNo = {           
+              title:"Conflicto con Choferes y Vehiculos",      
+              messages:mensajes,      
+            };
+    
+            this._ms.mostraModal( mensaje ); 
+            
+            if( this.checkVtaSubsc ){ this.checkVtaSubsc.unsubscribe(); }
+            this.checkVtaSubsc = this._ms.notificacionSiNO.subscribe( resultado => {            
+              if( resultado.acepto ) {
+                  this.salvar(  vuelta, id );
+              }  
+            });
+        }else{
+             this.salvar(  vuelta, id );
+        }     
+        
+    });
+  }
+  
+  salvar( vuelta, id: number ) {    
+    if ( id < 0 ){
+        this.saveVtaSubsc= this._ds.saveVuelta$( vuelta )
+          .subscribe( ( resp: any)  =>  this._vv.okSaveVuelta( resp ) );
+    }else{
+        this.updateVtaSubsc = this._ds.updateVuelta$( id, vuelta )
+        .subscribe( ( resp: any)  => this._vv.okModificarVuelta( resp ) );
+    }
+  }   
   
 
   onChangeServRetorno(   idServRetorno ) {
     this._vv.onChangeServRetorno(  idServRetorno );
-    if ( this._vv.servRet ) {            
-      this.formVueltas.get('internoVta').setValue(this._vv.getVehiculoVtaToForm() );      
+    if ( this._vv.servRet ) { 
+
+      this.formVueltas.get('internoVta').setValue(this._vv.getVehiculoVtaToForm() );         
+      this.choOcupVtaCombo = this.pipeChofer.transform( this._vs.choferesOcupacion,
+                                                        this._vv.serv.fechaHoraSalida,
+                                                        this._vv.serv.fechaHoraLlegada );    
+      this.escucharChoferesVta();
     }
   }
 
+  private escucharChoferesVta(){
+    this.filteredChoferesVta =  this.formVueltas.get('choferVta').valueChanges
+      .pipe(
+        startWith(''),
+        map(value => this._filterChoferesVta(value))
+    );     
+  }
+
+  private _filterChoferesVta(value: string): ComboCho[]{   
+    const filterValue = value.toLowerCase();
+    return this.choOcupVtaCombo.filter( ( option:any ) => option.nombreConTipo.toLowerCase().includes(filterValue));
+  }  
+
   addChoferIda( choferes, choferSel ) {    
     this._vv.addChoferIda( choferes, choferSel )
-    //Lo pongo a null para que siga seleccionando
+    //Lo pongo a '' para que siga seleccionando
     this.resetComboChofer( 'choferIda' );    
   }  
 
@@ -122,7 +210,7 @@ export class VueltaDeVueltaComponent implements OnInit, OnDestroy {
   }  
   
   resetComboChofer( nombre ){
-    this.formVueltas.get(nombre).setValue(null);
+    this.formVueltas.get(nombre).setValue('');
   }
 
   removeChofer( choferes, index ) {
@@ -131,8 +219,19 @@ export class VueltaDeVueltaComponent implements OnInit, OnDestroy {
 
   eliminarVta(){
     if( this._vv.vuelta ){
-         this.deleteVtaSubsc = this._ds.deleteVuelta$( this._vv.vuelta.id )
-        .subscribe( ( resp: any) => this.okEliminarVta( resp )  );
+
+      swal({
+        title: "Eliminación",
+        text: "Esta seguro que desea eliminar la vuelta?",
+        icon: "warning",
+        dangerMode: true,
+      })
+      .then(willDelete => {
+        if (willDelete) {
+          this.deleteVtaSubsc = this._ds.deleteVuelta$( this._vv.vuelta.id )
+          .subscribe( ( resp: any) => this.okEliminarVta( resp )  );
+        }
+      });        
     }    
   }
 
@@ -158,10 +257,16 @@ export class VueltaDeVueltaComponent implements OnInit, OnDestroy {
     this._vv.editable = event;
   }
 
+  cancelarEdicion(){
+    this._vv.editable = false;
+  }
+
+
   ngOnDestroy(): void {
     if( this.deleteVtaSubsc ){ this.deleteVtaSubsc.unsubscribe(); }     
     if( this.saveVtaSubsc ){ this.saveVtaSubsc.unsubscribe(); }
-    if( this.updateVtaSubsc ){ this.updateVtaSubsc.unsubscribe(); }
+    if( this.updateVtaSubsc ){ this.updateVtaSubsc.unsubscribe(); }    
+    if( this.checkVtaSubsc ){ this.checkVtaSubsc.unsubscribe(); }        
   }
 
 }

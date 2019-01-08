@@ -1,6 +1,6 @@
-import { NgModule } from '@angular/core';
+import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ReactiveFormsModule  } from '@angular/forms';
+import { ReactiveFormsModule, FormsModule  } from '@angular/forms';
 import {HttpModule, Http, XHRBackend, RequestOptions} from '@angular/http';
 
 import {Tabs} from './tabs/tabs';
@@ -26,13 +26,23 @@ import { SearchByFechaComponent } from './search-by-fecha/search-by-fecha.compon
 import { PruebaComponent } from './prueba/prueba.component';
 import { ChoferesConEstadoPipe } from '../pipes/choferes-con-estado.pipe';
 import { PipesModule } from '../pipes/pipes.module';
+import { MaterialModule } from '../material/material.module';
+import {platformBrowserDynamic} from '@angular/platform-browser-dynamic';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import { BrowserModule } from '@angular/platform-browser';
+import { MatAutocompleteModule } from '@angular/material';
+import { ModalSiNoComponent } from './modal-si-no/modal-si-no.component';
 
 
 @NgModule({
   imports: [
-    CommonModule,
+    BrowserModule,
+    BrowserAnimationsModule,
+    FormsModule,       
     ReactiveFormsModule,
-    PipesModule
+    CommonModule,    
+    PipesModule,    
+    MaterialModule,    
   ],
   declarations: [ MensajesComponent,
                   AlertComponent,
@@ -47,7 +57,9 @@ import { PipesModule } from '../pipes/pipes.module';
                   PlaceHolderComponent,
                   AddComponenteDirective,
                   SearchByFechaComponent,
-                  PruebaComponent  ],
+                  PruebaComponent,
+                  ModalSiNoComponent,
+                  ModalSiNoComponent  ],
   exports:[
     CommonModule,
     ReactiveFormsModule,
@@ -65,7 +77,11 @@ import { PipesModule } from '../pipes/pipes.module';
     AddComponenteDirective,
     SearchByFechaComponent,
     PruebaComponent,
-    ChoferesConEstadoPipe
+    ChoferesConEstadoPipe,
+    ModalSiNoComponent
+  ],
+  schemas: [
+    CUSTOM_ELEMENTS_SCHEMA
   ]
 })
 export class SharedModule { }

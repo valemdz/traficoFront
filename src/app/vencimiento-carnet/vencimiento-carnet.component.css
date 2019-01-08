@@ -1,0 +1,12 @@
+.alert {}
+
+.alert-danger>ul>li {
+    list-style: none;
+    border-left: 1px;
+}
+
+.alert-danger {
+    display: inline-block;
+    margin-top: 1em;
+    /*height: 34px;*/
+}

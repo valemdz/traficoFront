@@ -56,28 +56,27 @@ export class VueltasService {
   }
 
   OnInit( formFechas ){
-
-      this.setFechas( formFechas );
-
-      this.loaderService.displayConjunto(true);
-      this.loaded = false;
-      
+      this.setFechas( formFechas );      
+      this.loaded = false;      
       this.generarFechas();
-
-      const servIda$ = this.getServiciosIda$();
-      const servVta$ = this.getServiciosVta$();      
-      const choOcupacion$ = this.getChoferesOcupacion$(); 
-      const vueltas$ = this.getVueltas$();
-      const vehOcupacion$ = this.getVehiculosOcupacion$();
-
-      this.datosVueltasSubs = Observable.forkJoin([ servIda$, 
-                                                    servVta$,                                                  
-                                                    choOcupacion$,
-                                                    vueltas$,
-                                                    vehOcupacion$])
-          .subscribe( this.okParalelo.bind(this));
-                                                 
+      this.llamadaEnParalelo();                                                 
   } 
+
+  llamadaEnParalelo(){
+    this.loaderService.displayConjunto(true);
+    const servIda$ = this.getServiciosIda$();
+    const servVta$ = this.getServiciosVta$();      
+    const choOcupacion$ = this.getChoferesOcupacion$(); 
+    const vueltas$ = this.getVueltas$();
+    const vehOcupacion$ = this.getVehiculosOcupacion$();
+
+    this.datosVueltasSubs = Observable.forkJoin([ servIda$, 
+                                                  servVta$,                                                  
+                                                  choOcupacion$,
+                                                  vueltas$,
+                                                  vehOcupacion$])
+        .subscribe( this.okParalelo.bind(this));
+  }
 
   okParalelo( respuesta ){
 
@@ -209,6 +208,9 @@ export class VueltasService {
       return this.choferesOcupacion.find( cho => JSON.stringify( cho.choferPK ) == choferSel );
   }
 
+  getChoferByNombreConTipo( choferNombre ) {
+    return this.choferesOcupacion.find( cho => cho.nombreConTipo == choferNombre );
+  }
 
   getVueltas$(){
 

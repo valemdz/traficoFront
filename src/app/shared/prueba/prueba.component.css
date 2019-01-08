@@ -1,8 +1,3 @@
-.badge-white {
-    background-color: white !important;
-    color: #337ab7;
-}
-
 .mat-option {
     white-space: nowrap;
     overflow: hidden;
@@ -27,13 +22,10 @@
 }
 .alert {
     padding: 3px;
-    margin-bottom: 15px;
+    margin-bottom: 20px;
     border: 1px solid transparent;
     border-radius: 4px;
 }
 
 
-.mat-option.mat-active {   
-    border: 1px solid blue;
-    border-radius: 4px;
-}
+

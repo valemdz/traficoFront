@@ -2,7 +2,7 @@
 import { Injectable } from '@angular/core';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/publish';
-import { Observable } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 
 import { environment } from 'src/environments/environment';
@@ -10,14 +10,21 @@ import { map, filter, concatAll } from 'rxjs/operators';
 import swal from 'sweetalert';
 import { PaginationPropertySort } from 'src/app/shared/pagination';
 import { FuncionesGrales } from 'src/app/utiles/funciones.grales';
+import { ModalSiNo } from 'src/app/models/modalSiNo.model';
+import { ModalSiNoService } from 'src/app/shared/modal-si-no/modal-si-no.service';
+
+
 
 
 @Injectable()
-export class DiagrService {
+export class DiagrService { 
 
   private urlBase = environment.origin;
 
-  constructor(private http: HttpClient ) {}
+  constructor(  private http: HttpClient,
+                public _ms: ModalSiNoService ) {      
+               
+  }
 
   findLineasByEmp$(idEmpresa: String): Observable<any> {
     const url = this.urlBase + `/diagr/empresa/${idEmpresa}/lineas`;
@@ -97,13 +104,32 @@ export class DiagrService {
     return this.http.get( url );
   }
 
+  checkVueltas$(  vuelta ) {
+    const url = this.urlBase + '/diagr/vuelta/check';
+    return this.http.post( url, vuelta );           
+  }
+ 
+
   saveVuelta$( vuelta ){
+     //this.checkVueltas$( vuelta ).subscribe( resp => console.log( resp ));
      const url = this.urlBase + '/diagr/vuelta';
      return this.http.post( url, vuelta ).pipe( map( resp =>{
           swal('La vuelta' ,'Fue Agregada  con exito', 'success' );
           return resp;
         }
      ));
+  }
+
+  updateVuelta$( idVuelta, vuelta ){
+
+    //this.checkVueltas$( vuelta );
+
+    const url = this.urlBase + `/diagr/vuelta/${idVuelta}`;
+    return this.http.put( url, vuelta ).pipe( map( resp =>{
+        swal('La vuelta' ,'Fue modificada con exito', 'success' );
+        return resp;
+      }
+    ));    
   }
 
   getVueltas$( idEmpresa: String, idLinea: String, inicio: any, fin: any ){
@@ -116,16 +142,7 @@ export class DiagrService {
                           });                          
                 return v;
               } ));
-  }
-
-  updateVuelta$( idVuelta, vuelta ){
-    const url = this.urlBase + `/diagr/vuelta/${idVuelta}`;
-    return this.http.put( url, vuelta ).pipe( map( resp =>{
-        swal('La vuelta' ,'Fue modificada con exito', 'success' );
-        return resp;
-      }
-    ));
-  }
+  } 
 
   deleteVuelta$( idVuelta ){
     const url = this.urlBase + `/diagr/vuelta/${idVuelta}`;
@@ -164,5 +181,7 @@ export class DiagrService {
             );
   } 
 
+  
+    
 
 }

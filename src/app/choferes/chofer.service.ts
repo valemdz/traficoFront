@@ -32,6 +32,13 @@ export class ChoferService {
       return this.http.get( url , params);
     }
 
+    
+    findVencimientos$(cho_emp_codigo: String ): Observable<any> {
+         const url = this.urlBase + `/choferes/empresa/${cho_emp_codigo}/VencimientoCarnets`;
+         return this.http.get(url);
+    }
+
+
 
     viewChofer$(id: number): Observable<any> {
         const url = this.urlBase + `/chofer/${id}`;

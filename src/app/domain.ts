@@ -120,6 +120,19 @@ export interface OpcCombo{
     observaciones: String;
 }
 
+export interface CarnetChofer{
+    id : number;
+    tipo: number,
+    fechaEmision: Date;
+    fechaVenc: Date;
+    fechaVencString : String;
+    fechaEmisionString: String;
+    numeroCarnet: String;
+    observaciones: String;
+    choferPK: ChoferPK;
+    cho_nombre: String;
+}
+
 export interface ChoferIndicencia{
     id:number;
     idIncidencia:number;

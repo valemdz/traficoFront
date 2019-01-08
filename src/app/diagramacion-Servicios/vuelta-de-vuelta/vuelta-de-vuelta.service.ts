@@ -37,25 +37,21 @@ export class VueltaDeVueltaService {
   }
 
   okSaveVuelta( vuelta:Vuelta ){    
-    this._vs.addVuelta( vuelta );
-    //this.vuelta = this._vs.getVuelta( this.serv.servicioPK );
-    this.vuelta = vuelta;
-    this.editable = false;  
+    this._vs.llamadaEnParalelo();
   }
 
-  okModificarVuelta( vuelta:Vuelta ){       
-    this._vs.replaceVuelta( vuelta );    
-    //this.vuelta = this._vs.getVuelta( this.serv.servicioPK );
-    this.vuelta = vuelta;
-    this.editable = false;  
-    
+  okModificarVuelta( vuelta:Vuelta ){           
+    this._vs.llamadaEnParalelo();    
   }
 
-  addChoferIda( choferes, choferSel ) {  
+  ocultar(){
+    this.editable = false;
+  }
 
-    const chofer = this._vs.getChofer( choferSel );    
+  addChoferIda( choferes, choferSelNombre ) {  
 
-    const existe = choferes.find( cho => JSON.stringify( cho.choferPK ) == choferSel );
+    const chofer = this._vs.getChoferByNombreConTipo( choferSelNombre );    
+    const existe = choferes.find( cho => JSON.stringify( cho.choferPK ) == JSON.stringify(chofer.choferPK) );
     if ( existe ) {
         swal('Atencion!!!', 'El chofer ' + chofer.nombre + ' ya esta asignado', 'error');
         return; 
@@ -73,8 +69,15 @@ export class VueltaDeVueltaService {
     choferes.push( cho );       
   }  
 
-  addChoferVta( choferes, choferSel ) {
-    const chofer = this._vs.getChofer( choferSel );
+  addChoferVta( choferes, choferSelNombre ) {
+    const chofer = this._vs.getChoferByNombreConTipo( choferSelNombre );
+
+    const existe = choferes.find( cho => JSON.stringify( cho.choferPK ) == JSON.stringify(chofer.choferPK) );
+    if ( existe ) {
+        swal('Atencion!!!', 'El chofer ' + chofer.nombre + ' ya esta asignado', 'error');
+        return; 
+    }
+
     const cho = {
       choferPK : chofer.choferPK,
       nombre: chofer.nombre,
@@ -140,5 +143,5 @@ export class VueltaDeVueltaService {
     this.editable = false;
   }
   
-
+  
 }

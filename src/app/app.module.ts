@@ -33,6 +33,7 @@ import { PruebaComponent } from './shared/prueba/prueba.component';
 import { ServiceModule } from './services/service.module';
 import { TokenInterceptorService, RequestInterceptorService } from './services/service.index';
 import { NavegacionComponent } from './navegacion/navegacion.component';
+import { MaterialModule } from './material/material.module';
 
 
 const appRoutes: Routes = [
@@ -57,13 +58,14 @@ const appRoutes: Routes = [
     ReactiveFormsModule,
     Ng2DatetimePickerModule,
     VentanasModalesModule,
-    RouterModule.forRoot(appRoutes),
+    RouterModule.forRoot(appRoutes, {useHash:true}),
     IncidenciaModule,
     VehiculoModule,
     ChoferModule,
     ViajesModule,
     DiagramacionServicioModule,
     ServiceModule,
+    MaterialModule,    
     SharedModule
   ],
   providers: [
