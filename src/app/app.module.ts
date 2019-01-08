@@ -50,7 +50,7 @@ const appRoutes: Routes = [
     FileUploaderComponent,
     HomeComponent,
     LoginComponent,
-    NavegacionComponent,
+    NavegacionComponent
   ],
   imports: [
     BrowserModule,

@@ -30,6 +30,7 @@ export class ChoferListComponent implements OnInit, OnDestroy {
     currentChofer;
     carnetChofer;
     incidenciaChofer;
+    updateEstChofer: Chofer;
 
     public estados = [
         { value: '0', display: 'HABILITADO' },
@@ -130,13 +131,19 @@ export class ChoferListComponent implements OnInit, OnDestroy {
         this.alertService.clear();
     }
 
-    cambiarEstado(chofer) {
-
-        this.choferService.update$(chofer).subscribe(result => {
-            //nada solo cambiar el color del boton
+    cambiarEstado(updateEstChofer) {
+        if (updateEstChofer.cho_estado === 1) {
+            updateEstChofer.cho_estado = 0 ;
+        } else {
+            updateEstChofer.cho_estado = 1 ;
+        }
+        this.choferService.update$(updateEstChofer).subscribe(result => {
+            this.mostrarDetalle();
+            this.success('Se cambio correctamente el estado del Personal');
         }, err => {
               this.ctrolError.tratarErroresEliminaciones( err );
         } );
+        this.clearAlert();
 
     }
 

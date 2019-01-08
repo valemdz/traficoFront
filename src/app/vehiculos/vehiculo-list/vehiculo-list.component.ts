@@ -29,6 +29,7 @@ export class VehiculoListComponent implements OnInit, OnDestroy  {
     deleteVehiculoSubs: Subscription;
 
     currentVehiculo;
+    updateEstvehiculo : Vehiculo;
 
     public estados = [
         { value: '0', display: 'HABILITADO' },
@@ -126,17 +127,22 @@ export class VehiculoListComponent implements OnInit, OnDestroy  {
         this.alertService.clear();
     }
 
-    cambiarEstado(vehiculo){
-
-        this.vehiculoService.update$( vehiculo ).subscribe( result => {
-            //nada solo cambia el color del boton
+    cambiarEstado(updateEstvehiculo) {
+    if (updateEstvehiculo.vehEstado === 1) {
+        updateEstvehiculo.vehEstado = 0;
+    } else {
+        updateEstvehiculo.vehEstado = 1;
+    }
+        this.vehiculoService.update$( updateEstvehiculo ).subscribe( result => {
+          this.mostrarDetalle();
+          this.success('Se cambio correctamente el estado del vehículo');
           }, err => {
              this.ctrolError.tratarErroresEliminaciones(err) ;
           }
         );
-
+        this.clearAlert();
     }
-
+  
 
 
 }
