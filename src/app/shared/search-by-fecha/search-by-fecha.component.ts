@@ -2,7 +2,8 @@ import { Component, OnInit, Inject, LOCALE_ID, Input, Output, EventEmitter } fro
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { FECHA_PATTERN } from 'src/app/utiles/const-data-model';
 import { FuncionesGrales } from 'src/app/utiles/funciones.grales';
-import { ErrorService } from 'src/app/_services/error.service';
+import { ErrorService } from 'src/app/services/service.index';
+
 
 @Component({
   selector: 'app-search-by-fecha',

@@ -11,24 +11,14 @@ import { Observable } from 'rxjs';
 @Injectable()
 export class TokenInterceptorService implements HttpInterceptor {
 
-
-  constructor( ) {
-
-  }
+  constructor( ) { }
 
   private get token(): String{
-    /*let token = '';
-    if( this.store.usuario && this.store.usuario.token ){
-      token = this.store.usuario.token;
+    let token = '';    
+    if ( localStorage.getItem('token') ) {
+        token = localStorage.getItem('token');
     }
-    return token;*/
-
-    let token = '';
-    const currentUser = JSON.parse(localStorage.getItem('currentUser'));
-    if ( currentUser ) {
-        token = currentUser.token;
-    }
-    return token;
+    return token;    
   }
 
 

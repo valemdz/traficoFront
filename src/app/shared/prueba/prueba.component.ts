@@ -1,6 +1,5 @@
 import { Component, OnInit, Inject, LOCALE_ID, ViewChild, ElementRef, AfterViewInit, ViewChildren, OnDestroy } from '@angular/core';
-import { MiUsuarioService } from 'src/app/_services/mi.usuario.service';
-import { DiagrService, VueltasService } from 'src/app/services/service.index';
+import { DiagrService, VueltasService, UsuarioService } from 'src/app/services/service.index';
 import { ChoferesConEstadoPipe } from 'src/app/pipes/choferes-con-estado.pipe';
 import { ModalSiNoService } from '../modal-si-no/modal-si-no.service';
 import { ModalSiNo } from 'src/app/models/modalSiNo.model';
@@ -22,7 +21,7 @@ export class PruebaComponent implements OnInit, AfterViewInit, OnDestroy  {
   resultado = {"2":[" En Viaje Especial  Desde 29/11/2018 12:30 Hasta 30/11/2018 12:00","Ocupado en el servicio IMQ 125 30/11/2018 12:00/0","Ocupado en el servicio IMQ 100 30/11/2018 15:00/0"],"(CHO)VALERIa":[" Con Incidencia ENFERMEDAD Desde 30/11/2018 01:00 Hasta 03/12/2018 18:30","Ocupado en el servicio IMQ 100 30/11/2018 15:00/0"]};
  
   constructor( public _vs: VueltasService,     
-      private yo: MiUsuarioService,   
+      public _us: UsuarioService,   
       public _ms: ModalSiNoService,   
       @Inject(LOCALE_ID) public locale: string ) {     
 

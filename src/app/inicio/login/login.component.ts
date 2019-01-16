@@ -1,13 +1,9 @@
 import { Component, OnInit, ViewChild, ElementRef, Input, AfterViewInit} from '@angular/core';
-import { AuthenticationService } from '../../_services/authentication.service';
 import { FormBuilder, FormGroup, Validators  } from '@angular/forms';
 import { Usuario, NoAutorizado } from '../../domain';
 import { Router } from '@angular/router';
-import * as Rx from 'rxjs/Rx';
-import { ErrorService } from '../../_services/error.service';
-import { Observable } from 'rxjs';
 
-
+import { UsuarioService, ErrorService } from 'src/app/services/service.index';
 
 @Component({
     selector: 'app-login',
@@ -17,9 +13,7 @@ import { Observable } from 'rxjs';
 export class LoginComponent implements OnInit, AfterViewInit {
 
     loginForm: FormGroup;
-
-    //usuario: any = {};
-
+    
     //para el ojito del campo password
     @ViewChild('input') el: ElementRef;
     @ViewChild('toggler') toggler: ElementRef;
@@ -29,21 +23,17 @@ export class LoginComponent implements OnInit, AfterViewInit {
     loading = false;
 
     constructor(
-        private router: Router,
-        private authenticationService: AuthenticationService,
+        private router: Router,        
         private fb: FormBuilder,
-        private ctrolError: ErrorService ) {
+        private ctrolError: ErrorService,
+        private _us: UsuarioService ) {
            this.crearForm();
-
     }
 
-    ngOnInit() {
-        // reset login status
-        //para traer cosas del servidor por ejemplo
+    ngOnInit() {        
     }
 
-    crearForm(){
-        this.authenticationService.logout();
+    crearForm(){        
 
         /*this.loginForm = this.fb.group({
             username: ['', [Validators.required, Validators.minLength(2)]],
@@ -129,38 +119,30 @@ export class LoginComponent implements OnInit, AfterViewInit {
 
     loginUsuario() {
 
-        const saveUser = this.prepareSaveUsuario();
-        this.loading = true;
-        this.authenticationService.login(saveUser.username, saveUser.password)
-            .subscribe( this.okLogin.bind(this), this.errorLogin.bind(this) );
+        const usuario = this.prepareSaveUsuario();
+        this.loading = true;      
 
+        this._us.login$( usuario )
+            .subscribe( this.okLogin.bind( this ),
+                        this.errorLogin.bind( this ) );                   
     }
 
-    okLogin( login ) {
-      console.log(login);
-
-      if ( login &&  login.token ) {
-          localStorage.setItem('currentUser', JSON.stringify(login) );
-          this.router.navigate(['home']);
-      } else {
-          this.loading = false;
-      }
+    okLogin( ){
+        this.router.navigate(['wellcome']);
     }
-
+   
     errorLogin( err ) {
       this.ctrolError.tratarErrores(err, this.loginForm, this.erroresGrales, this.translations['gral']);
       this.ctrolError.checkFormValidity(this.loginForm, this.errMsgs,  this.translations );
     }
 
-
-
     prepareSaveUsuario(): Usuario {
         const formModel = this.loginForm.value;
-        const saveUser: Usuario = {
-            username: formModel.username as string,
-            password : formModel.password as string
+        const usuario: Usuario = {
+            username: formModel.username.toUpperCase(),
+            password : formModel.password.toUpperCase()
         };
-        return saveUser;
+        return usuario;
     }
 
 }

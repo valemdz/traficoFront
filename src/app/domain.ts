@@ -55,8 +55,11 @@ export interface UsuarioPk{
 }*/
 
 export interface Usuario{
-    username: string;
-    password: string;
+    username?: string;
+    password?: string;
+    name?: string;
+    empresa?: string;
+    token?: string;
 }
 
 export interface Me{

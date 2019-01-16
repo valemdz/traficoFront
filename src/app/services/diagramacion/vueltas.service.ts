@@ -3,13 +3,12 @@ import { FECHA_PATTERN_MOMENT, FECHA_PATTERN, CANTIDAD_DIAS_DIAGR_DEFAULT,
          FECHA_HORA_MOSTRAR_PATTERN, CANTIDAD_DIAS_DIAGR_ADICIONALES_VTA, HABILITADO }
           from 'src/app/utiles/const-data-model';
 import { FuncionesGrales } from 'src/app/utiles/funciones.grales';
-import { MiUsuarioService } from 'src/app/_services/mi.usuario.service';
 import { Vuelta } from 'src/app/models/vuelta.model';
 import { Servicio } from 'src/app/models/servicio.model';
 import { Observable, Subscription } from 'rxjs';
 import 'rxjs/add/observable/forkJoin';
-import { LoaderService } from 'src/app/_services/loader.service';
 import { DiagrService } from './diagr.service';
+import { LoaderService, UsuarioService } from '../service.index';
 
 
 @Injectable()
@@ -34,8 +33,9 @@ export class VueltasService {
   loaded = false;
 
 
-  constructor( private _ds: DiagrService,  private loaderService: LoaderService,
-               private yo: MiUsuarioService,
+  constructor( private _ds: DiagrService,  
+               private loaderService: LoaderService,
+               private _us: UsuarioService,
                @Inject(LOCALE_ID) public locale: string   ) {
 
     this.inicio = new Date();
@@ -108,7 +108,7 @@ export class VueltasService {
 
  
   getServiciosIda$() {
-      return this._ds.findSerConHorariosByLineaYfecha$( this.yo.getEmpresa(),
+      return this._ds.findSerConHorariosByLineaYfecha$( this._us.usuario.empresa,
                   this.idLinIda,
                   FuncionesGrales.fromFecha( this.locale, this.inicio, FECHA_PATTERN),
                   FuncionesGrales.fromFecha( this.locale, this.fin, FECHA_PATTERN)  );
@@ -155,7 +155,7 @@ export class VueltasService {
   }
 
   getServiciosVta$() {
-      return this._ds.findSerConHorariosByLineaYfecha$( this.yo.getEmpresa(),
+      return this._ds.findSerConHorariosByLineaYfecha$( this._us.usuario.empresa,
                   this.idLinVta,
                   FuncionesGrales.fromFecha( this.locale, this.inicio, FECHA_PATTERN),
                   FuncionesGrales.fromFecha( this.locale, this.finVuelta, FECHA_PATTERN)   );
@@ -176,11 +176,11 @@ export class VueltasService {
   } 
 
   getVehiculos$() {
-     return this._ds.findVehiculos$( this.yo.getEmpresa());
+     return this._ds.findVehiculos$( this._us.usuario.empresa );
   } 
 
   getChoferesOcupacion$() {
-        return  this._ds.findChoresOcupacion$( this.yo.getEmpresa(),
+        return  this._ds.findChoresOcupacion$( this._us.usuario.empresa,
                           FuncionesGrales.fromFecha( this.locale, this.inicio, FECHA_PATTERN),
                           FuncionesGrales.fromFecha( this.locale, this.finVuelta, FECHA_PATTERN) );
 
@@ -190,7 +190,7 @@ export class VueltasService {
 
   getVehiculosOcupacion$() {
      // Trae todos lo vehiculos con ocupacion
-     return  this._ds.findVehiculosOcupacion$( this.yo.getEmpresa(),
+     return  this._ds.findVehiculosOcupacion$( this._us.usuario.empresa,
                           FuncionesGrales.fromFecha( this.locale, this.inicio, FECHA_PATTERN),
                           FuncionesGrales.fromFecha( this.locale, this.finVuelta, FECHA_PATTERN) );                          
   }
@@ -214,7 +214,7 @@ export class VueltasService {
 
   getVueltas$(){
 
-    return this._ds.getVueltas$( this.yo.getEmpresa(),
+    return this._ds.getVueltas$( this._us.usuario.empresa,
                           this.idLinIda,
                           FuncionesGrales.fromFecha( this.locale, this.inicio, FECHA_PATTERN),
                           FuncionesGrales.fromFecha( this.locale, this.fin, FECHA_PATTERN) );

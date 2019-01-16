@@ -11,7 +11,8 @@ import { Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
 import { Router } from '@angular/router';
-import { LoaderService } from 'src/app/_services/loader.service';
+import { LoaderService } from '../service.index';
+
 
 
 

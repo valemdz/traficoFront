@@ -8,76 +8,44 @@ import { registerLocaleData } from '@angular/common';
 registerLocaleData(localeEs);
 
 import { AppComponent } from './app.component';
-import { ValidationService } from './_services/validation.service';
-import { ErrorService } from './_services/error.service';
-import { MiUsuarioService } from './_services/mi.usuario.service';
-import { AlertService } from './_services/alert.service';
-import { LoaderService } from './_services/loader.service';
-import { UsuarioService } from './inicio/usuario.service';
-import { AuthGuard } from './_guards/auth.guard';
-import { RespuestaModalService } from './_services/respuesta.modal.service';
 import { LoginComponent } from './inicio/login/login.component';
-import { HomeComponent } from './inicio/home/home.component';
-import { FileUploaderComponent } from './file-uploader/file-uploader.component';
 import { Ng2DatetimePickerModule } from 'ng2-datetime-picker';
-import { VentanasModalesModule } from './ventanas-modales/ventanas-modales.module';
 import { RouterModule, Routes } from '@angular/router';
-import { IncidenciaModule } from './incidencias/incidencia.module';
-import { VehiculoModule } from './vehiculos/vehiculo.module';
-import { ChoferModule } from './choferes/chofer.module';
-import { ViajesModule } from './viajes/viaje.module';
-import { DiagramacionServicioModule } from './diagramacion-Servicios/diagramacion.servicio.module';
 import { SharedModule } from './shared/shared.module';
-import { AuthenticationService } from './_services/authentication.service';
 import { PruebaComponent } from './shared/prueba/prueba.component';
 import { ServiceModule } from './services/service.module';
 import { TokenInterceptorService, RequestInterceptorService } from './services/service.index';
-import { NavegacionComponent } from './navegacion/navegacion.component';
 import { MaterialModule } from './material/material.module';
+import { PagesModule } from './pages/pages.module';
+import { PagesComponent } from './pages/pages.component';
+import { NoPageFoundComponent } from './shared/no-page-found/no-page-found.component';
 
 
-const appRoutes: Routes = [
-  { path: '', component: HomeComponent, canActivate: [AuthGuard] },
-  { path: 'login', component: LoginComponent },
-  { path: 'home', component: HomeComponent },
-  { path: 'prueba', component: PruebaComponent }
+const appRoutes: Routes = [  
+  { path: 'login', component: LoginComponent },  
+  { path: 'prueba', component: PruebaComponent },
+  { path: '**', pathMatch: 'full', component: NoPageFoundComponent }
 ];
 
 
 @NgModule({
   declarations: [
-    AppComponent,
-    FileUploaderComponent,
-    HomeComponent,
-    LoginComponent,
-    NavegacionComponent
+    AppComponent,    
+    LoginComponent,    
+    PagesComponent
   ],
   imports: [
     BrowserModule,
     HttpClientModule,
     ReactiveFormsModule,
-    Ng2DatetimePickerModule,
-    VentanasModalesModule,
-    RouterModule.forRoot(appRoutes, {useHash:true}),
-    IncidenciaModule,
-    VehiculoModule,
-    ChoferModule,
-    ViajesModule,
-    DiagramacionServicioModule,
+    Ng2DatetimePickerModule,    
+    RouterModule.forRoot(appRoutes, {useHash:true}),            
     ServiceModule,
     MaterialModule,    
-    SharedModule
+    SharedModule,
+    PagesModule
   ],
-  providers: [
-    ValidationService,
-    ErrorService,
-    MiUsuarioService,
-    AlertService,
-    LoaderService,
-    UsuarioService,
-    AuthGuard,
-    RespuestaModalService,
-    AuthenticationService,
+  providers: [             
     { provide: HTTP_INTERCEPTORS,
       useClass: TokenInterceptorService,
       multi: true

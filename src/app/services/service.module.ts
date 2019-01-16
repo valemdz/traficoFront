@@ -1,8 +1,23 @@
 import { NgModule } from '@angular/core';
 
 
-import { VueltasService, DiagrService, RequestInterceptorService, TokenInterceptorService, IdaVtaListService } from './service.index';
+import { VueltasService, 
+         DiagrService, 
+         RequestInterceptorService, 
+         TokenInterceptorService, 
+         IdaVtaListService, 
+         LoginGuardGuard, 
+         AlertService,
+         ErrorService,
+         RespuestaModalService,
+         IncidenciaService,
+         VehiculoService} from './service.index';
+         
 import { ModalSiNoService } from '../shared/modal-si-no/modal-si-no.service';
+import { ChoferService } from './choferes/chofer.service';
+import { UsuarioService } from './usuario/usuario.service';
+import { LoaderService } from './mensajes/loader.service';
+
 
 @NgModule({
   imports: [],
@@ -13,7 +28,16 @@ import { ModalSiNoService } from '../shared/modal-si-no/modal-si-no.service';
                 IdaVtaListService,
                 RequestInterceptorService,
                 TokenInterceptorService,
-                ModalSiNoService
+                ModalSiNoService, 
+                ChoferService,
+                IncidenciaService,
+                UsuarioService,
+                LoginGuardGuard,
+                AlertService,
+                ErrorService,
+                LoaderService,
+                RespuestaModalService,
+                VehiculoService
              ]
 })
 export class ServiceModule { }

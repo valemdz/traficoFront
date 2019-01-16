@@ -32,6 +32,9 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import { BrowserModule } from '@angular/platform-browser';
 import { MatAutocompleteModule } from '@angular/material';
 import { ModalSiNoComponent } from './modal-si-no/modal-si-no.component';
+import { HeaderComponent } from './header/header.component';
+import { RouterModule } from '@angular/router';
+import { NoPageFoundComponent } from './no-page-found/no-page-found.component';
 
 
 @NgModule({
@@ -43,6 +46,7 @@ import { ModalSiNoComponent } from './modal-si-no/modal-si-no.component';
     CommonModule,    
     PipesModule,    
     MaterialModule,    
+    RouterModule
   ],
   declarations: [ MensajesComponent,
                   AlertComponent,
@@ -59,7 +63,10 @@ import { ModalSiNoComponent } from './modal-si-no/modal-si-no.component';
                   SearchByFechaComponent,
                   PruebaComponent,
                   ModalSiNoComponent,
-                  ModalSiNoComponent  ],
+                  ModalSiNoComponent,
+                  HeaderComponent,
+                  NoPageFoundComponent,
+                  AlertComponent  ],
   exports:[
     CommonModule,
     ReactiveFormsModule,
@@ -78,7 +85,10 @@ import { ModalSiNoComponent } from './modal-si-no/modal-si-no.component';
     SearchByFechaComponent,
     PruebaComponent,
     ChoferesConEstadoPipe,
-    ModalSiNoComponent
+    ModalSiNoComponent,
+    HeaderComponent,
+    NoPageFoundComponent,
+    AlertComponent
   ],
   schemas: [
     CUSTOM_ELEMENTS_SCHEMA
