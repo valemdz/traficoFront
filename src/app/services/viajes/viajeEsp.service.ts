@@ -1,14 +1,13 @@
 
 import {Injectable} from '@angular/core';
-import { PaginationPropertySort} from '../shared/pagination';
-// import * as Rx from 'rxjs/Rx';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/publish';
 import { Observable } from 'rxjs';
-import { ViajeEspecial, VehiculoPK, ViajeEspecialList } from '../domain';
 import { HttpClient } from '@angular/common/http';
-import { FuncionesGrales } from '../utiles/funciones.grales';
 import { environment } from 'src/environments/environment';
+import { PaginationPropertySort } from 'src/app/shared/pagination';
+import { FuncionesGrales } from 'src/app/utiles/funciones.grales';
+import { ViajeEspecial, VehiculoPK } from 'src/app/models/model.index';
 
 
 

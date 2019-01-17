@@ -1,14 +1,12 @@
 import { Component, OnInit, Input, OnDestroy } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, NgForm, FormControl } from '@angular/forms';
-import { Vuelta } from 'src/app/models/vuelta.model';
-import { Servicio } from 'src/app/models/servicio.model';
 import { VueltasService, DiagrService, ModalSiNoService, UsuarioService } from 'src/app/services/service.index';
 import { Subscription, Observable } from 'rxjs';
 import { VueltaDeVueltaService } from './vuelta-de-vuelta.service';
 import { startWith, map } from 'rxjs/operators';
 import { ChoferesConEstadoPipe } from 'src/app/pipes/choferes-con-estado.pipe';
-import { ComboCho } from 'src/app/models/comboCho';
-import { ModalSiNo } from 'src/app/models/modalSiNo.model';
+import { Servicio, ComboCho, Vuelta, ModalSiNo  } from '../../../models/model.index';
+
 
 
 @Component({

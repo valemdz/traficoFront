@@ -2,14 +2,17 @@ import {Injectable} from '@angular/core';
 import 'rxjs/add/operator/toPromise';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/publish';
-import { Observable } from 'rxjs';
+import { Observable, of, throwError } from 'rxjs';
 
 import { HttpClient } from '@angular/common/http';
 
 import { environment } from 'src/environments/environment';
 import { PaginationPropertySort } from 'src/app/shared/pagination';
 import { FuncionesGrales } from 'src/app/utiles/funciones.grales';
-import { Chofer } from 'src/app/domain';
+
+import { map, catchError } from 'rxjs/operators';
+import swal from 'sweetalert';
+import { Chofer } from 'src/app/models/model.index';
 
 
 @Injectable()
@@ -50,17 +53,43 @@ export class ChoferService {
 
     update$( chofer: Chofer ) {
         const url = this.urlBase + `/choferes/empresa/${chofer.choferPK.cho_emp_codigo}/codigo/${chofer.choferPK.cho_codigo}`;
-        return this.http.put( url, chofer );
+        return this.http.put( url, chofer )
+                   .pipe(
+                      map( (resp: any) => {
+                         swal( "Actualizacón", 
+                               "El chofer fue actualizado con exito!",
+                               "success" );  
+                      })  
+                   );
     }
 
     create$( chofer: Chofer ): Observable<any> {
         const url = this.urlBase + `/choferes`;
-        return this.http.post( url, chofer );
+        return this.http.post( url, chofer )
+                   .pipe(
+                      map( ( resp: any) => {
+                         swal( "Creacion", 
+                               "El chofer " + chofer.cho_nombre + " fue creado con exito!",
+                               "success" );
+                         return resp;      
+                      })  
+                   ) ;
     }
 
    deleteChofer$( cho_emp_codigo: String ,  cho_codigo: number ): Observable<any> {
         const url = this.urlBase + `/choferes/empresa/${cho_emp_codigo}/codigo/${cho_codigo}`;
-        return this.http.delete(url);
+        return this.http.delete(url).pipe(
+             map( resp =>{
+                  swal("Eliminacion","La eliminacion fue exitosa!!!", "success");
+                  return resp;
+             }),
+             catchError( err => {               
+               swal( 'Inconvenientes al eliminar chofer!!!', 
+                      err.error.errorCode + ' - ' + err.error.errorMessage ,
+                      'error');
+                return throwError(err);
+             })
+        );
    }
 
    saveIncidenciasByChofer$( cho_emp_codigo: String, cho_codigo: number, incidencias: any ) {

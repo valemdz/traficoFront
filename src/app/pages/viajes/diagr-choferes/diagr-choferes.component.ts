@@ -1,13 +1,13 @@
 import { Component, OnInit, Input, OnChanges, OnDestroy, ViewChild, ElementRef, AfterContentChecked } from '@angular/core';
 import { FormGroup, FormBuilder, FormArray, Validators } from '@angular/forms';
-import {ChoferPK, ViajeEspecial, ChoferPKConDet, VehiculoPK, ListaChoferPK} from '../../domain';
-import { ViajeEspServive } from '../viajeEsp.service';
-// import * as Rx from "rxjs/Rx";
 import {Response} from '@angular/http';
 // import { ViajesEspListComponent } from  '../viajes-esp-list/viajes-esp-list.component';
 import { Observable} from 'rxjs';
-import {Modal} from '../../ventanas-modales/modal.utilidades';
-import { ErrorService, LoaderService } from 'src/app/services/service.index';
+
+import { ErrorService, LoaderService, ViajeEspServive } from 'src/app/services/service.index';
+import { Modal } from 'src/app/ventanas-modales/modal.utilidades';
+import { ViajeEspecial, ChoferPKConDet, ListaChoferPK, ChoferPK } from 'src/app/models/model.index';
+
 
 @Component({
   selector: 'app-diagr-choferes',

@@ -7,9 +7,10 @@ import {DatePipe} from '@angular/common';
 import { DOCUMENTOS, ESTADOS, GRUPOS_SANGUINEOS, FUNCION } from './constantes-chofer';
 import { ChoferesComponent } from '../choferes.component';
 import { ChoferService } from 'src/app/services/choferes/chofer.service';
-import { Chofer } from 'src/app/domain';
+
 import { TabChild } from 'src/app/shared/tabs/tab-child';
 import { ErrorService } from 'src/app/services/service.index';
+import { Chofer } from 'src/app/models/model.index';
 
 
 
@@ -188,14 +189,12 @@ export class ChoferNuevoComponent implements OnInit, OnChanges, TabChild {
   }
 
   okChoferSave( ) {
-    this.parent.mostrarDetalle();
-    this.parent.success('El Personal se agrego con exito!!!');
+    this.parent.mostrarDetalle();    
     this.closeModal();
   }
 
   okChoferUpdate() {
-    this.parent.mostrarDetalle();
-    this.parent.success('El Personal se actualizo con exito!!!')
+    this.parent.mostrarDetalle();    
     this.closeModal();
   }
 

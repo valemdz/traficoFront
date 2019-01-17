@@ -1,5 +1,4 @@
 import { Chofer } from "./chofer.model";
-import { ServicioPK } from "./servicioPK.model";
 import { Vehiculo } from "./vehiculo.model";
 
 export interface Servicio {
@@ -17,6 +16,17 @@ export interface Servicio {
     detalle?:string; 
 }
 
+export interface ServicioPK {
+    serEmpCodigo:string;
+    serLinCodigo: string;
+    serFechaHora: Date;
+    serRefuerzo: number
+}
+
+export interface Servicios {
+    servicioPK: ServicioPK;
+    serEsrCodigo: number;
+}
 
 
 

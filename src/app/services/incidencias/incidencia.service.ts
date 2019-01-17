@@ -3,11 +3,11 @@ import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/publish';
 import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
-
 import { environment } from 'src/environments/environment';
 import { PaginationPropertySort } from 'src/app/shared/pagination';
 import { FuncionesGrales } from 'src/app/utiles/funciones.grales';
-import { Incidencia } from 'src/app/domain';
+import { Incidencia } from 'src/app/models/model.index';
+
 
 
 @Injectable()

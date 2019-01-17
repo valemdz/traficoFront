@@ -1,6 +1,9 @@
 import {Modal} from "../ventanas-modales/modal.utilidades";
 import {Component, ViewChild, ElementRef, Input } from "@angular/core";
-import { Chofer } from "../domain";
+import { Chofer } from "../models/chofer.model";
+
+
+
 @Component({
     selector: "my-custom-modal",
     templateUrl: './my-custom-modal.component.html',

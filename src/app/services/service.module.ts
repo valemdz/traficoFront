@@ -11,12 +11,14 @@ import { VueltasService,
          ErrorService,
          RespuestaModalService,
          IncidenciaService,
-         VehiculoService} from './service.index';
+         VehiculoService,
+         ViajeEspServive,
+         ModalService,
+         ChoferService,
+         ModalSiNoService,
+         UsuarioService,
+         LoaderService} from './service.index';
          
-import { ModalSiNoService } from '../shared/modal-si-no/modal-si-no.service';
-import { ChoferService } from './choferes/chofer.service';
-import { UsuarioService } from './usuario/usuario.service';
-import { LoaderService } from './mensajes/loader.service';
 
 
 @NgModule({
@@ -37,7 +39,9 @@ import { LoaderService } from './mensajes/loader.service';
                 ErrorService,
                 LoaderService,
                 RespuestaModalService,
-                VehiculoService
+                VehiculoService,
+                ViajeEspServive,
+                ModalService
              ]
 })
 export class ServiceModule { }

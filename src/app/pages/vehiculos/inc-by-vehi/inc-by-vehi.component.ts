@@ -5,7 +5,8 @@ import {DatePipe} from '@angular/common';
 import * as moment from 'moment';
 import { Observable } from 'rxjs';
 import { ErrorService, IncidenciaService, VehiculoService } from 'src/app/services/service.index';
-import { Vehiculo, VehiculoIndicencia } from 'src/app/domain';
+import { Vehiculo, VehiculoIndicencia, ListaVehiculoIncidencia } from 'src/app/models/model.index';
+
 
 
 

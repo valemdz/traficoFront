@@ -1,9 +1,10 @@
 import { Component, OnInit, ViewChild, ElementRef, Input, AfterViewInit} from '@angular/core';
 import { FormBuilder, FormGroup, Validators  } from '@angular/forms';
-import { Usuario, NoAutorizado } from '../../domain';
+
 import { Router } from '@angular/router';
 
 import { UsuarioService, ErrorService } from 'src/app/services/service.index';
+import { Usuario } from 'src/app/models/model.index';
 
 @Component({
     selector: 'app-login',

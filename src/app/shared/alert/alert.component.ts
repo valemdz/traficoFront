@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-
-import { Alert, AlertType } from '../../_models/index';
 import { AlertService } from 'src/app/services/service.index';
+import { Alert, AlertType } from 'src/app/models/model.index';
 
 
 @Component({

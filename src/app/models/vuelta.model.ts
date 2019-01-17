@@ -1,4 +1,4 @@
-import { ServicioPK } from "./servicioPK.model";
+import { ServicioPK } from "./model.index";
 
 export interface Vuelta{
     empresa:string;

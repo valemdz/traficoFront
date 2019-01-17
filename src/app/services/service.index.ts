@@ -1,3 +1,5 @@
+export { ModalService } from "../ventanas-modales/modal.service";
+export { ViajeEspServive } from "./viajes/viajeEsp.service";
 export { VehiculoService } from "./vehiculos/vehiculo.service";
 export { RespuestaModalService } from "./respuesta.modal.service";
 export { LoaderService } from "./mensajes/loader.service";

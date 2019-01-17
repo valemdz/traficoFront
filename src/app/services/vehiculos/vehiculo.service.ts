@@ -1,5 +1,4 @@
 import {Injectable} from '@angular/core';
-import * as Rx from "rxjs/Rx";
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/publish';
 import { HttpClient } from '@angular/common/http';
@@ -7,7 +6,8 @@ import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { PaginationPropertySort } from 'src/app/shared/pagination';
 import { FuncionesGrales } from 'src/app/utiles/funciones.grales';
-import { Vehiculo } from 'src/app/domain';
+import { Vehiculo } from 'src/app/models/model.index';
+
 
 
 

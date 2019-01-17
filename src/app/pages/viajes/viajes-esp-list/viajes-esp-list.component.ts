@@ -1,16 +1,14 @@
 import { DiagrAuxiliaresComponent } from './../diagr-auxiliares/diagr-auxiliares.component';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormGroup, FormBuilder, FormArray, Validators, FormControl } from '@angular/forms';
-// import * as Rx from "rxjs/Rx";
-import { ViajeEspServive } from '../viajeEsp.service';
-import { Table } from '../../shared/table';
-import { ViajeEspecial, ViajeEspecialList, VehiculoPK, ChoferPK } from '../../domain';
-import { PaginationPage, PaginationPropertySort } from '../../shared/pagination';
-import { ModalService } from '../../ventanas-modales/modal.service';
 import { Subscription } from 'rxjs';
 import { DiagrChoferesComponent } from '../diagr-choferes/diagr-choferes.component';
-import { VentanasModalesModule } from '../../ventanas-modales/ventanas-modales.module';
-import { AlertService, UsuarioService } from 'src/app/services/service.index';
+import { AlertService, UsuarioService, ViajeEspServive } from 'src/app/services/service.index';
+import { PaginationPage, PaginationPropertySort } from 'src/app/shared/pagination';
+import { Table } from 'src/app/shared/table';
+import { ModalService } from 'src/app/ventanas-modales/modal.service';
+import { VentanasModalesModule } from 'src/app/ventanas-modales/ventanas-modales.module';
+import { ViajeEspecial } from 'src/app/models/model.index';
 
 
 

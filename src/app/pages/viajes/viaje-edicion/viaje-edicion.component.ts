@@ -1,12 +1,11 @@
 import { Component, OnInit, ViewChild, ElementRef, Input, OnChanges } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, FormControl  } from '@angular/forms';
-import { ViajeEspServive } from '../viajeEsp.service';
-import * as Rx from "rxjs/Rx";
-import { ViajeEspecial } from '../../domain';
 import * as moment from 'moment';
 import { ViajesEspListComponent } from  '../viajes-esp-list/viajes-esp-list.component';
 import { Observable } from 'rxjs';
-import { UsuarioService, ErrorService } from 'src/app/services/service.index';
+import { UsuarioService, ErrorService, ViajeEspServive } from 'src/app/services/service.index';
+import { ViajeEspecial } from 'src/app/models/model.index';
+
 
 
 

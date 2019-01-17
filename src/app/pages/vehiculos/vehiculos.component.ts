@@ -1,12 +1,11 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
-import * as Rx from 'rxjs/Rx';
 import { PaginationPage, PaginationPropertySort } from '../../shared/pagination';
 import { Table } from '../../shared/table';
-import { Vehiculo } from '../../domain';
 import { Constantes } from '../../utiles/const-data-model';
 import { Observable, Subscription } from 'rxjs';
 import { UsuarioService, AlertService, ErrorService, VehiculoService } from 'src/app/services/service.index';
+import { Vehiculo } from 'src/app/models/model.index';
 
 
 

@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
-import { Servicio } from 'src/app/models/servicio.model';
-import { Vuelta } from 'src/app/models/vuelta.model';
 import { VueltasService, DiagrService, UsuarioService } from 'src/app/services/service.index';
+import { Servicio, Vuelta } from  '../../../models/model.index';
 
 
 @Injectable()

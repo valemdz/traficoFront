@@ -4,8 +4,10 @@ import {DatePipe} from '@angular/common';
 import{ IncChoferValidator } from '../inc-chofer-validator';
 import * as moment from 'moment';
 import { Observable } from 'rxjs';
-import { Chofer, ChoferIndicencia, ListaChoferIncidencia } from 'src/app/domain';
+
 import { IncidenciaService, ChoferService, ErrorService } from 'src/app/services/service.index';
+import { Chofer, ChoferIndicencia, ListaChoferIncidencia } from 'src/app/models/model.index';
+
 
 
 

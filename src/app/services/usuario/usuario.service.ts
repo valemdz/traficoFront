@@ -6,7 +6,8 @@ import { Router } from '@angular/router';
 import { map, catchError  } from 'rxjs/operators';
 import swal from 'sweetalert';
 import { of } from 'rxjs/internal/observable/of';
-import { Usuario } from 'src/app/domain';
+import { Usuario } from 'src/app/models/model.index';
+
 
 
 

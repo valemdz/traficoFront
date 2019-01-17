@@ -1,12 +1,11 @@
 import { Component, OnInit, Input, OnChanges, ViewChild, ElementRef } from '@angular/core';
 import { FormGroup, FormBuilder, FormArray, Validators } from '@angular/forms'
-import { ViajeEspServive } from '../viajeEsp.service';
-import { ViajeEspecial, VehiculoPK, VehiculoPKConDet} from '../../domain';
-import * as Rx from "rxjs/Rx";
 import {Response} from '@angular/http';
 import { Observable} from 'rxjs';
 import { ViajesEspListComponent } from  '../viajes-esp-list/viajes-esp-list.component';
-import { UsuarioService, ErrorService } from 'src/app/services/service.index';
+import { UsuarioService, ErrorService, ViajeEspServive } from 'src/app/services/service.index';
+import { ViajeEspecial, VehiculoPK, VehiculoPKConDet } from 'src/app/models/model.index';
+
 
 
 @Component({

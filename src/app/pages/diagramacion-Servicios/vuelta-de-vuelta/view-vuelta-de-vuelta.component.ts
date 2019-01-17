@@ -1,7 +1,8 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { Servicio } from 'src/app/models/servicio.model';
-import { Vuelta } from 'src/app/models/vuelta.model';
+
 import { VueltasService } from 'src/app/services/service.index';
+import { Vuelta } from 'src/app/models/model.index';
 
 
 @Component({

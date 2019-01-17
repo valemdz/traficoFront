@@ -5,7 +5,8 @@ import { FormBuilder,  Validators } from '@angular/forms';
 import { IncidenciaValidator } from '../incidencia-validator';
 import { ErrorService, AlertService, RespuestaModalService, IncidenciaService } from 'src/app/services/service.index';
 import { ComponenteBaseComponent } from 'src/app/shared/componente.base.component';
-import { Incidencia } from 'src/app/domain';
+import { Incidencia } from 'src/app/models/model.index';
+
 
 
 @Component({

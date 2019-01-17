@@ -9,6 +9,8 @@ import { ChoferesComponent } from './choferes/choferes.component';
 import { LoginGuardGuard } from '../services/service.index';
 import { IncidenciasComponent } from './incidencias/incidencias.component';
 import { VehiculosComponent } from './vehiculos/vehiculos.component';
+import { ViajesEspListComponent } from './viajes/viajes-esp-list/viajes-esp-list.component';
+import { IdaVtaListComponent } from './diagramacion-Servicios/ida-vta-list/ida-vta-list.component';
 
 
 const pagesRoutes: Routes = [
@@ -21,6 +23,8 @@ const pagesRoutes: Routes = [
     { path: 'incByChofer', component: IncByChoferComponent },
     { path: 'incidencias', component: IncidenciasComponent },    
     { path: 'vehiculos', component: VehiculosComponent },    
+    { path: 'viajesEspeciales', component: ViajesEspListComponent }, 
+    { path: 'idaVtaList', component: IdaVtaListComponent },        
     { path: 'wellcome', component: WellcomeComponent },        
     { path: '', pathMatch: 'full', redirectTo: '/wellcome' }
   ]}

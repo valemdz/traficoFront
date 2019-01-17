@@ -8,9 +8,10 @@ import {Response} from '@angular/http';
 
 import { Observable } from 'rxjs';
 import { FuncionesGrales } from 'src/app/utiles/funciones.grales';
-import { Chofer, Carnet, ListaCarnet } from 'src/app/domain';
+
 import { ChoferService } from 'src/app/services/choferes/chofer.service';
 import { ErrorService } from 'src/app/services/service.index';
+import { Chofer, Carnet, ListaCarnet } from 'src/app/models/model.index';
 
 
 

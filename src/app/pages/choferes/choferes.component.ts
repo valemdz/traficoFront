@@ -1,12 +1,12 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import {Router} from '@angular/router';
-import { Observable, Subscription } from 'rxjs';
+import {  Subscription } from 'rxjs';
 import {PaginationPage, PaginationPropertySort} from '../../shared/pagination';
 import {Table} from '../../shared/table';
-import {Chofer} from '../../domain';
 import { Constantes } from '../../utiles/const-data-model';
 import { ChoferService } from 'src/app/services/choferes/chofer.service';
 import { UsuarioService, AlertService, ErrorService } from 'src/app/services/service.index';
+import { Chofer } from 'src/app/models/model.index';
 
 
 @Component({
@@ -22,9 +22,7 @@ export class ChoferesComponent implements OnInit, OnDestroy {
    listadoSubscription: Subscription;
    deleteChoferSubscription: Subscription;
 
-    choferNuevo: Chofer;
-
-    deleteChofer;
+    choferNuevo: Chofer;    
     currentChofer;
     carnetChofer;
     incidenciaChofer;
@@ -75,20 +73,34 @@ export class ChoferesComponent implements OnInit, OnDestroy {
         this.router.navigate(['chofer', chofer.id]);
     }
 
+    deleteChofer( chofer: any ){
+        swal({
+         title: "Eliminación",
+         text: "Esta seguro que desea eliminar el chofer " + chofer.cho_nombre,
+         icon: "warning",
+         dangerMode: true,
+       })
+       .then(willDelete => {
+         if (willDelete) {
+             this.delete( chofer );
+         }
+       });        
+    }
+
     delete( chofer ) {
         this.deleteChoferSubscription = this.choferService.deleteChofer$( chofer.choferPK.cho_emp_codigo, chofer.choferPK.cho_codigo )
-        .subscribe( this.okDeleteChofer.bind( this), this.errorDeleteChofer.bind( this ) );
+        .subscribe( this.okDeleteChofer.bind( this) );
 
     }
 
     okDeleteChofer( ok) {
-      this.mostrarDetalle();
-      this.success('El personal se elimino con exito!!!');
+      this.mostrarDetalle();      
     }
 
-    errorDeleteChofer( err ) {
+    /*errorDeleteChofer( err ) {
+       // Lo manejo interamente 
        this.ctrolError.tratarErroresEliminaciones(err);
-    }
+    }*/
   
 
     back( ) {
@@ -96,8 +108,7 @@ export class ChoferesComponent implements OnInit, OnDestroy {
     }
 
 
-    crearNuevo() {
-        this.clearAlert();
+    crearNuevo() {        
         this.choferNuevo = {
             choferPK: { cho_emp_codigo: this._us.usuario.empresa, cho_codigo:0},
             cho_estado: null,
@@ -112,15 +123,7 @@ export class ChoferesComponent implements OnInit, OnDestroy {
             cho_telefono_emergencia: null,
             cho_fecha_nacimiento: null
         };
-    }
-
-    success(message: string) {
-        this.alertService.success(message);
-    }
-
-    clearAlert() {
-        this.alertService.clear();
-    }
+    }  
 
     cambiarEstado(updateEstChofer) {
         if (updateEstChofer.cho_estado === 1) {
@@ -128,14 +131,27 @@ export class ChoferesComponent implements OnInit, OnDestroy {
         } else {
             updateEstChofer.cho_estado = 1 ;
         }
+        swal({
+            title: "Estado",
+            text: "Esta seguro que desea cambiar el estado del chofer " + updateEstChofer.cho_nombre,
+            icon: "warning",
+            dangerMode: true,
+        })
+        .then(willDelete => {
+            if (willDelete) {
+                //this.delete( chofer );
+            }
+        });        
+
+
         this.choferService.update$(updateEstChofer).subscribe(result => {
-            this.mostrarDetalle();
-            this.success('Se cambio correctamente el estado del Personal');
+            this.mostrarDetalle();            
         }, err => {
               this.ctrolError.tratarErroresEliminaciones( err );
         } );
-        this.clearAlert();
-
-    }
+        
+    }  
+    
+   
 
 }

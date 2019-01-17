@@ -11,6 +11,14 @@ import { CarnetListComponent } from './choferes/carnet-list/carnet-list.componen
 import { IncidenciasComponent } from './incidencias/incidencias.component';
 import { VehiculosComponent } from './vehiculos/vehiculos.component';
 import { VehiculoComponent } from './vehiculos/vehiculo/vehiculo.component';
+import { ViajesEspListComponent } from './viajes/viajes-esp-list/viajes-esp-list.component';
+import { ViajesEspecialesComponent } from './viajes/viajes-especiales/viajes-especiales.component';
+import { ViajeEdicionComponent } from './viajes/viaje-edicion/viaje-edicion.component';
+import { DiagrInternoComponent } from './viajes/diagr-interno/diagr-interno.component';
+import { ModalPlaceholderComponent } from '../ventanas-modales/modal.utilidades';
+import { IdaVtaListComponent } from './diagramacion-Servicios/ida-vta-list/ida-vta-list.component';
+import { EnlaceLineasComponent } from './diagramacion-Servicios/enlace-lineas/enlace-lineas.component';
+
 
 
 @NgModule({
@@ -20,14 +28,27 @@ import { VehiculoComponent } from './vehiculos/vehiculo/vehiculo.component';
                   IncByChoferComponent, 
                   CarnetListComponent,
                   IncidenciasComponent,
-                  VehiculosComponent ],
+                  VehiculosComponent,
+                  ViajesEspListComponent,
+                  ViajesEspecialesComponent,
+                  ViajeEdicionComponent,
+                  DiagrInternoComponent,
+                  ModalPlaceholderComponent,
+                  IdaVtaListComponent,
+                  EnlaceLineasComponent ],
   exports:[ WellcomeComponent, 
             ChoferesComponent, 
             ChoferNuevoComponent, 
             IncByChoferComponent,
             CarnetListComponent, 
             IncidenciasComponent,
-            VehiculosComponent ],
+            VehiculosComponent,
+            ViajesEspListComponent,
+            ViajesEspecialesComponent,
+            ViajeEdicionComponent,
+            DiagrInternoComponent,
+            IdaVtaListComponent,
+            EnlaceLineasComponent ],
   imports: [
     CommonModule,    
     SharedModule,

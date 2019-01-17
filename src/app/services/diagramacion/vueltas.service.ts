@@ -3,12 +3,13 @@ import { FECHA_PATTERN_MOMENT, FECHA_PATTERN, CANTIDAD_DIAS_DIAGR_DEFAULT,
          FECHA_HORA_MOSTRAR_PATTERN, CANTIDAD_DIAS_DIAGR_ADICIONALES_VTA, HABILITADO }
           from 'src/app/utiles/const-data-model';
 import { FuncionesGrales } from 'src/app/utiles/funciones.grales';
-import { Vuelta } from 'src/app/models/vuelta.model';
-import { Servicio } from 'src/app/models/servicio.model';
 import { Observable, Subscription } from 'rxjs';
 import 'rxjs/add/observable/forkJoin';
 import { DiagrService } from './diagr.service';
-import { LoaderService, UsuarioService } from '../service.index';
+import { LoaderService } from '../mensajes/loader.service';
+import { UsuarioService } from '../usuario/usuario.service';
+import { Servicio, Vuelta } from 'src/app/models/model.index';
+
 
 
 @Injectable()

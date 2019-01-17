@@ -1,14 +1,13 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
-import * as Rx from 'rxjs/Rx';
 import { PaginationPage, PaginationPropertySort } from '../../shared/pagination';
 import { Table } from '../../shared/table';
-import { Incidencia} from '../../domain';
 import { Constantes } from '../../utiles/const-data-model';
 import { ComponenteItem }         from '../../shared/componente-item';
 import { Observable, Subscription } from 'rxjs';
 import { AlertService, ErrorService, RespuestaModalService, UsuarioService, IncidenciaService } from 'src/app/services/service.index';
 import { IncidenciaComponent } from './incidencia/incidencia.component';
+import { Incidencia } from 'src/app/models/model.index';
 
 
 

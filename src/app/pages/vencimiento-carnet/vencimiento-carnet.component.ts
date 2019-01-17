@@ -2,8 +2,9 @@ import { Component, OnInit, LOCALE_ID, Inject } from '@angular/core';
 import { Observable } from 'rxjs';
 import { ChoferService, UsuarioService } from 'src/app/services/service.index';
 
-import { CarnetChofer, Carnet } from 'src/app/domain';
+
 import { FuncionesGrales } from 'src/app/utiles/funciones.grales';
+import { CarnetChofer, Carnet } from 'src/app/models/model.index';
 
 
 

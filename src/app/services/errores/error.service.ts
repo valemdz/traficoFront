@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import{ FormGroup, FormControl, FormArray } from '@angular/forms';
-
 import { Router } from '@angular/router';
-import { AlertService } from '../service.index';
+import { AlertService } from '../mensajes/alert.service';
+
 
 @Injectable()
 export class  ErrorService {
