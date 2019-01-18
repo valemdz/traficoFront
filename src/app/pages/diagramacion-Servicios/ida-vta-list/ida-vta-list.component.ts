@@ -1,10 +1,9 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { PaginationPage, PaginationPropertySort } from 'src/app/shared/pagination';
-import { Table } from 'src/app/shared/table';
 import { Subscription } from 'rxjs';
 import { FuncionesGrales } from 'src/app/utiles/funciones.grales';
-import { Constantes } from 'src/app/utiles/const-data-model';
 import { IdaVtaListService, UsuarioService, ErrorService, AlertService } from 'src/app/services/service.index';
+import { PaginationPage, Table, PaginationPropertySort } from 'src/app/shared/pagination/pagination.index';
+import { Constantes } from 'src/app/models/model.index';
 
 
 @Component({

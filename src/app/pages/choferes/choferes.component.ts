@@ -1,13 +1,15 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import {Router} from '@angular/router';
 import {  Subscription } from 'rxjs';
-import {PaginationPage, PaginationPropertySort} from '../../shared/pagination';
-import {Table} from '../../shared/table';
-import { Constantes } from '../../utiles/const-data-model';
+
 import { ChoferService } from 'src/app/services/choferes/chofer.service';
 import { UsuarioService, AlertService, ErrorService } from 'src/app/services/service.index';
-import { Chofer } from 'src/app/models/model.index';
+import { Chofer, CONSTANTES_CHOFER, Constantes } from 'src/app/models/model.index';
 
+import { PaginationPage, Table, PaginationPropertySort } from 'src/app/shared/pagination/pagination.index';
+import { FuncionesGrales } from 'src/app/utiles/funciones.grales';
+
+declare var swal;
 
 @Component({
   selector: 'app-choferes',
@@ -28,10 +30,7 @@ export class ChoferesComponent implements OnInit, OnDestroy {
     incidenciaChofer;
     updateEstChofer: Chofer;
 
-    public estados = [
-        { value: '0', display: 'HABILITADO' },
-        { value: '1', display: 'DESHABILITADO' },
-    ];
+    public estados = CONSTANTES_CHOFER.ESTADOS;
 
     constructor( private choferService: ChoferService,
                  private router: Router,
@@ -51,10 +50,13 @@ export class ChoferesComponent implements OnInit, OnDestroy {
     }
 
     fetchPage(pageNumber: number, pageSize: number, sort: PaginationPropertySort)  {
+
+        const params = FuncionesGrales.toParams( pageNumber, pageSize, sort );
+
         this.listadoSubscription
-        = this.choferService.findChoferes$( pageNumber, pageSize, sort, this._us.usuario.empresa )
+        = this.choferService.findChoferes$(  this._us.usuario.empresa, params )
         .subscribe( this.okChoferes.bind( this), this.errorChoferes.bind( this ) );
-        this.self = this;
+        this.self = this;        
     }
 
     okChoferes ( choferesPage  ) {
@@ -78,6 +80,7 @@ export class ChoferesComponent implements OnInit, OnDestroy {
          title: "Eliminación",
          text: "Esta seguro que desea eliminar el chofer " + chofer.cho_nombre,
          icon: "warning",
+         buttons: true,
          dangerMode: true,
        })
        .then(willDelete => {
@@ -126,29 +129,37 @@ export class ChoferesComponent implements OnInit, OnDestroy {
     }  
 
     cambiarEstado(updateEstChofer) {
+
+        let valueFuturo;
+
         if (updateEstChofer.cho_estado === 1) {
-            updateEstChofer.cho_estado = 0 ;
+            valueFuturo = 0 ;
         } else {
-            updateEstChofer.cho_estado = 1 ;
+            valueFuturo = 1 ;
         }
+
+        const estadoFuturo = this.estados.find( e => e.value === valueFuturo );
+
         swal({
             title: "Estado",
-            text: "Esta seguro que desea cambiar el estado del chofer " + updateEstChofer.cho_nombre,
+            text: "El nuevo estado del chofer " 
+                   + updateEstChofer.cho_nombre
+                   + " sera: " + ( estadoFuturo? estadoFuturo.display: 'Sin definir' ) 
+                   + " esta seguro? ",
             icon: "warning",
+            buttons: true,
             dangerMode: true,
         })
-        .then(willDelete => {
-            if (willDelete) {
-                //this.delete( chofer );
+        .then( actualiza => {
+            if (actualiza ){
+                updateEstChofer.cho_estado = valueFuturo;
+                this.choferService.update$(updateEstChofer).subscribe(result => {
+                    this.mostrarDetalle();            
+                }, err => {
+                      this.ctrolError.tratarErroresEliminaciones( err );
+                } );
             }
-        });        
-
-
-        this.choferService.update$(updateEstChofer).subscribe(result => {
-            this.mostrarDetalle();            
-        }, err => {
-              this.ctrolError.tratarErroresEliminaciones( err );
-        } );
+        });    
         
     }  
     

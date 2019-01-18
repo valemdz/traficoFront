@@ -1,13 +1,8 @@
 import {Injectable} from '@angular/core';
-import 'rxjs/add/operator/map';
-import 'rxjs/add/operator/publish';
 import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
-import { PaginationPropertySort } from 'src/app/shared/pagination';
-import { FuncionesGrales } from 'src/app/utiles/funciones.grales';
 import { Incidencia } from 'src/app/models/model.index';
-
 
 
 @Injectable()
@@ -18,9 +13,8 @@ export class IncidenciaService {
     constructor( private http: HttpClient ) {
     }
 
-    findIncidencias$( page: number, pageSize: number, sort: PaginationPropertySort, idEmpresa: String ): Observable<any> {
-      const url = this.urlBase + `/incidencias/empresa/${idEmpresa}`;
-      const params = FuncionesGrales.toParams( page, pageSize, sort );
+    findIncidencias$(  idEmpresa: String, params ): Observable<any> {
+      const url = this.urlBase + `/incidencias/empresa/${idEmpresa}`;      
       return this.http.get( url, params);
     }
 

@@ -1,11 +1,10 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
-import { PaginationPage, PaginationPropertySort } from '../../shared/pagination';
-import { Table } from '../../shared/table';
-import { Constantes } from '../../utiles/const-data-model';
 import { Observable, Subscription } from 'rxjs';
 import { UsuarioService, AlertService, ErrorService, VehiculoService } from 'src/app/services/service.index';
-import { Vehiculo } from 'src/app/models/model.index';
+import { Vehiculo, Constantes } from 'src/app/models/model.index';
+import { PaginationPage, Table, PaginationPropertySort } from 'src/app/shared/pagination/pagination.index';
+import { FuncionesGrales } from 'src/app/utiles/funciones.grales';
 
 
 
@@ -53,8 +52,9 @@ export class VehiculosComponent implements OnInit, OnDestroy  {
     }
 
    fetchPage(pageNumber: number, pageSize: number, sort: PaginationPropertySort) {
-        this.listadoSubs =
-        this.vehiculoService.findVehiculos$(pageNumber, pageSize, sort, this._us.usuario.empresa )
+
+        const params = FuncionesGrales.toParams( pageNumber, pageSize, sort );
+        this.listadoSubs =  this.vehiculoService.findVehiculos$( this._us.usuario.empresa, params )
         .subscribe( this.okVehiculo.bind( this), this.errorVehiculo.bind( this) );
         this.self = this;
     }
@@ -84,15 +84,7 @@ export class VehiculosComponent implements OnInit, OnDestroy  {
 
     errorDeleteVehiculo( err ) {
        this.ctrolError.tratarErroresEliminaciones(err);
-    }
-
-    /*viewDetails(vehiculo) {
-        let observable: Observable<any> = this.vehiculoService.viewVehiculo(vehiculo.id);
-        showLoading();
-        observable.switchMap(() => {
-            return this.fetchPage(0, Constantes.ROWS_BY_PAGE, null);
-        }).subscribe(doNothing, hideLoading, hideLoading);
-    }*/
+    }    
 
     crearNuevo() {
 

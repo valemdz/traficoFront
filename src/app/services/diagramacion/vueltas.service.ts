@@ -1,14 +1,12 @@
 import { Injectable, Inject, LOCALE_ID } from '@angular/core';
-import { FECHA_PATTERN_MOMENT, FECHA_PATTERN, CANTIDAD_DIAS_DIAGR_DEFAULT,
-         FECHA_HORA_MOSTRAR_PATTERN, CANTIDAD_DIAS_DIAGR_ADICIONALES_VTA, HABILITADO }
-          from 'src/app/utiles/const-data-model';
+
 import { FuncionesGrales } from 'src/app/utiles/funciones.grales';
 import { Observable, Subscription } from 'rxjs';
 import 'rxjs/add/observable/forkJoin';
 import { DiagrService } from './diagr.service';
 import { LoaderService } from '../mensajes/loader.service';
 import { UsuarioService } from '../usuario/usuario.service';
-import { Servicio, Vuelta } from 'src/app/models/model.index';
+import { Servicio, Vuelta, CONSTANTES_VIAJE, Constantes, CONSTANTES_VEHICULOS } from 'src/app/models/model.index';
 
 
 
@@ -41,19 +39,19 @@ export class VueltasService {
 
     this.inicio = new Date();
     this.fin = new Date();
-    this.fin.setDate( this.fin.getDate() + CANTIDAD_DIAS_DIAGR_DEFAULT - 1 );
+    this.fin.setDate( this.fin.getDate() + CONSTANTES_VIAJE.CANTIDAD_DIAS_DIAGR_DEFAULT - 1 );
 
     this.finVuelta = new Date( this.fin.getTime());
     this.finVuelta.setDate( this.finVuelta.getDate()                     
-                                + CANTIDAD_DIAS_DIAGR_ADICIONALES_VTA );  
+                                + CONSTANTES_VIAJE.CANTIDAD_DIAS_DIAGR_ADICIONALES_VTA );  
   }
 
   setFechas( formFechas ){
-    this.inicio = FuncionesGrales.toFecha( formFechas.fInicio ,  FECHA_PATTERN_MOMENT );
-    this.fin = FuncionesGrales.toFecha( formFechas.fFin ,  FECHA_PATTERN_MOMENT );
+    this.inicio = FuncionesGrales.toFecha( formFechas.fInicio ,  Constantes.FECHA_PATTERN_MOMENT );
+    this.fin = FuncionesGrales.toFecha( formFechas.fFin ,  Constantes.FECHA_PATTERN_MOMENT );
     this.finVuelta = new Date( this.fin.getTime());
     this.finVuelta.setDate( this.finVuelta.getDate()                     
-                                + CANTIDAD_DIAS_DIAGR_ADICIONALES_VTA );    
+                                + CONSTANTES_VIAJE.CANTIDAD_DIAS_DIAGR_ADICIONALES_VTA );    
   }
 
   OnInit( formFechas ){
@@ -111,8 +109,8 @@ export class VueltasService {
   getServiciosIda$() {
       return this._ds.findSerConHorariosByLineaYfecha$( this._us.usuario.empresa,
                   this.idLinIda,
-                  FuncionesGrales.fromFecha( this.locale, this.inicio, FECHA_PATTERN),
-                  FuncionesGrales.fromFecha( this.locale, this.fin, FECHA_PATTERN)  );
+                  FuncionesGrales.fromFecha( this.locale, this.inicio, Constantes.FECHA_PATTERN),
+                  FuncionesGrales.fromFecha( this.locale, this.fin, Constantes.FECHA_PATTERN)  );
       //.subscribe( this.okServiciosIda.bind( this ), this.errorServiciosIda.bind( this ) );
   }
 
@@ -158,8 +156,8 @@ export class VueltasService {
   getServiciosVta$() {
       return this._ds.findSerConHorariosByLineaYfecha$( this._us.usuario.empresa,
                   this.idLinVta,
-                  FuncionesGrales.fromFecha( this.locale, this.inicio, FECHA_PATTERN),
-                  FuncionesGrales.fromFecha( this.locale, this.finVuelta, FECHA_PATTERN)   );
+                  FuncionesGrales.fromFecha( this.locale, this.inicio, Constantes.FECHA_PATTERN),
+                  FuncionesGrales.fromFecha( this.locale, this.finVuelta, Constantes.FECHA_PATTERN)   );
 
       //.subscribe( this.okServiciosVta.bind( this ), this.errorServiciosIda.bind( this ) );
   }
@@ -169,7 +167,7 @@ export class VueltasService {
     this.serviciosVta = serviciosVta;
     this.serviciosVta.forEach( serv  => {      
         serv.servicioPKStr  = JSON.stringify( serv.servicioPK );
-        serv.detalle  = FuncionesGrales.formatearFecha( this.locale, serv.fechaHoraSalida, FECHA_HORA_MOSTRAR_PATTERN );
+        serv.detalle  = FuncionesGrales.formatearFecha( this.locale, serv.fechaHoraSalida, Constantes.FECHA_HORA_MOSTRAR_PATTERN );
     });
     this.ordenamientoServiciosAscendente( this.serviciosVta );
     console.log( 'Servicios Vta' );
@@ -182,8 +180,8 @@ export class VueltasService {
 
   getChoferesOcupacion$() {
         return  this._ds.findChoresOcupacion$( this._us.usuario.empresa,
-                          FuncionesGrales.fromFecha( this.locale, this.inicio, FECHA_PATTERN),
-                          FuncionesGrales.fromFecha( this.locale, this.finVuelta, FECHA_PATTERN) );
+                          FuncionesGrales.fromFecha( this.locale, this.inicio, Constantes.FECHA_PATTERN),
+                          FuncionesGrales.fromFecha( this.locale, this.finVuelta, Constantes.FECHA_PATTERN) );
 
         //.subscribe( this.okChoferes.bind( this ) );
 
@@ -192,8 +190,8 @@ export class VueltasService {
   getVehiculosOcupacion$() {
      // Trae todos lo vehiculos con ocupacion
      return  this._ds.findVehiculosOcupacion$( this._us.usuario.empresa,
-                          FuncionesGrales.fromFecha( this.locale, this.inicio, FECHA_PATTERN),
-                          FuncionesGrales.fromFecha( this.locale, this.finVuelta, FECHA_PATTERN) );                          
+                          FuncionesGrales.fromFecha( this.locale, this.inicio, Constantes.FECHA_PATTERN),
+                          FuncionesGrales.fromFecha( this.locale, this.finVuelta, Constantes.FECHA_PATTERN) );                          
   }
 
   okChoferes( data ) {
@@ -217,8 +215,8 @@ export class VueltasService {
 
     return this._ds.getVueltas$( this._us.usuario.empresa,
                           this.idLinIda,
-                          FuncionesGrales.fromFecha( this.locale, this.inicio, FECHA_PATTERN),
-                          FuncionesGrales.fromFecha( this.locale, this.fin, FECHA_PATTERN) );
+                          FuncionesGrales.fromFecha( this.locale, this.inicio, Constantes.FECHA_PATTERN),
+                          FuncionesGrales.fromFecha( this.locale, this.fin, Constantes.FECHA_PATTERN) );
 
       //.subscribe( this.okVueltas.bind( this) );
   }
@@ -235,7 +233,8 @@ export class VueltasService {
 
   okVehiculosOcupacion( vehiculos){
      this.vehiOcupacion = vehiculos;
-     this.vehiOcupacion = this.vehiOcupacion.filter(  v => v.estado === HABILITADO );
+     this.vehiOcupacion = 
+              this.vehiOcupacion.filter(  v => v.estado === CONSTANTES_VEHICULOS.HABILITADO );
      console.log( 'okVehiculosOcupacion ');
      console.log( this.vehiOcupacion );
   }

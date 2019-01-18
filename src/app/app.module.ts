@@ -19,6 +19,7 @@ import { MaterialModule } from './material/material.module';
 import { PagesModule } from './pages/pages.module';
 import { PagesComponent } from './pages/pages.component';
 import { NoPageFoundComponent } from './shared/no-page-found/no-page-found.component';
+import { DirectivesModule } from './directives/directives.module';
 
 
 
@@ -45,7 +46,8 @@ const appRoutes: Routes = [
     ServiceModule,
     MaterialModule,    
     SharedModule,
-    PagesModule
+    PagesModule,
+    DirectivesModule
   ],
   providers: [             
     { provide: HTTP_INTERCEPTORS,

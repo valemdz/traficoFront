@@ -1,15 +1,14 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
-import { PaginationPage, PaginationPropertySort } from '../../shared/pagination';
-import { Table } from '../../shared/table';
-import { Constantes } from '../../utiles/const-data-model';
-import { ComponenteItem }         from '../../shared/componente-item';
 import { Observable, Subscription } from 'rxjs';
-import { AlertService, ErrorService, RespuestaModalService, UsuarioService, IncidenciaService } from 'src/app/services/service.index';
+import { AlertService, ErrorService, ModalService, UsuarioService, IncidenciaService } from 'src/app/services/service.index';
 import { IncidenciaComponent } from './incidencia/incidencia.component';
-import { Incidencia } from 'src/app/models/model.index';
+import { Incidencia, Constantes } from 'src/app/models/model.index';
+import { PaginationPage, Table, PaginationPropertySort } from 'src/app/shared/pagination/pagination.index';
+import { FuncionesGrales } from 'src/app/utiles/funciones.grales';
+import { ComponenteItem } from 'src/app/shared/modal/componente-item';
 
-
+declare var swal;
 
 @Component({
     selector: 'app-incidencias-list',
@@ -28,7 +27,7 @@ export class IncidenciasComponent implements OnInit, OnDestroy  {
 
     incidenciaNuevo: Incidencia;
 
-    ads: ComponenteItem[];
+    comp: ComponenteItem;
 
     currentIncidencia;
 
@@ -37,15 +36,14 @@ export class IncidenciasComponent implements OnInit, OnDestroy  {
         private router: Router,        
         private alertService: AlertService,
         private ctrolError: ErrorService,
-        private respuestaModalService: RespuestaModalService  ) {
+        private _ms: ModalService ) {
 
-        this.subscription = this.respuestaModalService.
-        getMessage().
-        subscribe( ( mostrar: boolean) => {
-                                            if ( mostrar ) {
-                                               this.mostrarDetalle();
-                                            }
-        } );
+        this.subscription = this._ms.getRespuesta()
+                                .subscribe( ( mostrar: boolean) => {
+                                                                    if ( mostrar ) {
+                                                                    this.mostrarDetalle();
+                                                                    }
+                                } );
     }
 
     ngOnInit() {
@@ -66,9 +64,9 @@ export class IncidenciasComponent implements OnInit, OnDestroy  {
 
 
     fetchPage(pageNumber: number, pageSize: number, sort: PaginationPropertySort) {
-
-        this.listadoSubcription = this.incidenciaService.findIncidencias$(pageNumber,
-                 pageSize, sort, this._us.usuario.empresa )
+        const params = FuncionesGrales.toParams( pageNumber, pageSize, sort );
+        this.listadoSubcription = 
+        this.incidenciaService.findIncidencias$(this._us.usuario.empresa, params )
         .subscribe( this.okIncidencias.bind( this), this.erroIncidencias.bind( this ) );
         this.self = this;
     }
@@ -85,9 +83,26 @@ export class IncidenciasComponent implements OnInit, OnDestroy  {
         this.router.navigate(['incidencia', incidencia.id]);
     }
 
-    delete(incidencia) {
-        this.deleteIncSubscription = this.incidenciaService.deleteIncidencia$(incidencia.id)
-        .subscribe( this.okDeleteInc.bind( this ), this.errorDeleteInc.bind(this) );
+    delete( incidencia ) {
+
+        swal({
+        title: "Eliminación",
+        text: "Esta seguro que desea eliminar la incidencia: " + incidencia.in_descripcion ,
+        icon: "warning",
+        buttons: true,
+        dangerMode: true,
+        })
+        .then(willDelete => {
+        if (willDelete) {
+            //this.delete( chofer );
+        }
+        });        
+
+
+        /*this.deleteIncSubscription = this.incidenciaService.deleteIncidencia$(incidencia.id)
+        .subscribe( this.okDeleteInc.bind( this ), this.errorDeleteInc.bind(this) );*/
+
+        
     }
 
     okDeleteInc( okDelete){
@@ -99,14 +114,6 @@ export class IncidenciasComponent implements OnInit, OnDestroy  {
        this.ctrolError.tratarErroresEliminaciones(err);
     }
 
-    /*viewDetails(incidencia) {
-        let observable: Observable<any> = this.incidenciaService.viewIncidencia(incidencia.id);
-        showLoading();
-        observable.subscribe(() => {
-            return this.fetchPage(0, Constantes.ROWS_BY_PAGE, null);
-        }).subscribe(doNothing, hideLoading, hideLoading);
-    }*/
-
     crearNuevo() {
         this.alertService.clear();
         this.incidenciaNuevo = {
@@ -117,7 +124,6 @@ export class IncidenciasComponent implements OnInit, OnDestroy  {
             in_color:null,
             in_empresa: this._us.usuario.empresa
         };
-
     }
 
     success(message: string) {
@@ -129,20 +135,19 @@ export class IncidenciasComponent implements OnInit, OnDestroy  {
     }
 
     crearNuevoDinam() {
-
         this.crearNuevo();
-        this.ads = this.getComponente(this.incidenciaNuevo, true);
+        this._ms.sendComponent( this.getComponente(this.incidenciaNuevo, true) );
 
     }
 
     modificarDinam( incidenciaM ) {
-        this.ads = this.getComponente( incidenciaM, false );
+        this._ms.sendComponent( this.getComponente( incidenciaM, false ) );
     }
 
-    getComponente( incid, nuev) {
-        return [
-          new ComponenteItem(IncidenciaComponent, {incidencia: incid, nuevo: nuev, mensaje: ''})
-        ];
+    getComponente( incid, nuev) {        
+        return new ComponenteItem( IncidenciaComponent, 
+                                   {incidencia: incid, nuevo: nuev, mensaje: ''});
+        
     }
 
 

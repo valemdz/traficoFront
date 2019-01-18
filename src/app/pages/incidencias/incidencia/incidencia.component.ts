@@ -1,11 +1,10 @@
 import { Component, Input, OnInit, OnChanges, OnDestroy,
   ViewChild, ElementRef } from '@angular/core';
-import 'rxjs/add/operator/toPromise';
 import { FormBuilder,  Validators } from '@angular/forms';
 import { IncidenciaValidator } from '../incidencia-validator';
-import { ErrorService, AlertService, RespuestaModalService, IncidenciaService } from 'src/app/services/service.index';
-import { ComponenteBaseComponent } from 'src/app/shared/componente.base.component';
+import { ErrorService, AlertService,  IncidenciaService, ModalService } from 'src/app/services/service.index';
 import { Incidencia } from 'src/app/models/model.index';
+import { ComponenteBaseComponent } from 'src/app/shared/modal/componente.base.component';
 
 
 
@@ -25,13 +24,11 @@ export class IncidenciaComponent implements  ComponenteBaseComponent, OnInit,  O
 
  @ViewChild('closeBtn') closeBtn: ElementRef;
 
-
-
  constructor( private incidenciaService:IncidenciaService,
               private fb: FormBuilder,
               private ctrolError: ErrorService,
               private alertService: AlertService,
-              private respuestaModalService: RespuestaModalService ) {
+              private _ms: ModalService ) {
      this.crearForm();
      console.log('constructor Incid' );
   }
@@ -229,7 +226,7 @@ export class IncidenciaComponent implements  ComponenteBaseComponent, OnInit,  O
  sendMessage( mostrar:boolean): void {
    // send message to subscribers via observable subject
    //this.respuestaModalService.clearMessage();
-   this.respuestaModalService.sendMessage(mostrar);
+   this._ms.sendRespuesta(mostrar);
  }
 
  closeModalYMostrarGrilla(){

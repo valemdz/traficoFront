@@ -1,12 +1,10 @@
 import {Injectable} from '@angular/core';
-import 'rxjs/add/operator/map';
-import 'rxjs/add/operator/publish';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
-import { PaginationPropertySort } from 'src/app/shared/pagination';
 import { FuncionesGrales } from 'src/app/utiles/funciones.grales';
 import { Vehiculo } from 'src/app/models/model.index';
+import { PaginationPropertySort } from 'src/app/shared/pagination/pagination.index';
 
 
 
@@ -22,9 +20,8 @@ export class VehiculoService {
     constructor(private http: HttpClient ) {
     }
 
-    findVehiculos$(page: number, pageSize: number, sort: PaginationPropertySort, vehEmpCodigo: String ): Observable<any> {
-      const url = this.urlBase + `/vehiculos/empresa/${vehEmpCodigo}`;
-      const params = FuncionesGrales.toParams( page, pageSize, sort );
+    findVehiculos$( vehEmpCodigo: String, params ): Observable<any> {
+      const url = this.urlBase + `/vehiculos/empresa/${vehEmpCodigo}`;   
       return this.http.get( url, params );
     }
 

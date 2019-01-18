@@ -4,13 +4,12 @@ import { Component, OnInit, Input, OnChanges, ViewChild, ElementRef,
 import {FormGroup, FormBuilder, Validators } from '@angular/forms';
 import * as moment from 'moment';
 import {DatePipe} from '@angular/common';
-import { DOCUMENTOS, ESTADOS, GRUPOS_SANGUINEOS, FUNCION } from './constantes-chofer';
 import { ChoferesComponent } from '../choferes.component';
 import { ChoferService } from 'src/app/services/choferes/chofer.service';
 
 import { TabChild } from 'src/app/shared/tabs/tab-child';
 import { ErrorService } from 'src/app/services/service.index';
-import { Chofer } from 'src/app/models/model.index';
+import { Chofer, CONSTANTES_CHOFER } from 'src/app/models/model.index';
 
 
 
@@ -46,10 +45,10 @@ export class ChoferNuevoComponent implements OnInit, OnChanges, TabChild {
 
 
   ngOnInit() {
-    this.comboDocumentos = DOCUMENTOS;
-    this.comboFuncion = FUNCION;
-    this.comboEstados = ESTADOS;
-    this.comboSanguineo = GRUPOS_SANGUINEOS;
+    this.comboDocumentos = CONSTANTES_CHOFER.DOCUMENTOS;
+    this.comboFuncion = CONSTANTES_CHOFER.FUNCION;
+    this.comboEstados = CONSTANTES_CHOFER.ESTADOS;
+    this.comboSanguineo = CONSTANTES_CHOFER.GRUPOS_SANGUINEOS;
   }
 
   tabActivated():void{

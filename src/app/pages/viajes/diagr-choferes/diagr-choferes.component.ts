@@ -1,11 +1,8 @@
 import { Component, OnInit, Input, OnChanges, OnDestroy, ViewChild, ElementRef, AfterContentChecked } from '@angular/core';
 import { FormGroup, FormBuilder, FormArray, Validators } from '@angular/forms';
 import {Response} from '@angular/http';
-// import { ViajesEspListComponent } from  '../viajes-esp-list/viajes-esp-list.component';
 import { Observable} from 'rxjs';
-
 import { ErrorService, LoaderService, ViajeEspServive } from 'src/app/services/service.index';
-import { Modal } from 'src/app/ventanas-modales/modal.utilidades';
 import { ViajeEspecial, ChoferPKConDet, ListaChoferPK, ChoferPK } from 'src/app/models/model.index';
 
 
@@ -14,7 +11,6 @@ import { ViajeEspecial, ChoferPKConDet, ListaChoferPK, ChoferPK } from 'src/app/
   templateUrl: './diagr-choferes.component.html',
   styleUrls: ['./diagr-choferes.component.css']
 })
-@Modal()
 export class DiagrChoferesComponent implements OnInit, OnChanges, OnDestroy,
 AfterContentChecked {
 

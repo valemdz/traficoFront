@@ -3,12 +3,10 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormGroup, FormBuilder, FormArray, Validators, FormControl } from '@angular/forms';
 import { Subscription } from 'rxjs';
 import { DiagrChoferesComponent } from '../diagr-choferes/diagr-choferes.component';
-import { AlertService, UsuarioService, ViajeEspServive } from 'src/app/services/service.index';
-import { PaginationPage, PaginationPropertySort } from 'src/app/shared/pagination';
-import { Table } from 'src/app/shared/table';
-import { ModalService } from 'src/app/ventanas-modales/modal.service';
-import { VentanasModalesModule } from 'src/app/ventanas-modales/ventanas-modales.module';
+import { AlertService, UsuarioService, ViajeEspServive, ModalService } from 'src/app/services/service.index';
 import { ViajeEspecial } from 'src/app/models/model.index';
+import { PaginationPage, Table, PaginationPropertySort } from 'src/app/shared/pagination/pagination.index';
+import { ComponenteItem } from 'src/app/shared/modal/modal.index';
 
 
 
@@ -37,7 +35,7 @@ export class ViajesEspListComponent implements OnInit, OnDestroy {
                 private viajeServ: ViajeEspServive,
                 private alertService: AlertService,
                 private _us: UsuarioService,
-                private modalService: ModalService  ) {
+                private _ms: ModalService  ) {
       this.crearForm();
   }
 
@@ -154,22 +152,14 @@ crearNuevo() {
 
 openModalChoferes( viajeEspecial: ViajeEspecial ) {
 
-   let modal$ = this.modalService.create( VentanasModalesModule,
-                                          DiagrChoferesComponent,
-                                          {'viajeEspecial': viajeEspecial,
-                                            ok: () => {
-                                              this.mostrarDetalle();
-                                            } } ) ;
+   let modal$ = this._ms.sendComponent( new ComponenteItem( DiagrChoferesComponent,
+                                          {'viajeEspecial': viajeEspecial } ) );
 
 }
 
 openModalAuxiliares(viajeEspecial: ViajeEspecial) {
-  let modal$ = this.modalService.create(
-                                        VentanasModalesModule,
-                                        DiagrAuxiliaresComponent,
-                                        {'viajeEspecial': viajeEspecial,
-                                      ok: () => { this.mostrarDetalle();
-                                      } } ) ;
+  let modal$ = this._ms.sendComponent(  new ComponenteItem( DiagrAuxiliaresComponent,
+                                        {'viajeEspecial': viajeEspecial} ) );
 }
 
 }

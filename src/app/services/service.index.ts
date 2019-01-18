@@ -1,7 +1,6 @@
-export { ModalService } from "../ventanas-modales/modal.service";
+export { ModalService } from "./modal/modal.service";
 export { ViajeEspServive } from "./viajes/viajeEsp.service";
 export { VehiculoService } from "./vehiculos/vehiculo.service";
-export { RespuestaModalService } from "./respuesta.modal.service";
 export { LoaderService } from "./mensajes/loader.service";
 export { AlertService } from "./mensajes/alert.service";
 export { ErrorService } from "./errores/error.service";
@@ -15,6 +14,8 @@ export { DiagrService } from "./diagramacion/diagr.service";
 export { TokenInterceptorService } from "./interceptors/token-interceptor.service";
 export { RequestInterceptorService } from "./interceptors/request.interceptor.service";
 export { VueltasService } from "./diagramacion/vueltas.service";
+
+
 
 
 

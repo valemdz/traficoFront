@@ -1,8 +1,8 @@
 import * as moment from 'moment';
 import { DatePipe } from '@angular/common';
 import { HttpParams } from '../../../node_modules/@angular/common/http';
-import { PaginationPropertySort } from '../shared/pagination';
-import { CHOFER } from './const-data-model';
+
+import { PaginationPropertySort } from '../shared/pagination/pagination.index';
 
 export class FuncionesGrales {
 
@@ -48,13 +48,7 @@ export class FuncionesGrales {
       }
       return {params};
   }
-
-  public static getTipoChoferStr( tipoChofer ): string {
-     if ( tipoChofer === CHOFER ) {
-        return 'CHO';
-     }
-     return 'AUX';
-  }
+ 
 
   public static diffDias( inicio: Date, fin: Date ) {
     const fechaInicio = inicio.getTime();

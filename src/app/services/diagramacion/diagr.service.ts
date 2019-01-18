@@ -1,17 +1,14 @@
 
 import { Injectable } from '@angular/core';
-import 'rxjs/add/operator/map';
-import 'rxjs/add/operator/publish';
 import { Observable, Subscription } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 
 import { environment } from 'src/environments/environment';
-import { map, filter, concatAll } from 'rxjs/operators';
+import { map } from 'rxjs/operators';
 import swal from 'sweetalert';
-import { PaginationPropertySort } from 'src/app/shared/pagination';
 import { FuncionesGrales } from 'src/app/utiles/funciones.grales';
-import { ModalSiNo } from 'src/app/models/modalSiNo.model';
 import { ModalSiNoService } from 'src/app/shared/modal-si-no/modal-si-no.service';
+import { PaginationPropertySort } from 'src/app/shared/pagination/pagination.index';
 
 
 

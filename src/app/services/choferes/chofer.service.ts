@@ -1,15 +1,7 @@
 import {Injectable} from '@angular/core';
-import 'rxjs/add/operator/toPromise';
-import 'rxjs/add/operator/map';
-import 'rxjs/add/operator/publish';
 import { Observable, of, throwError } from 'rxjs';
-
 import { HttpClient } from '@angular/common/http';
-
 import { environment } from 'src/environments/environment';
-import { PaginationPropertySort } from 'src/app/shared/pagination';
-import { FuncionesGrales } from 'src/app/utiles/funciones.grales';
-
 import { map, catchError } from 'rxjs/operators';
 import swal from 'sweetalert';
 import { Chofer } from 'src/app/models/model.index';
@@ -26,9 +18,8 @@ export class ChoferService {
     constructor( private http: HttpClient ) {
     }
 
-    findChoferes$( page: number, pageSize: number, sort: PaginationPropertySort, cho_emp_codigo: String ): Observable<any> {
-      const url = this.urlBase + `/choferes/empresa/${cho_emp_codigo}`;
-      const params = FuncionesGrales.toParams( page, pageSize, sort );
+    findChoferes$(  cho_emp_codigo: String, params ): Observable<any> {
+      const url = this.urlBase + `/choferes/empresa/${cho_emp_codigo}`;      
       return this.http.get( url , params);
     }
 
@@ -37,7 +28,6 @@ export class ChoferService {
          const url = this.urlBase + `/choferes/empresa/${cho_emp_codigo}/VencimientoCarnets`;
          return this.http.get(url);
     }
-
 
 
     viewChofer$(id: number): Observable<any> {

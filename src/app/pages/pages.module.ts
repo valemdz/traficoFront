@@ -15,9 +15,10 @@ import { ViajesEspListComponent } from './viajes/viajes-esp-list/viajes-esp-list
 import { ViajesEspecialesComponent } from './viajes/viajes-especiales/viajes-especiales.component';
 import { ViajeEdicionComponent } from './viajes/viaje-edicion/viaje-edicion.component';
 import { DiagrInternoComponent } from './viajes/diagr-interno/diagr-interno.component';
-import { ModalPlaceholderComponent } from '../ventanas-modales/modal.utilidades';
 import { IdaVtaListComponent } from './diagramacion-Servicios/ida-vta-list/ida-vta-list.component';
 import { EnlaceLineasComponent } from './diagramacion-Servicios/enlace-lineas/enlace-lineas.component';
+import { PipesModule } from '../pipes/pipes.module';
+import { IncidenciaComponent } from './incidencias/incidencia/incidencia.component';
 
 
 
@@ -32,10 +33,10 @@ import { EnlaceLineasComponent } from './diagramacion-Servicios/enlace-lineas/en
                   ViajesEspListComponent,
                   ViajesEspecialesComponent,
                   ViajeEdicionComponent,
-                  DiagrInternoComponent,
-                  ModalPlaceholderComponent,
+                  DiagrInternoComponent,                  
                   IdaVtaListComponent,
-                  EnlaceLineasComponent ],
+                  EnlaceLineasComponent,
+                  IncidenciaComponent ],
   exports:[ WellcomeComponent, 
             ChoferesComponent, 
             ChoferNuevoComponent, 
@@ -48,13 +49,16 @@ import { EnlaceLineasComponent } from './diagramacion-Servicios/enlace-lineas/en
             ViajeEdicionComponent,
             DiagrInternoComponent,
             IdaVtaListComponent,
-            EnlaceLineasComponent ],
+            EnlaceLineasComponent,
+            IncidenciaComponent ],
   imports: [
     CommonModule,    
     SharedModule,
     PAGES_ROUTES,
     FormsModule,
-    ReactiveFormsModule 
-  ]  
+    ReactiveFormsModule,
+    PipesModule 
+  ], 
+  entryComponents:[ IncidenciaComponent ]  
 })
 export class PagesModule { }

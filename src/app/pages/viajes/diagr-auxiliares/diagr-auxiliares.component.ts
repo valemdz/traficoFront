@@ -2,19 +2,13 @@ import { Component, OnInit, Input, OnChanges, OnDestroy, ViewChild, ElementRef, 
 import { FormGroup, FormBuilder, FormArray, Validators } from '@angular/forms';
 import {Response} from '@angular/http';
 import { Observable} from 'rxjs';
-
 import { ErrorService, LoaderService, ViajeEspServive } from 'src/app/services/service.index';
-import { Modal } from 'src/app/ventanas-modales/modal.utilidades';
 import { ViajeEspecial, ChoferPKConDet, ListaChoferPK, ChoferPK } from 'src/app/models/model.index';
-
-
-
 
 @Component({
   selector: 'app-diagr-auxiliares',
   templateUrl: './diagr-auxiliares.component.html'
 })
-@Modal()
 export class DiagrAuxiliaresComponent implements OnInit, OnChanges, OnDestroy,
 AfterContentChecked {
 
