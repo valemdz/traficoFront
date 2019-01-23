@@ -11,6 +11,8 @@ import { IncidenciasComponent } from './incidencias/incidencias.component';
 import { VehiculosComponent } from './vehiculos/vehiculos.component';
 import { ViajesEspListComponent } from './viajes/viajes-esp-list/viajes-esp-list.component';
 import { IdaVtaListComponent } from './diagramacion-Servicios/ida-vta-list/ida-vta-list.component';
+import { DiagramacionComponent } from './diagramacion-Servicios/diagramacion.component';
+import { VueltasComponent } from './diagramacion-Servicios/vueltas/vueltas.component';
 
 
 const pagesRoutes: Routes = [
@@ -23,11 +25,20 @@ const pagesRoutes: Routes = [
     { path: 'incByChofer', component: IncByChoferComponent },
     { path: 'incidencias', component: IncidenciasComponent },    
     { path: 'vehiculos', component: VehiculosComponent },    
-    { path: 'viajesEspeciales', component: ViajesEspListComponent }, 
-    { path: 'idaVtaList', component: IdaVtaListComponent },        
+    { path: 'viajesEspeciales', component: ViajesEspListComponent },     
     { path: 'wellcome', component: WellcomeComponent },        
-    { path: '', pathMatch: 'full', redirectTo: '/wellcome' }
-  ]}
+    { path: '', pathMatch: 'full', redirectTo: '/wellcome' },
+    { 
+      path:'diagr',
+      component: DiagramacionComponent,
+      children: [
+        { path: 'idaVtaList', component: IdaVtaListComponent },        
+        { path: 'vuelta/:idLinIda/:idLinVta', component: VueltasComponent },
+        { path: '', pathMatch: 'full', redirectTo: '/idaVtaList' },
+      ]
+     }
+  ]},
+  
 ];
 
 export const PAGES_ROUTES = RouterModule.forChild(pagesRoutes);

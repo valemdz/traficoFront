@@ -26,12 +26,12 @@
                         <td>{{chofer.cho_nombre}}</td>
                         <td>
                             <label>
-                                <div *ngIf="chofer.cho_estado==estados[0].value == 1">
+                                <div *ngIf="chofer.cho_estado==estados[0].codigo == 1">
                                     <a  (click)="cambiarEstado( chofer )" data-toggle="modal" data-target="#update-modal">
                                         <i class="fa fa-toggle-on fa-2x green" aria-hidden="true"></i>
                                     </a>
                                 </div>
-                                <div *ngIf="chofer.cho_estado==estados[0].value == 0">
+                                <div *ngIf="chofer.cho_estado==estados[0].codigo == 0">
                                         <a  (click)="cambiarEstado( chofer )" data-toggle="modal" data-target="#update-modal"                                        >
                                             <i class="fa fa-toggle-off fa-2x red" aria-hidden="true"></i>
                                         </a>

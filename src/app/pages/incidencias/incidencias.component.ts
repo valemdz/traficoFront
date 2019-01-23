@@ -33,16 +33,15 @@ export class IncidenciasComponent implements OnInit, OnDestroy  {
 
     constructor( private incidenciaService: IncidenciaService,
         public _us: UsuarioService, 
-        private router: Router,        
-        private alertService: AlertService,
+        private router: Router,                
         private ctrolError: ErrorService,
         private _ms: ModalService ) {
 
         this.subscription = this._ms.getRespuesta()
                                 .subscribe( ( mostrar: boolean) => {
-                                                                    if ( mostrar ) {
-                                                                    this.mostrarDetalle();
-                                                                    }
+                                            if ( mostrar ) {
+                                                this.mostrarDetalle();
+                                            }
                                 } );
     }
 
@@ -93,51 +92,23 @@ export class IncidenciasComponent implements OnInit, OnDestroy  {
         dangerMode: true,
         })
         .then(willDelete => {
-        if (willDelete) {
-            //this.delete( chofer );
-        }
-        });        
-
-
-        /*this.deleteIncSubscription = this.incidenciaService.deleteIncidencia$(incidencia.id)
-        .subscribe( this.okDeleteInc.bind( this ), this.errorDeleteInc.bind(this) );*/
-
-        
+            if (willDelete) {
+                this.deleteIncSubscription = this.incidenciaService.deleteIncidencia$(incidencia.id)
+                    .subscribe( this.okDeleteInc.bind( this ), this.errorDeleteInc.bind(this) );   
+            }
+        });         
     }
 
     okDeleteInc( okDelete){
-      this.mostrarDetalle();
-      this.success('La incidencia se elimino con exito!!!')
+      this.mostrarDetalle();      
     }
 
     errorDeleteInc( err ) {
        this.ctrolError.tratarErroresEliminaciones(err);
-    }
+    }   
 
-    crearNuevo() {
-        this.alertService.clear();
-        this.incidenciaNuevo = {
-            id: 0,
-            codigo:null,
-            in_descripcion: null,
-            in_tipo: null,
-            in_color:null,
-            in_empresa: this._us.usuario.empresa
-        };
-    }
-
-    success(message: string) {
-        this.alertService.success(message);
-    }
-
-    clearAlert() {
-        this.alertService.clear();
-    }
-
-    crearNuevoDinam() {
-        this.crearNuevo();
-        this._ms.sendComponent( this.getComponente(this.incidenciaNuevo, true) );
-
+    crearNuevoDinam() {            
+        this._ms.sendComponent( this.getComponente( new Incidencia() , true) );
     }
 
     modificarDinam( incidenciaM ) {

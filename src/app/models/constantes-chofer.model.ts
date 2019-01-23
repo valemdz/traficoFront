@@ -21,9 +21,14 @@ export class CONSTANTES_CHOFER {
     return 'AUX';
   }
 
+  public static readonly HABILITADO = 0;
+  public static readonly HABILITADO_STR = 'HABILITADO';
+  public static readonly DESHABILITADO = 1;
+  public static readonly DESHABILITADO_STR = 'DESHABILITADO';
+
   public static readonly ESTADOS = [
-      { value: 0, display: 'HABILITADO' },
-      { value: 1, display: 'DESHABILITADO' },
+      { codigo: CONSTANTES_CHOFER.HABILITADO, descripcion: CONSTANTES_CHOFER.HABILITADO_STR  },
+      { codigo: CONSTANTES_CHOFER.DESHABILITADO, descripcion: CONSTANTES_CHOFER.DESHABILITADO_STR },
   ];    
   
   public static readonly  DOCUMENTOS: any = [

@@ -1,13 +1,16 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
-import { Observable, Subscription } from 'rxjs';
-import { UsuarioService, AlertService, ErrorService, VehiculoService } from 'src/app/services/service.index';
-import { Vehiculo, Constantes } from 'src/app/models/model.index';
+import {  Subscription } from 'rxjs';
+import { UsuarioService, ErrorService, VehiculoService, ModalService } from 'src/app/services/service.index';
+import { Vehiculo, Constantes, CONSTANTES_VEHICULOS } from 'src/app/models/model.index';
 import { PaginationPage, Table, PaginationPropertySort } from 'src/app/shared/pagination/pagination.index';
 import { FuncionesGrales } from 'src/app/utiles/funciones.grales';
+import { ComponenteItem } from 'src/app/shared/modal/modal.index';
+import { VehiculoComponent } from './vehiculo/vehiculo.component';
 
+declare var swal;
 
-
+declare var $;
 
 @Component({
     selector: 'app-vehiculo-list',
@@ -17,25 +20,24 @@ import { FuncionesGrales } from 'src/app/utiles/funciones.grales';
 export class VehiculosComponent implements OnInit, OnDestroy  {
 
     vehiculoPage: PaginationPage<any>;
-    self: Table<any>;
-    vehiculoNuevo: Vehiculo;
+    self: Table<any>;    
 
     listadoSubs: Subscription;
     deleteVehiculoSubs: Subscription;
-
-    currentVehiculo;
+    modalSubs: Subscription;    
     updateEstvehiculo : Vehiculo;
 
-    public estados = [
-        { value: '0', display: 'HABILITADO' },
-        { value: '1', display: 'DESHABILITADO' },
-    ];
+    public estados = CONSTANTES_VEHICULOS.ESTADOS_VEHICULO;
 
     constructor(private vehiculoService: VehiculoService,
         private router: Router,
         private _us: UsuarioService,
-        private alertService: AlertService,
+        private _ms: ModalService,        
         private ctrolError: ErrorService) {
+
+            this.modalSubs = this._ms.getRespuesta().subscribe( res => {
+                this.mostrarDetalle();
+            });
     }
 
     ngOnInit() {
@@ -45,6 +47,7 @@ export class VehiculosComponent implements OnInit, OnDestroy  {
     ngOnDestroy(): void {
         if ( this.listadoSubs ) { this.listadoSubs.unsubscribe(); }
         if ( this.deleteVehiculoSubs ) { this.deleteVehiculoSubs.unsubscribe(); }
+        if ( this.modalSubs ){ this.modalSubs.unsubscribe(); }
     }
 
     mostrarDetalle(): void {
@@ -71,26 +74,34 @@ export class VehiculosComponent implements OnInit, OnDestroy  {
         this.router.navigate(['vehiculo', vehiculo.id]);
     }
 
-    delete(vehiculo) {
-        this.deleteVehiculoSubs =
-        this.vehiculoService.deleteVehiculo$( vehiculo.vehiculoPK.vehEmpCodigo, vehiculo.vehiculoPK.vehInterno )
-        .subscribe( this.okDeleteVehiculo.bind(this), this.errorDeleteVehiculo.bind( this ) );
+    delete( vehiculo ) {
+
+        swal({
+            title: "Eliminacion",
+            text: "Esta seguro que desea eliminar el Vehiculo " 
+                   + vehiculo.vehiculoPK.vehInterno                   
+                   + " ? ",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true,
+        })
+        .then( actualiza => {
+            if (actualiza ){
+                this.deleteVehiculoSubs =
+                this.vehiculoService.deleteVehiculo$( vehiculo.vehiculoPK.vehEmpCodigo, vehiculo.vehiculoPK.vehInterno )
+                .subscribe( this.okDeleteVehiculo.bind(this) );
+            }               
+         }); 
+       
     }
 
     okDeleteVehiculo( ok ) {
-      this.mostrarDetalle();
-      this.success('El Vehiculo se elimino con exito!!!');
-    }
+      this.mostrarDetalle();      
+    }   
 
-    errorDeleteVehiculo( err ) {
-       this.ctrolError.tratarErroresEliminaciones(err);
-    }    
-
-    crearNuevo() {
-
-        this.clearAlert();
-        this.vehiculoNuevo = {
-            vehiculoPK: { vehEmpCodigo: this._us.usuario.empresa , vehInterno: 0  },
+    crearNuevo() {        
+        let vehiculoNuevo = {
+            vehiculoPK: { vehEmpCodigo: this._us.usuario.empresa , vehInterno: 0 },
             vehEstado: null,
             vehPatente: null,
             vehMotor: null,
@@ -101,36 +112,49 @@ export class VehiculosComponent implements OnInit, OnDestroy  {
             vehVerificacionTecnica: null
         };
 
-    }
-
-    success(message: string) {
-        this.alertService.success(message);
-    }
-
-    error(message: string) {
-        this.alertService.error(message);
-    }
-
-    clearAlert() {
-        this.alertService.clear();
+        this._ms.sendComponent( new ComponenteItem( VehiculoComponent, { vehiculo: vehiculoNuevo }));
+        
+    }   
+    
+    modificarVehiculo( vehiculo ){
+        this._ms.sendComponent( new ComponenteItem( VehiculoComponent, { vehiculo: vehiculo }));
     }
 
     cambiarEstado(updateEstvehiculo) {
-    if (updateEstvehiculo.vehEstado === 1) {
-        updateEstvehiculo.vehEstado = 0;
-    } else {
-        updateEstvehiculo.vehEstado = 1;
-    }
-        this.vehiculoService.update$( updateEstvehiculo ).subscribe( result => {
-          this.mostrarDetalle();
-          this.success('Se cambio correctamente el estado del vehículo');
-          }, err => {
-             this.ctrolError.tratarErroresEliminaciones(err) ;
-          }
-        );
-        this.clearAlert();
-    }
-  
 
+        let valueFuturo;
+
+        if (updateEstvehiculo.vehEstado === CONSTANTES_VEHICULOS.HABILITADO ) {
+            valueFuturo = CONSTANTES_VEHICULOS.DESHABILITADO
+        } else {
+            valueFuturo = CONSTANTES_VEHICULOS.HABILITADO
+        }
+
+        const estadoFuturo = this.estados.find( e => e.codigo === valueFuturo );
+
+        swal({
+            title: "Estado",
+            text: "El nuevo estado del Vehiculo " 
+                   + updateEstvehiculo.vehiculoPK.vehInterno
+                   + " sera: " + ( estadoFuturo? estadoFuturo.descripcion: 'Sin definir' ) 
+                   + " esta seguro? ",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true,
+        })
+        .then( actualiza => {
+            if (actualiza ){
+                updateEstvehiculo.vehEstado =  valueFuturo;
+                this.vehiculoService.update$( updateEstvehiculo ).subscribe( result => {
+                    this.mostrarDetalle();
+                    
+                    }, err => {
+                        this.ctrolError.tratarErroresEliminaciones(err) ;
+                    }
+                    );                    
+                }
+               
+            });    
+    }          
 
 }

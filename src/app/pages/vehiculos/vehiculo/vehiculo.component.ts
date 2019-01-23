@@ -1,44 +1,59 @@
-import { Component, Input, Output,
-  OnInit, OnChanges, ViewChild, ElementRef } from '@angular/core';
+import { Component, Input, OnInit, OnChanges, OnDestroy } from '@angular/core';
 import { FormBuilder, FormGroup, Validators  } from '@angular/forms';
-
 import * as moment from 'moment';
 import {DatePipe} from '@angular/common';
-import { Observable } from 'rxjs';
-import { UsuarioService, ErrorService, VehiculoService } from 'src/app/services/service.index';
-import { VehiculosComponent } from '../vehiculos.component';
-import { Vehiculo, VehiculosArray } from 'src/app/models/model.index';
+import { UsuarioService, ErrorService, VehiculoService, ModalService } from 'src/app/services/service.index';
+import { Vehiculo, CONSTANTES_VEHICULOS } from 'src/app/models/model.index';
+import { ComponenteBaseComponent } from 'src/app/shared/modal/modal.index';
+import { Subscription } from 'rxjs';
 
-
+declare var $: any
 
 @Component({
   selector: 'app-vehiculo',
   templateUrl: './vehiculo.component.html',
-  styleUrls: ['./vehiculo.component.css']
+  styleUrls: []
 })
-export class VehiculoComponent implements OnChanges, OnInit {
-
-  @Input()
+export class VehiculoComponent implements ComponenteBaseComponent, OnChanges, OnInit, OnDestroy {
+ 
+  @Input() data:any;
   vehiculo: Vehiculo;
   vehiculoForm: FormGroup;
   comboEstados:any=[];
-  comboVeh:any=[];
-  @Input()
-  nuevo:boolean;
+  comboVeh:any=[]; 
 
-  @ViewChild('closeBtn') closeBtn: ElementRef;
+  comboSubs: Subscription;
+  addSubs: Subscription;
+  updateSubs: Subscription;
 
-  //private _miFecha='01-01-2017';
+  //@ViewChild('closeBtn') closeBtn: ElementRef;  
 
   constructor( private vehiculoService:VehiculoService,
                private fb: FormBuilder,
-               private _us: UsuarioService,
-               private parent: VehiculosComponent,
-               private ctrolError: ErrorService
+               private _us: UsuarioService,               
+               private ctrolError: ErrorService,
+               private _ms: ModalService
                ) {
       this.createForm();
   }
 
+  ngOnInit() {    
+    
+    this.crearComboEstados();
+    this.getComboOpcionesVeh();
+    this.vehiculo = this.data.vehiculo;    
+    if( this.nuevo ){        
+        this.vehiculoForm.get('vehiculoPK').setValue( this.vehiculo.vehiculoPK );
+    }else{
+        this.cargarFromVehiculo();         
+    }
+    $('#ventana').modal('show'); 
+
+  }
+
+  get nuevo():boolean{
+    return this.vehiculo.vehiculoPK.vehInterno <= 0;
+  }
 
   createForm(){
     this.vehiculoForm = this.fb.group({
@@ -57,15 +72,11 @@ export class VehiculoComponent implements OnChanges, OnInit {
 
     this.vehiculoForm.valueChanges
     .subscribe( data => this.checkTodoFormValidity( data ) );
-
   }
-
 
   crearComboEstados(){
-    this.comboEstados.push({codigo:0, descripcion:'HABILITADO'});
-    this.comboEstados.push({codigo:1, descripcion:'DESHABILITADO'});
+    this.comboEstados = CONSTANTES_VEHICULOS.ESTADOS_VEHICULO;
   }
-
 
   errMsgsPK: any = {
     vehEmpCodigo:[],
@@ -118,28 +129,25 @@ export class VehiculoComponent implements OnChanges, OnInit {
 
 
   ngOnChanges() {
+    this.cargarFromVehiculo();     
+  }  
 
-      let dp = new DatePipe(navigator.language);
-      let fecha = dp.transform( this.vehiculo.vehVerificacionTecnica, 'yyyy-MM-dd');
+  cargarFromVehiculo(){
 
-      this.vehiculoForm.reset({
-        vehiculoPK: this.vehiculo.vehiculoPK,
-        vehEstado: this.vehiculo.vehEstado,
-        vehPatente: this.vehiculo.vehPatente,
-        vehMotor: this.vehiculo.vehMotor,
-        vehChasis: this.vehiculo.vehChasis,
-        vehCarroceria: this.vehiculo.vehCarroceria,
-        vehMovilGps: this.vehiculo.vehMovilGps,
-        vehMpaCodigo: this.vehiculo.vehMpaCodigo,
-        vehVerificacionTecnica: fecha
-      });
+    let dp = new DatePipe(navigator.language);
+    let fecha = dp.transform( this.vehiculo.vehVerificacionTecnica, 'yyyy-MM-dd');
+    this.vehiculoForm.reset({
+      vehiculoPK: this.vehiculo.vehiculoPK,
+      vehEstado: this.vehiculo.vehEstado,
+      vehPatente: this.vehiculo.vehPatente,
+      vehMotor: this.vehiculo.vehMotor,
+      vehChasis: this.vehiculo.vehChasis,
+      vehCarroceria: this.vehiculo.vehCarroceria,
+      vehMovilGps: this.vehiculo.vehMovilGps,
+      vehMpaCodigo: this.vehiculo.vehMpaCodigo,
+      vehVerificacionTecnica: fecha
+    });
 
-  }
-
-
-  ngOnInit() {
-    this.crearComboEstados();
-    this.getComboOpcionesVeh();
   }
 
   salvarVehiculo(){
@@ -158,29 +166,18 @@ export class VehiculoComponent implements OnChanges, OnInit {
     const vehi:Vehiculo = this.prepararSaveVehiculo();
 
     if( this.nuevo ){
-      this.vehiculoService.create$(vehi).subscribe(result => {
-          this.parent.mostrarDetalle();
-          this.parent.success('El vehiculo se agrego con exito');
-          this.closeModal();
-
-        }, err => {
-
-          //this.limpiarMensajes();
+        this.addSubs = this.vehiculoService.create$(vehi).subscribe(result => {          
+          this.closeModalYMostrarGrilla();
+        }, err => {          
           this.ctrolError.tratarErroresBackEnd(err, this.vehiculoForm, this.errMsgs );
-
         }
       );
     }else{
 
-        this.vehiculoService.update$( vehi ).subscribe( result => {
-            this.parent.mostrarDetalle();
-            this.parent.success('El vehiculo se actualizo con exito');
-            this.closeModal();
-          }, err => {
-
-            //this.limpiarMensajes();
+         this.updateSubs = this.vehiculoService.update$( vehi ).subscribe( result => {            
+            this.closeModalYMostrarGrilla();
+          }, err => {            
             this.ctrolError.tratarErroresBackEnd(err, this.vehiculoForm, this.errMsgs );
-
           }
         );
     }
@@ -208,23 +205,28 @@ export class VehiculoComponent implements OnChanges, OnInit {
     return vehi;
   }
 
-  getComboOpcionesVeh(): void {
-
-    let opcionesVehArray:VehiculosArray;
-    let observable: Observable<VehiculosArray>
-            = this.vehiculoService.getOpcionesVeh$( this._us.usuario.empresa);
-
-    observable.subscribe( data => {
-        opcionesVehArray =  data;
-        for (var _i = 0; _i < opcionesVehArray.comboMapas.length; _i++) {
-          this.comboVeh.push(opcionesVehArray.comboMapas[_i]);
-        }
-     });
-
+  getComboOpcionesVeh(): void {    
+    this.comboSubs = this.vehiculoService
+                         .getOpcionesVeh$( this._us.usuario.empresa)
+                         .subscribe( data => {
+                                                this.comboVeh =  data;
+                          });    
   }
 
-  private closeModal(): void {
-    this.closeBtn.nativeElement.click();
+  closeModalYMostrarGrilla(){
+    this._ms.sendRespuesta(true);   
+    this.soloCerrar();
+  }
+
+  soloCerrar(){
+    this.ngOnDestroy();
+    $('#ventana').modal('hide'); 
+  }
+
+  ngOnDestroy(): void {
+      if( this.comboSubs ){ this.comboSubs.unsubscribe(); }
+      if( this.addSubs ){ this.addSubs.unsubscribe(); }
+      if( this.updateSubs ) { this.updateSubs.unsubscribe(); }  
   }
 
 

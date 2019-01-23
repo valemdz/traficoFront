@@ -1,10 +1,10 @@
 import {Injectable} from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, throwError } from 'rxjs';
 import { environment } from 'src/environments/environment';
-import { FuncionesGrales } from 'src/app/utiles/funciones.grales';
 import { Vehiculo } from 'src/app/models/model.index';
-import { PaginationPropertySort } from 'src/app/shared/pagination/pagination.index';
+import { map, catchError } from 'rxjs/operators';
+import swal from 'sweetalert';
 
 
 
@@ -38,22 +38,49 @@ export class VehiculoService {
     update$( vehiculo: Vehiculo ): Observable<any> {
         const url = this.urlBase + `/vehiculos/empresa/${vehiculo.vehiculoPK.vehEmpCodigo}/interno/${vehiculo.vehiculoPK.vehInterno}`;
         return this.http
-        .put( url, vehiculo );
+        .put( url, vehiculo )
+        .pipe(
+            map( resp =>{
+                swal('Actualización', 'El Vehiculo fue actualizado con éxito','success');
+                return resp;
+            } )
+        );
     }
 
      create$( vehiculo: Vehiculo ): Observable<any>{
         const url = this.urlBase + `/vehiculos`;
-        return this.http.post( url, vehiculo );
+        return this.http.post( url, vehiculo )
+                   .pipe(
+                        map( resp => {
+                            swal('Creación', 'El vehiculo fue creado con éxito', 'sucess');   
+                        })
+                   );
     }
 
    deleteVehiculo$( vehEmpCodigo: String,  vehInterno: number): Observable<any> {
         const url = this.urlBase + `/vehiculos/empresa/${vehEmpCodigo}/interno/${vehInterno}`
-        return this.http.delete(url);
+        return this.http.delete(url).pipe(
+            map( resp => {
+                swal('Anulación', 'El vehiculo fue eliminado con éxito', 'success');
+                return resp;
+            }),
+            catchError( err => {
+                swal( 'Inconvenientes al eliminar Vehiculo!!!', 
+                err.error.errorCode + ' - ' + err.error.errorMessage ,
+                'error');
+                return throwError(err);
+            })
+        );
    }
 
     getOpcionesVeh$( vehEmpCodigo): Observable<any> {
         const url = this.urlBase + `/empresa/${vehEmpCodigo}/vehiculosCb`;
-        return this.http.get( url );
+        return this.http.get( url )
+                   .pipe(
+                       map( ( resp: any)  => {
+                           return resp.comboMapas; 
+                       })
+                   );
     }
 
     getIncidenciasByVehiculo$( idEmpresa: String, idInterno: number ): Observable<any> {

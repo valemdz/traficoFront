@@ -1,4 +1,3 @@
-<br>
 <app-enlace-lineas (actualizarPadre)="actualizaPage($event)"></app-enlace-lineas>
 
 <ng-container *ngIf="IdaVueltaPage != null">
@@ -22,7 +21,7 @@
                         <td class="col-md-5">[ {{ enlace.ida.lineaPK.linCodigo }} ] - {{ enlace.ida.linNombre }}</td>
                         <td class="col-md-5">[ {{ enlace.vuelta.lineaPK.linCodigo }} ] - {{enlace.vuelta.linNombre}}</td>
                         <td class="actions col-md-1">
-                            <a class="btn btn-xs" routerLink="/vuelta/{{enlace.ida.lineaPK.linCodigo}}/{{enlace.vuelta.lineaPK.linCodigo}}">
+                            <a class="btn btn-xs" routerLink="/diagr/vuelta/{{enlace.ida.lineaPK.linCodigo}}/{{enlace.vuelta.lineaPK.linCodigo}}">
                                 <i title="Editar" data-toggle="tooltip" animation="true" data-placement="top" onmouseenter="$(this).tooltip('show')" class="fa fa-cog fa-2x green" aria-hidden="true"></i>
                             </a>               
                         </td>                        

@@ -19,6 +19,12 @@ import { IdaVtaListComponent } from './diagramacion-Servicios/ida-vta-list/ida-v
 import { EnlaceLineasComponent } from './diagramacion-Servicios/enlace-lineas/enlace-lineas.component';
 import { PipesModule } from '../pipes/pipes.module';
 import { IncidenciaComponent } from './incidencias/incidencia/incidencia.component';
+import { DiagramacionComponent } from './diagramacion-Servicios/diagramacion.component';
+import { VueltasComponent } from './diagramacion-Servicios/vueltas/vueltas.component';
+import { VueltaDeVueltaComponent } from './diagramacion-Servicios/vuelta-de-vuelta/vuelta-de-vuelta.component';
+import { MaterialModule } from '../material/material.module';
+import { ViewVueltaDeVueltaComponent } from './diagramacion-Servicios/vuelta-de-vuelta/view-vuelta-de-vuelta.component';
+import { MyCustomModalComponent } from '../shared/my-custom-modal/my-custom-modal.component';
 
 
 
@@ -36,7 +42,14 @@ import { IncidenciaComponent } from './incidencias/incidencia/incidencia.compone
                   DiagrInternoComponent,                  
                   IdaVtaListComponent,
                   EnlaceLineasComponent,
-                  IncidenciaComponent ],
+                  IncidenciaComponent,
+                  DiagramacionComponent,
+                  VueltasComponent,
+                  VueltaDeVueltaComponent,
+                  ViewVueltaDeVueltaComponent,
+                  VehiculoComponent,
+                  MyCustomModalComponent  ],
+                  
   exports:[ WellcomeComponent, 
             ChoferesComponent, 
             ChoferNuevoComponent, 
@@ -50,15 +63,22 @@ import { IncidenciaComponent } from './incidencias/incidencia/incidencia.compone
             DiagrInternoComponent,
             IdaVtaListComponent,
             EnlaceLineasComponent,
-            IncidenciaComponent ],
+            IncidenciaComponent,
+            DiagramacionComponent,
+            VueltasComponent,
+            VueltaDeVueltaComponent,
+            ViewVueltaDeVueltaComponent,
+            VehiculoComponent,
+            MyCustomModalComponent  ],
   imports: [
     CommonModule,    
     SharedModule,
     PAGES_ROUTES,
     FormsModule,
     ReactiveFormsModule,
-    PipesModule 
+    PipesModule,
+    MaterialModule    
   ], 
-  entryComponents:[ IncidenciaComponent ]  
+  entryComponents:[ IncidenciaComponent, VehiculoComponent, MyCustomModalComponent ]  
 })
 export class PagesModule { }

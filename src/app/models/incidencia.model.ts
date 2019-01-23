@@ -1,9 +1,12 @@
 
-export interface Incidencia {
-    id: number;
-    codigo:String;
-    in_descripcion: String;
-    in_tipo: number; /*0 unidades , 1 choferes */
-    in_color: String;
-    in_empresa: String;
+export class Incidencia {  
+
+    constructor( public id?: number,
+        public codigo?: String,
+        public in_descripcion?: String,
+        public in_tipo?: number,
+        public in_color?: String,
+        public in_empresa?: String ){
+
+    }
 }

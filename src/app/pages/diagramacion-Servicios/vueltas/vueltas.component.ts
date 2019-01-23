@@ -36,7 +36,7 @@ export class VueltasComponent implements OnInit, OnDestroy {
   }
 
   volver() {
-    this.router.navigate(['idaVtaList']);
+    this.router.navigate(['/diagr/idaVtaList']);
   }
 
   tieneVuelta( serv: Servicio ){

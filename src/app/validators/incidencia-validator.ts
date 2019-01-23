@@ -1,14 +1,11 @@
-import { Injectable } from '@angular/core';
-
 import { AbstractControl  } from '@angular/forms';
-
 import 'rxjs/add/operator/toPromise';
-import * as Rx from "rxjs/Rx";
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/publish';
 
-import {IncidenciaComponent } from './incidencia/incidencia.component';
+
 import { IncidenciaService } from 'src/app/services/service.index';
+import { IncidenciaComponent } from '../pages/incidencias/incidencia/incidencia.component';
 
 
 export class IncidenciaValidator {
@@ -20,7 +17,7 @@ export class IncidenciaValidator {
     return (AC: AbstractControl) => {
 
         if( AC.get('codigo').value && AC.get('in_empresa').value && AC.get('in_tipo').value
-            && incid.nuevo  ){
+            && !incid.incidencia.id  ){
 
             incidenciaService.checkCodigoIncidencia$( AC.get('in_empresa').value , AC.get('in_tipo').value, AC.get('codigo').value )
             .subscribe(flag => {

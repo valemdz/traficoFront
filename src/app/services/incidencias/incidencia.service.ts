@@ -1,8 +1,10 @@
 import {Injectable} from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, throwError } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { Incidencia } from 'src/app/models/model.index';
+import swal from 'sweetalert';
+import { map, catchError } from 'rxjs/operators';
 
 
 @Injectable()
@@ -30,20 +32,42 @@ export class IncidenciaService {
 
     update$( incidencia: Incidencia ): Observable<any> {
         const url = this.urlBase + `/incidencias/${incidencia.id}`;
-        return this.http
-        .put(url, incidencia );
+        return this.http.put(url, incidencia )
+        .pipe( 
+            map( resp => {
+              swal('Modificación', 'La incidencia se modifico con éxito','success');
+              return resp;
+            })
+        );
     }
 
      create$( incidencia: Incidencia ): Observable<any>{
 
         const url = this.urlBase +  `/incidencias`;
-        return this.http.post(url, incidencia );
+        return this.http.post(url, incidencia )
+                   .pipe( 
+                       map( resp => {
+                         swal('Creación', 'La incidencia se agrego con éxito','success');
+                         return resp;
+                       })
+                   ) ;
 
     }
 
    deleteIncidencia$(id: number): Observable<any> {
        const  url = this.urlBase +  `/incidencias/${id}`;
-        return this.http.delete( url );
+        return this.http.delete( url ).pipe(
+          map( resp =>{
+               swal("Eliminacion","La eliminacion fue exitosa!!!", "success");
+               return resp;
+          }),
+          catchError( err => {               
+            swal( 'Inconvenientes al eliminar Incidencia!!!', 
+                   err.error.errorCode + ' - ' + err.error.errorMessage ,
+                   'error');
+             return throwError(err);
+          })
+          );
    }
 
    findIncidenciasByEmpyTipo$( idEmpresa: String, idTipo: number ): Observable<any> {

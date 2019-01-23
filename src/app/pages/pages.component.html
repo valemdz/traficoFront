@@ -1,16 +1,12 @@
-<div id="main-wrapper">
+<!-- Page Content -->
+<div id="main" class="container-fluid">
   <app-header></app-header>
-  <!-- <app-sidebar></app-sidebar> -->
-
-  <!-- ============================================================== -->
-  <!-- Page wrapper  -->
-  <!-- ============================================================== -->
-  <div class="page-wrapper">   
-
-      <router-outlet></router-outlet>
-   </div>
-  <!-- ============================================================== -->
-  <!-- End Page wrapper  -->
-  <!-- ============================================================== -->
-
+  <div class="row">
+      <div class="col-md-12" style="margin-top: 5pt;">
+          <router-outlet>
+              <loader></loader>
+          </router-outlet>
+      </div>
+  </div>  
+  <app-modal-si-no></app-modal-si-no>
 </div>

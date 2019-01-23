@@ -98,13 +98,7 @@ export class ChoferesComponent implements OnInit, OnDestroy {
 
     okDeleteChofer( ok) {
       this.mostrarDetalle();      
-    }
-
-    /*errorDeleteChofer( err ) {
-       // Lo manejo interamente 
-       this.ctrolError.tratarErroresEliminaciones(err);
-    }*/
-  
+    }  
 
     back( ) {
         history.back();
@@ -138,13 +132,13 @@ export class ChoferesComponent implements OnInit, OnDestroy {
             valueFuturo = 1 ;
         }
 
-        const estadoFuturo = this.estados.find( e => e.value === valueFuturo );
+        const estadoFuturo = this.estados.find( e => e.codigo === valueFuturo );
 
         swal({
             title: "Estado",
             text: "El nuevo estado del chofer " 
                    + updateEstChofer.cho_nombre
-                   + " sera: " + ( estadoFuturo? estadoFuturo.display: 'Sin definir' ) 
+                   + " sera: " + ( estadoFuturo? estadoFuturo.descripcion: 'Sin definir' ) 
                    + " esta seguro? ",
             icon: "warning",
             buttons: true,
