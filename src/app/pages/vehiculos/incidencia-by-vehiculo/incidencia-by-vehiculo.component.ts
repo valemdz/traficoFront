@@ -1,25 +1,24 @@
-import { Component, OnInit, OnChanges, Input, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, OnChanges, OnDestroy } from '@angular/core';
 import { FormGroup, FormBuilder, FormArray, Validators } from '@angular/forms';
-import * as Rx from 'rxjs/Rx';
 import {DatePipe} from '@angular/common';
 import * as moment from 'moment';
 import { Observable } from 'rxjs';
 import { ErrorService, IncidenciaService, VehiculoService } from 'src/app/services/service.index';
 import { Vehiculo, VehiculoIndicencia, ListaVehiculoIncidencia } from 'src/app/models/model.index';
+import { ComponenteBaseComponent } from 'src/app/shared/modal/modal.index';
 
-
-
+declare var $;
 
 @Component({
   selector: 'app-inc-by-vehi',
-  templateUrl: './inc-by-vehi.component.html',
-  styleUrls: ['./inc-by-vehi.component.css']
+  templateUrl: './incidencia-by-vehiculo.component.html',
+  styleUrls: ['./incidencia-by-vehiculo.component.css']
 })
-export class IncByVehiComponent implements OnInit, OnChanges {
-
-  @Input() vehiculo:Vehiculo;
-  @ViewChild('closeBtn') closeBtn: ElementRef;
-
+export class IncidenciaByVehiculoComponent implements ComponenteBaseComponent, OnInit,
+                                           OnChanges, OnDestroy {  
+  
+  data: any;
+  vehiculo:Vehiculo;  
   incByVehiculoForm: FormGroup;
   comboTipos:any=[];
   vehiculoIndicencias:any=[];
@@ -34,28 +33,32 @@ export class IncByVehiComponent implements OnInit, OnChanges {
   }
 
   crearForm(){
+
+    $('#ventana').modal('show'); 
+
     this.incByVehiculoForm = this.fb.group({
       incidencias: this.fb.array([])
     });
 
     this.incByVehiculoForm.valueChanges
     .subscribe( data => this.checkFormValidity( ) );
-
   }
 
 
   ngOnInit() {
 
     const TIPO_INCIDENCIA_VEHICULO: number = 0;
+    this.vehiculo = this.data.vehiculo;
 
-    let observable: Observable<any> =
-            this.incidenciaService.findIncidenciasByEmpyTipo$(this.vehiculo.vehiculoPK.vehEmpCodigo ,
-                                                               TIPO_INCIDENCIA_VEHICULO);
-    observable.subscribe( data => {
+    setTimeout( ()=> {
+      this.incidenciaService.findIncidenciasByEmpyTipo$(this.vehiculo.vehiculoPK.vehEmpCodigo,
+        TIPO_INCIDENCIA_VEHICULO)
+        .subscribe( data => {
         this.comboTipos = data;
+        });
 
-     });
-
+        this.getIncidenciasByVehiculo();
+    });    
   }
 
   isNuevo( index:number ):boolean{
@@ -227,8 +230,7 @@ export class IncByVehiComponent implements OnInit, OnChanges {
       this.vehiculoService.saveIncidenciasByVehiculo$(  this.vehiculo.vehiculoPK.vehEmpCodigo ,
                                                    this.vehiculo.vehiculoPK.vehInterno,
                                                    lista ).subscribe(result => {
-        //this.parent.mostrarDetalle();
-        this.closeModal();
+        this.soloCerrar();
 
       }, err => {
 
@@ -288,9 +290,15 @@ export class IncByVehiComponent implements OnInit, OnChanges {
   }
 
 
-  private closeModal(): void {
-    this.closeBtn.nativeElement.click();
+
+
+  soloCerrar(){
+    this.ngOnDestroy();
+    $('#ventana').modal('hide'); 
   }
 
+  ngOnDestroy(): void {
+   
+  }
 
 }

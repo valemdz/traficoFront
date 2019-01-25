@@ -6,6 +6,7 @@ import { UsuarioService, ErrorService, VehiculoService, ModalService } from 'src
 import { Vehiculo, CONSTANTES_VEHICULOS } from 'src/app/models/model.index';
 import { ComponenteBaseComponent } from 'src/app/shared/modal/modal.index';
 import { Subscription } from 'rxjs';
+import { VehiculoCodigoValidator } from 'src/app/validators/vehiculoCodigo-validator';
 
 declare var $: any
 
@@ -68,7 +69,7 @@ export class VehiculoComponent implements ComponenteBaseComponent, OnChanges, On
       vehMovilGps: [''],
       vehMpaCodigo: ['',[Validators.required, Validators.maxLength(3)]],
       vehVerificacionTecnica: ['',Validators.required]
-    });
+    }, { validator: VehiculoCodigoValidator.createValidator( this.vehiculoService, this ) } );
 
     this.vehiculoForm.valueChanges
     .subscribe( data => this.checkTodoFormValidity( data ) );
@@ -98,7 +99,8 @@ export class VehiculoComponent implements ComponenteBaseComponent, OnChanges, On
     vehEmpCodigo:{ required: 'Por favor especifique una Empresa.',
                   maxlength:'La longitud maxima de la empresa es 4'},
     vehInterno: { required: 'Por favor especifique un interno.',
-                  maxlength:'La longitud maxima de interno es 4'},
+                  maxlength:'La longitud maxima de interno es 4',
+                  codigoTomado:'El interno ya esta ocupado'},                  
     vehEstado: { required: 'Por favor especifique un estado.',
                   maxlength:'La longitud maxima de interno es 4'},
     vehPatente: { required: 'Por favor especifique una patente.',
@@ -205,12 +207,17 @@ export class VehiculoComponent implements ComponenteBaseComponent, OnChanges, On
     return vehi;
   }
 
-  getComboOpcionesVeh(): void {    
-    this.comboSubs = this.vehiculoService
-                         .getOpcionesVeh$( this._us.usuario.empresa)
-                         .subscribe( data => {
-                                                this.comboVeh =  data;
-                          });    
+  getComboOpcionesVeh(): void {   
+    
+    setTimeout( ()=>
+      {
+        this.comboSubs = this.vehiculoService
+                          .getOpcionesVeh$( this._us.usuario.empresa)
+                          .subscribe( data => {
+                                                  this.comboVeh =  data;
+                            });    
+    });   
+    
   }
 
   closeModalYMostrarGrilla(){

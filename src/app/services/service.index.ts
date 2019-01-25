@@ -1,3 +1,4 @@
+export { ErrorsHandler } from "./ErrorsHandler ";
 export { ModalService } from "./modal/modal.service";
 export { ViajeEspServive } from "./viajes/viajeEsp.service";
 export { VehiculoService } from "./vehiculos/vehiculo.service";
@@ -14,6 +15,7 @@ export { DiagrService } from "./diagramacion/diagr.service";
 export { TokenInterceptorService } from "./interceptors/token-interceptor.service";
 export { RequestInterceptorService } from "./interceptors/request.interceptor.service";
 export { VueltasService } from "./diagramacion/vueltas.service";
+
 
 
 

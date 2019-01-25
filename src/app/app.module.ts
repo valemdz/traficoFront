@@ -1,5 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule, LOCALE_ID } from '@angular/core';
+import { NgModule, LOCALE_ID, ErrorHandler } from '@angular/core';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { ReactiveFormsModule } from '@angular/forms';
 
@@ -14,7 +14,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { SharedModule } from './shared/shared.module';
 import { PruebaComponent } from './shared/prueba/prueba.component';
 import { ServiceModule } from './services/service.module';
-import { TokenInterceptorService, RequestInterceptorService } from './services/service.index';
+import { TokenInterceptorService, RequestInterceptorService, ErrorsHandler } from './services/service.index';
 import { MaterialModule } from './material/material.module';
 import { PagesModule } from './pages/pages.module';
 import { PagesComponent } from './pages/pages.component';
@@ -47,7 +47,11 @@ const appRoutes: Routes = [
     PagesModule,
     DirectivesModule
   ],
-  providers: [             
+  providers: [     
+    {
+      provide: ErrorHandler,
+      useClass: ErrorsHandler,
+    },        
     { provide: HTTP_INTERCEPTORS,
       useClass: TokenInterceptorService,
       multi: true

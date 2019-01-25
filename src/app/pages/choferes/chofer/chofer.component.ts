@@ -15,12 +15,12 @@ import { Chofer, CONSTANTES_CHOFER } from 'src/app/models/model.index';
 
 @Component({
   selector: 'app-chofer-nuevo',
-  templateUrl: './chofer-nuevo.component.html',
-  styleUrls: ['./chofer-nuevo.component.css']
+  templateUrl: './chofer.component.html',
+  styleUrls: ['./chofer.component.css']
 })
 
 
-export class ChoferNuevoComponent implements OnInit, OnChanges, TabChild {
+export class ChoferComponent implements OnInit, OnChanges, TabChild {
 
   @Input() chofer: Chofer;
   @Input()

@@ -7,9 +7,11 @@ import { PaginationPage, Table, PaginationPropertySort } from 'src/app/shared/pa
 import { FuncionesGrales } from 'src/app/utiles/funciones.grales';
 import { ComponenteItem } from 'src/app/shared/modal/modal.index';
 import { VehiculoComponent } from './vehiculo/vehiculo.component';
+import { IncidenciaByVehiculoComponent } from './incidencia-by-vehiculo/incidencia-by-vehiculo.component';
+
+
 
 declare var swal;
-
 declare var $;
 
 @Component({
@@ -118,6 +120,10 @@ export class VehiculosComponent implements OnInit, OnDestroy  {
     
     modificarVehiculo( vehiculo ){
         this._ms.sendComponent( new ComponenteItem( VehiculoComponent, { vehiculo: vehiculo }));
+    }
+
+    modificarIncidencias( vehiculo ){
+        this._ms.sendComponent( new ComponenteItem( IncidenciaByVehiculoComponent, { vehiculo: vehiculo }));
     }
 
     cambiarEstado(updateEstvehiculo) {

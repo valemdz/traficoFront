@@ -54,10 +54,10 @@
                         </td>
                         <td>{{ vehiculo.vehVerificacionTecnica | date:'dd/MM/yyyy' }}</td>
                         <td class="actions">
-                            <a class="btn btn-xs" (click)="modificarVehiculo(vehiculo)" data-toggle="modal" data-target="#details-modal">
+                            <a class="btn btn-xs" (click)="modificarVehiculo( vehiculo )" data-toggle="modal" data-target="#details-modal">
                                 <i title="Editar" data-toggle="tooltip" animation="true" data-placement="top" onmouseenter="$(this).tooltip('show')" class="fa fa-pencil fa-2x green" aria-hidden="true"></i>
                             </a>
-                            <a class="btn btn-xs" (click)="currentVehiculo=vehiculo" data-toggle="modal" data-target="#details-Incidencias">
+                            <a class="btn btn-xs" (click)="modificarIncidencias( vehiculo )" data-toggle="modal" data-target="#details-Incidencias">
                                 <i title="Incidencias" data-toggle="tooltip" animation="true" data-placement="top" onmouseenter="$(this).tooltip('show')" class="fa fa-calendar fa-2x red" aria-hidden="true"></i>
 
                             </a>

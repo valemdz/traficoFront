@@ -23,21 +23,21 @@ export class ChoferesComponent implements OnInit, OnDestroy {
    self: Table<any>;
    listadoSubscription: Subscription;
    deleteChoferSubscription: Subscription;
+   estadoSubs: Subscription; 
 
-    choferNuevo: Chofer;    
-    currentChofer;
-    carnetChofer;
-    incidenciaChofer;
-    updateEstChofer: Chofer;
+   choferNuevo: Chofer;    
+   currentChofer;
+   carnetChofer;
+   incidenciaChofer;
+   updateEstChofer: Chofer;
 
-    public estados = CONSTANTES_CHOFER.ESTADOS;
+   public estados = CONSTANTES_CHOFER.ESTADOS;
 
-    constructor( private choferService: ChoferService,
+   constructor( private choferService: ChoferService,
                  private router: Router,
-                 public _us: UsuarioService,
-                 private alertService: AlertService,
+                 public _us: UsuarioService,                 
                  private ctrolError: ErrorService) {
-    }
+   }
 
 
     ngOnInit() {
@@ -45,8 +45,11 @@ export class ChoferesComponent implements OnInit, OnDestroy {
     }
 
     ngOnDestroy(): void {
+
           if ( this.listadoSubscription ) { this.listadoSubscription.unsubscribe(); }
           if ( this.deleteChoferSubscription ) { this.deleteChoferSubscription.unsubscribe(); }
+          if ( this.estadoSubs ) { this.estadoSubs.unsubscribe(); }
+
     }
 
     fetchPage(pageNumber: number, pageSize: number, sort: PaginationPropertySort)  {
@@ -146,7 +149,7 @@ export class ChoferesComponent implements OnInit, OnDestroy {
         })
         .then( actualiza => {
             if (actualiza ){
-                updateEstChofer.cho_estado = valueFuturo;
+                this.estadoSubs = updateEstChofer.cho_estado = valueFuturo;
                 this.choferService.update$(updateEstChofer).subscribe(result => {
                     this.mostrarDetalle();            
                 }, err => {

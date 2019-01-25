@@ -13,10 +13,10 @@ import { Chofer, ChoferIndicencia, ListaChoferIncidencia } from 'src/app/models/
 
 @Component({
   selector: 'app-inc-by-chofer',
-  templateUrl: './inc-by-chofer.component.html',
-  styleUrls: ['./inc-by-chofer.component.css']
+  templateUrl: './incidencia-by-chofer.component.html',
+  styleUrls: ['./incidencia-by-chofer.component.css']
 })
-export class IncByChoferComponent implements OnInit, OnChanges {
+export class IncidenciaByChoferComponent implements OnInit, OnChanges {
 
   @Input() chofer: Chofer;
 

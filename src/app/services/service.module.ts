@@ -16,7 +16,8 @@ import { VueltasService,
          ChoferService,
          ModalSiNoService,
          UsuarioService,
-         LoaderService} from './service.index';
+         LoaderService,
+         ErrorsHandler} from './service.index';
          
 
 
@@ -39,7 +40,8 @@ import { VueltasService,
                 LoaderService,                
                 VehiculoService,
                 ViajeEspServive,
-                ModalService
+                ModalService,
+                ErrorsHandler
              ]
 })
 export class ServiceModule { }

@@ -5,8 +5,6 @@ import { SharedModule } from '../shared/shared.module';
 import { PAGES_ROUTES } from './pages.routes';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ChoferesComponent } from './choferes/choferes.component';
-import { ChoferNuevoComponent } from './choferes/chofer-nuevo/chofer-nuevo.component';
-import { IncByChoferComponent } from './choferes/inc-by-chofer/inc-by-chofer.component';
 import { CarnetListComponent } from './choferes/carnet-list/carnet-list.component';
 import { IncidenciasComponent } from './incidencias/incidencias.component';
 import { VehiculosComponent } from './vehiculos/vehiculos.component';
@@ -25,14 +23,17 @@ import { VueltaDeVueltaComponent } from './diagramacion-Servicios/vuelta-de-vuel
 import { MaterialModule } from '../material/material.module';
 import { ViewVueltaDeVueltaComponent } from './diagramacion-Servicios/vuelta-de-vuelta/view-vuelta-de-vuelta.component';
 import { MyCustomModalComponent } from '../shared/my-custom-modal/my-custom-modal.component';
+import { IncidenciaByVehiculoComponent } from './vehiculos/incidencia-by-vehiculo/incidencia-by-vehiculo.component';
+import { IncidenciaByChoferComponent } from './choferes/incidencia-by-chofer/incidencia-by-chofer.component';
+import { ChoferComponent } from './choferes/chofer/chofer.component';
 
 
 
 @NgModule({
   declarations: [ WellcomeComponent, 
                   ChoferesComponent, 
-                  ChoferNuevoComponent, 
-                  IncByChoferComponent, 
+                  ChoferComponent, 
+                  IncidenciaByChoferComponent, 
                   CarnetListComponent,
                   IncidenciasComponent,
                   VehiculosComponent,
@@ -48,12 +49,13 @@ import { MyCustomModalComponent } from '../shared/my-custom-modal/my-custom-moda
                   VueltaDeVueltaComponent,
                   ViewVueltaDeVueltaComponent,
                   VehiculoComponent,
-                  MyCustomModalComponent  ],
+                  MyCustomModalComponent,
+                  IncidenciaByVehiculoComponent  ],
                   
   exports:[ WellcomeComponent, 
             ChoferesComponent, 
-            ChoferNuevoComponent, 
-            IncByChoferComponent,
+            ChoferComponent, 
+            IncidenciaByChoferComponent,
             CarnetListComponent, 
             IncidenciasComponent,
             VehiculosComponent,
@@ -69,7 +71,8 @@ import { MyCustomModalComponent } from '../shared/my-custom-modal/my-custom-moda
             VueltaDeVueltaComponent,
             ViewVueltaDeVueltaComponent,
             VehiculoComponent,
-            MyCustomModalComponent  ],
+            MyCustomModalComponent,
+            IncidenciaByVehiculoComponent  ],
   imports: [
     CommonModule,    
     SharedModule,
@@ -79,6 +82,7 @@ import { MyCustomModalComponent } from '../shared/my-custom-modal/my-custom-moda
     PipesModule,
     MaterialModule    
   ], 
-  entryComponents:[ IncidenciaComponent, VehiculoComponent, MyCustomModalComponent ]  
+  entryComponents:[ IncidenciaComponent, VehiculoComponent, 
+                    MyCustomModalComponent, IncidenciaByVehiculoComponent ]  
 })
 export class PagesModule { }

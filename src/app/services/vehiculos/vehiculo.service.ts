@@ -73,6 +73,14 @@ export class VehiculoService {
         );
    }
 
+   checkExisteVehiculo$( vehEmpCodigo: String,  vehInterno: number): Observable<any> {
+
+        const url = this.urlBase + `/vehiculos/empresa/${vehEmpCodigo}/interno/${vehInterno}/checkExiste`;
+        return this.http.get(url);
+        
+    }
+
+
     getOpcionesVeh$( vehEmpCodigo): Observable<any> {
         const url = this.urlBase + `/empresa/${vehEmpCodigo}/vehiculosCb`;
         return this.http.get( url )
@@ -90,7 +98,13 @@ export class VehiculoService {
 
     saveIncidenciasByVehiculo$(  vehEmpCodigo: String, vehInterno: number, incidenciasDeepCopy ) {
         const url = this.urlBase + `/vehiculos/empresa/${vehEmpCodigo}/interno/${vehInterno}/incidencias`;
-        return this.http.put(url, incidenciasDeepCopy );
+        return this.http.put(url, incidenciasDeepCopy )
+                   .pipe(
+                       map( resp => {
+                           swal('Modificación','Las incidencias fueron modificadas con éxito.','success');
+                           return resp;
+                       })
+                   );
     }
 
 
