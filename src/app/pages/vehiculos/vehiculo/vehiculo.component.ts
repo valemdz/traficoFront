@@ -215,8 +215,8 @@ export class VehiculoComponent implements ComponenteBaseComponent, OnChanges, On
                           .getOpcionesVeh$( this._us.usuario.empresa)
                           .subscribe( data => {
                                                   this.comboVeh =  data;
-                            });    
-    });   
+                          });    
+                            });                    
     
   }
 

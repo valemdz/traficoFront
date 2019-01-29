@@ -107,5 +107,19 @@ export class VehiculoService {
                    );
     }
 
+    getVencimientos$( vehEmpCodigo:string, vehEstado: number ): Observable<any>{
+        const url = this.urlBase + `/vehiculos/empresa/${vehEmpCodigo}/estado/${vehEstado}/vencimientos`;
+        return this.http.get( url )
+                    .pipe(
+                        map( (veh:any) =>{
+                            veh.forEach( ( v, k )=>{   
+                                v.vehVerificacionTecnica = v.vehVerificacionTecnica || new Date();                          
+                                v.vehVerificacionTecnica = new Date( v.vehVerificacionTecnica );    
+                            });   
+                            return veh;
+                        })
+                    );
+    }
+
 
 }

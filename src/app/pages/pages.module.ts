@@ -26,6 +26,7 @@ import { MyCustomModalComponent } from '../shared/my-custom-modal/my-custom-moda
 import { IncidenciaByVehiculoComponent } from './vehiculos/incidencia-by-vehiculo/incidencia-by-vehiculo.component';
 import { IncidenciaByChoferComponent } from './choferes/incidencia-by-chofer/incidencia-by-chofer.component';
 import { ChoferComponent } from './choferes/chofer/chofer.component';
+import { VehiculoVencimientoComponent } from '../components/vehiculo-vencimiento/vehiculo-vencimiento.component';
 
 
 
@@ -50,7 +51,8 @@ import { ChoferComponent } from './choferes/chofer/chofer.component';
                   ViewVueltaDeVueltaComponent,
                   VehiculoComponent,
                   MyCustomModalComponent,
-                  IncidenciaByVehiculoComponent  ],
+                  IncidenciaByVehiculoComponent,
+                  VehiculoVencimientoComponent  ],
                   
   exports:[ WellcomeComponent, 
             ChoferesComponent, 
@@ -72,7 +74,8 @@ import { ChoferComponent } from './choferes/chofer/chofer.component';
             ViewVueltaDeVueltaComponent,
             VehiculoComponent,
             MyCustomModalComponent,
-            IncidenciaByVehiculoComponent  ],
+            IncidenciaByVehiculoComponent,
+            VehiculoVencimientoComponent  ],
   imports: [
     CommonModule,    
     SharedModule,

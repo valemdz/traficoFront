@@ -6,7 +6,7 @@ export interface VehiculoOcupacion{
 
 export interface VehiculoPK {
     vehEmpCodigo: string;
-     vehInterno: number;
+    vehInterno: number;
 }
 
 export interface Vehiculo{
@@ -19,6 +19,8 @@ export interface Vehiculo{
     vehMovilGps: String,
     vehMpaCodigo: String,
     vehVerificacionTecnica: Date;
+    vehMpaDesc?:string
+    vehVencido?: boolean;
 }
 
 export interface VehiculosArray{
