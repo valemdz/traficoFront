@@ -1,3 +1,6 @@
+<br>
+<app-vehiculo-vencimiento  [vencimientosVeh]="vencimientosVeh" ></app-vehiculo-vencimiento>
+
 <ng-container *ngIf="vehiculoPage != null">
     <div id="list" class="row animated fadeIn">
         <div class="table-responsive col-md-12">
@@ -10,11 +13,7 @@
                         <th>
                             <!-- <app-table-sort [table]="self" [page]="vehiculoPage" [label]="'Patente'" [property]="'patente'"></app-table-sort>-->
                             Patente
-                        </th>
-                        <th>
-                            <!--<app-table-sort [table]="self" [page]="vehiculoPage" [label]="'Carroceria'" [property]="'vehCarroceria'"></app-table-sort>-->
-                            Carroceria
-                        </th>
+                        </th>                       
                         <th>
                             <app-table-sort [table]="self" [page]="vehiculoPage" [label]="'Mapa'" [property]="'vehMpaCodigo'"></app-table-sort>
                         </th>
@@ -22,7 +21,7 @@
                             <app-table-sort [table]="self" [page]="vehiculoPage" [label]="'Estado'" [property]="'vehEstado'"></app-table-sort>
                         </th>
                         <th>
-                            <app-table-sort [table]="self" [page]="vehiculoPage" [label]="'Ult.Verif'" [property]="'vehVerificacionTecnica'"></app-table-sort>
+                            <app-table-sort [table]="self" [page]="vehiculoPage" [label]="'Vto Verificacion'" [property]="'vehVerificacionTecnica'"></app-table-sort>
                         </th>
 
                         <th class="actions"></th>
@@ -32,9 +31,8 @@
                 <tbody>
                     <tr *ngFor="let vehiculo of vehiculoPage.content">
                         <td>{{vehiculo.vehiculoPK.vehInterno}}</td>
-                        <td>{{vehiculo.vehPatente}}</td>
-                        <td>{{vehiculo.vehCarroceria}}</td>
-                        <td>{{vehiculo.vehMpaCodigo}}</td>
+                        <td>{{vehiculo.vehPatente}}</td>                        
+                        <td>{{vehiculo.vehMpaDesc}}</td>
                         <td>
                                 <div *ngIf="vehiculo.vehEstado == estados[0].codigo == 1">
                                         <a  (click)="cambiarEstado(vehiculo)" data-toggle="modal" data-target="#update-modal">
@@ -52,7 +50,21 @@
                                 <span class="slider round"></span>
                             </label-->
                         </td>
-                        <td>{{ vehiculo.vehVerificacionTecnica | date:'dd/MM/yyyy' }}</td>
+                        <td>
+                            <div *ngIf="vehiculo.vehEstado===HABILITADO">
+                                <span *ngIf="vehiculo.vehVencido" class="label" 
+                                        [ngClass]="'label-danger'" >                                        
+                                        {{ vehiculo.vehVerificacionTecnicaVto | date:'dd/MM/yyyy' }}
+                                </span>                              
+                                <span *ngIf="!vehiculo.vehVencido&&vehiculo.mostrarDias" class="label" 
+                                        [ngClass]="'label-warning'" >                                        
+                                        {{ vehiculo.vehVerificacionTecnicaVto | date:'dd/MM/yyyy' }}
+                                </span> 
+                                <div *ngIf="!vehiculo.vehVencido&&!vehiculo.mostrarDias" > 
+                                        {{ vehiculo.vehVerificacionTecnicaVto | date:'dd/MM/yyyy' }}
+                                </div>                             
+                            </div>    
+                        </td>
                         <td class="actions">
                             <a class="btn btn-xs" (click)="modificarVehiculo( vehiculo )" data-toggle="modal" data-target="#details-modal">
                                 <i title="Editar" data-toggle="tooltip" animation="true" data-placement="top" onmouseenter="$(this).tooltip('show')" class="fa fa-pencil fa-2x green" aria-hidden="true"></i>
@@ -82,4 +94,3 @@
 </ng-container>
 
 
-<app-vehiculo-vencimiento></app-vehiculo-vencimiento>

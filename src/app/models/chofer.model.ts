@@ -1,3 +1,5 @@
+import { Vencimiento, Carnet } from "./model.index";
+
 export interface Chofer {
     choferPK: ChoferPK,
     cho_estado: number,
@@ -10,15 +12,20 @@ export interface Chofer {
     cho_observaciones: String,
     cho_telefono: String,
     cho_telefono_emergencia: String,
-    cho_fecha_nacimiento:Date
-    //carnets:Array<Carnet>;
-    //choferIncidencias:Array<ChoferIndicencia>;
+    cho_fecha_nacimiento:Date,
+    cho_funcion?:string,    
+    carnets?:Carnet[];
+    
 }
-
 
 export interface ChoferPK {
     cho_emp_codigo: string;
     cho_codigo: number;
+}
+
+export class VencimientosChoferes{
+    vencimiento:Vencimiento;
+	choferes: Chofer[];
 }
 
 export interface ListaChoferPK {

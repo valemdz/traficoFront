@@ -62,7 +62,7 @@ export class RequestInterceptorService implements HttpInterceptor {
     if( err.status === 401 ){
        if( err.url === environment.originLogin ){
           console.log("Not authorized Por Login");
-       }else{
+       }else{          
           this.router.navigate(['/login']);
        }
     } else {

@@ -1,0 +1,44 @@
+<div *ngIf="vencimientosVeh">        
+        <div *ngFor="let venc of vencimientosVeh">
+            <div class="panel panel-danger" *ngIf="venc.vehiculos.length > 0">
+                <div class="panel-heading" >
+                    Atención Vencimientos!!!! <b>{{ venc.vencimiento.tipoVencimiento.nombreEntidad | uppercase}} 
+                    => {{ venc.vencimiento.tipoVencimiento.descNombreCampo }} </b>
+                </div>
+                <div class="panel-body">    
+                    <div class='row'>
+                        <div class='col-md-2'>Interno</div> 
+                        <div class='col-md-2'>Patente</div> 
+                        <div class='col-md-2'>Mapa</div>                         
+                        <div class='col-md-2'>Vto Verificacion</div> 
+                        <div class='col-md-2'>Vencido</div> 
+                    </div>      
+                    <div *ngFor="let v of venc.vehiculos" class='row'>
+                        <div class='col-md-2'>{{v.vehiculoPK.vehEmpCodigo}} - {{v.vehiculoPK.vehInterno}}</div>
+                        <div class='col-md-2'>{{v.vehPatente}}</div>
+                        <div class='col-md-2'>{{v.vehMpaDesc}}</div>                        
+                        <div class='col-md-2'>
+                            <span class="label" [ngClass]="v.vehVencido?'label-danger':'label-warning'" >
+                                    {{v.vehVerificacionTecnicaVto | date:'dd/MM/yyyy'}}
+                            </span>    
+                        </div>
+                        <div class='col-md-2'>
+                            <span class="label" [ngClass]="v.vehVencido?'label-danger':'label-warning'" >
+                                {{v.vehVencido?"Vencido":"Proximo"}}
+                                <span *ngIf= "v.mostrarDias">
+                                    [ faltan {{ v.diasVencerFechaVerificacion }} dias ]
+                                </span>    
+                            </span>
+                            
+                        </div> 
+                    </div>    
+                </div>
+            </div>
+            <div class="alert alert-info" *ngIf="venc.vehiculos.length ===0">
+                    No existen Vencimientos!!!! 
+                        <strong>{{ venc.vencimiento.tipoVencimiento.nombreEntidad | uppercase}} 
+                            => {{ venc.vencimiento.tipoVencimiento.descNombreCampo }} </strong>
+            </div> 
+        </div>    
+</div>    
+

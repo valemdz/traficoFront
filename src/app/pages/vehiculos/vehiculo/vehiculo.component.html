@@ -1,4 +1,4 @@
-<div class="modal fade" id="ventana" tabindex="-1" role="dialog" aria-labelledby="modalLabel" data-backdrop="static" data-keyboard="false" (finalizarEventEmitter)="finalizar($event)">
+<div class="modal fade" id="ventana" tabindex="-1" role="dialog" aria-labelledby="modalLabel" data-backdrop="static" data-keyboard="false" >
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -10,7 +10,7 @@
             <div class="modal-body">
                 <section class="sample-app-content">
 
-                <form novalidate (ngSubmit)="onSubmit()" [formGroup]="vehiculoForm">  
+                <form novalidate  [formGroup]="vehiculoForm">  
                         <div class="col-xs-12 col-md-6">
                 
                             <div formGroupName="vehiculoPK">  
@@ -84,16 +84,17 @@
                                     <control-mensajes [errores]="errMsgs.vehMpaCodigo"></control-mensajes>                                                             
                                                         
                                     <div class="form-group" >
-                                        <input type="date" class="form-control" placeholder="Última Verificación Técnica" 
-                                        title="Última Verificación Técnica" formControlName="vehVerificacionTecnica" 
+                                        <input type="date" class="form-control" placeholder="Vto Verificación Técnica" 
+                                        title="Vto Verificación Técnica" formControlName="vehVerificacionTecnicaVto" 
                                         data-toggle="tooltip" animation="true" data-placement="top" onmouseenter="$(this).tooltip('show')" >                            
                                     </div>
                                     
                                     <control-mensajes [errores]="errMsgs.vehVerificacionTecnica"></control-mensajes>                
                 
                 
-                                    <control-mensajes [errores]="erroresGrales"></control-mensajes>                                                    
-                            </div>                
+                                    <!-- <control-mensajes [errores]="erroresGrales"></control-mensajes>                                                     -->
+                            </div>   
+                            <!-- <pre>{{vehiculoForm.value|json}}</pre>              -->
                     </form>   
                    
                 </section>

@@ -1,12 +1,12 @@
-import { Component, Input, OnInit, OnChanges, OnDestroy } from '@angular/core';
+import { Component, Input, OnInit, OnChanges, OnDestroy, LOCALE_ID, Inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators  } from '@angular/forms';
 import * as moment from 'moment';
-import {DatePipe} from '@angular/common';
 import { UsuarioService, ErrorService, VehiculoService, ModalService } from 'src/app/services/service.index';
-import { Vehiculo, CONSTANTES_VEHICULOS } from 'src/app/models/model.index';
+import { Vehiculo, CONSTANTES_VEHICULOS, ConstantesGrales } from 'src/app/models/model.index';
 import { ComponenteBaseComponent } from 'src/app/shared/modal/modal.index';
 import { Subscription } from 'rxjs';
 import { VehiculoCodigoValidator } from 'src/app/validators/vehiculoCodigo-validator';
+import { FuncionesGrales } from 'src/app/utiles/funciones.grales';
 
 declare var $: any
 
@@ -33,7 +33,8 @@ export class VehiculoComponent implements ComponenteBaseComponent, OnChanges, On
                private fb: FormBuilder,
                private _us: UsuarioService,               
                private ctrolError: ErrorService,
-               private _ms: ModalService
+               private _ms: ModalService,
+               @Inject(LOCALE_ID) public locale: string
                ) {
       this.createForm();
   }
@@ -68,7 +69,7 @@ export class VehiculoComponent implements ComponenteBaseComponent, OnChanges, On
       vehCarroceria: ['',[Validators.required, Validators.maxLength(20)]],
       vehMovilGps: [''],
       vehMpaCodigo: ['',[Validators.required, Validators.maxLength(3)]],
-      vehVerificacionTecnica: ['',Validators.required]
+      vehVerificacionTecnicaVto: ['',Validators.required]
     }, { validator: VehiculoCodigoValidator.createValidator( this.vehiculoService, this ) } );
 
     this.vehiculoForm.valueChanges
@@ -92,7 +93,7 @@ export class VehiculoComponent implements ComponenteBaseComponent, OnChanges, On
     vehCarroceria: [],
     vehMovilGps: [],
     vehMpaCodigo: [],
-    vehVerificacionTecnica:[]
+    vehVerificacionTecnicaVto:[]
   };
 
   translations: any = {
@@ -116,7 +117,7 @@ export class VehiculoComponent implements ComponenteBaseComponent, OnChanges, On
                   maxlength:'La longitud maxima de interno es 4'},
     vehMpaCodigo: { required: 'Por favor especifique un diseño de coche.',
                   maxlength:'La longitud maxima del diseño de coche es 3'},
-    vehVerificacionTecnica: { required: 'Por favor especifique fecha de verificacion tecnica.',
+    vehVerificacionTecnicaVto: { required: 'Por favor especifique fecha de verificacion tecnica.',
                   maxlength:'La longitud maxima de fecha es 4'} ,
     gral:{internoTomado:'El interno ya ha sido utilizado'}
   };
@@ -134,10 +135,11 @@ export class VehiculoComponent implements ComponenteBaseComponent, OnChanges, On
     this.cargarFromVehiculo();     
   }  
 
-  cargarFromVehiculo(){
-
-    let dp = new DatePipe(navigator.language);
-    let fecha = dp.transform( this.vehiculo.vehVerificacionTecnica, 'yyyy-MM-dd');
+  cargarFromVehiculo(){   
+   
+    let fecha = FuncionesGrales.fromFecha( this.locale, 
+                                           this.vehiculo.vehVerificacionTecnicaVto, 
+                                           ConstantesGrales.FECHA_PATTERN );
     this.vehiculoForm.reset({
       vehiculoPK: this.vehiculo.vehiculoPK,
       vehEstado: this.vehiculo.vehEstado,
@@ -147,7 +149,7 @@ export class VehiculoComponent implements ComponenteBaseComponent, OnChanges, On
       vehCarroceria: this.vehiculo.vehCarroceria,
       vehMovilGps: this.vehiculo.vehMovilGps,
       vehMpaCodigo: this.vehiculo.vehMpaCodigo,
-      vehVerificacionTecnica: fecha
+      vehVerificacionTecnicaVto: fecha
     });
 
   }
@@ -190,7 +192,7 @@ export class VehiculoComponent implements ComponenteBaseComponent, OnChanges, On
 
     const formModel = this.vehiculoForm.getRawValue();
     //let fecha = moment(formModel.vehVerificacionTecnica, 'DD/MM/YYYY');
-    let fecha = moment(formModel.vehVerificacionTecnica, 'YYYY-MM-DD');
+    let fecha = moment(formModel.vehVerificacionTecnicaVto, 'YYYY-MM-DD');
 
     const vehi:Vehiculo ={
       vehiculoPK: formModel.vehiculoPK,
@@ -201,7 +203,7 @@ export class VehiculoComponent implements ComponenteBaseComponent, OnChanges, On
       vehCarroceria: formModel.vehCarroceria,
       vehMovilGps: formModel.vehMovilGps,
       vehMpaCodigo: formModel.vehMpaCodigo,
-      vehVerificacionTecnica: fecha.format() as any
+      vehVerificacionTecnicaVto: fecha.format() as any
     }
 
     return vehi;

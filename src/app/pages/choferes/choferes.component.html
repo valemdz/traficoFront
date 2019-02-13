@@ -1,3 +1,5 @@
+<br>
+<app-chofer-vencimiento [vencimientosCho]="vencimientosCho"></app-chofer-vencimiento>
 <ng-container *ngIf="choferPage != null">
     <div id="list" class="row animated fadeIn ">
         <div class="table-responsive col-md-12">
@@ -46,10 +48,10 @@
                             <a class="btn btn-xs" (click)="currentChofer=chofer" data-toggle="modal" data-target="#details-modal">
                                 <i title="Editar" data-toggle="tooltip" animation="true" data-placement="top" onmouseenter="$(this).tooltip('show')" class="fa fa-pencil fa-2x green" aria-hidden="true"></i>
                             </a>
-                            <a class="btn btn-xs" (click)="carnetChofer=chofer;clearAlert()" data-toggle="modal" data-target="#details-carnet">
+                            <a class="btn btn-xs" (click)="carnetChofer=chofer" data-toggle="modal" data-target="#details-carnet">
                                 <i title="Carnets" data-toggle="tooltip" animation="true" data-placement="top" onmouseenter="$(this).tooltip('show')" class="fa fa-id-card-o fa-2x green" aria-hidden="true"></i>
                             </a>
-                            <a class="btn btn-xs" (click)="incidenciaChofer=chofer;clearAlert()" data-toggle="modal" data-target="#details-Incidencias">
+                            <a class="btn btn-xs" (click)="incidenciaChofer=chofer" data-toggle="modal" data-target="#details-Incidencias">
                                 <i title="Incidencias" data-toggle="tooltip" animation="true" data-placement="top" onmouseenter="$(this).tooltip('show')" class="fa fa-calendar fa-2x red" aria-hidden="true"></i>
                             </a>
                             <a class="btn btn-xs" (click)="deleteChofer( chofer )" data-toggle="modal" data-target="#delete-modal">

@@ -3,7 +3,7 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
 import { FuncionesGrales } from 'src/app/utiles/funciones.grales';
 import { ErrorService } from 'src/app/services/service.index';
-import { Constantes } from 'src/app/models/model.index';
+import { ConstantesGrales } from 'src/app/models/model.index';
 
 
 @Component({
@@ -46,8 +46,8 @@ export class SearchByFechaComponent implements OnInit {
 
 
     // =====Sacar =============
-    this.fInicio = FuncionesGrales.formatearFecha( this.locale, '2018/11/30', Constantes.FECHA_PATTERN ),
-    this.fFin = FuncionesGrales.formatearFecha( this.locale, '2018/12/02', Constantes.FECHA_PATTERN ),
+    this.fInicio = FuncionesGrales.formatearFecha( this.locale, '2018/11/30', ConstantesGrales.FECHA_PATTERN ),
+    this.fFin = FuncionesGrales.formatearFecha( this.locale, '2018/12/02', ConstantesGrales.FECHA_PATTERN ),
     // ===============================
 
 
@@ -64,8 +64,8 @@ export class SearchByFechaComponent implements OnInit {
     // ===============================
 
     this.searchForm.reset({
-      fInicio: FuncionesGrales.formatearFecha( this.locale, this.fInicio, Constantes.FECHA_PATTERN ),
-      fFin: FuncionesGrales.formatearFecha( this.locale, this.fFin, Constantes.FECHA_PATTERN )
+      fInicio: FuncionesGrales.formatearFecha( this.locale, this.fInicio, ConstantesGrales.FECHA_PATTERN ),
+      fFin: FuncionesGrales.formatearFecha( this.locale, this.fFin, ConstantesGrales.FECHA_PATTERN )
     });
 
   }

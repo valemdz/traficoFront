@@ -3,7 +3,9 @@ import { DiagrService, VueltasService, UsuarioService } from 'src/app/services/s
 import { ChoferesConEstadoPipe } from 'src/app/pipes/choferes-con-estado.pipe';
 import { ModalSiNoService } from '../modal-si-no/modal-si-no.service';
 import { ModalSiNo } from 'src/app/models/modalSiNo.model';
-import { Subscription } from 'rxjs';
+import { Subscription, forkJoin } from 'rxjs';
+import { getSingleValueObservable, getDelayedValueObservable, getMultiValueObservable } from './prueba';
+import { map } from 'rxjs/operators';
 
 
 @Component({
@@ -12,62 +14,29 @@ import { Subscription } from 'rxjs';
   styleUrls: ['./prueba.component.css'],
   providers: [ ChoferesConEstadoPipe ]
 })
-export class PruebaComponent implements OnInit, AfterViewInit, OnDestroy  {
- 
+export class PruebaComponent implements OnInit,  OnDestroy  {
 
-  mensaje:ModalSiNo;
-  subs:Subscription;
-
-  resultado = {"2":[" En Viaje Especial  Desde 29/11/2018 12:30 Hasta 30/11/2018 12:00","Ocupado en el servicio IMQ 125 30/11/2018 12:00/0","Ocupado en el servicio IMQ 100 30/11/2018 15:00/0"],"(CHO)VALERIa":[" Con Incidencia ENFERMEDAD Desde 30/11/2018 01:00 Hasta 03/12/2018 18:30","Ocupado en el servicio IMQ 100 30/11/2018 15:00/0"]};
- 
-  constructor( public _vs: VueltasService,     
-      public _us: UsuarioService,   
-      public _ms: ModalSiNoService,   
-      @Inject(LOCALE_ID) public locale: string ) {     
-
-     
-  }
-
-  ngAfterViewInit(): void {
-    
-  }
-
-  ngOnInit() {   
-    
-    let mensajes: string [] = [];
-
-    for ( let clave in this.resultado ) {
-        console.log( clave );
-        mensajes.push( clave + ":");
-        for( let mje of this.resultado[ clave] ){
-            mensajes.push( `     ${mje}` );
-        }
-    }
-
-    console.log( mensajes );
-
-    this.mensaje = {    
-      title:"Conflicto con Choferes y Vehiculos",      
-      messages:mensajes,      
-    };
-
-    this.escucharModalSino();
+  show=false;
   
-  }  
+  value$ = forkJoin(
+    getSingleValueObservable(),
+    getDelayedValueObservable()
+  ).pipe(
+    map( ( [ first , second ]) => {
+            return { first, second};   
+        }
+    )
+  );
 
-  abrirModalSiNo() {
-    this._ms.mostraModal( this.mensaje );    
+  
+
+  ngOnInit(): void {    
   }
 
-  escucharModalSino(){
-      this.subs = this._ms.notificacionSiNO.subscribe( resultado => {
-          console.log('resultado ' , resultado);
-      });
+  // Multi value observables must manually
+  // unsubscribe to prevent memory leaks.
+  ngOnDestroy() {
+    
   }
-
-  ngOnDestroy(): void {
-    if( this.subs ){ this.subs.unsubscribe(); }
-  } 
-
 
 }

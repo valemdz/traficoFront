@@ -1,0 +1,52 @@
+<div *ngIf="vencimientosCho">        
+  <div *ngFor="let venc of vencimientosCho">
+      <div class="panel panel-danger" *ngIf="venc.choferes.length > 0">
+          <div class="panel-heading" >
+              Atención Vencimientos!!!! <b>{{ venc.vencimiento.tipoVencimiento.nombreEntidad | uppercase}} 
+              => {{ venc.vencimiento.tipoVencimiento.descNombreCampo }} </b>
+          </div>
+          <div class="panel-body">    
+              <div class='row'>
+                  <div class='col-md-2'>Legajo</div> 
+                  <div class='col-md-2'>Nombre</div> 
+                  <div class='col-md-2'>Telefono</div>                         
+                  <div class='col-md-6'> 
+                      <div class='row'>                                               
+                        <div class='col-md-4'>Tipo</div>                         
+                        <div class='col-md-2'>Vto</div> 
+                        <div class='col-md-2'>Vencido</div> 
+                      </div>
+                  </div>                                           
+              </div>      
+              <div *ngFor="let ch of venc.choferes" class='row'>
+                  <div class='col-md-2'>{{ch.cho_legajo}}</div>
+                  <div class='col-md-2'>{{ch.cho_nombre}}</div>
+                  <div class='col-md-2'>{{ch.cho_telefono}}</div>                                          
+                  <div class='col-md-6'>                 
+                        <div class="row" *ngFor="let carnet of ch.carnets">
+                            <div class='col-md-4'>{{ carnet.descTipo}}</div>                         
+                            <div class='col-md-2'>
+                                <span class="label" [ngClass]="carnet.vencido?'label-danger':'label-warning'" >
+                                    {{ carnet.fechaVenc | date:'dd/MM/yyyy'}}
+                                </span> 
+                            </div> 
+                            <div class='col-md-2'>   
+                                <span class="label" [ngClass]="carnet.vencido?'label-danger':'label-warning'" >
+                                    {{carnet.vencido?"Vencido":"Proximo"}}
+                                    <span *ngIf= "carnet.mostrarDias">
+                                        [ faltan {{ carnet.diasVencerFechaVto }} dias ]
+                                    </span>    
+                                </span>                             
+                            </div>                             
+                        </div>                     
+                  </div>               
+              </div>    
+          </div>
+      </div>
+      <div class="alert alert-info" *ngIf="venc.choferes.length ===0">
+              No existen Vencimientos!!!! 
+                  <strong>{{ venc.vencimiento.tipoVencimiento.nombreEntidad | uppercase}} 
+                      => {{ venc.vencimiento.tipoVencimiento.descNombreCampo }} </strong>
+      </div> 
+  </div>    
+</div>    

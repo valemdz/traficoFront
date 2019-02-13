@@ -22,7 +22,16 @@ export class VehiculoService {
 
     findVehiculos$( vehEmpCodigo: String, params ): Observable<any> {
       const url = this.urlBase + `/vehiculos/empresa/${vehEmpCodigo}`;   
-      return this.http.get( url, params );
+      return this.http.get( url, params )
+                 .pipe(
+                     map( (resp:any) => {
+                        resp.content.forEach( ( v, k) => {
+                            v.vehVerificacionTecnicaVto = new Date( v.vehVerificacionTecnicaVto ) || new Date();
+                            v.vehVencido = v.vehVerificacionTecnicaVto.getTime() <= (new Date()).getTime();
+                        });                         
+                        return resp; 
+                     })
+                 );
     }
 
     viewVehiculo$( id: number ): Observable<any> {
@@ -105,21 +114,7 @@ export class VehiculoService {
                            return resp;
                        })
                    );
-    }
-
-    getVencimientos$( vehEmpCodigo:string, vehEstado: number ): Observable<any>{
-        const url = this.urlBase + `/vehiculos/empresa/${vehEmpCodigo}/estado/${vehEstado}/vencimientos`;
-        return this.http.get( url )
-                    .pipe(
-                        map( (veh:any) =>{
-                            veh.forEach( ( v, k )=>{   
-                                v.vehVerificacionTecnica = v.vehVerificacionTecnica || new Date();                          
-                                v.vehVerificacionTecnica = new Date( v.vehVerificacionTecnica );    
-                            });   
-                            return veh;
-                        })
-                    );
-    }
+    }    
 
 
 }

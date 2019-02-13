@@ -3,7 +3,7 @@ import { Subscription } from 'rxjs';
 import { FuncionesGrales } from 'src/app/utiles/funciones.grales';
 import { IdaVtaListService, UsuarioService, ErrorService, AlertService } from 'src/app/services/service.index';
 import { PaginationPage, Table, PaginationPropertySort } from 'src/app/shared/pagination/pagination.index';
-import { Constantes } from 'src/app/models/model.index';
+import { ConstantesGrales } from 'src/app/models/model.index';
 
 
 @Component({
@@ -29,7 +29,7 @@ export class IdaVtaListComponent implements OnInit, OnDestroy {
   }
 
   mostrarDetalle(): void {
-    this.fetchPage(0, Constantes.ROWS_BY_PAGE, null);
+    this.fetchPage(0, ConstantesGrales.ROWS_BY_PAGE, null);
   }
 
   fetchPage(pageNumber: number, pageSize: number, sort: PaginationPropertySort)  {

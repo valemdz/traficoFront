@@ -2,7 +2,7 @@ import { Component, Input, OnInit, OnChanges, OnDestroy,
   ViewChild, ElementRef } from '@angular/core';
 import { FormBuilder,  Validators } from '@angular/forms';
 import { ErrorService, IncidenciaService, ModalService, UsuarioService } from 'src/app/services/service.index';
-import { Incidencia, Constantes } from 'src/app/models/model.index';
+import { Incidencia, ConstantesGrales } from 'src/app/models/model.index';
 import { ComponenteBaseComponent } from 'src/app/shared/modal/componente.base.component';
 import { IncidenciaValidator } from 'src/app/validators/incidencia-validator';
 
@@ -49,7 +49,7 @@ export class IncidenciaComponent implements  ComponenteBaseComponent, OnInit,  O
   }
 
    crearComboTipos(){
-     this.comboTipos = Constantes.TIPOS_INCIDENCIA;
+     this.comboTipos = ConstantesGrales.TIPOS_INCIDENCIA;
    }
 
 
