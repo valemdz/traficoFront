@@ -17,6 +17,7 @@ import { VueltasService,
          ModalSiNoService,
          UsuarioService,
          LoaderService,
+         VencimientoService,
          ErrorsHandler} from './service.index';
          
 
@@ -41,6 +42,7 @@ import { VueltasService,
                 VehiculoService,
                 ViajeEspServive,
                 ModalService,
+                VencimientoService,
                 ErrorsHandler
              ]
 })

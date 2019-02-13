@@ -6,7 +6,7 @@ import 'rxjs/add/observable/forkJoin';
 import { DiagrService } from './diagr.service';
 import { LoaderService } from '../mensajes/loader.service';
 import { UsuarioService } from '../usuario/usuario.service';
-import { Servicio, Vuelta, CONSTANTES_VIAJE, Constantes, CONSTANTES_VEHICULOS } from 'src/app/models/model.index';
+import { Servicio, Vuelta, CONSTANTES_VIAJE, ConstantesGrales, CONSTANTES_VEHICULOS } from 'src/app/models/model.index';
 
 
 
@@ -47,8 +47,8 @@ export class VueltasService {
   }
 
   setFechas( formFechas ){
-    this.inicio = FuncionesGrales.toFecha( formFechas.fInicio ,  Constantes.FECHA_PATTERN_MOMENT );
-    this.fin = FuncionesGrales.toFecha( formFechas.fFin ,  Constantes.FECHA_PATTERN_MOMENT );
+    this.inicio = FuncionesGrales.toFecha( formFechas.fInicio ,  ConstantesGrales.FECHA_PATTERN_MOMENT );
+    this.fin = FuncionesGrales.toFecha( formFechas.fFin ,  ConstantesGrales.FECHA_PATTERN_MOMENT );
     this.finVuelta = new Date( this.fin.getTime());
     this.finVuelta.setDate( this.finVuelta.getDate()                     
                                 + CONSTANTES_VIAJE.CANTIDAD_DIAS_DIAGR_ADICIONALES_VTA );    
@@ -109,8 +109,8 @@ export class VueltasService {
   getServiciosIda$() {
       return this._ds.findSerConHorariosByLineaYfecha$( this._us.usuario.empresa,
                   this.idLinIda,
-                  FuncionesGrales.fromFecha( this.locale, this.inicio, Constantes.FECHA_PATTERN),
-                  FuncionesGrales.fromFecha( this.locale, this.fin, Constantes.FECHA_PATTERN)  );
+                  FuncionesGrales.fromFecha( this.locale, this.inicio, ConstantesGrales.FECHA_PATTERN),
+                  FuncionesGrales.fromFecha( this.locale, this.fin, ConstantesGrales.FECHA_PATTERN)  );
       //.subscribe( this.okServiciosIda.bind( this ), this.errorServiciosIda.bind( this ) );
   }
 
@@ -156,8 +156,8 @@ export class VueltasService {
   getServiciosVta$() {
       return this._ds.findSerConHorariosByLineaYfecha$( this._us.usuario.empresa,
                   this.idLinVta,
-                  FuncionesGrales.fromFecha( this.locale, this.inicio, Constantes.FECHA_PATTERN),
-                  FuncionesGrales.fromFecha( this.locale, this.finVuelta, Constantes.FECHA_PATTERN)   );
+                  FuncionesGrales.fromFecha( this.locale, this.inicio, ConstantesGrales.FECHA_PATTERN),
+                  FuncionesGrales.fromFecha( this.locale, this.finVuelta, ConstantesGrales.FECHA_PATTERN)   );
 
       //.subscribe( this.okServiciosVta.bind( this ), this.errorServiciosIda.bind( this ) );
   }
@@ -167,7 +167,7 @@ export class VueltasService {
     this.serviciosVta = serviciosVta;
     this.serviciosVta.forEach( serv  => {      
         serv.servicioPKStr  = JSON.stringify( serv.servicioPK );
-        serv.detalle  = FuncionesGrales.formatearFecha( this.locale, serv.fechaHoraSalida, Constantes.FECHA_HORA_MOSTRAR_PATTERN );
+        serv.detalle  = FuncionesGrales.formatearFecha( this.locale, serv.fechaHoraSalida, ConstantesGrales.FECHA_HORA_MOSTRAR_PATTERN );
     });
     this.ordenamientoServiciosAscendente( this.serviciosVta );
     console.log( 'Servicios Vta' );
@@ -180,8 +180,8 @@ export class VueltasService {
 
   getChoferesOcupacion$() {
         return  this._ds.findChoresOcupacion$( this._us.usuario.empresa,
-                          FuncionesGrales.fromFecha( this.locale, this.inicio, Constantes.FECHA_PATTERN),
-                          FuncionesGrales.fromFecha( this.locale, this.finVuelta, Constantes.FECHA_PATTERN) );
+                          FuncionesGrales.fromFecha( this.locale, this.inicio, ConstantesGrales.FECHA_PATTERN),
+                          FuncionesGrales.fromFecha( this.locale, this.finVuelta, ConstantesGrales.FECHA_PATTERN) );
 
         //.subscribe( this.okChoferes.bind( this ) );
 
@@ -190,8 +190,8 @@ export class VueltasService {
   getVehiculosOcupacion$() {
      // Trae todos lo vehiculos con ocupacion
      return  this._ds.findVehiculosOcupacion$( this._us.usuario.empresa,
-                          FuncionesGrales.fromFecha( this.locale, this.inicio, Constantes.FECHA_PATTERN),
-                          FuncionesGrales.fromFecha( this.locale, this.finVuelta, Constantes.FECHA_PATTERN) );                          
+                          FuncionesGrales.fromFecha( this.locale, this.inicio, ConstantesGrales.FECHA_PATTERN),
+                          FuncionesGrales.fromFecha( this.locale, this.finVuelta, ConstantesGrales.FECHA_PATTERN) );                          
   }
 
   okChoferes( data ) {
@@ -215,8 +215,8 @@ export class VueltasService {
 
     return this._ds.getVueltas$( this._us.usuario.empresa,
                           this.idLinIda,
-                          FuncionesGrales.fromFecha( this.locale, this.inicio, Constantes.FECHA_PATTERN),
-                          FuncionesGrales.fromFecha( this.locale, this.fin, Constantes.FECHA_PATTERN) );
+                          FuncionesGrales.fromFecha( this.locale, this.inicio, ConstantesGrales.FECHA_PATTERN),
+                          FuncionesGrales.fromFecha( this.locale, this.fin, ConstantesGrales.FECHA_PATTERN) );
 
       //.subscribe( this.okVueltas.bind( this) );
   }

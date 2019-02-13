@@ -18,9 +18,11 @@ export interface Vehiculo{
     vehCarroceria: String,
     vehMovilGps: String,
     vehMpaCodigo: String,
-    vehVerificacionTecnica: Date;
-    vehMpaDesc?:string
-    vehVencido?: boolean;
+    vehVerificacionTecnicaVto: Date,
+    vehMpaDesc?:string,
+    vehVencido?: boolean,    
+    diasVencerFechaVerificacion?:number,
+    mostrarDias?:boolean
 }
 
 export interface VehiculosArray{

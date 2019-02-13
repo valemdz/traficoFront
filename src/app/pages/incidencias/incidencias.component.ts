@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 import { Observable, Subscription } from 'rxjs';
 import { AlertService, ErrorService, ModalService, UsuarioService, IncidenciaService } from 'src/app/services/service.index';
 import { IncidenciaComponent } from './incidencia/incidencia.component';
-import { Incidencia, Constantes } from 'src/app/models/model.index';
+import { Incidencia, ConstantesGrales } from 'src/app/models/model.index';
 import { PaginationPage, Table, PaginationPropertySort } from 'src/app/shared/pagination/pagination.index';
 import { FuncionesGrales } from 'src/app/utiles/funciones.grales';
 import { ComponenteItem } from 'src/app/shared/modal/componente-item';
@@ -58,7 +58,7 @@ export class IncidenciasComponent implements OnInit, OnDestroy  {
 
     mostrarDetalle(): void {
         this.modal = null;
-        this.fetchPage(0, Constantes.ROWS_BY_PAGE, null);
+        this.fetchPage(0, ConstantesGrales.ROWS_BY_PAGE, null);
     }
 
 
@@ -66,7 +66,7 @@ export class IncidenciasComponent implements OnInit, OnDestroy  {
         const params = FuncionesGrales.toParams( pageNumber, pageSize, sort );
         this.listadoSubcription = 
         this.incidenciaService.findIncidencias$(this._us.usuario.empresa, params )
-        .subscribe( this.okIncidencias.bind( this), this.erroIncidencias.bind( this ) );
+        .subscribe( this.okIncidencias.bind( this), this.errorIncidencias.bind( this ) );
         this.self = this;
     }
 
@@ -74,7 +74,7 @@ export class IncidenciasComponent implements OnInit, OnDestroy  {
        this.incidenciaPage = incidenciasPage;
     }
 
-    erroIncidencias( err ) {
+    errorIncidencias( err ) {      
       this.ctrolError.tratarErrores( err, null, null, null );
     }
 

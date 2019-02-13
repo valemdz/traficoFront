@@ -3,8 +3,8 @@ import {Router} from '@angular/router';
 import {  Subscription } from 'rxjs';
 
 import { ChoferService } from 'src/app/services/choferes/chofer.service';
-import { UsuarioService, AlertService, ErrorService } from 'src/app/services/service.index';
-import { Chofer, CONSTANTES_CHOFER, Constantes } from 'src/app/models/model.index';
+import { UsuarioService, ErrorService, VencimientoService } from 'src/app/services/service.index';
+import { Chofer, CONSTANTES_CHOFER, ConstantesGrales, VencimientosChoferes } from 'src/app/models/model.index';
 
 import { PaginationPage, Table, PaginationPropertySort } from 'src/app/shared/pagination/pagination.index';
 import { FuncionesGrales } from 'src/app/utiles/funciones.grales';
@@ -18,23 +18,24 @@ declare var swal;
 })
 export class ChoferesComponent implements OnInit, OnDestroy {
 
-
    choferPage: PaginationPage<any>;
    self: Table<any>;
    listadoSubscription: Subscription;
    deleteChoferSubscription: Subscription;
    estadoSubs: Subscription; 
+   vencimientosSubs: Subscription;
 
    choferNuevo: Chofer;    
    currentChofer;
    carnetChofer;
    incidenciaChofer;
    updateEstChofer: Chofer;
+   vencimientosCho: VencimientosChoferes[]=[];
 
    public estados = CONSTANTES_CHOFER.ESTADOS;
 
    constructor( private choferService: ChoferService,
-                 private router: Router,
+                 private router: Router, public _vs: VencimientoService,
                  public _us: UsuarioService,                 
                  private ctrolError: ErrorService) {
    }
@@ -42,6 +43,7 @@ export class ChoferesComponent implements OnInit, OnDestroy {
 
     ngOnInit() {
         this.mostrarDetalle();
+        this.getVencimientos();
     }
 
     ngOnDestroy(): void {
@@ -49,6 +51,7 @@ export class ChoferesComponent implements OnInit, OnDestroy {
           if ( this.listadoSubscription ) { this.listadoSubscription.unsubscribe(); }
           if ( this.deleteChoferSubscription ) { this.deleteChoferSubscription.unsubscribe(); }
           if ( this.estadoSubs ) { this.estadoSubs.unsubscribe(); }
+          if ( this.vencimientosSubs ){ this.vencimientosSubs.unsubscribe(); }
 
     }
 
@@ -58,7 +61,7 @@ export class ChoferesComponent implements OnInit, OnDestroy {
 
         this.listadoSubscription
         = this.choferService.findChoferes$(  this._us.usuario.empresa, params )
-        .subscribe( this.okChoferes.bind( this), this.errorChoferes.bind( this ) );
+        .subscribe( this.okChoferes.bind( this), this.error.bind( this ) );
         this.self = this;        
     }
 
@@ -66,12 +69,18 @@ export class ChoferesComponent implements OnInit, OnDestroy {
       this.choferPage = choferesPage;
     }
 
-    errorChoferes( err) {
+    error( err) {
       this.ctrolError.tratarErrores( err, null, null, null );
     }
 
     mostrarDetalle(): void {
-        this.fetchPage(0, Constantes.ROWS_BY_PAGE, null);
+        this.fetchPage(0, ConstantesGrales.ROWS_BY_PAGE, null);
+    }
+
+    getVencimientos(){
+        this.vencimientosSubs = this._vs.getChoferesConVencimientos$( this._us.usuario.empresa,
+            CONSTANTES_CHOFER.HABILITADO )
+            .subscribe(  resp => this.vencimientosCho = resp, this.error.bind( this )  );
     }
 
     goToDetails( chofer ) {
@@ -101,6 +110,7 @@ export class ChoferesComponent implements OnInit, OnDestroy {
 
     okDeleteChofer( ok) {
       this.mostrarDetalle();      
+      this.getVencimientos();
     }  
 
     back( ) {
@@ -149,9 +159,11 @@ export class ChoferesComponent implements OnInit, OnDestroy {
         })
         .then( actualiza => {
             if (actualiza ){
-                this.estadoSubs = updateEstChofer.cho_estado = valueFuturo;
-                this.choferService.update$(updateEstChofer).subscribe(result => {
-                    this.mostrarDetalle();            
+                updateEstChofer.cho_estado = valueFuturo;
+                this.estadoSubs = this.choferService.update$(updateEstChofer)
+                .subscribe( result => {
+                    this.mostrarDetalle();        
+                    this.getVencimientos();    
                 }, err => {
                       this.ctrolError.tratarErroresEliminaciones( err );
                 } );

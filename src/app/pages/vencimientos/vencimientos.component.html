@@ -1,0 +1,9 @@
+<br>
+<br>
+<app-vehiculo-vencimiento [vencimientosVeh]="vencimientosVeh"></app-vehiculo-vencimiento>
+<br>
+<app-chofer-vencimiento [vencimientosCho]="vencimientosCho"></app-chofer-vencimiento>
+
+<div class="alert alert-warning" *ngIf="noExisteConfiguracionVencimientos">    
+        <strong>No existen Vencimientos configurados!!!!</strong>
+</div> 

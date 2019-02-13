@@ -7,6 +7,10 @@ export interface Carnet{
     fechaVenc: Date;
     numeroCarnet: String;
     observaciones: String;
+    mostrarDias?: boolean;
+    diasVencerFechaVto?: number;
+    vencido?:boolean;
+    descTipo?: string;
 }
 
 export interface CarnetChofer{

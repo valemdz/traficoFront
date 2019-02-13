@@ -22,11 +22,18 @@ import { VueltasComponent } from './diagramacion-Servicios/vueltas/vueltas.compo
 import { VueltaDeVueltaComponent } from './diagramacion-Servicios/vuelta-de-vuelta/vuelta-de-vuelta.component';
 import { MaterialModule } from '../material/material.module';
 import { ViewVueltaDeVueltaComponent } from './diagramacion-Servicios/vuelta-de-vuelta/view-vuelta-de-vuelta.component';
-import { MyCustomModalComponent } from '../shared/my-custom-modal/my-custom-modal.component';
+//import { MyCustomModalComponent } from '../shared/my-custom-modal/my-custom-modal.component';
 import { IncidenciaByVehiculoComponent } from './vehiculos/incidencia-by-vehiculo/incidencia-by-vehiculo.component';
 import { IncidenciaByChoferComponent } from './choferes/incidencia-by-chofer/incidencia-by-chofer.component';
 import { ChoferComponent } from './choferes/chofer/chofer.component';
-import { VehiculoVencimientoComponent } from '../components/vehiculo-vencimiento/vehiculo-vencimiento.component';
+import { VencimientosComponent } from './vencimientos/vencimientos.component';
+import { ChoferVencimientoComponent } from './vencimientos/chofer-vencimiento/chofer-vencimiento.component';
+import { VehiculoVencimientoComponent } from './vencimientos/vehiculo-vencimiento/vehiculo-vencimiento.component';
+import { ConfVencimientoComponent } from './vencimientos/conf-vencimiento/conf-vencimiento.component';
+import { VencimientoCarnetComponent } from './vencimiento-carnet/vencimiento-carnet.component';
+import { DiagrAuxiliaresComponent } from './viajes/diagr-auxiliares/diagr-auxiliares.component';
+import { DiagrViajesEspComponent } from './viajes/diagr-viajes-esp/diagr-viajes-esp.component';
+import { DiagrChoferesComponent } from './viajes/diagr-choferes/diagr-choferes.component';
 
 
 
@@ -50,9 +57,17 @@ import { VehiculoVencimientoComponent } from '../components/vehiculo-vencimiento
                   VueltaDeVueltaComponent,
                   ViewVueltaDeVueltaComponent,
                   VehiculoComponent,
-                  MyCustomModalComponent,
+                  //MyCustomModalComponent,
                   IncidenciaByVehiculoComponent,
-                  VehiculoVencimientoComponent  ],
+                  VehiculoVencimientoComponent,
+                  ConfVencimientoComponent,
+                  VencimientosComponent,
+                  VencimientosComponent,
+                  ChoferVencimientoComponent,
+                  VencimientoCarnetComponent,
+                  DiagrAuxiliaresComponent,
+                  DiagrChoferesComponent,
+                  DiagrViajesEspComponent     ],
                   
   exports:[ WellcomeComponent, 
             ChoferesComponent, 
@@ -73,9 +88,15 @@ import { VehiculoVencimientoComponent } from '../components/vehiculo-vencimiento
             VueltaDeVueltaComponent,
             ViewVueltaDeVueltaComponent,
             VehiculoComponent,
-            MyCustomModalComponent,
+            //MyCustomModalComponent,
             IncidenciaByVehiculoComponent,
-            VehiculoVencimientoComponent  ],
+            VehiculoVencimientoComponent,
+            ConfVencimientoComponent,
+            VencimientosComponent,
+            VencimientoCarnetComponent,
+            DiagrAuxiliaresComponent,
+            DiagrChoferesComponent,
+            DiagrViajesEspComponent     ],
   imports: [
     CommonModule,    
     SharedModule,
@@ -85,7 +106,9 @@ import { VehiculoVencimientoComponent } from '../components/vehiculo-vencimiento
     PipesModule,
     MaterialModule    
   ], 
-  entryComponents:[ IncidenciaComponent, VehiculoComponent, 
-                    MyCustomModalComponent, IncidenciaByVehiculoComponent ]  
+  entryComponents:[ IncidenciaComponent, 
+                    VehiculoComponent, 
+                    //MyCustomModalComponent, 
+                    IncidenciaByVehiculoComponent ]  
 })
 export class PagesModule { }

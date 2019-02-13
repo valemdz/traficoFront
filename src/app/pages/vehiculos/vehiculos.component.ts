@@ -1,14 +1,13 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
 import {  Subscription } from 'rxjs';
-import { UsuarioService, ErrorService, VehiculoService, ModalService } from 'src/app/services/service.index';
-import { Vehiculo, Constantes, CONSTANTES_VEHICULOS } from 'src/app/models/model.index';
+import { UsuarioService, ErrorService, VehiculoService, ModalService, VencimientoService } from 'src/app/services/service.index';
+import { Vehiculo, ConstantesGrales, CONSTANTES_VEHICULOS, VencimientosVehiculo } from 'src/app/models/model.index';
 import { PaginationPage, Table, PaginationPropertySort } from 'src/app/shared/pagination/pagination.index';
 import { FuncionesGrales } from 'src/app/utiles/funciones.grales';
 import { ComponenteItem } from 'src/app/shared/modal/modal.index';
 import { VehiculoComponent } from './vehiculo/vehiculo.component';
 import { IncidenciaByVehiculoComponent } from './incidencia-by-vehiculo/incidencia-by-vehiculo.component';
-
 
 
 declare var swal;
@@ -23,15 +22,19 @@ export class VehiculosComponent implements OnInit, OnDestroy  {
 
     vehiculoPage: PaginationPage<any>;
     self: Table<any>;    
+    vencimientosVeh: VencimientosVehiculo[]=[];
+    vencimientosSubs: Subscription;
 
     listadoSubs: Subscription;
     deleteVehiculoSubs: Subscription;
     modalSubs: Subscription;    
     updateEstvehiculo : Vehiculo;
 
+    readonly HABILITADO = CONSTANTES_VEHICULOS.HABILITADO;
     public estados = CONSTANTES_VEHICULOS.ESTADOS_VEHICULO;
 
     constructor(private vehiculoService: VehiculoService,
+        private _vs: VencimientoService,
         private router: Router,
         private _us: UsuarioService,
         private _ms: ModalService,        
@@ -39,21 +42,37 @@ export class VehiculosComponent implements OnInit, OnDestroy  {
 
             this.modalSubs = this._ms.getRespuesta().subscribe( res => {
                 this.mostrarDetalle();
+                this.getVehiculosVencimientos();
             });
     }
 
-    ngOnInit() {
+    ngOnInit() {             
        this.mostrarDetalle();
+       this.getVehiculosVencimientos();
     }
+
+    getVehiculosVencimientos(){
+          //trae ven 
+       this.vencimientosSubs = this._vs.getVehiculosConVencimientos$( this._us.usuario.empresa,
+        CONSTANTES_VEHICULOS.HABILITADO )
+       .subscribe( this.okVencimientos.bind( this ) );
+       //////////////
+    }
+
+    okVencimientos( resp ){
+        this.vencimientosVeh = resp;          
+    }
+    
 
     ngOnDestroy(): void {
         if ( this.listadoSubs ) { this.listadoSubs.unsubscribe(); }
         if ( this.deleteVehiculoSubs ) { this.deleteVehiculoSubs.unsubscribe(); }
         if ( this.modalSubs ){ this.modalSubs.unsubscribe(); }
+        if ( this.vencimientosSubs ){ this.vencimientosSubs.unsubscribe();}
     }
 
     mostrarDetalle(): void {
-        this.fetchPage(0, Constantes.ROWS_BY_PAGE, null);
+        this.fetchPage(0, ConstantesGrales.ROWS_BY_PAGE, null);       
     }
 
    fetchPage(pageNumber: number, pageSize: number, sort: PaginationPropertySort) {
@@ -111,7 +130,7 @@ export class VehiculosComponent implements OnInit, OnDestroy  {
             vehCarroceria: null,
             vehMovilGps: null,
             vehMpaCodigo: null,
-            vehVerificacionTecnica: null
+            vehVerificacionTecnicaVto: null
         };
 
         this._ms.sendComponent( new ComponenteItem( VehiculoComponent, { vehiculo: vehiculoNuevo }));
@@ -153,6 +172,7 @@ export class VehiculosComponent implements OnInit, OnDestroy  {
                 updateEstvehiculo.vehEstado =  valueFuturo;
                 this.vehiculoService.update$( updateEstvehiculo ).subscribe( result => {
                     this.mostrarDetalle();
+                    this.getVehiculosVencimientos();
                     
                     }, err => {
                         this.ctrolError.tratarErroresEliminaciones(err) ;

@@ -1,14 +1,13 @@
 import { Injectable } from '@angular/core';
 import{ FormGroup, FormControl, FormArray } from '@angular/forms';
-import { Router } from '@angular/router';
 import { AlertService } from '../mensajes/alert.service';
+import swal from 'sweetalert';
 
 
 @Injectable()
 export class  ErrorService {
 
-  constructor( private alertService: AlertService,
-      private router: Router ) {
+  constructor( private alertService: AlertService ) {
   }
 
     validateAllFormFields(formGroup: FormGroup) {
@@ -23,7 +22,6 @@ export class  ErrorService {
               this.validateAllFormFields(<FormGroup>control.controls[i]);
             }
           }
-
         });
     }
 
@@ -57,8 +55,9 @@ export class  ErrorService {
     tratarErroresBackEnd(err, form: FormGroup, errMsgs) {
 
       this.limpiarErrores();
-      this.error( this.tratarErroresHttpBackEndArray( err, form, errMsgs));
+      //this.error( this.tratarErroresHttpBackEndArray( err, form, errMsgs));
 
+      this.tratarErroresHttpBackEndArray( err, form, errMsgs)
     }
 
     tratarErroresHttpBackEndArray( err, form: FormGroup, errMsgs ) {
@@ -71,7 +70,7 @@ export class  ErrorService {
           }else if( err.status == 0){
             errores.push(' NO es posible comunicarse con el back end! ');
           }else if ( err.status == 401 ){
-            errores.push(' Usuario o contraseña incorrecta ');
+            errores.push(' Su sesion ha caducado ');
           } else if( err.status == 404 ){
             if( data['errorCode'] ){
               errores.push( data['errorMessage']);
@@ -113,21 +112,22 @@ export class  ErrorService {
             errores.push(' Error Desconocido comuniquese con el administrador! ');
           }
 
-          return errores;
+          //return errores;
+          this.mostrarError( errores );
     }
 
   tratarErroresEliminaciones(err) {
     this.tratarErroresBackEnd( err, null, null);
   }
 
-    error( messages ) {
+    /*error( messages ) {
       this.alertService.clear();
       if( messages ){
         for(let mge of messages ) {
             this.alertService.error(mge);
         }
       }
-    }
+    }*/
 
     limpiarErrores(){
         this.alertService.clear();
@@ -139,7 +139,8 @@ export class  ErrorService {
 
     tratarErroresBackEndLista(err, erroresGral){
 
-      erroresGral.length = 0;
+      if( erroresGral ){ erroresGral.length = 0; }
+      else { erroresGral=[]; }
 
       const data = err.error;
 
@@ -148,7 +149,7 @@ export class  ErrorService {
       }else if( err.status == 0){
         erroresGral.push(' NO es posible comunicarse con el back end! ');
       }else if ( err.status == 401 ){
-        erroresGral.push(' Usuario o contraseña incorrecta ');
+        erroresGral.push(' Su sesion ha caducado ');
       } else if( err.status == 404 ){
         if( data['errorCode'] ){
           erroresGral.push( data['errorMessage']);
@@ -169,18 +170,21 @@ export class  ErrorService {
         erroresGral.push(' Error Desconocido comuniquese con el administrador! ');
       }
 
+      this.mostrarError( erroresGral );
 }
+
 
     tratarErrores(err, form: FormGroup, erroresGral, translationsGral){
 
-      erroresGral.length = 0;
+      if( erroresGral ){ erroresGral.length = 0; }
+      else { erroresGral=[]; }      
 
       if( err.status == 500 ){
         erroresGral.push(' Error interno 500 comuniquese con el administrador! ');
       }else if( err.status == 0){
         erroresGral.push(' NO es posible comunicarse con el back end! ');
       }else if ( err.status == 401 ){
-        erroresGral.push(' Usuario o contraseña incorrecta ');
+        erroresGral.push(' Su sesion ha caducado ');
       }else if ( err.status == 409 ) {
           const data = err.error;
           if ( form && data ) {
@@ -210,6 +214,15 @@ export class  ErrorService {
         erroresGral.push(' Error Desconocido comuniquese con el administrador! ');
       }
 
+      this.mostrarError( erroresGral );
+  }
+
+  mostrarError( errores ){
+    if(  errores && errores.length > 0 ) {
+         let mensajes = '';
+         errores.forEach( e => mensajes = mensajes + e );
+         swal('Error', mensajes,'error');
+    }
   }
 
 }

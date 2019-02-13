@@ -1,6 +1,5 @@
 import { Routes, RouterModule, CanActivate } from '@angular/router';
 import { PagesComponent } from './pages.component';
-//import { LoginGuardGuard } from '../services/service.index';
 import { WellcomeComponent } from './wellcome/wellcome.component';
 import { ChoferesComponent } from './choferes/choferes.component';
 import { LoginGuardGuard } from '../services/service.index';
@@ -12,6 +11,8 @@ import { DiagramacionComponent } from './diagramacion-Servicios/diagramacion.com
 import { VueltasComponent } from './diagramacion-Servicios/vueltas/vueltas.component';
 import { IncidenciaByChoferComponent } from './choferes/incidencia-by-chofer/incidencia-by-chofer.component';
 import { ChoferComponent } from './choferes/chofer/chofer.component';
+import { VencimientosComponent } from './vencimientos/vencimientos.component';
+import { ConfVencimientoComponent } from './vencimientos/conf-vencimiento/conf-vencimiento.component';
 
 
 const pagesRoutes: Routes = [
@@ -25,8 +26,10 @@ const pagesRoutes: Routes = [
     { path: 'incidencias', component: IncidenciasComponent },    
     { path: 'vehiculos', component: VehiculosComponent },    
     { path: 'viajesEspeciales', component: ViajesEspListComponent },     
-    { path: 'wellcome', component: WellcomeComponent },        
-    { path: '', pathMatch: 'full', redirectTo: '/wellcome' },
+    { path: 'wellcome', component: WellcomeComponent },      
+    { path: 'confVencimiento', component:ConfVencimientoComponent },  
+    { path: 'vencimientos', component:VencimientosComponent },  
+    { path: '', pathMatch: 'full', redirectTo: '/wellcome' },    
     { 
       path:'diagr',
       component: DiagramacionComponent,

@@ -21,6 +21,16 @@ export class CONSTANTES_CHOFER {
     return 'AUX';
   }
 
+  public static readonly CARNET_NATIONAL=1; 
+  public static readonly CARNET_NATIONAL_STR='NAC CNRT'; 
+  public static readonly CARNET_PROVINCIAL=2; 
+  public static readonly CARNET_PROVINCIAL_STR='PROV'; 
+
+  public static readonly ESTADOS_CARNETS = [
+    { codigo: CONSTANTES_CHOFER.CARNET_NATIONAL, descripcion: CONSTANTES_CHOFER.CARNET_NATIONAL_STR  },
+    { codigo: CONSTANTES_CHOFER.CARNET_PROVINCIAL, descripcion: CONSTANTES_CHOFER.CARNET_PROVINCIAL_STR },
+  ];   
+
   public static readonly HABILITADO = 0;
   public static readonly HABILITADO_STR = 'HABILITADO';
   public static readonly DESHABILITADO = 1;
