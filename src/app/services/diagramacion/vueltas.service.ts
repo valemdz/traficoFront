@@ -224,8 +224,8 @@ export class VueltasService {
   getFullVueltas$() {
 
     return this._ds.getFullVueltas$( this._us.usuario.empresa,
-                           FuncionesGrales.fromFecha( this.locale, this.inicio, Constantes.FECHA_PATTERN),
-                          FuncionesGrales.fromFecha( this.locale, this.fin, Constantes.FECHA_PATTERN) );
+                           FuncionesGrales.fromFecha( this.locale, this.inicio, ConstantesGrales.FECHA_PATTERN),
+                          FuncionesGrales.fromFecha( this.locale, this.fin, ConstantesGrales.FECHA_PATTERN) );
 
   }
 
