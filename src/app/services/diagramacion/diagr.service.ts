@@ -132,14 +132,21 @@ export class DiagrService {
   getVueltas$( idEmpresa: String, idLinea: String, inicio: any, fin: any ){
       const url = this.urlBase + `/diagr/empresa/${idEmpresa}/linea/${idLinea}/fechaInicio/${inicio}/fechaFin/${fin}/vueltas`;
       return this.http.get(url)
-      .pipe( map( ( v: any) => {                         
+      .pipe( map( ( v: any) => {
                           v.forEach(ele => {
                             ele.servicio.servicioPK.serFechaHora = new Date( ele.servicio.servicioPK.serFechaHora);
-                            ele.servicioRet.servicioPK.serFechaHora = new Date( ele.servicioRet.servicioPK.serFechaHora);                            
-                          });                          
+                            ele.servicioRet.servicioPK.serFechaHora =
+                            new Date( ele.servicioRet.servicioPK.serFechaHora);
+                          });
                 return v;
               } ));
   } 
+
+  getFullVueltas$( idEmpresa: String,  inicio: any, fin: any ) {
+    const url = this.urlBase + `/diagr/empresa/${idEmpresa}/fechaInicio/${inicio}/fechaFin/${fin}/fullVueltas`;
+   console.log('FULL VUELTAS ', this.http.get(url));
+    return this.http.get(url);
+}
 
   deleteVuelta$( idVuelta ){
     const url = this.urlBase + `/diagr/vuelta/${idVuelta}`;

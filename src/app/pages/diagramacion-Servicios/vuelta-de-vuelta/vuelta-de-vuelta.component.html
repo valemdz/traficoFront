@@ -1,8 +1,8 @@
-<ng-container *ngIf="!_vv.vuelta||_vv.editable">
+<ng-container   *ngIf="!_vv.vuelta||_vv.editable">
 
     <form #f="ngForm" [formGroup]="formVueltas" (ngSubmit)="salvarForm( f )" ngNativeValidate>
-        <div class="table-responsive">
-            <table class="table">
+        <div  data-html2canvas-ignore="true"  class="table-responsive tableexport-ignore">
+            <table class="table" name="excel">
                 <thead>
                     <tr>
                         <th class="col-xs-1"><strong>Servicio Ida</strong></th>
@@ -62,12 +62,12 @@
                                 <i title="Cancelar" class="fa fa-window-close fa-2x red" data-toggle="tooltip"
                                     animation="true" data-placement="top" onmouseenter="$(this).tooltip('show')"
                                     aria-hidden="true"></i></button>
-                            <button type="submit" class="btn btn-xs botonVuelta">
+                            <button   data-html2canvas-ignore="true"  type="submit" class="btn btn-xs botonVuelta">
                                 <i title="Guardar" data-toggle="tooltip" animation="true" data-placement="top"
                                     onmouseenter="$(this).tooltip('show')" class="fa fa-floppy-o fa-2x green"
                                     aria-hidden="true"></i>
                             </button>
-                            <button *ngIf="_vv.vuelta" type="button" (click)="eliminarVta()" class="btn btn-xs botonVuelta">
+                            <button    data-html2canvas-ignore="true"  *ngIf="_vv.vuelta" type="button" (click)="eliminarVta()" class="btn btn-xs botonVuelta">
                                 <i title="Eliminar" data-toggle="tooltip" animation="true" data-placement="top"
                                     onmouseenter="$(this).tooltip('show')" class="fa fa-trash fa-2x red" aria-hidden="true"></i>
                             </button>                           
@@ -106,6 +106,6 @@
     </form>
 
 </ng-container>
-<ng-container *ngIf="_vv.vuelta&&!_vv.editable">
+<ng-container  *ngIf="_vv.vuelta&&!_vv.editable" >
     <app-view-vuelta-de-vuelta [serv]="_vv.serv" (onEditable)="cambiarEditable($event)"></app-view-vuelta-de-vuelta>
 </ng-container>
