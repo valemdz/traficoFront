@@ -18,7 +18,9 @@ import { VueltasService,
          UsuarioService,
          LoaderService,
          VencimientoService,
-         ErrorsHandler} from './service.index';
+         PaginationService,
+         ErrorsHandler,
+         PermisoService} from './service.index';
          
 
 
@@ -43,7 +45,9 @@ import { VueltasService,
                 ViajeEspServive,
                 ModalService,
                 VencimientoService,
-                ErrorsHandler
+                PaginationService,
+                ErrorsHandler,
+                PermisoService
              ]
 })
 export class ServiceModule { }

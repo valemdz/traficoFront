@@ -47,14 +47,13 @@ export class ModalPlaceHolderComponent implements OnInit, AfterViewInit, OnDestr
 
   loadComponent() {   
 
+    let viewContainerRef = this.adHost.viewContainerRef;  
+    viewContainerRef.clear();         
+
     if( this.componentItem  ){      
 
       let componentFactory =
-            this.componentFactoryResolver.resolveComponentFactory(this.componentItem.component);
-  
-      let viewContainerRef = this.adHost.viewContainerRef;
-  
-      viewContainerRef.clear();         
+            this.componentFactoryResolver.resolveComponentFactory(this.componentItem.component);      
   
       let componentRef = viewContainerRef.createComponent(componentFactory);
       (<ComponenteBaseComponent>componentRef.instance).data = this.componentItem.data;       

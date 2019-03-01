@@ -1,0 +1,9 @@
+<br>
+<h1 mat-dialog-title>Eliminación</h1>
+<div mat-dialog-content>  
+  <p>{{data.titulo}}</p>
+</div>  
+<div mat-dialog-actions>
+  <button mat-button (click)="onNoClick()">Cancelar</button>
+  <button mat-button [mat-dialog-close]="true" cdkFocusInitial>Ok</button>  
+</div>

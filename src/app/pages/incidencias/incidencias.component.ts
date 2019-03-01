@@ -1,7 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
-import { Observable, Subscription } from 'rxjs';
-import { AlertService, ErrorService, ModalService, UsuarioService, IncidenciaService } from 'src/app/services/service.index';
+import { Subscription } from 'rxjs';
+import { ErrorService, ModalService, UsuarioService, IncidenciaService } from 'src/app/services/service.index';
 import { IncidenciaComponent } from './incidencia/incidencia.component';
 import { Incidencia, ConstantesGrales } from 'src/app/models/model.index';
 import { PaginationPage, Table, PaginationPropertySort } from 'src/app/shared/pagination/pagination.index';
@@ -54,6 +54,10 @@ export class IncidenciasComponent implements OnInit, OnDestroy  {
         if ( this.subscription) { this.subscription.unsubscribe(); }
         if ( this.listadoSubcription ) { this.listadoSubcription.unsubscribe(); }
         if ( this.deleteIncSubscription ){ this.deleteIncSubscription.unsubscribe(); }
+        if( this._ms ){
+            this._ms.clearComponent();            
+        }
+
     }
 
     mostrarDetalle(): void {

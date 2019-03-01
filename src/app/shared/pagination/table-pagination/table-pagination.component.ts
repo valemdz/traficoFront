@@ -4,6 +4,7 @@ import {Table} from '../table';
 import {showLoading, hideLoading, doNothing} from "../commons"
 import * as Rx from "rxjs/Rx";
 import { Observable } from 'rxjs';
+import { PaginationService } from 'src/app/services/service.index';
 
 
 @Component({
@@ -17,6 +18,8 @@ export class TablePaginationComponent implements OnInit, OnChanges {
     @Input() page: PaginationPage<any>;
 
     pagesIndexes: Array<number> = [];
+
+    constructor( private paginationService: PaginationService ){}
 
     ngOnInit() {
 
@@ -74,8 +77,8 @@ export class TablePaginationComponent implements OnInit, OnChanges {
     }
 
     private getSort(): PaginationPropertySort {
-        if (this.page.sort != null && this.page.sort.length > 0) {
-            return this.page.sort[0];
+        if ( this.paginationService != null ) {            
+            return this.paginationService.sort;
         } else {
             return null;
         }

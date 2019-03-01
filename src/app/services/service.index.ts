@@ -1,3 +1,5 @@
+export { PermisoService } from "./permisos/permiso.service";
+export { PaginationService } from "./pagination/pagination.service";
 export { VencimientoService } from "./vencimientos/vencimiento.service";
 export { ErrorsHandler } from "./ErrorsHandler ";
 export { ModalService } from "./modal/modal.service";

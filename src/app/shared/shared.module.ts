@@ -23,6 +23,7 @@ import { TableElementsCountComponent,
          TableSortComponent } from './pagination/pagination.index';
 import { ModalPlaceHolderComponent } from './modal/modal.place.holder.component';
 import { AddComponenteDirective } from './modal/add.componente.directive';
+import { ConfirmarDeleteComponent } from './confirmar-delete/confirmar-delete.component';
 
 
 @NgModule({
@@ -53,7 +54,8 @@ import { AddComponenteDirective } from './modal/add.componente.directive';
                   ModalSiNoComponent,
                   HeaderComponent,
                   NoPageFoundComponent,
-                  AlertComponent  ],
+                  AlertComponent,
+                  ConfirmarDeleteComponent ],
   exports:[
     CommonModule,
     ReactiveFormsModule,
@@ -76,6 +78,7 @@ import { AddComponenteDirective } from './modal/add.componente.directive';
     NoPageFoundComponent,
     AlertComponent
   ],
+  entryComponents:[ ConfirmarDeleteComponent],
   schemas: [
     CUSTOM_ELEMENTS_SCHEMA
   ]

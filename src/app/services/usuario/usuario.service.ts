@@ -6,10 +6,7 @@ import { Router } from '@angular/router';
 import { map, catchError  } from 'rxjs/operators';
 import swal from 'sweetalert';
 import { of } from 'rxjs/internal/observable/of';
-import { Usuario } from 'src/app/models/model.index';
-
-
-
+import { Usuario, LoginResponse } from 'src/app/models/model.index';
 
 @Injectable()
 export class UsuarioService{
@@ -25,22 +22,13 @@ export class UsuarioService{
         this.cargarStorage();
     }
 
-    /*guardarStorage( token: string, usuario: Usuario ) {
+      guardarStorage( loginResponse: LoginResponse ) {
         
-        localStorage.setItem( 'token', token );
-        localStorage.setItem( 'usuario', JSON.stringify( usuario ) );    
+        localStorage.setItem( 'token', loginResponse.token );
+        localStorage.setItem( 'usuario', JSON.stringify( loginResponse.usuario ) );    
 
-        this.usuario = usuario;
-        this.token = token;    
-    }*/
-
-    guardarStorage( usuario: Usuario ) {
-        
-        localStorage.setItem( 'token', usuario.token );
-        localStorage.setItem( 'usuario', JSON.stringify( usuario ) );    
-
-        this.usuario = usuario;
-        this.token = usuario.token;    
+        this.usuario = loginResponse.usuario;
+        this.token = loginResponse.token;    
     }
 
     logout() {

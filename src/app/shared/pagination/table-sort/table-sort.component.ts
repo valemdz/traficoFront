@@ -4,6 +4,7 @@ import {Table} from '../table';
 import {showLoading, hideLoading, doNothing} from "../commons"
 import * as Rx from "rxjs/Rx";
 import { Observable } from 'rxjs';
+import { PaginationService } from 'src/app/services/service.index';
 
 
 @Component({
@@ -19,16 +20,20 @@ export class TableSortComponent implements OnInit, OnChanges {
     @Input() page: PaginationPage<any>;
 
     sortDirection: string;
-    sortClass: boolean = false;
+    sortClass: boolean = true;
     sortAscClass: boolean = false;
     sortDescClass: boolean = false;
+
+    constructor( private paginationService: PaginationService ){      
+        paginationService.limpiarSort();
+    }
 
     ngOnInit() {
 
     }
 
-    ngOnChanges(changes) {
-
+    ngOnChanges( changes ) {
+      
         if (changes['page']) {
 
             let defineValues = (s, sa, sd, dir) => {
@@ -36,30 +41,35 @@ export class TableSortComponent implements OnInit, OnChanges {
                 this.sortAscClass = sa;
                 this.sortDescClass = sd;
                 this.sortDirection = dir;
-            };
+            };           
 
-            if (this.page.sort == null) {
+            if ( this.page.sort == null  || !this.page.sort.sorted  ) {
                 defineValues(true, false, false, 'ASC');
                 return;
-            }
-            let one: PaginationPropertySort = this.page.sort.find(e => e.property === this.property);
-
-            if (one == null) {
-                defineValues(true, false, false, 'ASC');
             } else {
-                if (one.direction === 'ASC') {
-                    defineValues(false, true, false, 'DESC');
-                } else {
-                    defineValues(false, false, true, 'ASC');
-                }
-            }
-        }
+            
+                if( this.paginationService.sort != null
+                        && this.paginationService.sort.property === this.property  ) {
+
+                    if ( this.sortDirection === 'ASC') {
+                        defineValues(false, true, false, 'DESC');
+                    } else {
+                        defineValues(false, false, true, 'ASC');
+                    }        
+
+                }else{
+                    defineValues(true, false, false, 'ASC');
+                    return;
+                }                
+            }     
+        }        
     }
 
     sortByProperty() {
 
         let sort: PaginationPropertySort;
         sort = {property: this.property, direction: this.sortDirection};
+        this.paginationService.setSort( sort );
 
         let pageNumber = this.page.number - 1;
         if (pageNumber < 0) {

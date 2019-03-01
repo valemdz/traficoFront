@@ -1,0 +1,29 @@
+<h2 mat-dialog-title>Control de Accesos</h2>
+<mat-dialog-content class="mat-typography">
+    <div *ngFor="let modulo of data.modulos" >                            
+        <div class="panel-heading col-md-12" >{{ modulo.modulo }} </div>
+        <div *ngFor="let permiso of modulo.permisos" class="col-md-12" >                            
+                <div class="col-md-8">{{permiso.descripcionPermiso}}</div>
+                <div class="col-md-4">                        
+
+                        <div *ngIf="permiso.granted">
+                                <a  (click)="revokeGrant( permiso )" data-toggle="modal" data-target="#update-modal">
+                                        <i class="fa fa-toggle-on fa-2x green" aria-hidden="true"></i>
+                                </a>
+                        </div>
+                        <div *ngIf="!permiso.granted">
+                                <a  (click)="revokeGrant( permiso )" data-toggle="modal" data-target="#update-modal"                                        >
+                                        <i class="fa fa-toggle-off fa-2x red" aria-hidden="true"></i>
+                                </a>
+                        </div>
+                </div>   
+        </div>  
+        <br>  
+        <br>  
+</div>  
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-button mat-dialog-close>Cerrar</button>
+  <!-- <button mat-button [mat-dialog-close]="true" cdkFocusInitial>Install</button> -->
+</mat-dialog-actions>
+

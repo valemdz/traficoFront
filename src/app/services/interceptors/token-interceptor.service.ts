@@ -30,7 +30,7 @@ export class TokenInterceptorService implements HttpInterceptor {
 
   private setAuthHeader(req: HttpRequest<any>): HttpRequest<any> {
     const authToken = 'Bearer ' + this.token;
-    const headers = req.headers.set('X-Authorization', authToken);
+    const headers = req.headers.set('Authorization', authToken);
     const authorizedReq = req.clone({ headers });
     return authorizedReq;
   }

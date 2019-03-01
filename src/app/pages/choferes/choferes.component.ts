@@ -19,7 +19,8 @@ declare var swal;
 export class ChoferesComponent implements OnInit, OnDestroy {
 
    choferPage: PaginationPage<any>;
-   self: Table<any>;
+   self: Table<any>;   
+
    listadoSubscription: Subscription;
    deleteChoferSubscription: Subscription;
    estadoSubs: Subscription; 

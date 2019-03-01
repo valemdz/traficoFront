@@ -1,0 +1,14 @@
+<form ngNativeValidate   (ngSubmit)="onClick()">
+      <h1 mat-dialog-title>Grupo</h1>
+      <div mat-dialog-content>          
+        <mat-form-field>
+            <input matInput placeholder="Nombre Grupo" [(ngModel)]="data.groupName" name="groupName" required >            
+          </mat-form-field>
+      </div>
+      <div mat-dialog-actions>
+        <button mat-button (click)="onNoClick()">Cancelar</button>
+        <!-- <button mat-button [mat-dialog-close]="true" cdkFocusInitial>Ok</button> -->
+        <button mat-button  type="submit" cdkFocusInitial>Ok</button>
+      </div>
+</form>
+

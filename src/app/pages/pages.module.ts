@@ -34,6 +34,11 @@ import { VencimientoCarnetComponent } from './vencimiento-carnet/vencimiento-car
 import { DiagrAuxiliaresComponent } from './viajes/diagr-auxiliares/diagr-auxiliares.component';
 import { DiagrViajesEspComponent } from './viajes/diagr-viajes-esp/diagr-viajes-esp.component';
 import { DiagrChoferesComponent } from './viajes/diagr-choferes/diagr-choferes.component';
+import { ErrorAppComponent } from './error-app/error-app.component';
+import { UsuariosComponent } from './permisos/usuarios.component';
+import { GruposComponent } from './permisos/grupos/grupos.component';
+import { GrupoComponent } from './permisos/grupo/grupo.component';
+import { RolesComponent } from './permisos/roles/roles.component';
 
 
 
@@ -67,7 +72,12 @@ import { DiagrChoferesComponent } from './viajes/diagr-choferes/diagr-choferes.c
                   VencimientoCarnetComponent,
                   DiagrAuxiliaresComponent,
                   DiagrChoferesComponent,
-                  DiagrViajesEspComponent     ],
+                  DiagrViajesEspComponent,
+                  ErrorAppComponent,
+                  UsuariosComponent,
+                  GruposComponent,
+                  GrupoComponent,
+                  RolesComponent     ],
                   
   exports:[ WellcomeComponent, 
             ChoferesComponent, 
@@ -96,7 +106,9 @@ import { DiagrChoferesComponent } from './viajes/diagr-choferes/diagr-choferes.c
             VencimientoCarnetComponent,
             DiagrAuxiliaresComponent,
             DiagrChoferesComponent,
-            DiagrViajesEspComponent     ],
+            DiagrViajesEspComponent,
+            ErrorAppComponent,
+            GruposComponent     ],
   imports: [
     CommonModule,    
     SharedModule,
@@ -109,6 +121,8 @@ import { DiagrChoferesComponent } from './viajes/diagr-choferes/diagr-choferes.c
   entryComponents:[ IncidenciaComponent, 
                     VehiculoComponent, 
                     //MyCustomModalComponent, 
-                    IncidenciaByVehiculoComponent ]  
+                    IncidenciaByVehiculoComponent,
+                    GrupoComponent,
+                    RolesComponent ]  
 })
 export class PagesModule { }

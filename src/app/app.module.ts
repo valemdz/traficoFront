@@ -22,6 +22,8 @@ import { NoPageFoundComponent } from './shared/no-page-found/no-page-found.compo
 import { DirectivesModule } from './directives/directives.module';
 
 
+
+
 const appRoutes: Routes = [  
   { path: 'login', component: LoginComponent },  
   { path: 'prueba', component: PruebaComponent },
@@ -33,7 +35,7 @@ const appRoutes: Routes = [
   declarations: [
     AppComponent,    
     LoginComponent,    
-    PagesComponent 
+    PagesComponent
   ],
   imports: [
     BrowserModule,

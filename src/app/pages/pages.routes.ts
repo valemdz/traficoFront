@@ -13,33 +13,39 @@ import { IncidenciaByChoferComponent } from './choferes/incidencia-by-chofer/inc
 import { ChoferComponent } from './choferes/chofer/chofer.component';
 import { VencimientosComponent } from './vencimientos/vencimientos.component';
 import { ConfVencimientoComponent } from './vencimientos/conf-vencimiento/conf-vencimiento.component';
+import { ErrorAppComponent } from './error-app/error-app.component';
+import { GruposComponent } from './permisos/grupos/grupos.component';
+
 
 
 const pagesRoutes: Routes = [
   { path: '',
-  component: PagesComponent,  
-  canActivate: [ LoginGuardGuard ],
-  children: [
-    { path: 'choferes', component: ChoferesComponent },    
-    { path: 'chofer/:id', component: ChoferComponent },     
-    { path: 'incByChofer', component: IncidenciaByChoferComponent  },
-    { path: 'incidencias', component: IncidenciasComponent },    
-    { path: 'vehiculos', component: VehiculosComponent },    
-    { path: 'viajesEspeciales', component: ViajesEspListComponent },     
-    { path: 'wellcome', component: WellcomeComponent },      
-    { path: 'confVencimiento', component:ConfVencimientoComponent },  
-    { path: 'vencimientos', component:VencimientosComponent },  
-    { path: '', pathMatch: 'full', redirectTo: '/wellcome' },    
-    { 
-      path:'diagr',
-      component: DiagramacionComponent,
-      children: [
-        { path: 'idaVtaList', component: IdaVtaListComponent },        
-        { path: 'vuelta/:idLinIda/:idLinVta', component: VueltasComponent },
-        { path: '', pathMatch: 'full', redirectTo: '/idaVtaList' },
-      ]
-     }
-  ]},
+    component: PagesComponent,  
+    canActivate: [ LoginGuardGuard ],
+    children: [
+      { path: 'choferes', component: ChoferesComponent },    
+      { path: 'chofer/:id', component: ChoferComponent },     
+      { path: 'incByChofer', component: IncidenciaByChoferComponent  },
+      { path: 'incidencias', component: IncidenciasComponent },    
+      { path: 'vehiculos', component: VehiculosComponent },    
+      { path: 'viajesEspeciales', component: ViajesEspListComponent },     
+      { path: 'wellcome', component: WellcomeComponent },      
+      { path: 'confVencimiento', component:ConfVencimientoComponent },  
+      { path: 'grupos', component:GruposComponent },  
+      { path: 'vencimientos', component:VencimientosComponent },  
+      { path: '', pathMatch: 'full', redirectTo: '/wellcome' },    
+      { 
+        path:'diagr',
+        component: DiagramacionComponent,
+        children: [
+          { path: 'idaVtaList', component: IdaVtaListComponent },        
+          { path: 'vuelta/:idLinIda/:idLinVta', component: VueltasComponent },
+          { path: '', pathMatch: 'full', redirectTo: '/idaVtaList' },
+        ]
+      },
+      { path:'errorApp', component: ErrorAppComponent }
+    ]
+  },
   
 ];
 
