@@ -221,6 +221,14 @@ export class VueltasService {
       //.subscribe( this.okVueltas.bind( this) );
   }
 
+  getFullVueltas$() {
+
+    return this._ds.getFullVueltas$( this._us.usuario.empresa,
+                           FuncionesGrales.fromFecha( this.locale, this.inicio, ConstantesGrales.FECHA_PATTERN),
+                          FuncionesGrales.fromFecha( this.locale, this.fin, ConstantesGrales.FECHA_PATTERN) );
+
+  }
+
   getVuelta( idaPK ){
     let vuelta =  this.vueltas.find( v  => JSON.stringify( v.servicio.servicioPK ) == JSON.stringify(idaPK ) );
     return vuelta;

@@ -1,4 +1,4 @@
-<div class="table-responsive">
+<div class="table-responsive" >
     <table class="table">
         <thead>
             <tr>
@@ -34,7 +34,7 @@
                 <td> {{internoIda}}</td>
                 <td *ngIf="servRet">{{servRet.servicioPK.serFechaHora | date:'EE HH:mm' }}</td>
                 <td class="actions">
-                    <button type="button" class="btn btn-xs botonVuelta" (click)="editar()">
+                    <button  data-html2canvas-ignore="true" type="button" class="btn btn-xs botonVuelta" (click)="editar()">
                         <i title="Modificar" data-toggle="tooltip" animation="true" data-placement="top" onmouseenter="$(this).tooltip('show')"
                                 class="fa fa-edit fa-2x green" aria-hidden="true"></i>
                     </button>

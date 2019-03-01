@@ -23,13 +23,18 @@
         "@angular/platform-browser-dynamic": "^6.1.0",
         "@angular/router": "^6.1.0",
         "@auth0/angular-jwt": "^2.1.0",
+        "@types/html2canvas": "0.0.35",
+        "@types/jspdf": "^1.2.2",
         "bootstrap": "^3.3.7",
         "core-js": "^2.5.4",
+        "html2canvas": "^1.0.0-alpha.12",
+        "jspdf": "^1.5.3",
         "moment": "^2.22.2",
         "ng2-datetime-picker": "^0.15.1",
         "rxjs": "~6.2.0",
         "rxjs-compat": "^6.3.3",
         "sweetalert": "^2.1.2",
+        "tableexport": "^5.2.0",
         "zone.js": "~0.8.26"
     },
     "devDependencies": {
