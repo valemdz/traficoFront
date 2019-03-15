@@ -1,0 +1,68 @@
+
+<mat-dialog-content class="mat-typography">
+ <div class="row"> 
+    <div class="col-md-6" > 
+        <form ngNativeValidate   (ngSubmit)="onClick()">
+            <h1 mat-dialog-title>Grupo [{{ usuario.nombre }}]</h1>
+            <mat-form-field>
+                <mat-select placeholder="Seleccione Grupo"                
+                (selectionChange)="select($event.value)" [formControl]="grupoControl"  required>
+                  <mat-option>--</mat-option>
+                  <mat-option *ngFor="let grupo of grupos" [value]="grupo" >
+                    {{grupo.groupName}}
+                  </mat-option>
+                </mat-select>
+                <mat-error *ngIf="grupoControl.hasError('required')">Seleccione un grupo</mat-error>
+                
+            </mat-form-field>
+            <div mat-dialog-actions>
+              <button mat-button [mat-dialog-close]="null">Cancelar</button>      
+              <button mat-button  type="submit" cdkFocusInitial>Ok</button>
+            </div>            
+        </form>    
+    </div>                  
+    <div class="col-md-6" > 
+      <div *ngIf="grupoForm()">
+        <div *ngIf="modulos">     
+            <div *ngFor="let modulo of modulos" >                            
+                  <div class="panel-heading col-md-12" >{{ modulo.modulo }} </div>
+                  <div *ngFor="let permiso of modulo.permisos" class="col-md-12" >                            
+                          <div class="col-md-8">{{permiso.descripcionPermiso}}</div>
+                          <div class="col-md-4">                        
+          
+                                  <div *ngIf="permiso.granted">
+                                          <a  (click)="revokeGrant( permiso )" data-toggle="modal" data-target="#update-modal">
+                                                  <i class="fa fa-toggle-on fa-2x green" aria-hidden="true"></i>
+                                          </a>
+                                  </div>
+                                  <div *ngIf="!permiso.granted">
+                                          <a  (click)="revokeGrant( permiso )" data-toggle="modal" data-target="#update-modal"                                        >
+                                                  <i class="fa fa-toggle-off fa-2x red" aria-hidden="true"></i>
+                                          </a>
+                                  </div>
+                          </div>   
+                  </div>  
+                  <br>  
+                  <br>  
+            </div>  
+         </div>          
+      </div>  
+      <div *ngIf="!grupoForm()"  [ngStyle]="{'height.px':200}">  
+          <pre>Seleccione un Grupo</pre>          
+      </div> 
+    </div>  
+  </div>    
+</mat-dialog-content>    
+
+
+<!-- <form [formGroup]="_selectPaymentPlanForm" (ngSubmit) = "cmdSelectPaymentPlan_click()" novalidate>
+    <mat-form-field class="input-width">
+        <mat-select placeholder="Plans" formControlName="plans" (selectionChange)="select(plan)"  required>
+            <mat-option *ngFor="let plan of plans" [value]="plan.name">
+              {{ plan.name }}
+            </mat-option>
+        </mat-select>
+    </mat-form-field>
+    <br/>
+    ...
+ </form> -->

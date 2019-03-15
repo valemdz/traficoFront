@@ -15,7 +15,6 @@ export class RolesComponent implements OnInit {
                public _ps: PermisoService ) { }
 
   ngOnInit() {   
-    console.log( this.data );
   } 
 
   revokeGrant( permiso: Permiso ){    

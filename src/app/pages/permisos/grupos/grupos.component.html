@@ -1,12 +1,16 @@
 <br>
+<br>
 <ng-container *ngIf="groupPage != null">
   <div id="list" class="row animated fadeIn ">
       <div class="table-responsive col-md-12">
           <table class="table table-striped table-hover" cellspacing="0" cellpadding="0">
               <thead>
                   <tr>
+                     <th>
+                          <app-table-sort [table]="self" [page]="groupPage" [label]="'Empresa'" [property]="'empresa'"></app-table-sort>
+                     </th>
                       <th>
-                          <app-table-sort [table]="self" [page]="groupPage" [label]="'Nombre Grupo'" [property]="'groupName'"></app-table-sort>
+                          <app-table-sort [table]="self" [page]="groupPage" [label]="'Nombre Perfil'" [property]="'groupName'"></app-table-sort>
                       </th>
                       <th>
                           <app-table-sort [table]="self" [page]="groupPage" [label]="'Creado'" [property]="'created'"></app-table-sort>
@@ -19,6 +23,7 @@
               </thead>
               <tbody>
                   <tr *ngFor="let grupo of groupPage.content">
+                      <td>{{ grupo.empresa }}</td>
                       <td>{{ grupo.groupName }}</td>
                       <td>{{ grupo.created | date:'EEE dd/MM/yyyy HH:mm'  }}</td>
                       <td>{{ grupo.modified  | date:'EEE dd/MM/yyyy HH:mm'  }}</td>                      

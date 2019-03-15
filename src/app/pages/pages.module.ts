@@ -39,6 +39,8 @@ import { UsuariosComponent } from './permisos/usuarios.component';
 import { GruposComponent } from './permisos/grupos/grupos.component';
 import { GrupoComponent } from './permisos/grupo/grupo.component';
 import { RolesComponent } from './permisos/roles/roles.component';
+import { UsuarioComponent } from './permisos/usuario/usuario.component';
+import { DirectivesModule } from '../directives/directives.module';
 
 
 
@@ -77,7 +79,8 @@ import { RolesComponent } from './permisos/roles/roles.component';
                   UsuariosComponent,
                   GruposComponent,
                   GrupoComponent,
-                  RolesComponent     ],
+                  RolesComponent,
+                  UsuarioComponent     ],
                   
   exports:[ WellcomeComponent, 
             ChoferesComponent, 
@@ -116,13 +119,15 @@ import { RolesComponent } from './permisos/roles/roles.component';
     FormsModule,
     ReactiveFormsModule,
     PipesModule,
-    MaterialModule    
+    MaterialModule,
+    DirectivesModule     
   ], 
   entryComponents:[ IncidenciaComponent, 
                     VehiculoComponent, 
                     //MyCustomModalComponent, 
                     IncidenciaByVehiculoComponent,
                     GrupoComponent,
-                    RolesComponent ]  
+                    RolesComponent,                    
+                    UsuarioComponent ]  
 })
 export class PagesModule { }

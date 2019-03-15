@@ -1,5 +1,8 @@
+import { Grupo } from "./model.index";
+
+
 export interface UsuarioPk{
-    empresa: String;
+    empresa: string;
     legajo:number;
 }
 
@@ -22,23 +25,16 @@ export interface LoginResponse{
     mensaje?: string;
 }
 
-
-/*export interface Me{
-    username: string;
-}*/
-
-/*export interface Usuario{
-    username?: string;
-    password?: string;
-    name?: string;
-    empresa?: string;
-    token?: string;
-}*/
-
-/*export interface UserLogueado{
+export interface UsuarioWithGrupo{
+    usuarioPk: UsuarioPk;
     empresa: string;
-    name: string;
-    refreshToken: string;
-    token: string;
-    username:string;
-}*/
+    legajo:	number;
+    username: string;    
+    nombre:	string;
+    agencia: number;
+    estado: boolean;
+    email:string;
+    group: Grupo;	
+}
+
+

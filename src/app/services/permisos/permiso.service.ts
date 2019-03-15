@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { Grupo } from 'src/app/models/model.index';
 import { MatSnackBar } from '@angular/material';
-import { map } from 'rxjs/operators';
+import { map, catchError } from 'rxjs/operators';
+import { throwError } from 'rxjs';
 
 @Injectable()
 export class PermisoService {
@@ -13,13 +14,18 @@ export class PermisoService {
   constructor( private http: HttpClient,
                private snackBar: MatSnackBar ) { }
 
-  getGrupos$( empresa: string){
-    const url = this.urlBase + '/permisos/grupos';
-    return this.http.get( url );
+  getGrupos$( params ){
+    const url = this.urlBase + `/permisos/grupos`;
+    return this.http.get( url, params );
+  }             
+
+  getGruposByEmpresa$( empresa: string, params){
+    const url = this.urlBase + `/permisos/grupos/${empresa}`;
+    return this.http.get( url, params );
 
   }
 
-  saveGrupo$( grupo: Grupo ){
+  saveGrupo$( grupo: Grupo,  ){
     if( grupo.id ){ 
       return this.updateGrupo( grupo );
     }else{
@@ -59,12 +65,22 @@ export class PermisoService {
     const url = this.urlBase + `/permisos/grupos/${grupo.id}`;
     return this.http.delete( url )
                .pipe( 
-                 map( resp => {
-                  this.snackBar.open( 'Grupo eliminado con exito!!!', 'X', {
-                    duration: 2000,
-                  });
-                  return;
-                 }) 
+                  map( resp => {
+                    this.snackBar.open( 'Grupo eliminado con exito!!!', 'X', {
+                      duration: 2000,
+                    });
+                    return;
+                  }),
+                  catchError( err => {  
+                    
+                    if (err instanceof HttpErrorResponse) {
+                      if( err.status == 409 ){
+                        this.snackBar.open( 'No puede eliminarse el Grupo. Dado que esta asociado a algun usuario', 'X', 
+                        { duration: 10000  });
+                      }
+                    }                                   
+                    return throwError(err);
+                  }) 
                );
 
   }
@@ -91,6 +107,30 @@ export class PermisoService {
                     return resp;
                   })
                ) ;
+ }
+
+ getUsuarios$( params ){
+  const url = this.urlBase + `/usuarios`;
+  return this.http.get(url, params);
+}
+
+ getUsuariosByEmpresa$( empresa: string, params ){
+    const url = this.urlBase + `/usuarios/${empresa}`;
+    return this.http.get(url, params);
+ }
+
+ updateGrupo$( username: string, grupo: Grupo ){
+  const url = this.urlBase + `/usuarios/${username}/changeGrupo`;
+  return this.http.put( url, grupo)
+             .pipe(
+               map( resp => {
+                  this.snackBar.open( 'Grupo asignado!!!', 'X', {
+                      duration: 2000,
+                  });
+                  return resp;
+               })
+             ) ;
+
  }
 
 

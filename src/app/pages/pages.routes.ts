@@ -15,6 +15,7 @@ import { VencimientosComponent } from './vencimientos/vencimientos.component';
 import { ConfVencimientoComponent } from './vencimientos/conf-vencimiento/conf-vencimiento.component';
 import { ErrorAppComponent } from './error-app/error-app.component';
 import { GruposComponent } from './permisos/grupos/grupos.component';
+import { UsuariosComponent } from './permisos/usuarios.component';
 
 
 
@@ -32,6 +33,7 @@ const pagesRoutes: Routes = [
       { path: 'wellcome', component: WellcomeComponent },      
       { path: 'confVencimiento', component:ConfVencimientoComponent },  
       { path: 'grupos', component:GruposComponent },  
+      { path: 'usuarios', component:UsuariosComponent },  
       { path: 'vencimientos', component:VencimientosComponent },  
       { path: '', pathMatch: 'full', redirectTo: '/wellcome' },    
       { 

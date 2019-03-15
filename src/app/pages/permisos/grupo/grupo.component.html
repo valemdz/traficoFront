@@ -1,13 +1,23 @@
-<form ngNativeValidate   (ngSubmit)="onClick()">
+<form ngNativeValidate   (ngSubmit)="onClick()" [formGroup]="formGrupo" >
       <h1 mat-dialog-title>Grupo</h1>
-      <div mat-dialog-content>          
+      <div mat-dialog-content>  
         <mat-form-field>
-            <input matInput placeholder="Nombre Grupo" [(ngModel)]="data.groupName" name="groupName" required >            
-          </mat-form-field>
+          <mat-select placeholder="Seleccione Empresa"                
+                formControlName ="empresa"  empresa required>
+            <mat-option>--</mat-option>
+            <mat-option *ngFor="let empresa of empresas" [value]="empresa" >
+              [{{empresa.empCodigo}}] - {{empresa.nombre}}
+            </mat-option>
+          </mat-select>             
+        </mat-form-field>        
+        <mat-form-field>
+            <input  matInput placeholder="Nombre Grupo" formControlName="groupName" 
+             required uppercase />            
+        </mat-form-field>
+        <mat-error *ngIf="formGrupo.hasError('required')">Seleccione un grupo</mat-error>
       </div>
       <div mat-dialog-actions>
-        <button mat-button (click)="onNoClick()">Cancelar</button>
-        <!-- <button mat-button [mat-dialog-close]="true" cdkFocusInitial>Ok</button> -->
+        <button mat-button [mat-dialog-close]="null">Cancelar</button>       
         <button mat-button  type="submit" cdkFocusInitial>Ok</button>
       </div>
 </form>

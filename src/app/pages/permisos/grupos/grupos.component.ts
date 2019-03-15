@@ -1,12 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { PermisoService, UsuarioService } from 'src/app/services/service.index';
-import { PaginationPage } from 'src/app/shared/pagination/pagination';
+import { PaginationPage, PaginationPropertySort } from 'src/app/shared/pagination/pagination';
 import { Table } from 'src/app/shared/pagination/table';
-import { Grupo, Modulo, Rol } from 'src/app/models/model.index';
+import { Grupo, Modulo, Rol, ConstantesGrales, Empresa } from 'src/app/models/model.index';
 import { MatDialog } from '@angular/material';
 import { GrupoComponent } from '../grupo/grupo.component';
 import { ConfirmarDeleteComponent } from 'src/app/shared/confirmar-delete/confirmar-delete.component';
 import { RolesComponent } from '../roles/roles.component';
+import { FuncionesGrales } from 'src/app/utiles/funciones.grales';
 
 @Component({
   selector: 'app-grupos',
@@ -14,7 +15,7 @@ import { RolesComponent } from '../roles/roles.component';
   styles: []
 })
 export class GruposComponent implements OnInit {
-
+  empresas:Empresa[];
   groupPage: PaginationPage<any>;
   self: Table<any>; 
 
@@ -23,16 +24,29 @@ export class GruposComponent implements OnInit {
                public _us: UsuarioService ) { }
 
   ngOnInit() {
-      this.getGrupos(); 
+      this.mostrarDetalle();
   }
 
-  getGrupos(){
-      this.permisoService.getGrupos$('')
-        .subscribe( this.okGrupos.bind( this ) );
+  mostrarDetalle(): void {  
+    this.fetchPage(0, ConstantesGrales.ROWS_BY_PAGE, null);
   }
+  
+  fetchPage(pageNumber: number, pageSize: number, sort: PaginationPropertySort) {
 
-  okGrupos( gruposPage ){
-    this.groupPage = gruposPage;
+    let params = FuncionesGrales.toParams( pageNumber, pageSize, sort );      
+
+    /*this.permisoService.getGruposByEmpresa$( this._us.usuario.empresa, params )
+    .subscribe( this.okGrupos.bind( this ) );*/
+
+    this.permisoService.getGrupos$( params )
+    .subscribe( this.okGrupos.bind( this ) );
+
+    this.self = this; 
+  } 
+
+  okGrupos( respuesta ){
+    this.groupPage = respuesta.grupos;
+    this.empresas = respuesta.empresas;    
   }
 
   crearGrupo(){    
@@ -47,21 +61,21 @@ export class GruposComponent implements OnInit {
   openModalGrupo( grupo: Grupo ){    
 
     const dialogRef = this.dialog.open( GrupoComponent, {
-      width: '250px',
-      data: grupo      
+      width: '300px',
+      data:{ grupo: grupo, empresas: this.empresas }      
     });
 
-    dialogRef.afterClosed().subscribe( si => {
-      if( si ){
-          this.saveGrupo( grupo );         
-      }
+    dialogRef.afterClosed().subscribe( grupo => {        
+        if( grupo ){
+            this.saveGrupo( grupo );         
+        }
     } );
 
   } 
   
   saveGrupo( grupo: Grupo ){
     this.permisoService.saveGrupo$( grupo )
-        .subscribe( () =>  this.getGrupos()  );
+        .subscribe( () => this.mostrarDetalle() );
   }
 
   deleteGrupo( grupo: Grupo ){
@@ -74,7 +88,7 @@ export class GruposComponent implements OnInit {
     confirmDelete.afterClosed().subscribe( siDelete => {      
         if(  siDelete ) {
             this.permisoService.deleteGrupo$( grupo )
-                .subscribe( ()=> this.getGrupos() );
+                .subscribe( ()=> this.mostrarDetalle() );
         }
     } );
 
@@ -85,11 +99,11 @@ export class GruposComponent implements OnInit {
   permisosGrupo( grupo: Grupo ){
 
     this.permisoService.getModulos$()
-        .subscribe( modulos => { this.okRoles( modulos, grupo ) } );    
+        .subscribe( modulos => { this.openRoles( modulos, grupo ) } );    
 
   }
 
-  okRoles( modulos,  grupo: Grupo ){
+  openRoles( modulos,  grupo: Grupo ){
 
     this.completarRolesconPermisoGrupo( grupo.roles , modulos); 
 
@@ -97,7 +111,7 @@ export class GruposComponent implements OnInit {
       data: { modulos: modulos, idGrupo: grupo.id }
     } );
 
-    dialogRef.afterClosed().subscribe();
+    dialogRef.afterClosed().subscribe( ()=> this.mostrarDetalle() );
 
   }
 

@@ -1,12 +1,15 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { UpperCaseText } from './UpperCaseText';
+import { TienePermisoDirective } from './tiene-permiso.directive';
+import { UppercaseDirective } from './uppercase.directive';
+//import { UppercaseDirective } from './uppercase.directive';
+
 
 @NgModule({
   imports: [
     CommonModule
   ],
-  declarations: [ UpperCaseText],
-  exports: [ UpperCaseText ]
+  declarations: [ TienePermisoDirective, UppercaseDirective ],
+  exports: [ TienePermisoDirective, UppercaseDirective ]
 })
 export class DirectivesModule { }

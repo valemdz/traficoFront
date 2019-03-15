@@ -16,21 +16,28 @@ import { map } from 'rxjs/operators';
 })
 export class PruebaComponent implements OnInit,  OnDestroy  {
 
-  show=false;
-  
-  value$ = forkJoin(
-    getSingleValueObservable(),
-    getDelayedValueObservable()
-  ).pipe(
-    map( ( [ first , second ]) => {
-            return { first, second};   
-        }
-    )
-  );
+  constructor( private _us: UsuarioService ){
 
-  
+  }
+
+  permisos = [ 'ROLE_USUARIOS_LISTAR', 'ROLE_USUARIOS_MODIFICAR', 
+              'ROLE_USUARIOS_TODOS_LISTAR', 'ROLE_ADMIN'];
+
+
+  usuarios = [ 'ROLE_USUARIOS_TODOS_LISTAR*', 'ROLE_ADMIN' ];            
 
   ngOnInit(): void {    
+
+  let tienePermiso = false;  
+
+   console.log( this._us.usuario.authorities );
+
+    this.permisos.forEach( p => {
+        const encontro =  this._us.usuario.authorities.find( a => a.authority === p  )?true:false;       
+        console.log( encontro );         
+        tienePermiso = tienePermiso || encontro ;
+     });    
+
   }
 
   // Multi value observables must manually

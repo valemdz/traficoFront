@@ -47,8 +47,20 @@ export class FuncionesGrales {
           params = params.append('sort', `${sort.property},${sort.direction}`);
       }
       return {params};
-  }
+    }
  
+    public static toParamsWithBusqueda( busqueda: string, page: number, pageSize: number, sort: PaginationPropertySort ){
+
+      let params = new HttpParams()
+      .set('busqueda', `${busqueda}`)
+      .set('size', `${pageSize}`)
+      .set('page', `${page}`);
+
+      if (sort != null) {
+          params = params.append('sort', `${sort.property},${sort.direction}`);
+      }
+      return {params};
+    }
 
   public static diffDias( inicio: Date, fin: Date ) {
     const fechaInicio = inicio.getTime();

@@ -17,15 +17,31 @@
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav">
-                    <li><a [routerLink]="['/choferes']">Personal</a></li>
-                    <li><a [routerLink]="['/incidencias']">Incidencias</a></li>
-                    <li><a [routerLink]="['/vehiculos']">Unidades</a></li>
-                    <li><a [routerLink]="['/viajesEspeciales']">Viajes Especiales</a></li>
+                    <li><a [routerLink]="['/choferes']" 
+                           [appTienePermiso]="['ROLE_CHOFERES_LISTAR']" >Personal</a></li>
+                    <li><a [routerLink]="['/incidencias']"
+                           [appTienePermiso]="['ROLE_INCIDENCIAS_LISTAR']" >Incidencias</a></li>
+                    <li><a [routerLink]="['/vehiculos']"
+                           [appTienePermiso]="['ROLE_UNIDADES_LISTAR']"  >Unidades</a></li>
+                    <li><a [routerLink]="['/viajesEspeciales']"
+                           [appTienePermiso]="['ROLE_VIAJES_ESPECIALES_LISTAR']"  >Viajes Especiales</a></li>
                     <!--li><a [routerLink]="['/diagramacion']">Diagramacion</a></li-->
-                    <li><a [routerLink]="['/diagr/idaVtaList']">Diagramación</a></li>
-                    <li><a [routerLink]="['/confVencimiento']">Conf Vencimiento</a></li>
-                    <li><a [routerLink]="['/vencimientos']">Vencimientos</a></li>
-                    <li><a [routerLink]="['/grupos']">Grupos</a></li>
+                    <li><a [routerLink]="['/diagr/idaVtaList']" 
+                           [appTienePermiso]="['ROLE_DIAGRAMACION_LISTAR']" >Diagramación</a></li>
+                    <li><a [routerLink]="['/confVencimiento']"
+                           [appTienePermiso]="['ROLE_CONF_VENCIMIENTOS_LISTAR']" >Conf Vencimiento</a></li>
+                    <li><a [routerLink]="['/vencimientos']"
+                           [appTienePermiso]="['ROLE_VENCIMIENTOS_LISTAR']" >Vencimientos</a></li>
+                    <li><a [routerLink]="['/grupos']"
+                           [appTienePermiso]="['ROLE_GRUPOS_LISTAR','ROLE_GRUPOS_TODOS_LISTAR']" >
+                           Perfiles
+                        </a>
+                    </li>
+                    <li><a [routerLink]="['/usuarios']"
+                           [appTienePermiso]="['ROLE_USUARIOS_LISTAR','ROLE_USUARIOS_MODIFICAR','ROLE_USUARIOS_TODOS_LISTAR' ]" >
+                           Usuarios
+                        </a>
+                    </li>
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
                     <li class="dropdown">

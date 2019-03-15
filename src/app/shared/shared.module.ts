@@ -24,6 +24,7 @@ import { TableElementsCountComponent,
 import { ModalPlaceHolderComponent } from './modal/modal.place.holder.component';
 import { AddComponenteDirective } from './modal/add.componente.directive';
 import { ConfirmarDeleteComponent } from './confirmar-delete/confirmar-delete.component';
+import { DirectivesModule } from '../directives/directives.module';
 
 
 @NgModule({
@@ -35,7 +36,8 @@ import { ConfirmarDeleteComponent } from './confirmar-delete/confirmar-delete.co
     CommonModule,    
     PipesModule,    
     MaterialModule,    
-    RouterModule
+    RouterModule,
+    DirectivesModule   
   ],
   declarations: [ MensajesComponent,
                   AlertComponent,

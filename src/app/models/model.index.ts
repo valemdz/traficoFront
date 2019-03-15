@@ -14,3 +14,4 @@ export * from './constantes-viajes.model';
 export * from './constantes-vehiculos.model';
 export * from './vencimiento.model';
 export * from './permiso.model';
+export * from './empresa.model';

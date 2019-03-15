@@ -13,7 +13,7 @@ export class ErrorAppComponent implements OnInit {
   }
 
   ngOnInit() {
-     this.errorApp = this.route.snapshot.paramMap.get( 'error' );
+     this.errorApp = this.route.snapshot.paramMap.get( 'error' );     
   }
 
 }

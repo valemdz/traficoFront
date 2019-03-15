@@ -1,3 +1,78 @@
-<p>
-  usuarios works!
-</p>
+<br>
+<br>
+<br>
+<br>
+<ng-container *ngIf="usuariosPage != null" >
+  
+    <div class='container'>
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body">
+                    <input #busqueda type='text' 
+                           (keyup.enter)="buscarUsuarios( busqueda.value)" 
+                           placeholder="Buscar Usuario por el Legajo o Nombre"                           
+                           class="form-control" uppercase >
+                </div>
+            </div>
+        </div>
+    </div>      
+    
+  <div id="list" class="row animated fadeIn ">
+      <div class="table-responsive col-md-12">
+          <table class="table table-striped table-hover" cellspacing="0" cellpadding="0">
+              <thead>
+                  <tr>
+                      <th>
+                          <app-table-sort [table]="self" [page]="usuariosPage" [label]="'empresa'" [property]="'usuarioPk.empresa'"></app-table-sort>
+                      </th>
+                      <th>
+                          <app-table-sort [table]="self" [page]="usuariosPage" [label]="'Agencia'" [property]="'agencia'"></app-table-sort>
+                      </th>
+                      <th>
+                          <app-table-sort [table]="self" [page]="usuariosPage" [label]="'Legajo'" [property]="'usuarioPk.legajo'"></app-table-sort>
+                      </th>
+                      <th>
+                          <app-table-sort [table]="self" [page]="usuariosPage" [label]="'Nombre'" [property]="'nombre'"></app-table-sort>
+                      </th>  
+                      <th>
+                            <app-table-sort [table]="self" [page]="usuariosPage" [label]="'Perfil'" [property]="'group.id'"></app-table-sort>
+                        </th>  
+                      <th>
+                          <app-table-sort [table]="self" [page]="usuariosPage" [label]="'Estado'" [property]="'estado'"></app-table-sort>
+                      </th>                    
+                      <th class="actions"></th>
+                  </tr>
+              </thead>
+              <tbody>
+                  <tr *ngFor="let usuario of usuariosPage.content">  
+                      <td>{{ usuario.usuarioPk.empresa }}</td>                    
+                      <td>{{ usuario.agencia   }}</td>
+                      <td>{{ usuario.usuarioPk.legajo }}</td>
+                      <td>{{ usuario.nombre }}</td>   
+                      <td>                          
+                          {{ usuario.group?usuario.group.groupName:'Sin Perfil'}}
+                       </td>                    
+                      <td>
+                          <div *ngIf="usuario.estado">
+                              <i class="fa fa-toggle-on fa-2x green" aria-hidden="true"></i>                              
+                          </div>
+                          <div *ngIf="!usuario.estado">
+                              <i class="fa fa-toggle-off fa-2x red" aria-hidden="true"></i>                              
+                          </div>                       
+                      </td>                      
+                      <td class="actions">
+                          <a class="btn btn-xs" (click)="openModificarGrupo( usuario )" >
+                              <i title="Grupo" data-toggle="tooltip" animation="true" data-placement="top" onmouseenter="$(this).tooltip('show')" class="fa fa-pencil fa-2x green" aria-hidden="true"></i>
+                          </a>
+                          <!-- <a class="btn btn-xs" (click)="openPermisosGrupo( usuario.group )" >
+                              <i title="Permisos" data-toggle="tooltip" animation="true" data-placement="top" onmouseenter="$(this).tooltip('show')" class="fa fa-lock fa-2x green" aria-hidden="true"></i>
+                          </a>                         -->
+                      </td>
+                  </tr>
+              </tbody>
+          </table>
+      </div>
+  </div> 
+  <app-table-pagination class="text-center" [table]="self" [page]="usuariosPage" >
+  </app-table-pagination>
+</ng-container>
