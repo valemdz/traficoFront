@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { PermisoService, UsuarioService } from 'src/app/services/service.index';
+import { PermisoService, UsuarioService, ErrorService } from 'src/app/services/service.index';
 import { Table, PaginationPage, PaginationPropertySort } from 'src/app/shared/pagination/pagination.index';
 import { FuncionesGrales } from 'src/app/utiles/funciones.grales';
 import { Subscription } from 'rxjs';
@@ -23,7 +23,8 @@ export class UsuariosComponent implements OnInit, OnDestroy {
   constructor( private _ps: PermisoService,
                private _us: UsuarioService,
                public dialog: MatDialog,
-               private snackBar: MatSnackBar ) { }
+               private snackBar: MatSnackBar,
+               private _es: ErrorService ) { }
 
   ngOnInit() {
       this.mostrarDetalle();
@@ -84,10 +85,15 @@ export class UsuariosComponent implements OnInit, OnDestroy {
           this._ps.updateGrupo$( respuesta.usuario.username, respuesta.grupo)
               .subscribe( () =>{
                 this.mostrarDetalle();
-              } );
+              } , 
+              this.erroresModificarGrupo.bind( this ) );
       }      
     });    
 
+  }
+
+  erroresModificarGrupo( err ){    
+    this._es.tratarErroresBackEnd( err, null, null );
   }
 
 

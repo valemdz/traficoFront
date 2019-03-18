@@ -30,15 +30,11 @@
                           <div class="col-md-8">{{permiso.descripcionPermiso}}</div>
                           <div class="col-md-4">                        
           
-                                  <div *ngIf="permiso.granted">
-                                          <a  (click)="revokeGrant( permiso )" data-toggle="modal" data-target="#update-modal">
-                                                  <i class="fa fa-toggle-on fa-2x green" aria-hidden="true"></i>
-                                          </a>
+                                  <div *ngIf="permiso.granted">                                          
+                                      <i class="fa fa-toggle-on fa-2x green" aria-hidden="true"></i>                                          
                                   </div>
-                                  <div *ngIf="!permiso.granted">
-                                          <a  (click)="revokeGrant( permiso )" data-toggle="modal" data-target="#update-modal"                                        >
-                                                  <i class="fa fa-toggle-off fa-2x red" aria-hidden="true"></i>
-                                          </a>
+                                  <div *ngIf="!permiso.granted">                                          
+                                      <i class="fa fa-toggle-off fa-2x red" aria-hidden="true"></i>                                          
                                   </div>
                           </div>   
                   </div>  

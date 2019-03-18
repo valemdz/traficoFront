@@ -2,12 +2,14 @@ import { Injectable } from '@angular/core';
 import{ FormGroup, FormControl, FormArray } from '@angular/forms';
 import { AlertService } from '../mensajes/alert.service';
 import swal from 'sweetalert';
+import { MatSnackBar } from '@angular/material';
 
 
 @Injectable()
 export class  ErrorService {
 
-  constructor( private alertService: AlertService ) {
+  constructor( private alertService: AlertService,
+    private snackBar: MatSnackBar ) {
   }
 
     validateAllFormFields(formGroup: FormGroup) {
@@ -71,6 +73,9 @@ export class  ErrorService {
             errores.push(' NO es posible comunicarse con el back end! ');
           }else if ( err.status == 401 ){
             errores.push(' Su sesion ha caducado ');
+          }else if( err.status == 403 ){  
+            console.log('PASO POR 403');
+            errores.push(' Usted no tiene permiso para acceder a la pagina ');
           } else if( err.status == 404 ){
             if( data['errorCode'] ){
               errores.push( data['errorMessage']);
@@ -154,6 +159,8 @@ export class  ErrorService {
         if( data['errorCode'] ){
           erroresGral.push( data['errorMessage']);
         }
+      } else if( err.status == 403) {
+
       }else if( err.status == 400 ){
         if( data['errorCode'] ){
           erroresGral.push( data['errorMessage']);
@@ -221,7 +228,10 @@ export class  ErrorService {
     if(  errores && errores.length > 0 ) {
          let mensajes = '';
          errores.forEach( e => mensajes = mensajes + e );
-         swal('Error', mensajes,'error');
+        // swal('Error', mensajes,'error');
+        this.snackBar.open( 'Error!!!' + mensajes , 'X', {
+          duration: 5000,
+        });
     }
   }
 
