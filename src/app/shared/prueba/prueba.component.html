@@ -1,13 +1,3 @@
 <br>
 <br>
 <br>
-<button (click)="show=!show" >toggle</button>
-<div *ngIf="show">
-    <ng-container *ngIf="value$ | async; let values;">
-            <p>{{ values.first }}</p>
-            <p>{{ values.second }}</p>            
-    </ng-container>
-    
-
-
-</div>
