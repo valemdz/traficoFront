@@ -7,22 +7,22 @@
                 </div>
                 <div class="panel-body">    
                     <div class='row'>
-                        <div class='col-md-2'>Interno</div> 
-                        <div class='col-md-2'>Patente</div> 
-                        <div class='col-md-2'>Mapa</div>                         
-                        <div class='col-md-2'>Vto Verificacion</div> 
-                        <div class='col-md-2'>Vencido</div> 
+                        <div class='col-md-2 col-xs-2 col-lg-2'>Interno</div> 
+                        <div class='col-md-2 col-xs-2 col-lg-2'>Patente</div> 
+                        <div class='col-md-2 col-xs-2 col-lg-2'>Mapa</div>                         
+                        <div class='col-md-2 col-xs-2 col-lg-2'>Vto Verif.</div> 
+                        <div class='col-md-2 col-xs-2 col-lg-2'>Vencido</div> 
                     </div>      
                     <div *ngFor="let v of venc.vehiculos" class='row'>
-                        <div class='col-md-2'>{{v.vehiculoPK.vehEmpCodigo}} - {{v.vehiculoPK.vehInterno}}</div>
-                        <div class='col-md-2'>{{v.vehPatente}}</div>
-                        <div class='col-md-2'>{{v.vehMpaDesc}}</div>                        
-                        <div class='col-md-2'>
+                        <div class='col-md-2 col-xs-2 col-lg-2'> {{v.vehiculoPK.vehInterno}}</div>
+                        <div class='col-md-2 col-xs-2 col-lg-2'>{{v.vehPatente}}</div>
+                        <div class='col-md-2 col-xs-2 col-lg-2'>{{v.vehMpaDesc}}</div>                        
+                        <div class='col-md-2 col-xs-2 col-lg-2'>
                             <span class="label" [ngClass]="v.vehVencido?'label-danger':'label-warning'" >
-                                    {{v.vehVerificacionTecnicaVto | date:'dd/MM/yyyy'}}
+                                    {{v.vehVerificacionTecnicaVto | date:'dd/MM/yy'}}
                             </span>    
                         </div>
-                        <div class='col-md-2'>
+                        <div class='col-md-2 col-xs-2 col-lg-2'>
                             <span class="label" [ngClass]="v.vehVencido?'label-danger':'label-warning'" >
                                 {{v.vehVencido?"Vencido":"Proximo"}}
                                 <span *ngIf= "v.mostrarDias">
