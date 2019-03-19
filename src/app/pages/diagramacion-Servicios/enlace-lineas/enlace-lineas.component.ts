@@ -105,7 +105,7 @@ export class EnlaceLineasComponent implements OnInit, OnDestroy {
   }
 
   volver() {
-    this.router.navigate(['wellcome']);
+    this.router.navigate(['welcome']);
   }
 
 

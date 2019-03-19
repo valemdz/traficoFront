@@ -93,7 +93,7 @@ export class ConfVencimientoComponent implements OnInit, OnDestroy {
   }
 
   onCancel(){
-    this.router.navigate(['wellcome']);
+    this.router.navigate(['welcome']);
   }
 
   prepararVencimiento(){

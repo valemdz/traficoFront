@@ -129,7 +129,7 @@ export class LoginComponent implements OnInit, AfterViewInit {
     }
 
     okLogin( ){
-        this.router.navigate(['wellcome']);
+        this.router.navigate(['welcome']);
     }
    
     errorLogin( err ) {
