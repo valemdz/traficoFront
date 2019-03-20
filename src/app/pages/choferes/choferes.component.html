@@ -45,16 +45,16 @@
                         </td>
                         <td>{{chofer.cho_telefono_emergencia}}</td>
                         <td class="actions">
-                            <a class="btn btn-xs" (click)="currentChofer=chofer" data-toggle="modal" data-target="#details-modal">
+                            <a class="btn btn-xs" (click)="modificarChofer( chofer )" >
                                 <i title="Editar" data-toggle="tooltip" animation="true" data-placement="top" onmouseenter="$(this).tooltip('show')" class="fa fa-pencil fa-2x green" aria-hidden="true"></i>
                             </a>
-                            <a class="btn btn-xs" (click)="carnetChofer=chofer" data-toggle="modal" data-target="#details-carnet">
+                            <a class="btn btn-xs" (click)="openCarnets( chofer )" >
                                 <i title="Carnets" data-toggle="tooltip" animation="true" data-placement="top" onmouseenter="$(this).tooltip('show')" class="fa fa-id-card-o fa-2x green" aria-hidden="true"></i>
                             </a>
-                            <a class="btn btn-xs" (click)="incidenciaChofer=chofer" data-toggle="modal" data-target="#details-Incidencias">
+                            <a class="btn btn-xs" (click)="openIncidencias( chofer )" >
                                 <i title="Incidencias" data-toggle="tooltip" animation="true" data-placement="top" onmouseenter="$(this).tooltip('show')" class="fa fa-calendar fa-2x red" aria-hidden="true"></i>
                             </a>
-                            <a class="btn btn-xs" (click)="deleteChofer( chofer )" data-toggle="modal" data-target="#delete-modal">
+                            <a class="btn btn-xs" (click)="deleteChofer( chofer )" >
                                 <i title="Eliminar" data-toggle="tooltip" animation="true" data-placement="top" onmouseenter="$(this).tooltip('show')" class="fa fa-trash-o fa-2x red" aria-hidden="true"></i>
                             </a>
                         </td>
@@ -65,52 +65,9 @@
     </div>
     <!-- /#list -->
     <div class="col-md-12 text-left">
-        <a class="btn btn-primary" (click)="crearNuevo()" data-toggle="modal" data-target="#nuevo-modal">Crear</a>
+        <a class="btn btn-primary" (click)="crearNuevo()" >Crear</a>
     </div>
     <app-table-pagination class="text-center" [table]="self" [page]="choferPage" >
 
     </app-table-pagination>
-</ng-container>
-
-
-<!-- Modal Crear-->
-<ng-container *ngIf="choferNuevo">
-
-    <div class="modal fade" id="nuevo-modal" tabindex="-1" role="dialog" aria-labelledby="modalLabel" data-backdrop="static" data-keyboard="false">
-        <div class="modal-dialog" role="document">
-            <app-chofer-nuevo [chofer]="choferNuevo" [nuevo]="true"></app-chofer-nuevo>
-        </div>
-    </div>
-
-</ng-container>
-<!-- Modal Details-->
-<ng-container *ngIf="currentChofer">
-
-    <div class="modal fade" id="details-modal" tabindex="-1" role="dialog" aria-labelledby="modalLabel" data-backdrop="static" data-keyboard="false">
-        <div class="modal-dialog" role="document">
-            <app-chofer-nuevo [chofer]="currentChofer" [nuevo]="false"></app-chofer-nuevo>
-        </div>
-    </div>
-
-</ng-container>
-<!-- Modal Carnets-->
-<ng-container *ngIf="carnetChofer">
-
-    <div class="modal fade" id="details-carnet" tabindex="-1" role="dialog" aria-labelledby="modalLabel" data-backdrop="static" data-keyboard="false">
-        <div class="modal-dialog" role="document">
-            <app-carnet-list [chofer]="carnetChofer"></app-carnet-list>
-        </div>
-    </div>
-
-</ng-container>
-
-<!-- Modal Incidencias-->
-<ng-container *ngIf="incidenciaChofer">
-
-    <div class="modal fade" id="details-Incidencias" tabindex="-1" role="dialog" aria-labelledby="modalLabel" data-backdrop="static" data-keyboard="false">
-        <div class="modal-dialog modal-lg" role="document">
-            <app-inc-by-chofer [chofer]="incidenciaChofer"></app-inc-by-chofer>
-        </div>
-    </div>
-
 </ng-container>

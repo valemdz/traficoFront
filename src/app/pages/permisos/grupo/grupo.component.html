@@ -1,5 +1,5 @@
 <form ngNativeValidate   (ngSubmit)="onClick()" [formGroup]="formGrupo" >
-      <h1 mat-dialog-title>Grupo</h1>
+      <h1 mat-dialog-title>Perfil</h1>
       <div mat-dialog-content>  
         <mat-form-field>
           <mat-select placeholder="Seleccione Empresa"                
@@ -11,10 +11,10 @@
           </mat-select>             
         </mat-form-field>        
         <mat-form-field>
-            <input  matInput placeholder="Nombre Grupo" formControlName="groupName" 
+            <input  matInput placeholder="Nombre Perfil" formControlName="groupName" 
              required uppercase />            
         </mat-form-field>
-        <mat-error *ngIf="formGrupo.hasError('required')">Seleccione un grupo</mat-error>
+        <mat-error *ngIf="formGrupo.hasError('required')">Seleccione un perfil</mat-error>
       </div>
       <div mat-dialog-actions>
         <button mat-button [mat-dialog-close]="null">Cancelar</button>       

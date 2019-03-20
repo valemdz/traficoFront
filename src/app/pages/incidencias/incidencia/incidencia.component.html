@@ -16,7 +16,7 @@
                             <!-- <tabs>
                                     <tab [tabTitle]="'Datos de la incidencia'">  -->
                             <div class="form-group">
-                                <input type="text" data-toggle="tooltip" animation="true" data-placement="top" onmouseenter="$(this).tooltip('show')" title="Empresa" placeholder="Empresa" class="form-control" formControlName="in_empresa" [readonly]=true>
+                                <input type="text" uppercase data-toggle="tooltip" animation="true" data-placement="top" onmouseenter="$(this).tooltip('show')" title="Empresa" placeholder="Empresa" class="form-control" formControlName="in_empresa" [readonly]=true>
                             </div>
                             <control-mensajes [errores]="errMsgs.in_empresa"></control-mensajes>
 
@@ -32,18 +32,18 @@
                             </div>
                             <div *ngIf="!data.nuevo">
                                 <div class="form-group">
-                                    <input data-toggle="tooltip" animation="true" data-placement="top" onmouseenter="$(this).tooltip('show')" title="Tipo" [readonly]="true" type="text" placeholder="Tipo" class="form-control" [value]="getDescripcion()">
+                                    <input uppercase data-toggle="tooltip" animation="true" data-placement="top" onmouseenter="$(this).tooltip('show')" title="Tipo" [readonly]="true" type="text" placeholder="Tipo" class="form-control" [value]="getDescripcion()">
                                 </div>
                             </div>
                             <control-mensajes [errores]="errMsgs.in_tipo"></control-mensajes>
 
                             <div class="form-group">
-                                <input type="text" data-toggle="tooltip" animation="true" data-placement="top" onmouseenter="$(this).tooltip('show')" title="Codigo" placeholder="Codigo" class="form-control" formControlName="codigo" [readonly]="!nuevo">
+                                <input uppercase type="text" data-toggle="tooltip" animation="true" data-placement="top" onmouseenter="$(this).tooltip('show')" title="Codigo" placeholder="Codigo" class="form-control" formControlName="codigo" [readonly]="!nuevo">
                             </div>
                             <control-mensajes [errores]="errMsgs.codigo"></control-mensajes>
 
                             <div class="form-group">
-                                <input data-toggle="tooltip" animation="true" data-placement="top" onmouseenter="$(this).tooltip('show')" title="Descripción" type="text" placeholder="Descripcion" formControlName="in_descripcion" class="form-control">
+                                <input uppercase data-toggle="tooltip" animation="true" data-placement="top" onmouseenter="$(this).tooltip('show')" title="Descripción" type="text" placeholder="Descripcion" formControlName="in_descripcion" class="form-control">
                             </div>
                             <control-mensajes [errores]="errMsgs.in_descripcion"></control-mensajes>
 

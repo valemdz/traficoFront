@@ -3,11 +3,15 @@ import {Router} from '@angular/router';
 import {  Subscription } from 'rxjs';
 
 import { ChoferService } from 'src/app/services/choferes/chofer.service';
-import { UsuarioService, ErrorService, VencimientoService } from 'src/app/services/service.index';
-import { Chofer, CONSTANTES_CHOFER, ConstantesGrales, VencimientosChoferes } from 'src/app/models/model.index';
+import { UsuarioService, ErrorService, VencimientoService, ModalService } from 'src/app/services/service.index';
+import { Chofer, CONSTANTES_CHOFER, ConstantesGrales, VencimientosChoferes, ChoferPK } from 'src/app/models/model.index';
 
 import { PaginationPage, Table, PaginationPropertySort } from 'src/app/shared/pagination/pagination.index';
 import { FuncionesGrales } from 'src/app/utiles/funciones.grales';
+import { ComponenteItem } from 'src/app/shared/modal/modal.index';
+import { ChoferComponent } from './chofer/chofer.component';
+import { CarnetListComponent } from './carnet-list/carnet-list.component';
+import { IncidenciaByChoferComponent } from './incidencia-by-chofer/incidencia-by-chofer.component';
 
 declare var swal;
 
@@ -25,9 +29,8 @@ export class ChoferesComponent implements OnInit, OnDestroy {
    deleteChoferSubscription: Subscription;
    estadoSubs: Subscription; 
    vencimientosSubs: Subscription;
+   subscriptionModal: Subscription;
 
-   choferNuevo: Chofer;    
-   currentChofer;
    carnetChofer;
    incidenciaChofer;
    updateEstChofer: Chofer;
@@ -38,7 +41,15 @@ export class ChoferesComponent implements OnInit, OnDestroy {
    constructor( private choferService: ChoferService,
                  private router: Router, public _vs: VencimientoService,
                  public _us: UsuarioService,                 
-                 private ctrolError: ErrorService) {
+                 private ctrolError: ErrorService,
+                 private _ms: ModalService) {
+
+        this.subscriptionModal = this._ms.getRespuesta()
+        .subscribe( ( mostrar: boolean) => {
+                    if ( mostrar ) {
+                        this.mostrarDetalle();
+                    }
+        } );            
    }
 
 
@@ -53,6 +64,7 @@ export class ChoferesComponent implements OnInit, OnDestroy {
           if ( this.deleteChoferSubscription ) { this.deleteChoferSubscription.unsubscribe(); }
           if ( this.estadoSubs ) { this.estadoSubs.unsubscribe(); }
           if ( this.vencimientosSubs ){ this.vencimientosSubs.unsubscribe(); }
+          if ( this.subscriptionModal ) { this.subscriptionModal.unsubscribe(); }
 
     }
 
@@ -119,22 +131,31 @@ export class ChoferesComponent implements OnInit, OnDestroy {
     }
 
 
-    crearNuevo() {        
-        this.choferNuevo = {
-            choferPK: { cho_emp_codigo: this._us.usuario.empresa, cho_codigo:0},
-            cho_estado: null,
-            cho_chofer: null,
-            cho_legajo: null,
-            cho_nombre: null,
-            cho_doc_codigo: null,
-            cho_documento: null,
-            cho_grupo_sanguineo: null,
-            cho_observaciones: null,
-            cho_telefono: null,
-            cho_telefono_emergencia: null,
-            cho_fecha_nacimiento: null
-        };
+    crearNuevo() {  
+        
+        let choferPK: ChoferPK = { cho_emp_codigo: this._us.usuario.empresa,
+                                cho_codigo:0};
+
+        let choferNuevo = new Chofer( choferPK );        
+
+        this._ms.sendComponent( new ComponenteItem( ChoferComponent ,
+                                { chofer: choferNuevo, nuevo:true } ) );       
     }  
+
+    modificarChofer( chofer: Chofer ){  
+        this._ms.sendComponent( new ComponenteItem( ChoferComponent ,
+                                { chofer: chofer, nuevo: false } ) );       
+    }
+
+    openCarnets( chofer: Chofer ){  
+        this._ms.sendComponent( new ComponenteItem( CarnetListComponent ,
+                                { chofer: chofer } ) );       
+    }
+
+    openIncidencias( chofer: Chofer ){  
+        this._ms.sendComponent( new ComponenteItem( IncidenciaByChoferComponent ,
+                                { chofer: chofer } ) );       
+    }
 
     cambiarEstado(updateEstChofer) {
 

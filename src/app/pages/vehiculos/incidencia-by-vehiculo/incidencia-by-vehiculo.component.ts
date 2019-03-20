@@ -32,9 +32,7 @@ export class IncidenciaByVehiculoComponent implements ComponenteBaseComponent, O
     this.crearForm();
   }
 
-  crearForm(){
-
-    $('#ventana').modal('show'); 
+  crearForm(){    
 
     this.incByVehiculoForm = this.fb.group({
       incidencias: this.fb.array([])
@@ -46,6 +44,8 @@ export class IncidenciaByVehiculoComponent implements ComponenteBaseComponent, O
 
 
   ngOnInit() {
+
+    $('#ventana').modal('show'); 
 
     const TIPO_INCIDENCIA_VEHICULO: number = 0;
     this.vehiculo = this.data.vehiculo;

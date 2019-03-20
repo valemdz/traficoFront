@@ -13,7 +13,7 @@ import { ChoferService } from 'src/app/services/choferes/chofer.service';
 import { ErrorService } from 'src/app/services/service.index';
 import { Chofer, Carnet, ListaCarnet } from 'src/app/models/model.index';
 
-
+declare var $:any;
 
 @Component({
   selector: 'app-carnet-list',
@@ -21,15 +21,14 @@ import { Chofer, Carnet, ListaCarnet } from 'src/app/models/model.index';
 })
 export class CarnetListComponent implements OnInit, OnChanges {
 
-   @Input() chofer: Chofer;
+   
+   @Input() data: any;
+   chofer: Chofer;
+
    formCarnet: FormGroup;
    carnetsChofer: any = [];
    comboTipos: any = [];
    todosErrores: any = [];
-
-
-   @ViewChild('closeBtn') closeBtn: ElementRef;
-
 
   constructor(  private choferService: ChoferService,
                 private ctrolError: ErrorService,
@@ -40,7 +39,10 @@ export class CarnetListComponent implements OnInit, OnChanges {
 
 
   ngOnInit() {
+    $('#ventana').modal('show'); 
+    this.chofer = this.data.chofer;
     this.crearComboTipo();
+    this.resetForm();    
   }
 
 
@@ -182,7 +184,10 @@ export class CarnetListComponent implements OnInit, OnChanges {
   };
 
   ngOnChanges() {
+    this.resetForm();    
+  }
 
+  resetForm(){
     if( this.formCarnet ){
       this.getCarnetsByChofer( this.chofer.choferPK.cho_emp_codigo,
                                this.chofer.choferPK.cho_codigo );
@@ -191,13 +196,13 @@ export class CarnetListComponent implements OnInit, OnChanges {
 
   getCarnetsByChofer( cho_emp_codigo:String, cho_codigo: number ){
 
-    let incObservable:Observable<Response> =
-    this.choferService.getCarnetsByChofer$( cho_emp_codigo, cho_codigo);
-
-    incObservable.subscribe( data =>{
-      this.carnetsChofer = data;
-      this.setCarnets( this.carnetsChofer );
-    });
+    setTimeout( () =>{
+      this.choferService.getCarnetsByChofer$( cho_emp_codigo, cho_codigo)
+      .subscribe( data =>{
+        this.carnetsChofer = data;
+        this.setCarnets( this.carnetsChofer );
+      });
+    });  
 
   }
 
@@ -277,7 +282,7 @@ export class CarnetListComponent implements OnInit, OnChanges {
                                                 this.chofer.choferPK.cho_codigo,  listaCarnet )
         .subscribe(result => {
           //this.parent.mostrarDetalle();
-          this.closeModal();
+          this. soloCerrar();
 
         }, err => {
 
@@ -311,11 +316,7 @@ export class CarnetListComponent implements OnInit, OnChanges {
         } );
    }
 
-
-
-  private closeModal(): void {
-    this.closeBtn.nativeElement.click();
-  }
+ 
 
   borrarCarnet( index:number ) {
     if (index > -1) {
@@ -337,5 +338,9 @@ export class CarnetListComponent implements OnInit, OnChanges {
       }
 
    }
+
+   soloCerrar(){   
+    $('#ventana').modal('hide'); 
+  }
 
 }
