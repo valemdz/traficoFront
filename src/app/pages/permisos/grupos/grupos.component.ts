@@ -82,7 +82,7 @@ export class GruposComponent implements OnInit {
 
     const confirmDelete = this.dialog.open( ConfirmarDeleteComponent, {
       width: '300px',
-      data: { titulo:`Esta seguro que desea eliminar el grupo nombre = [ ${grupo.groupName} ]`}      
+      data: { titulo:`Esta seguro que desea eliminar el perfil nombre = [ ${grupo.groupName} ]`}      
     });
 
     confirmDelete.afterClosed().subscribe( siDelete => {      

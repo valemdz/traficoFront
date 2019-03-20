@@ -44,9 +44,7 @@ export class ChoferComponent implements OnInit, OnChanges, OnDestroy, TabChild {
    }
 
 
-  ngOnInit() {
-
-    console.log( this.data);
+  ngOnInit() {   
 
     $('#ventana').modal('show'); 
 

@@ -65,14 +65,20 @@
                         <label class="col-md-2  text-left">Anticipación</label>                    
                     </div>            
                     <div class="form-group row" >                        
-                        <div class="col-md-4">
-                            <select class="form-control" formControlName="tipoVencimiento" >
+                        <div *ngIf ="!vencimientoEdit"class="col-md-4">
+                            <select class="form-control" formControlName="tipoVencimiento" required>
                                 <option [selected]="vencimientosForm.controls.tipoVencimiento.value == null" value="null" >-- Seleccionar --</option>
-                                <option *ngFor="let t of tiposVencimientos" [value]="t.id">
+                                <option *ngFor="let t of tiposVencLibres" [value]="t.id">
                                     {{t.nombreEntidad}} => {{t.descNombreCampo}}
                                 </option>    
                             </select>    
                         </div>
+                        <div *ngIf ="vencimientoEdit" class="col-md-4">
+                                <span class="form-control">
+                                    {{vencimientoEdit.tipoVencimiento.nombreEntidad}} => 
+                                    {{vencimientoEdit.tipoVencimiento.descNombreCampo}}
+                                </span>      
+                            </div>
                         <div class="col-md-1">
                             <label class="switch" id="my-switch">
                                     <input type="text" placeholder="Estado"

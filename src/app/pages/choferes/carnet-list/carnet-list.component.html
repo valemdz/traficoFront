@@ -13,7 +13,7 @@
         <div class="modal-body">
 
             <section class="sample-app-content">
-                <form [formGroup]="formCarnet" (ngSubmit)="onSubmitTemplateBased()" novalidate>
+                <form [formGroup]="formCarnet"  novalidate>
                     <div class="col-xs-12 col-md-12">
                         <div formArrayName="carnets" class="well well-lg">
                             <div *ngFor="let carnet of carnets.controls; let i=index">
