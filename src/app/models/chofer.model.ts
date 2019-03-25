@@ -1,20 +1,20 @@
 import { Vencimiento, Carnet } from "./model.index";
 
-export interface Chofer {
-    choferPK: ChoferPK,
-    cho_estado: number,
-    cho_chofer: number,
-    cho_legajo: number,
-    cho_nombre: String,
-    cho_doc_codigo: number,
-    cho_documento: String,
-    cho_grupo_sanguineo: String,
-    cho_observaciones: String,
-    cho_telefono: String,
-    cho_telefono_emergencia: String,
-    cho_fecha_nacimiento:Date,
-    cho_funcion?:string,    
-    carnets?:Carnet[];
+export class Chofer {
+   constructor( public choferPK: ChoferPK,
+                public cho_estado?: number,
+                public cho_chofer?: number,
+                public cho_legajo?: number,
+                public cho_nombre?: String,
+                public cho_doc_codigo?: number,
+                public cho_documento?: String,
+                public cho_grupo_sanguineo?: String,
+                public cho_observaciones?: String,
+                public cho_telefono?: String,
+                public cho_telefono_emergencia?: String,
+                public cho_fecha_nacimiento?:Date,
+                public cho_funcion?:string,    
+                public carnets?:Carnet[]){}
     
 }
 

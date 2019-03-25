@@ -15,13 +15,13 @@
                 
                             <div formGroupName="vehiculoPK">  
                                 <div class="form-group">                        
-                                    <input type="text" data-toggle="tooltip" animation="true" data-placement="top"
+                                    <input type="text" uppercase data-toggle="tooltip" animation="true" data-placement="top"
                                     onmouseenter="$(this).tooltip('show')" title="Empresa"  placeholder="Empresa" class="form-control" 
                                                 formControlName="vehEmpCodigo" [readonly]="true" >   
                                 </div>
                                 <control-mensajes [errores]="errMsgsPK.vehEmpCodigo"></control-mensajes>                         
                                     <div class="form-group">                     
-                                    <input type="text"  class="form-control"data-toggle="tooltip" animation="true" data-placement="top"
+                                    <input type="text" uppercase class="form-control"data-toggle="tooltip" animation="true" data-placement="top"
                                     onmouseenter="$(this).tooltip('show')" title="Interno" 
                                     placeholder="Interno" formControlName="vehInterno" [readonly]="!nuevo" >   
                                     </div>
@@ -40,13 +40,13 @@
                                     </div> 
                                     <control-mensajes [errores]="errMsgs.vehEstado"></control-mensajes>  
                                 <div class="form-group">
-                                    <input type="text"  class="form-control" data-toggle="tooltip" animation="true" data-placement="top"
+                                    <input type="text" uppercase class="form-control" data-toggle="tooltip" animation="true" data-placement="top"
                                     onmouseenter="$(this).tooltip('show')" title="Patente" 
                                     placeholder="Patente" formControlName="vehPatente">   
                                 </div>
                                 <control-mensajes [errores]="errMsgs.vehPatente"></control-mensajes>
                                 <div class="form-group">                       
-                                    <input type="text"  class="form-control" data-toggle="tooltip" animation="true" data-placement="top"
+                                    <input type="text" uppercase  class="form-control" data-toggle="tooltip" animation="true" data-placement="top"
                                     onmouseenter="$(this).tooltip('show')" title="Motor" 
                                         placeholder="Motor" formControlName="vehMotor">   
                                 </div>
@@ -55,13 +55,13 @@
                             </div>
                             <div class="col-xs-12 col-md-6"> 
                                     <div class="form-group">                          
-                                            <input type="text"  class="form-control" data-toggle="tooltip" animation="true" data-placement="top"
+                                            <input type="text" uppercase  class="form-control" data-toggle="tooltip" animation="true" data-placement="top"
                                             onmouseenter="$(this).tooltip('show')" title="Chasis" placeholder="Chasis" 
                                             formControlName="vehChasis">                               
                                     </div> 
                                     <control-mensajes [errores]="errMsgs.vehChasis"></control-mensajes>
                                     <div class="form-group">                                          
-                                    <input type="text"  class="form-control" data-toggle="tooltip" animation="true" data-placement="top"
+                                    <input type="text" uppercase class="form-control" data-toggle="tooltip" animation="true" data-placement="top"
                                     onmouseenter="$(this).tooltip('show')"  title="Carrocería" 
                                     placeholder="Carrocería" formControlName="vehCarroceria">   
                                     </div>

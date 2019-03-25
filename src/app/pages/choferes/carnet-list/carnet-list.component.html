@@ -1,16 +1,19 @@
-<div *ngIf="chofer != null">
+
+<div class="modal fade" id="ventana" tabindex="-1" role="dialog" aria-labelledby="modalLabel" 
+        data-backdrop="static" data-keyboard="false" >
+<div class="modal-dialog" role="document">
 
     <div class="modal-content">
         <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal" aria-label="Fechar" #closeBtn>
-                <span aria-hidden="true">&times;</span>
-            </button>
+                <button type="button" class="close" (click)="soloCerrar()">
+                    <span aria-hidden="true">&times;</span>
+                </button>
             <h4 class="modal-title" id="modalLabel">Modificando Carnets de {{ chofer.cho_nombre}} </h4>
         </div>
         <div class="modal-body">
 
             <section class="sample-app-content">
-                <form [formGroup]="formCarnet" (ngSubmit)="onSubmitTemplateBased()" novalidate>
+                <form [formGroup]="formCarnet"  novalidate>
                     <div class="col-xs-12 col-md-12">
                         <div formArrayName="carnets" class="well well-lg">
                             <div *ngFor="let carnet of carnets.controls; let i=index">
@@ -23,16 +26,16 @@
                                         <div *ngIf="isNuevo(i)">
                                             <div class="form-group">
                                                 <select class="form-control" formControlName="tipo" title="Tipo" placeholder="Tipo" #t (change)="onChangeTipo(t.value, i)" data-toggle="tooltip" animation="true" data-placement="top" onmouseenter="$(this).tooltip('show')">
-                                        <option [selected]="tipoByIndex(i) == null" value="">-- Seleccionar --</option>
-                                        <option *ngFor="let opt of comboTipos"   [selected]="opt.codigo == tipoByIndex(i)" [value]="opt.codigo">
-                                                {{opt.descripcion}}
-                                        </option>
-                                    </select>
+                                                    <option [selected]="tipoByIndex(i) == null" value="">-- Seleccionar --</option>
+                                                    <option *ngFor="let opt of comboTipos"   [selected]="opt.codigo == tipoByIndex(i)" [value]="opt.codigo">
+                                                            {{opt.descripcion}}
+                                                    </option>
+                                                </select>
                                             </div>
                                         </div>
                                         <div *ngIf="!isNuevo(i)">
                                             <div class="form-group">
-                                                <input data-toggle="tooltip" animation="true" data-placement="top" onmouseenter="$(this).tooltip('show')" title="Tipo" [readonly]="true" type="text" placeholder="Tipo" class="form-control" [value]="getDescripcion(i)">
+                                                <input data-toggle="tooltip" uppercase animation="true" data-placement="top" onmouseenter="$(this).tooltip('show')" title="Tipo" [readonly]="true" type="text" placeholder="Tipo" class="form-control" [value]="getDescripcion(i)">
                                             </div>
                                         </div>
                                         <control-mensajes [errores]="todosErrores[i].tipo"></control-mensajes>
@@ -45,11 +48,11 @@
                                         </div>
                                         <control-mensajes [errores]="todosErrores[i].fechaVenc"></control-mensajes>
                                         <div class="form-group">
-                                            <input type="text" placeholder="Numero Carnet" formControlName="numeroCarnet" class="form-control" title="Numero Carnet" data-toggle="tooltip" animation="true" data-placement="top" onmouseenter="$(this).tooltip('show')">
+                                            <input type="text" uppercase placeholder="Numero Carnet" formControlName="numeroCarnet" class="form-control" title="Numero Carnet" data-toggle="tooltip" animation="true" data-placement="top" onmouseenter="$(this).tooltip('show')">
                                         </div>
                                         <control-mensajes [errores]="todosErrores[i].numeroCarnet"></control-mensajes>
                                         <div class="form-group">
-                                            <input type="textarea" placeholder="Observaciones" formControlName="observaciones" class="form-control" title="Observaciones" data-toggle="tooltip" animation="true" data-placement="top" onmouseenter="$(this).tooltip('show')">
+                                            <input type="textarea" uppercase placeholder="Observaciones" formControlName="observaciones" class="form-control" title="Observaciones" data-toggle="tooltip" animation="true" data-placement="top" onmouseenter="$(this).tooltip('show')">
                                         </div>
                                         <control-mensajes [errores]="todosErrores[i].observaciones"></control-mensajes>
 
@@ -69,5 +72,5 @@
             <button type="button" class="btn btn-default" data-dismiss="modal" data-dismiss="modal">Volver</button>
         </div>
     </div>
-
+</div>
 </div>

@@ -1,16 +1,15 @@
 import { Component, OnInit, Input, OnChanges, ViewChild, ElementRef,
-  Inject, LOCALE_ID  } from '@angular/core';
-
+  Inject, LOCALE_ID, OnDestroy  } from '@angular/core';
 import {FormGroup, FormBuilder, Validators } from '@angular/forms';
 import * as moment from 'moment';
 import {DatePipe} from '@angular/common';
-import { ChoferesComponent } from '../choferes.component';
 import { ChoferService } from 'src/app/services/choferes/chofer.service';
 
 import { TabChild } from 'src/app/shared/tabs/tab-child';
-import { ErrorService } from 'src/app/services/service.index';
+import { ErrorService, ModalService } from 'src/app/services/service.index';
 import { Chofer, CONSTANTES_CHOFER } from 'src/app/models/model.index';
 
+declare var $: any;
 
 
 @Component({
@@ -20,10 +19,11 @@ import { Chofer, CONSTANTES_CHOFER } from 'src/app/models/model.index';
 })
 
 
-export class ChoferComponent implements OnInit, OnChanges, TabChild {
+export class ChoferComponent implements OnInit, OnChanges, OnDestroy, TabChild {  
 
-  @Input() chofer: Chofer;
-  @Input()
+  @Input() data:any;
+
+  chofer: Chofer;
   nuevo:boolean;
 
   comboDocumentos: any = [];
@@ -33,22 +33,31 @@ export class ChoferComponent implements OnInit, OnChanges, TabChild {
 
   choferForm: FormGroup;
 
-  @ViewChild('closeBtn') closeBtn: ElementRef;
+  //@ViewChild('closeBtn') closeBtn: ElementRef;
 
   constructor(  private choferService: ChoferService,
-                private  fb: FormBuilder,
-                private parent: ChoferesComponent,
+                private  fb: FormBuilder,                
                 private ctrolError: ErrorService,
+                private _ms: ModalService,
                 @Inject(LOCALE_ID) public locale: string ) {
      this.crearForm();
    }
 
 
-  ngOnInit() {
+  ngOnInit() {   
+
+    $('#ventana').modal('show'); 
+
     this.comboDocumentos = CONSTANTES_CHOFER.DOCUMENTOS;
     this.comboFuncion = CONSTANTES_CHOFER.FUNCION;
     this.comboEstados = CONSTANTES_CHOFER.ESTADOS;
     this.comboSanguineo = CONSTANTES_CHOFER.GRUPOS_SANGUINEOS;
+
+    this.chofer = this.data.chofer;
+    this.nuevo = this.data.nuevo;
+
+    this. resetForm();
+
   }
 
   tabActivated():void{
@@ -80,6 +89,26 @@ export class ChoferComponent implements OnInit, OnChanges, TabChild {
     .subscribe( data => this.checkTodoFormValidity( data ) );
 
   }
+
+  resetForm(){
+    let dp = new DatePipe( this.locale );
+    let fecha = dp.transform( this.chofer.cho_fecha_nacimiento, 'yyyy-MM-dd');
+
+    this.choferForm.reset({
+      choferPK:{ cho_emp_codigo: this.chofer.choferPK.cho_emp_codigo },
+      cho_estado: this.chofer.cho_estado,
+      cho_chofer: this.chofer.cho_chofer,
+      cho_legajo:this.chofer.cho_legajo,
+      cho_nombre:this.chofer.cho_nombre,
+      cho_doc_codigo:this.chofer.cho_doc_codigo,
+      cho_documento: this.chofer.cho_documento,
+      cho_fecha_nacimiento:fecha,
+      cho_grupo_sanguineo:this.chofer.cho_grupo_sanguineo,
+      cho_observaciones:this.chofer.cho_observaciones,
+      cho_telefono:this.chofer.cho_telefono,
+      cho_telefono_emergencia:  this.chofer.cho_telefono_emergencia
+    });
+ }
 
   errMsgsPK: any = {
     cho_emp_codigo:[],
@@ -132,24 +161,7 @@ export class ChoferComponent implements OnInit, OnChanges, TabChild {
 
 
    ngOnChanges() {
-
-      let dp = new DatePipe( this.locale );
-      let fecha = dp.transform( this.chofer.cho_fecha_nacimiento, 'yyyy-MM-dd');
-
-      this.choferForm.reset({
-        choferPK:{ cho_emp_codigo: this.chofer.choferPK.cho_emp_codigo },
-        cho_estado: this.chofer.cho_estado,
-        cho_chofer: this.chofer.cho_chofer,
-        cho_legajo:this.chofer.cho_legajo,
-        cho_nombre:this.chofer.cho_nombre,
-        cho_doc_codigo:this.chofer.cho_doc_codigo,
-        cho_documento: this.chofer.cho_documento,
-        cho_fecha_nacimiento:fecha,
-        cho_grupo_sanguineo:this.chofer.cho_grupo_sanguineo,
-        cho_observaciones:this.chofer.cho_observaciones,
-        cho_telefono:this.chofer.cho_telefono,
-        cho_telefono_emergencia:  this.chofer.cho_telefono_emergencia
-      });
+      this.resetForm();    
    }
 
 
@@ -177,25 +189,22 @@ export class ChoferComponent implements OnInit, OnChanges, TabChild {
 
     if( this.nuevo ){
         this.choferService.create$(cho)
-        .subscribe( this.okChoferSave.bind( this ), this.errorChofer.bind(this) );
+        .subscribe( this.okChofer.bind( this ), this.errorChofer.bind(this) );
     }else{
 
         this.choferService.update$(cho)
-        .subscribe( this.okChoferUpdate.bind( this ), this.errorChofer.bind(this) );
+        .subscribe( this.okChofer.bind( this ), this.errorChofer.bind(this) );
 
     }
 
   }
 
-  okChoferSave( ) {
-    this.parent.mostrarDetalle();    
-    this.closeModal();
+  okChofer( ) {   
+    this._ms.sendRespuesta(true);    
+    this.soloCerrar();
   }
 
-  okChoferUpdate() {
-    this.parent.mostrarDetalle();    
-    this.closeModal();
-  }
+
 
   errorChofer( err ) {
     this.limpiarMensajes();
@@ -230,9 +239,19 @@ export class ChoferComponent implements OnInit, OnChanges, TabChild {
        return cho;
   }
 
-  private closeModal(): void {
+  /*private closeModal(): void {
     this.closeBtn.nativeElement.click();
+  }*/
+
+  ngOnDestroy(): void {
+   
   }
+
+  soloCerrar(){
+    this.ngOnDestroy();
+    $('#ventana').modal('hide'); 
+  }
+
 
 }
 

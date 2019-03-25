@@ -8,7 +8,7 @@ const LOWERCASE_INPUT_CONTROL_VALUE_ACCESSOR = {
 };
 
 @Directive({
-  selector: 'input[uppercase]',
+  selector: 'input[uppercase],textarea[uppercase]',
   host: {
     // When the user updates the input
     '(input)': 'onInput($event.target.value)',

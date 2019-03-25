@@ -128,6 +128,7 @@ import { DirectivesModule } from '../directives/directives.module';
                     IncidenciaByVehiculoComponent,
                     GrupoComponent,
                     RolesComponent,                    
-                    UsuarioComponent ]  
+                    UsuarioComponent,
+                    CarnetListComponent ]  
 })
 export class PagesModule { }

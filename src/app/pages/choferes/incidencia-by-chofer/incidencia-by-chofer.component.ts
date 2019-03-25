@@ -8,7 +8,7 @@ import { Observable } from 'rxjs';
 import { IncidenciaService, ChoferService, ErrorService } from 'src/app/services/service.index';
 import { Chofer, ChoferIndicencia, ListaChoferIncidencia } from 'src/app/models/model.index';
 
-
+declare var $:any;
 
 
 @Component({
@@ -18,16 +18,14 @@ import { Chofer, ChoferIndicencia, ListaChoferIncidencia } from 'src/app/models/
 })
 export class IncidenciaByChoferComponent implements OnInit, OnChanges {
 
-  @Input() chofer: Chofer;
+  @Input() data: any;
 
+  chofer: Chofer;
   choferIndicencias:any=[];
 
   incByChoferForm:FormGroup;
   comboTipos:any=[];
   todosErrores:any=[];
-
-  @ViewChild('closeBtn') closeBtn: ElementRef;
-
 
   constructor( private incidenciaService:IncidenciaService,
                private fb: FormBuilder,
@@ -62,18 +60,28 @@ export class IncidenciaByChoferComponent implements OnInit, OnChanges {
 
   ngOnInit() {
 
-    let observable: Observable<any> =
-              this.incidenciaService.findIncidenciasByEmpyTipo$(this.chofer.choferPK.cho_emp_codigo,1);
-    observable.subscribe( data => {
-        this.comboTipos = data;
+    $('#ventana').modal('show'); 
+    this.chofer = this.data.chofer;
 
-     });
+    setTimeout( () =>{
+        this.incidenciaService.findIncidenciasByEmpyTipo$(this.chofer.choferPK.cho_emp_codigo,1)
+        .subscribe( data => {
+            this.comboTipos = data;
+
+        });
+        this.resetForm();  
+    });
+       
   }
 
   ngOnChanges() {
-      if( this.incByChoferForm ){
-        this.getIncidenciasByChofer();
-      }
+    this.resetForm();  
+  }
+
+  resetForm(){
+    if( this.incByChoferForm ){
+      this.getIncidenciasByChofer();
+    }
   }
 
   getIncidenciasByChofer(){
@@ -231,7 +239,7 @@ export class IncidenciaByChoferComponent implements OnInit, OnChanges {
                                                  this.chofer.choferPK.cho_codigo,
                                                  lista).subscribe(result => {
       //this.parent.mostrarDetalle();
-      this.closeModal();
+      this.soloCerrar();
 
     }, err => {
 
@@ -289,8 +297,9 @@ prepararSalvarChoferIncid():any {
     return incidenciasDeepCopy;
   }
 
-  private closeModal(): void {
-    this.closeBtn.nativeElement.click();
+  soloCerrar(){
+    //this.ngOnDestroy();
+    $('#ventana').modal('hide'); 
   }
 
 

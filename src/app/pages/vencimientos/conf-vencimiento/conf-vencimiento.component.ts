@@ -6,6 +6,7 @@ import { Vencimiento, TipoVencimiento, ConstantesGrales } from 'src/app/models/m
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 
+
 declare var swal;
 
 @Component({
@@ -18,11 +19,13 @@ export class ConfVencimientoComponent implements OnInit, OnDestroy {
   vencimientosForm:FormGroup;
   allVencimientos:Vencimiento[]=[];     
   tiposVencimientos: TipoVencimiento[] =[];
+  tiposVencLibres: TipoVencimiento[] =[];
 
   vencimientosSubs: Subscription;
   deleteVencimientoSubs: Subscription;
   
   vencimientosLoaded=false;
+  vencimientoEdit: Vencimiento= null;
 
   constructor( public _vs: VencimientoService,
                public _us: UsuarioService,
@@ -48,7 +51,8 @@ export class ConfVencimientoComponent implements OnInit, OnDestroy {
       tipoVencimiento: null,
       activo:  false,
       cantidadAnticipacion:  null,      
-    });     
+    }); 
+    this.vencimientoEdit = null;    
   }
 
   ngOnInit() {
@@ -62,8 +66,18 @@ export class ConfVencimientoComponent implements OnInit, OnDestroy {
 
   okVencimientos( resp ){
     this.allVencimientos = resp.vencimientos; 
-    this.tiposVencimientos = resp.tiposVencimientos;                   
+    this.tiposVencimientos = resp.tiposVencimientos;     
+    
+    this.filterTipoVencLibres();
+    
     this.vencimientosLoaded = true;
+  }  
+
+  filterTipoVencLibres(){
+    this.tiposVencLibres = 
+    this.tiposVencimientos.filter( tipo =>        
+                                   this.allVencimientos.find(  
+                                      v => v.tipoVencimiento.id === tipo.id) ? false:true );    
   }
 
   errorVencimientos( err ){
@@ -132,6 +146,7 @@ export class ConfVencimientoComponent implements OnInit, OnDestroy {
   }
 
   editarVencimiento( vencimiento: Vencimiento ){
+    this.vencimientoEdit = vencimiento;
     this.setVencimientoToForm( vencimiento );
   }
 
