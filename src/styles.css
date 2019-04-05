@@ -17,7 +17,7 @@ body {
 }
 
 .navbar-brand {
-    padding: 7px 15px;
+    padding: 4px 0px;
 }
 
 .container {
@@ -627,12 +627,3 @@ hr.style14 {
       margin-bottom: -10px !important;
   }
 
-
-  .navbar-brand {
-    padding: 0px; /* firefox bug fix */
-  }
-  .navbar-brand>img {
-    height: 100%;
-    padding: 15px; /* firefox bug fix */
-    width: auto;
-  }
