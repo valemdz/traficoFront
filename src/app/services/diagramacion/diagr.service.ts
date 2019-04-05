@@ -74,6 +74,8 @@ export class DiagrService {
               map( ( choferes: any ) =>{
 
                 choferes.forEach(cho => {
+                    cho.nombreConTipo = cho.cho_id_aux + cho.nombreConTipo;
+                    
                     cho.servicios.forEach( serv =>{
                       serv.servicioPK.serFechaHora = new Date( serv.servicioPK.serFechaHora );
                       serv.fechaHoraSalida = new Date( serv.fechaHoraSalida );

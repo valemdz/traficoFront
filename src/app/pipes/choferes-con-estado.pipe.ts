@@ -2,6 +2,7 @@ import { Pipe, PipeTransform } from '@angular/core';
 
 import { FuncionesGrales } from '../utiles/funciones.grales';
 import { CONSTANTES_CHOFER } from '../models/model.index';
+import { ChildActivationEnd } from '@angular/router';
 
 
 
@@ -47,6 +48,7 @@ export class ChoferesConEstadoPipe implements PipeTransform {
                   choferPKStr: JSON.stringify( cho.choferPK ),
                   nombre: cho.nombre,
                   nombreConTipo: cho.nombreConTipo,
+                  idaux: cho.cho_id_aux,
                   classCho: classCho });
               }
 

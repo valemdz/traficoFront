@@ -1,5 +1,7 @@
 export class ConstantesGrales {
 
+    public static PAGES_IN_PAGINATION = 10;
+
     public static ROWS_BY_PAGE = 5;
     public static readonly DATE_FMT = 'dd/MMM/yyyy';
     public static readonly DATE_TIME_FMT = `${ConstantesGrales.DATE_FMT} hh:mm:ss`;

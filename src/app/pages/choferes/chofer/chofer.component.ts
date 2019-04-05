@@ -82,7 +82,8 @@ export class ChoferComponent implements OnInit, OnChanges, OnDestroy, TabChild {
       cho_grupo_sanguineo:['',Validators.required],
       cho_observaciones:['', Validators.maxLength(255)],
       cho_telefono:['',[Validators.required, Validators.maxLength(50)]],
-      cho_telefono_emergencia: ['',[Validators.required, Validators.maxLength(50)]]
+      cho_telefono_emergencia: ['',[Validators.required, Validators.maxLength(50)]],
+      cho_id_aux: ['']
     });
 
     this.choferForm.valueChanges
@@ -106,7 +107,8 @@ export class ChoferComponent implements OnInit, OnChanges, OnDestroy, TabChild {
       cho_grupo_sanguineo:this.chofer.cho_grupo_sanguineo,
       cho_observaciones:this.chofer.cho_observaciones,
       cho_telefono:this.chofer.cho_telefono,
-      cho_telefono_emergencia:  this.chofer.cho_telefono_emergencia
+      cho_telefono_emergencia:  this.chofer.cho_telefono_emergencia,
+      cho_id_aux: this.chofer.cho_id_aux
     });
  }
 
@@ -232,7 +234,8 @@ export class ChoferComponent implements OnInit, OnChanges, OnDestroy, TabChild {
           cho_observaciones: form.cho_observaciones,
           cho_telefono: form.cho_telefono,
           cho_telefono_emergencia: form.cho_telefono_emergencia,
-          cho_fecha_nacimiento: fecha.format() as any
+          cho_fecha_nacimiento: fecha.format() as any,
+          cho_id_aux: form.cho_id_aux
        };
 
 

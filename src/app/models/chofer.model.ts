@@ -13,7 +13,8 @@ export class Chofer {
                 public cho_telefono?: String,
                 public cho_telefono_emergencia?: String,
                 public cho_fecha_nacimiento?:Date,
-                public cho_funcion?:string,    
+                public cho_funcion?:string, 
+                public cho_id_aux?:number,   
                 public carnets?:Carnet[]){}
     
 }

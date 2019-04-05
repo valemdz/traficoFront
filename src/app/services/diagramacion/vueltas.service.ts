@@ -1,12 +1,13 @@
 import { Injectable, Inject, LOCALE_ID } from '@angular/core';
 
 import { FuncionesGrales } from 'src/app/utiles/funciones.grales';
-import { Observable, Subscription } from 'rxjs';
+import { Observable, Subscription, of } from 'rxjs';
 import 'rxjs/add/observable/forkJoin';
 import { DiagrService } from './diagr.service';
 import { LoaderService } from '../mensajes/loader.service';
 import { UsuarioService } from '../usuario/usuario.service';
 import { Servicio, Vuelta, CONSTANTES_VIAJE, ConstantesGrales, CONSTANTES_VEHICULOS } from 'src/app/models/model.index';
+import { map, catchError } from 'rxjs/operators';
 
 
 
@@ -61,13 +62,29 @@ export class VueltasService {
       this.llamadaEnParalelo();                                                 
   } 
 
-  llamadaEnParalelo(){
+  /*llamadaEnParalelo(){
     this.loaderService.displayConjunto(true);
     const servIda$ = this.getServiciosIda$();
     const servVta$ = this.getServiciosVta$();      
     const choOcupacion$ = this.getChoferesOcupacion$(); 
     const vueltas$ = this.getVueltas$();
     const vehOcupacion$ = this.getVehiculosOcupacion$();
+
+    this.datosVueltasSubs = Observable.forkJoin([ servIda$, 
+                                                  servVta$,                                                  
+                                                  choOcupacion$,
+                                                  vueltas$,
+                                                  vehOcupacion$])
+        .subscribe( this.okParalelo.bind(this));
+  }*/
+
+  llamadaEnParalelo(){
+    this.loaderService.displayConjunto(true);
+    const servIda$ = this.getServiciosIda$().pipe( map( (res) => res ), catchError(  error => of([]) )) ;
+    const servVta$ = this.getServiciosVta$().pipe( map( (res) => res ), catchError(  error => of([]) )) ;      
+    const choOcupacion$ = this.getChoferesOcupacion$().pipe( map( (res) => res ), catchError(  error => of([]) )) ; 
+    const vueltas$ = this.getVueltas$().pipe( map( (res) => res ), catchError(  error => of([]) )) ;
+    const vehOcupacion$ = this.getVehiculosOcupacion$().pipe( map( (res) => res ), catchError(  error => of([]) )) ;
 
     this.datosVueltasSubs = Observable.forkJoin([ servIda$, 
                                                   servVta$,                                                  
@@ -196,7 +213,7 @@ export class VueltasService {
 
   okChoferes( data ) {
     this.choferesOcupacion = data;    
-    console.log( this.choferesOcupacion );
+    console.log('choferes', this.choferesOcupacion );
   }
 
   getServRetorno( idServRetorno ) {

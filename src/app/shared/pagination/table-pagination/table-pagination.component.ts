@@ -5,6 +5,7 @@ import {showLoading, hideLoading, doNothing} from "../commons"
 import * as Rx from "rxjs/Rx";
 import { Observable } from 'rxjs';
 import { PaginationService } from 'src/app/services/service.index';
+import { ConstantesGrales } from 'src/app/models/model.index';
 
 
 @Component({
@@ -25,7 +26,7 @@ export class TablePaginationComponent implements OnInit, OnChanges {
 
     }
 
-    ngOnChanges(changes) {
+    /*ngOnChanges(changes) {
         if (changes['page']) {
             let pagesIndexes_: Array<number> = [];
             for (let i = 0; i < this.page.totalPages; i++) {
@@ -33,10 +34,39 @@ export class TablePaginationComponent implements OnInit, OnChanges {
             }
             this.pagesIndexes = pagesIndexes_;
         }
+    }*/
+
+    ngOnChanges(changes) {
+        if (changes['page']) {
+            ///Se ven 10 paginas en la paginacion////            
+            let inicio = 1;
+            let fin = 10;
+            if( this.page.number + 1 > 6  ){
+                inicio =  this.page.number + 1 - 5;
+                fin =  this.page.number + 1 + 4
+            }
+            if( fin > this.page.totalPages ){
+                fin = this.page.totalPages;
+            }
+            let pagesIndexes_: Array<number> = [];
+            for (let i = inicio; i <= fin; i++) {
+                pagesIndexes_.push(i);
+            }
+            this.pagesIndexes = pagesIndexes_;
+        }
     }
 
-    fetchPageNumber(pageNumer: number) {
-        let observable: Observable<any> = this.table.fetchPage(pageNumer - 1, this.page.size, this.getSort());
+    fetchPageNumber(pageNumer: number) {       
+
+        if( this.page.first && (pageNumer - 1) == 0){
+            return;
+        }
+
+        if( this.page.last && pageNumer == this.page.totalPages ){
+            return;
+        }
+
+        let observable: Observable<any> = this.table.fetchPage(pageNumer-1, this.page.size, this.getSort());
         if (observable != null) {
             showLoading();
             observable.subscribe(doNothing,hideLoading,hideLoading);

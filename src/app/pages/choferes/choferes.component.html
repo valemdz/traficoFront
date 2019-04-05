@@ -18,6 +18,9 @@
                         <th>
                             <app-table-sort [table]="self" [page]="choferPage" [label]="'Estado'" [property]="'cho_estado'"></app-table-sort>
                         </th>
+                        <th>
+                            <app-table-sort [table]="self" [page]="choferPage" [label]="'Id Aux'" [property]="'cho_id_aux'"></app-table-sort>
+                        </th>
                         <th class="actions"></th>
                     </tr>
                 </thead>
@@ -43,7 +46,7 @@
                                     <span class="slider round"></span-->                                        
                             </label>
                         </td>
-                        <td>{{chofer.cho_telefono_emergencia}}</td>
+                        <td>{{chofer.cho_id_aux}}</td>
                         <td class="actions">
                             <a class="btn btn-xs" (click)="modificarChofer( chofer )" >
                                 <i title="Editar" data-toggle="tooltip" animation="true" data-placement="top" onmouseenter="$(this).tooltip('show')" class="fa fa-pencil fa-2x green" aria-hidden="true"></i>
