@@ -1,18 +1,21 @@
 import { Component, OnInit, Input, OnDestroy } from '@angular/core';
-import { FormGroup, FormBuilder, Validators, NgForm, FormControl } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators, NgForm } from '@angular/forms';
 import { VueltasService, DiagrService, ModalSiNoService, UsuarioService } from 'src/app/services/service.index';
-import { Subscription, Observable } from 'rxjs';
+import { Subscription } from 'rxjs';
 import { VueltaDeVueltaService } from './vuelta-de-vuelta.service';
-import { startWith, map } from 'rxjs/operators';
 import { ChoferesConEstadoPipe } from 'src/app/pipes/choferes-con-estado.pipe';
-import { Servicio, ComboCho, Vuelta, ModalSiNo  } from '../../../models/model.index';
+import { Servicio, Vuelta, ModalSiNo  } from '../../../models/model.index';
+import { ChofereEtapasComponent } from '../chofere-etapas/chofere-etapas.component';
+import { MatDialog } from '@angular/material';
+import { GenerarChoferesServicioService } from './generar-choferes-servicio.service';
+
 
 
 
 @Component({
   selector: 'app-vuelta-de-vuelta',
   templateUrl: './vuelta-de-vuelta.component.html',  
-  providers:[VueltaDeVueltaService, ChoferesConEstadoPipe],
+  providers:[ VueltaDeVueltaService, ChoferesConEstadoPipe, GenerarChoferesServicioService],
   styleUrls: ['./vuelta-de-vuelta.component.css']
 })
 export class VueltaDeVueltaComponent implements OnInit, OnDestroy {
@@ -26,87 +29,71 @@ export class VueltaDeVueltaComponent implements OnInit, OnDestroy {
   updateVtaSubsc: Subscription;
   deleteVtaSubsc: Subscription;    
 
-  ////////////////////////  
-  choOcupIdaCombo=[]; 
-  choOcupVtaCombo=[]; 
-
-  filteredChoferesIda: Observable<ComboCho[]>;
-  filteredChoferesVta: Observable<ComboCho[]>;
-  ////////////////////////
-
+  
   constructor(  public _vv: VueltaDeVueltaService,
                 public _vs: VueltasService,
                 private _us: UsuarioService,
                 private fb: FormBuilder,
-                private _ds: DiagrService,
-                private pipeChofer: ChoferesConEstadoPipe,
-                public _ms: ModalSiNoService   ) {
+                private _ds: DiagrService,                
+                public _ms: ModalSiNoService,
+                public dialog: MatDialog  ) {
       this.crearForm();
   }
 
   crearForm() {
     this.formVueltas = this.fb.group({
       peliIda: [ null, [ Validators.required ]],
-      videoIda: [ null, [ Validators.required ]],
-      choferIda: [ null],
-      internoIda: [ null, [ Validators.required ]],
+      videoIda: [ null, [ Validators.required ]],      
       peliVta: [ null, [ Validators.required ]],
-      videoVta: [ null, [ Validators.required ]],
-      choferVta: [ null],
-      internoVta: [ null, [ Validators.required ]],
+      videoVta: [ null, [ Validators.required ]],      
       servRetorno: [ null, [Validators.required]]
     });
   }
 
   ngOnInit() {     
-    this._vv.OnInit( this.servInput );    
-    this.resetInternoServicioIda(); 
+    this._vv.OnInit( this.servInput );        
     this.resetVuelta();  
+  }
 
-    /////////////////////////
-
-    this.choOcupIdaCombo = this.pipeChofer.transform( this._vs.choferesOcupacion,
-                                                      this._vv.serv.fechaHoraSalida,
-                                                      this._vv.serv.fechaHoraLlegada );
+  modificarChoferesEtapasIda( serv: any ){                                 
     
-    this.escucharChoferesIda();   
-    //////////////////////////////////////    
-
-  }
-
+      const dialogRef = this.dialog.open( ChofereEtapasComponent, {
+        width: '1400px',
+        data:{ servicio: serv }      
+      });
   
+      dialogRef.afterClosed().subscribe( horarios => {        
+          if( horarios ){
+              this._vv.generarChoferesYVehiculosIda( horarios );
+          }
+      } );
+       
+  } 
 
-  private escucharChoferesIda(){
-    this.filteredChoferesIda =  this.formVueltas.get('choferIda').valueChanges
-      .pipe(
-        startWith(''),
-        map(value => this._filterChoferesIda(value))
-    );     
-  }
+  modificarChoferesEtapasVta( serv: any ){                                 
+    
+    const dialogRef = this.dialog.open( ChofereEtapasComponent, {
+      width: '1400px',
+      data:{ servicio: serv }      
+    });
 
-  private _filterChoferesIda(value: string): ComboCho[]{   
-    const filterValue = value.toLowerCase();
-    return this.choOcupIdaCombo.filter( ( option:any ) => option.nombreConTipo.toLowerCase().includes(filterValue));
-  }  
-
-  resetInternoServicioIda(){
-    //Solo reseteo el valor de su internoIda    
-    this.formVueltas.get('internoIda').setValue( this._vv.getVehiculoIdaToForm() );      
-  }
-
+    dialogRef.afterClosed().subscribe( horarios => {        
+        if( horarios ){
+            this._vv.generarChoferesYVehiculosVta( horarios );
+        }
+    } );
+     
+} 
+  
   resetVuelta() {
     if ( this._vv.vuelta ) {         
       //Traer el retorno 
       this.onChangeServRetorno( JSON.stringify( this._vv.vuelta.servicioRet.servicioPK ) ); 
       this.formVueltas.reset({
         peliIda: this._vv.vuelta.peliIda,
-        videoIda: this._vv.vuelta.videoIda,
-        //choferIda:  null,
-        internoIda: this._vv.getVehiculoIdaToForm(),
+        videoIda: this._vv.vuelta.videoIda,       
         peliVta: this._vv.vuelta.peliVta,
-        videoVta: this._vv.vuelta.videoVta,
-        //choferVta: null ,
-        internoVta: this._vv.getVehiculoVtaToForm(),
+        videoVta: this._vv.vuelta.videoVta,                
         servRetorno: this._vv.servRet.servicioPKStr
       });
     }
@@ -169,50 +156,8 @@ export class VueltaDeVueltaComponent implements OnInit, OnDestroy {
   
 
   onChangeServRetorno(   idServRetorno ) {
-    this._vv.onChangeServRetorno(  idServRetorno );
-    if ( this._vv.servRet ) { 
-
-      this.formVueltas.get('internoVta').setValue(this._vv.getVehiculoVtaToForm() );         
-      this.choOcupVtaCombo = this.pipeChofer.transform( this._vs.choferesOcupacion,
-                                                        this._vv.serv.fechaHoraSalida,
-                                                        this._vv.serv.fechaHoraLlegada );    
-      this.escucharChoferesVta();
-    }
-  }
-
-  private escucharChoferesVta(){
-    this.filteredChoferesVta =  this.formVueltas.get('choferVta').valueChanges
-      .pipe(
-        startWith(''),
-        map(value => this._filterChoferesVta(value))
-    );     
-  }
-
-  private _filterChoferesVta(value: string): ComboCho[]{   
-    const filterValue = value.toLowerCase();
-    return this.choOcupVtaCombo.filter( ( option:any ) => option.nombreConTipo.toLowerCase().includes(filterValue));
-  }  
-
-  addChoferIda( choferes, choferSel ) {    
-    this._vv.addChoferIda( choferes, choferSel )
-    //Lo pongo a '' para que siga seleccionando
-    this.resetComboChofer( 'choferIda' );    
-  }  
-
-  addChoferVta( choferes, choferSel ) {
-
-    this._vv.addChoferVta( choferes, choferSel );
-    //Lo pongo a null para que siga seleccionando
-    this.resetComboChofer( 'choferVta' );   
-  }  
-  
-  resetComboChofer( nombre ){
-    this.formVueltas.get(nombre).setValue('');
-  }
-
-  removeChofer( choferes, index ) {
-    choferes.splice(index, 1);
-  }
+    this._vv.onChangeServRetorno(  idServRetorno );    
+  }    
 
   eliminarVta(){
     if( this._vv.vuelta ){
@@ -238,13 +183,9 @@ export class VueltaDeVueltaComponent implements OnInit, OnDestroy {
 
     this.formVueltas.patchValue({
       peliIda: null,
-      videoIda: null,
-      //choferIda:  null,
-      internoIda: this._vv.getVehiculoIdaToForm(),
+      videoIda: null,      
       peliVta: null,
-      videoVta: null,
-      //choferVta: null ,
-      internoVta: null,
+      videoVta: null,      
       servRetorno: null
     });
 

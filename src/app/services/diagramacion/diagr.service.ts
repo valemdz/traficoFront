@@ -48,7 +48,11 @@ export class DiagrService {
                   serv.servicioPK.serFechaHora = new Date( serv.servicioPK.serFechaHora );
                   serv.fechaHoraLlegada = new Date( serv.fechaHoraLlegada );
                   serv.fechaHoraSalida = new Date( serv.fechaHoraSalida ); 
-              });
+                  serv.horarios.forEach( h =>{
+                        h.fechaHoraSalida = new Date( h.fechaHoraSalida );
+                        h.fechaHoraLlegada = new Date( h.fechaHoraLlegada );                        
+                  } );
+              })
               return v;
         }
       )

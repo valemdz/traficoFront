@@ -1,7 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { FuncionesGrales } from 'src/app/utiles/funciones.grales';
-import { IdaVtaListService, UsuarioService, ErrorService, AlertService } from 'src/app/services/service.index';
+import { IdaVtaListService, UsuarioService, ErrorService, AlertService, VueltasService } from 'src/app/services/service.index';
 import { PaginationPage, Table, PaginationPropertySort } from 'src/app/shared/pagination/pagination.index';
 import { ConstantesGrales } from 'src/app/models/model.index';
 
@@ -20,6 +20,7 @@ export class IdaVtaListComponent implements OnInit, OnDestroy {
   deleteEnlaceSubs: Subscription;
 
   constructor( private _us:  UsuarioService,
+               public _vs: VueltasService,
                private _ivs: IdaVtaListService,
                private ctrolError: ErrorService,
                private alertService: AlertService ) { }

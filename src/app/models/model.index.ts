@@ -15,3 +15,4 @@ export * from './constantes-vehiculos.model';
 export * from './vencimiento.model';
 export * from './permiso.model';
 export * from './empresa.model';
+export * from './linea.model';

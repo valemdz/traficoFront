@@ -41,6 +41,11 @@ import { GrupoComponent } from './permisos/grupo/grupo.component';
 import { RolesComponent } from './permisos/roles/roles.component';
 import { UsuarioComponent } from './permisos/usuario/usuario.component';
 import { DirectivesModule } from '../directives/directives.module';
+import { ChofereEtapasComponent } from './diagramacion-Servicios/chofere-etapas/chofere-etapas.component';
+import { ChoferComboOcupacionComponent } from './diagramacion-Servicios/chofer-combo-ocupacion/chofer-combo-ocupacion.component';
+import { DetOcupacionChoferComponent } from './diagramacion-Servicios/det-ocupacion-chofer/det-ocupacion-chofer.component';
+import { ModalUploadComponent } from '../components/modal-upload/modal-upload.component';
+import { VehiculoComboOcupacionComponent } from './diagramacion-Servicios/vehiculo-combo-ocupacion/vehiculo-combo-ocupacion.component';
 
 
 
@@ -80,7 +85,12 @@ import { DirectivesModule } from '../directives/directives.module';
                   GruposComponent,
                   GrupoComponent,
                   RolesComponent,
-                  UsuarioComponent     ],
+                  UsuarioComponent,
+                  ChofereEtapasComponent,
+                  ChoferComboOcupacionComponent,
+                  DetOcupacionChoferComponent,
+                  ModalUploadComponent,
+                  VehiculoComboOcupacionComponent ],
                   
   exports:[ WellcomeComponent, 
             ChoferesComponent, 
@@ -111,7 +121,9 @@ import { DirectivesModule } from '../directives/directives.module';
             DiagrChoferesComponent,
             DiagrViajesEspComponent,
             ErrorAppComponent,
-            GruposComponent     ],
+            GruposComponent,
+            DetOcupacionChoferComponent,
+            ModalUploadComponent  ],
   imports: [
     CommonModule,    
     SharedModule,
@@ -129,6 +141,8 @@ import { DirectivesModule } from '../directives/directives.module';
                     GrupoComponent,
                     RolesComponent,                    
                     UsuarioComponent,
-                    CarnetListComponent ]  
+                    CarnetListComponent,
+                    ChofereEtapasComponent,
+                    DetOcupacionChoferComponent ]  
 })
 export class PagesModule { }

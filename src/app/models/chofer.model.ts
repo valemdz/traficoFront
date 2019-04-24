@@ -1,11 +1,11 @@
-import { Vencimiento, Carnet } from "./model.index";
+import { Vencimiento, Carnet, ServicioPK } from "./model.index";
 
 export class Chofer {
    constructor( public choferPK: ChoferPK,
                 public cho_estado?: number,
                 public cho_chofer?: number,
                 public cho_legajo?: number,
-                public cho_nombre?: String,
+                public cho_nombre?: string,
                 public cho_doc_codigo?: number,
                 public cho_documento?: String,
                 public cho_grupo_sanguineo?: String,
@@ -15,7 +15,8 @@ export class Chofer {
                 public cho_fecha_nacimiento?:Date,
                 public cho_funcion?:string, 
                 public cho_id_aux?:number,   
-                public carnets?:Carnet[]){}
+                public carnets?:Carnet[],
+                public foto?:string ){}
     
 }
 
@@ -53,20 +54,44 @@ export interface ComboCho{
     nombreConTipo: string;
 }
 
-export interface ChoferOcupacion {
+/*export interface ChoferOcupacion {
     choferPK: ChoferPK;
     etaDesde:number;
     etaHasta:number;
     nombre:string;
     nombreConTipo: string;
     tipoChofer: number;
+}*/
+
+export interface ChoferOcupacion {
+    choferPK:ChoferPK;    
+    nombre:string;
+    tipoChofer:number;
+    estado:number;
+    nombreConTipo:string;
+    cho_id_aux:number;
+    servicios:ChoferServ[];
+    incidencias:ChoferIndicencia[];
+    viajes:ChoferViajesEsp[];
 }
 
+export interface ChoferServ {
+    servicioPK: ServicioPK;
+    estado:number;
+    fechaHoraSalida:Date;
+    fechaHoraLlegada:Date;  
+}
 
 export interface ChoferIndicencia{
-    id:number;
+    id?:number;
     idIncidencia:number;
     inicio:Date;
+    fin:Date;
+}
+
+export interface ChoferViajesEsp{
+    idViaje:number;
+    inicio:Date
     fin:Date;
 }
 

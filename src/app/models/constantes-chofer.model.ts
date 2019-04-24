@@ -1,18 +1,18 @@
 
 export class CONSTANTES_CHOFER {
 
-  public static readonly CON_SERVICIOS = 1;
-  public static readonly CON_INCIDENCIAS = 2;
-  public static readonly CON_VIAJES = 3;
-  public static readonly LIBRE = 4;
-
-  public static readonly CON_SERVICIOS_STR = 'alert alert-danger';
-  public static readonly CON_INCIDENCIAS_STR = 'alert alert-warning';
-  public static readonly CON_VIAJES_STR = 'alert alert-danger';
-  public static readonly LIBRE_STR = 'alert alert-success';
+ 
 
   public static readonly CHOFER = 0;
   public static readonly AUXILIAR = 1;
+
+
+  public static readonly PRIMER_CHOFER = 1;
+  public static readonly SEGUNDO_CHOFER = 2;
+  public static readonly PRIMER_AUX = 3;
+  public static readonly SEGUNDO_AUX = 4;
+
+  public static readonly CHOFER_SIN_PERSONAL_STR = 'Sin Personal';
 
   public static getTipoChoferStr( tipoChofer ): string {
     if ( tipoChofer === CONSTANTES_CHOFER.CHOFER ) {

@@ -1,6 +1,7 @@
 
 export const environment = {
   production: false,
+  originSinApi: 'http://127.0.0.1:8088',
   origin: 'http://127.0.0.1:8088/api',
   originLogin: 'http://127.0.0.1:8088/api/login'
    //origin: 'http://190.15.196.153:8081/nue-trafico-1/api',

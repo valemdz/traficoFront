@@ -1,9 +1,9 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import {Router} from '@angular/router';
+import { Router } from '@angular/router';
 import {  Subscription } from 'rxjs';
 
 import { ChoferService } from 'src/app/services/choferes/chofer.service';
-import { UsuarioService, ErrorService, VencimientoService, ModalService } from 'src/app/services/service.index';
+import { UsuarioService, ErrorService, VencimientoService, ModalService, ModalUploadService } from 'src/app/services/service.index';
 import { Chofer, CONSTANTES_CHOFER, ConstantesGrales, VencimientosChoferes, ChoferPK } from 'src/app/models/model.index';
 
 import { PaginationPage, Table, PaginationPropertySort } from 'src/app/shared/pagination/pagination.index';
@@ -42,7 +42,8 @@ export class ChoferesComponent implements OnInit, OnDestroy {
                  private router: Router, public _vs: VencimientoService,
                  public _us: UsuarioService,                 
                  private ctrolError: ErrorService,
-                 private _ms: ModalService) {
+                 private _ms: ModalService,
+                 public _imgs: ModalUploadService ) {
 
         this.subscriptionModal = this._ms.getRespuesta()
         .subscribe( ( mostrar: boolean) => {
@@ -52,8 +53,19 @@ export class ChoferesComponent implements OnInit, OnDestroy {
         } );            
    }
 
+   cambiarImagenModal( choferPK: ChoferPK ) {
+    //armar la url base upload/choferes
+    const url = `/upload/choferes/${choferPK.cho_emp_codigo}/${choferPK.cho_codigo}`;    
+    this._imgs.mostraModal( url );
+   }
+
+   suscripcionModalImagenes(){
+       this._imgs.notificacion.subscribe( resp =>   this.mostrarDetalle() );
+   }
+
 
     ngOnInit() {
+        this.suscripcionModalImagenes();
         this.mostrarDetalle();
         this.getVencimientos();
     }

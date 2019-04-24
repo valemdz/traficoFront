@@ -23,15 +23,21 @@
                 <td>{{ serv.escSalida }}<br>{{ serv.fechaHoraSalida | date:'EE HH:mm' }}</td>
                 <td>{{ serv.escLlegada }}<br>{{ serv.fechaHoraLlegada | date:'EE HH:mm' }}</td>
                 <td>
-                    <table>
-                        <tr *ngFor="let c of choferesIda;let i=index">
-                            <td><span class="badge badge-pill" [ngClass]="c.cho_estado === 1 ?
-                          'badge-warning' : 'badge-primary'">
-                                    {{ c.nombreConTipo }}</span></td>
-                        </tr>
-                    </table>
+                    <button *ngFor="let c of choferesIda" 
+                        type="button"                         
+                        [appColorBotonEstadoChofer]="[c.choferPK!=null?c.choferPK:null, c.fechaHoraSalida, c.fechaHoraLlegada, serv.servicioPK ]"                                                                                 
+                        class="btn btn-primary btn-xs">
+                        {{c.nombreConTipo}}
+                    </button>
                 </td>
-                <td> {{internoIda}}</td>
+                <td> 
+                    <button *ngFor="let v of vehiculosIda" 
+                        type="button" 
+                        class="btn btn-primary btn-xs"
+                        [appColorBotonEstadoVehiculo]="[v.vehiculoPK!=null?v.vehiculoPK:null, v.fechaHoraSalida, v.fechaHoraLlegada, serv.servicioPK ]" >                                                                               
+                        {{v.vehiculoPK.vehInterno}}
+                    </button>
+                </td>
                 <td *ngIf="servRet">{{servRet.servicioPK.serFechaHora | date:'EE HH:mm' }}</td>
                 <td class="actions">
                     <button  data-html2canvas-ignore="true" type="button" class="btn btn-xs botonVuelta" (click)="editar()">
@@ -49,15 +55,21 @@
                 <td>{{ servRet.escSalida }}<br>{{ servRet.fechaHoraSalida | date:'EE HH:mm' }}</td>
                 <td>{{ servRet.escLlegada }}<br>{{ servRet.fechaHoraLlegada | date:'EE HH:mm' }}</td>
                 <td>
-                    <table>
-                        <tr *ngFor="let c of choferesVta;let i=index">
-                            <td><span class="badge badge-pill" [ngClass]="c.cho_estado === 1 ?
-                          'badge-warning' : 'badge-primary'">
-                                    {{ c.nombreConTipo }}</span></td>
-                        </tr>
-                    </table>
+                    <button *ngFor="let c of choferesVta;let i=index" 
+                        type="button"                         
+                        [appColorBotonEstadoChofer]="[c.choferPK!=null?c.choferPK:null, c.fechaHoraSalida, c.fechaHoraLlegada, servRet.servicioPK ]"                                     
+                        class="btn btn-primary btn-xs" >        
+                        {{c.nombreConTipo}}
+                    </button>                     
                 </td>
-                <td>{{internoVta}}</td>
+                <td>
+                    <button *ngFor="let v of vehiculosVta" 
+                        type="button" 
+                        class="btn btn-primary btn-xs"
+                        [appColorBotonEstadoVehiculo]="[v.vehiculoPK!=null?v.vehiculoPK:null, v.fechaHoraSalida, v.fechaHoraLlegada, servRet.servicioPK ]"  >                                                           
+                        {{v.vehiculoPK.vehInterno}}
+                    </button>  
+                </td>
                 <td></td>
                 <td></td>
             </tr>

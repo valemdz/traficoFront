@@ -7,6 +7,9 @@
                 <thead>
                     <tr>
                         <th>
+                            Imagen
+                        </th>    
+                        <th>
                             <app-table-sort [table]="self" [page]="choferPage" [label]="'Rol'" [property]="'cho_chofer'"></app-table-sort>
                         </th>
                         <th>
@@ -26,6 +29,14 @@
                 </thead>
                 <tbody>
                     <tr *ngFor="let chofer of choferPage.content">
+                        <td class='w70'>     
+                             <img *ngIf="!chofer.foto||chofer.foto.length===0" 
+                                  (click)="cambiarImagenModal( chofer.choferPK )" 
+                                  class="img-responsive" src="assets/img/no-img.jpg">                        
+                             <img *ngIf="chofer.foto&&chofer.foto.length>0" 
+                                  (click)="cambiarImagenModal( chofer.choferPK )" 
+                                  [src]="chofer.foto | imagen:'choferes'" class="w50 img-circle pointer" /> 
+                        </td>
                         <td>{{ chofer.cho_chofer == 0 ? 'Conductor' : 'Auxiliar'}}</td>
                         <td>{{chofer.cho_legajo}}</td>
                         <td>{{chofer.cho_nombre}}</td>

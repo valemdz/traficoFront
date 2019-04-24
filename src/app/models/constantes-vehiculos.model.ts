@@ -10,6 +10,9 @@ export class CONSTANTES_VEHICULOS{
       { codigo: CONSTANTES_VEHICULOS.DESHABILITADO , descripcion: CONSTANTES_VEHICULOS.DESHABILITADO_STR } 
   ];
 
+
+  public static readonly SIN_UNIDAD = 'Sin Unidad';
+
 }
 
   

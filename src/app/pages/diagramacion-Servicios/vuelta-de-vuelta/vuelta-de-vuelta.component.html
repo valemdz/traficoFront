@@ -23,32 +23,32 @@
                         <td><input type="text" required formControlName="videoIda" data-toggle="tooltip" animation="true" data-placement="top" title="Video" onmouseenter="$(this).tooltip('show')" class="input-sm form-control"></td>
                         <td>{{ _vv.serv.escalaSalida }}<br>{{ _vv.serv.fechaHoraSalida | date:'EE HH:mm' }}</td>
                         <td>{{ _vv.serv.escalaLlegada }}<br>{{ _vv.serv.fechaHoraLlegada | date:'EE HH:mm' }}</td>
-                        <td><button *ngFor="let c of _vv.choferesIda;let i=index" type="button" class="btn btn-primary btn-xs"><span
-                                    (click)="removeChofer( _vv.choferesIda, i)" class="badge">x</span>{{c.nombreConTipo}}</button>
-
-                            <mat-form-field class="example-full-width">
-                                <input type="text" placeholder="Seleccionar-----" aria-label="Number" matInput [formControl]="formVueltas.get('choferIda')" [matAutocomplete]="auto">
-                                <mat-autocomplete #auto="matAutocomplete" (optionSelected)="addChoferIda( _vv.choferesIda, $event.option.value )">
-                                    <mat-option *ngFor="let option of filteredChoferesIda | async" [value]="option.nombreConTipo">
-                                        <span [class]="option.classCho" >{{option.nombreConTipo}} </span>
-                                    </mat-option>
-                                </mat-autocomplete>
-                            </mat-form-field>
-                            <!--<select class="input-sm form-control" #ch (change)="addChoferIda(_vv.choferesIda, ch.value, serv)" formControlName="choferIda">
-                               <option *ngFor="let opt of _vs.choferesOcupacion|choferesConEstado:_vv.serv.fechaHoraSalida:_vv.serv.fechaHoraLlegada"
-                                    [value]="opt.choferPKStr" [ngClass]="opt.classCho">
-                                    {{opt.nombreConTipo}}
-                                </option>
-                            </select>-->
+                        <td><button *ngFor="let c of _vv.choferesIda;let i=index" 
+                                    type="button" 
+                                    class="btn btn-primary btn-xs"
+                                    [appColorBotonEstadoChofer]="[c.choferPK!=null?c.choferPK:null, c.fechaHoraSalida, c.fechaHoraLlegada, _vv.serv.servicioPK ]"                                     
+                                    (click)="modificarChoferesEtapasIda(_vv.serv)" >
+                                    {{c.nombreConTipo}}
+                            </button>
+                            <button *ngIf="_vv.choferesIda.length===0"
+                                    (click)="modificarChoferesEtapasIda(_vv.serv)"
+                                    class="btn btn-primary btn-xs" > 
+                                    Asignar Choferes 
+                            </button>                            
                         </td>
-                        <td>                            
-                            <select class="input-sm form-control" formControlName="internoIda" required>
-                                <option value="null">-- Seleccionar --</option>
-                                <option *ngFor="let opt of _vs.vehiOcupacion|vehiculosConColores:_vv.serv.fechaHoraSalida:_vv.serv.fechaHoraLlegada" 
-                                    [value]="opt.vehiculoPKStr" [ngClass]="opt.classObj">
-                                    {{opt.interno}}
-                                </option>
-                            </select>
+                        <td>   
+                            <button *ngFor="let v of _vv.vehiculosIda" 
+                                    type="button" 
+                                    class="btn btn-primary btn-xs"
+                                    [appColorBotonEstadoVehiculo]="[v.vehiculoPK!=null?v.vehiculoPK:null, v.fechaHoraSalida, v.fechaHoraLlegada, _vv.serv.servicioPK ]"                                     
+                                    (click)="modificarChoferesEtapasIda(_vv.serv)" >
+                                    {{v.vehiculoPK.vehInterno}}
+                            </button>
+                            <button *ngIf="_vv.vehiculosIda.length===0"
+                                    (click)="modificarChoferesEtapasIda(_vv.serv)"
+                                    class="btn btn-primary btn-xs" > 
+                                    Asignar Unidad 
+                            </button>                                                            
                         </td>
                         <td> <select formControlName="servRetorno" class="input-sm form-control" #t (change)="onChangeServRetorno( t.value)" title="Servicio Vta" placeholder="Servicio Vta" data-toggle="tooltip" animation="true" data-placement="top" onmouseenter="$(this).tooltip('show')"
                                 required>
@@ -79,25 +79,32 @@
                         <td><input formControlName="videoVta" type="text" data-toggle="tooltip" animation="true" data-placement="top" title="Pelicula" onmouseenter="$(this).tooltip('show')" class="input-sm form-control" required></td>
                         <td>{{ _vv.servRet.escalaSalida }}<br>{{ _vv.servRet.fechaHoraSalida | date:'EE HH:mm' }}</td>
                         <td>{{ _vv.servRet.escalaLlegada }}<br>{{ _vv.servRet.fechaHoraLlegada | date:'EE HH:mm' }}</td>
-                        <td> <button *ngFor="let c of _vv.choferesVta;let i=index" type="button" class="btn btn-primary btn-xs"><span
-                                    (click)="removeChofer( _vv.choferesVta, i)" class="badge">x</span>
-                                {{c.nombreConTipo}}</button>
-                                <mat-form-field class="example-full-width">
-                                    <input type="text" placeholder="Seleccionar-----" aria-label="Number" matInput [formControl]="formVueltas.get('choferVta')" [matAutocomplete]="auto">
-                                    <mat-autocomplete #auto="matAutocomplete" (optionSelected)="addChoferVta(_vv.choferesVta, $event.option.value )">
-                                        <mat-option *ngFor="let option of filteredChoferesVta | async" [value]="option.nombreConTipo">
-                                            <span [class]="option.classCho" >{{option.nombreConTipo}} </span>
-                                        </mat-option>
-                                   </mat-autocomplete>
-                                </mat-form-field>
-                </td>
-                        <td> <select class="input-sm form-control" formControlName="internoVta" required>
-                            <option value="null">-- Seleccionar --</option>
-                            <option *ngFor="let opt of _vs.vehiOcupacion|vehiculosConColores:_vv.servRet.fechaHoraSalida:_vv.servRet.fechaHoraLlegada" 
-                                [value]="opt.vehiculoPKStr" [ngClass]="opt.classObj">
-                                {{opt.interno}}
-                            </option>
-                        </select>
+                        <td> <button *ngFor="let c of _vv.choferesVta;let i=index" 
+                                    type="button" 
+                                    class="btn btn-primary btn-xs"
+                                    [appColorBotonEstadoChofer]="[c.choferPK!=null?c.choferPK:null, c.fechaHoraSalida, c.fechaHoraLlegada, _vv.servRet.servicioPK ]"                                     
+                                    (click)="modificarChoferesEtapasVta(_vv.servRet)" >        
+                                    {{c.nombreConTipo}}
+                            </button> 
+                            <button *ngIf="_vv.choferesVta.length===0"
+                                    (click)="modificarChoferesEtapasVta(_vv.servRet)"
+                                    class="btn btn-primary btn-xs" > 
+                                    Asignar Choferes 
+                            </button>                              
+                        </td>
+                        <td>
+                            <button *ngFor="let v of _vv.vehiculosVta" 
+                                    type="button" 
+                                    class="btn btn-primary btn-xs"
+                                    [appColorBotonEstadoVehiculo]="[v.vehiculoPK!=null?v.vehiculoPK:null, v.fechaHoraSalida, v.fechaHoraLlegada, _vv.servRet.servicioPK ]"                                     
+                                    (click)="modificarChoferesEtapasVta(_vv.servRet)" >        
+                                    {{v.vehiculoPK.vehInterno}}
+                            </button> 
+                            <button *ngIf="_vv.vehiculosVta.length===0"
+                                    (click)="modificarChoferesEtapasVta(_vv.servRet)"
+                                    class="btn btn-primary btn-xs" > 
+                                    Asignar Unidad 
+                            </button>            
                         </td>
                     </tr>
                 </tbody>

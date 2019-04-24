@@ -8,7 +8,7 @@
         
         <ng-container *ngIf="_vs.serviciosIda.length > 0">
             <div *ngFor="let f of _vs.fechas" >
-                <span ><strong>{{f|date:'EEEE dd'}} {{f|date:'MMMM yyyy' }} Lineas [ {{_vs.idLinIda}} - {{_vs.idLinVta}} ] </strong></span>
+                <span ><strong>{{f|date:'EEEE dd'}} {{f|date:'MMMM yyyy' }} Ida [ {{_vs.idLinIda}} ] {{_vs.lineaIda?_vs.lineaIda.linNombre:''}}  /  Vuelta  [ {{_vs.idLinVta}} ] {{(_vs.lineaVta)?_vs.lineaVta.linNombre:''}} </strong></span>
 
                 <div *ngFor="let serv of _vs.serviciosIda|filterByFecha:f">
                     <app-vuelta-de-vuelta [servInput]="serv"></app-vuelta-de-vuelta>

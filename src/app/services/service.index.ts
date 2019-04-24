@@ -1,3 +1,5 @@
+export { ModalUploadService } from "../components/modal-upload/modal-upload.service";
+export { SubirArchivoService } from "./subir-archivo/subir-archivo.service";
 export { PermisoService } from "./permisos/permiso.service";
 export { PaginationService } from "./pagination/pagination.service";
 export { VencimientoService } from "./vencimientos/vencimiento.service";

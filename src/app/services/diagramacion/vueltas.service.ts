@@ -6,8 +6,9 @@ import 'rxjs/add/observable/forkJoin';
 import { DiagrService } from './diagr.service';
 import { LoaderService } from '../mensajes/loader.service';
 import { UsuarioService } from '../usuario/usuario.service';
-import { Servicio, Vuelta, CONSTANTES_VIAJE, ConstantesGrales, CONSTANTES_VEHICULOS } from 'src/app/models/model.index';
+import { Servicio, Vuelta, CONSTANTES_VIAJE, ConstantesGrales, CONSTANTES_VEHICULOS, ChoferPK, VehiculoPK, Linea } from 'src/app/models/model.index';
 import { map, catchError } from 'rxjs/operators';
+import { IdaVtaListService } from '../service.index';
 
 
 
@@ -20,13 +21,16 @@ export class VueltasService {
   fechas: any = [];
 
   idLinIda: string;
+  lineaIda:Linea=null;
   idLinVta: string;
+  lineaVta:Linea=null;
 
   serviciosIda: Servicio[] = [];
   serviciosVta: Servicio[] = [];    
   choferesOcupacion: any;
   vueltas:Vuelta[] = [];
   vehiOcupacion:any;
+  lineas:Linea[]=[];
 
   datosVueltasSubs:Subscription;
 
@@ -36,7 +40,11 @@ export class VueltasService {
   constructor( private _ds: DiagrService,  
                private loaderService: LoaderService,
                private _us: UsuarioService,
-               @Inject(LOCALE_ID) public locale: string   ) {
+               private _ivs: IdaVtaListService,
+               @Inject(LOCALE_ID) public locale: string   ) {    
+
+    this._ivs.getLineasByEmpresa$( this._us.usuario.empresa )
+             .subscribe(  this.okLineas.bind( this ) );            
 
     this.inicio = new Date();
     this.fin = new Date();
@@ -60,23 +68,7 @@ export class VueltasService {
       this.loaded = false;      
       this.generarFechas();
       this.llamadaEnParalelo();                                                 
-  } 
-
-  /*llamadaEnParalelo(){
-    this.loaderService.displayConjunto(true);
-    const servIda$ = this.getServiciosIda$();
-    const servVta$ = this.getServiciosVta$();      
-    const choOcupacion$ = this.getChoferesOcupacion$(); 
-    const vueltas$ = this.getVueltas$();
-    const vehOcupacion$ = this.getVehiculosOcupacion$();
-
-    this.datosVueltasSubs = Observable.forkJoin([ servIda$, 
-                                                  servVta$,                                                  
-                                                  choOcupacion$,
-                                                  vueltas$,
-                                                  vehOcupacion$])
-        .subscribe( this.okParalelo.bind(this));
-  }*/
+  }  
 
   llamadaEnParalelo(){
     this.loaderService.displayConjunto(true);
@@ -84,13 +76,13 @@ export class VueltasService {
     const servVta$ = this.getServiciosVta$().pipe( map( (res) => res ), catchError(  error => of([]) )) ;      
     const choOcupacion$ = this.getChoferesOcupacion$().pipe( map( (res) => res ), catchError(  error => of([]) )) ; 
     const vueltas$ = this.getVueltas$().pipe( map( (res) => res ), catchError(  error => of([]) )) ;
-    const vehOcupacion$ = this.getVehiculosOcupacion$().pipe( map( (res) => res ), catchError(  error => of([]) )) ;
+    const vehOcupacion$ = this.getVehiculosOcupacion$().pipe( map( (res) => res ), catchError(  error => of([]) )) ;    
 
     this.datosVueltasSubs = Observable.forkJoin([ servIda$, 
                                                   servVta$,                                                  
                                                   choOcupacion$,
                                                   vueltas$,
-                                                  vehOcupacion$])
+                                                  vehOcupacion$ ])
         .subscribe( this.okParalelo.bind(this));
   }
 
@@ -100,7 +92,7 @@ export class VueltasService {
     this.okServiciosVta( respuesta[1] );    
     this.okChoferes( respuesta[2] ) ;
     this.okVueltas( respuesta[3] );
-    this.okVehiculosOcupacion( respuesta[4] );
+    this.okVehiculosOcupacion( respuesta[4] );   
 
     this.loaded = true;
     this.loaderService.displayConjunto(false);
@@ -117,9 +109,18 @@ export class VueltasService {
     }
   }
 
-  setLineas( lineas ) {
-      this.idLinIda = lineas.idLinIda;
-      this.idLinVta = lineas.idLinVta;
+  setLineas( lineasCodigos ) {      
+      this.idLinIda = lineasCodigos.idLinIda;
+      const lineaPK = { linEmpCodigo: this._us.usuario.empresa, linCodigo: this.idLinIda };
+      this.lineaIda = this.lineas.find( l => JSON.stringify( l.lineaPK) == JSON.stringify( lineaPK ));
+
+      this.idLinVta = lineasCodigos.idLinVta;     
+      const lineaPKVta = { linEmpCodigo: this._us.usuario.empresa, linCodigo: this.idLinVta };
+      this.lineaVta = this.lineas.find( l => JSON.stringify( l.lineaPK) == JSON.stringify( lineaPKVta ));
+  }
+
+  okLineas( lineas ){
+      this.lineas = lineas;
   }
 
  
@@ -130,14 +131,10 @@ export class VueltasService {
                   FuncionesGrales.fromFecha( this.locale, this.fin, ConstantesGrales.FECHA_PATTERN)  );
       //.subscribe( this.okServiciosIda.bind( this ), this.errorServiciosIda.bind( this ) );
   }
-
-
-
+  
   okServiciosIda( serviciosIda ) { 
       this.serviciosIda = serviciosIda;     
-      this.ordenamientoServiciosAscendente(  this.serviciosIda );
-      console.log('Serv Ida');                  
-      console.log(this.serviciosIda);      
+      this.ordenamientoServiciosAscendente(  this.serviciosIda );      
   }
 
   ordenamientoServiciosAscendente( servicios ) {
@@ -186,9 +183,7 @@ export class VueltasService {
         serv.servicioPKStr  = JSON.stringify( serv.servicioPK );
         serv.detalle  = FuncionesGrales.formatearFecha( this.locale, serv.fechaHoraSalida, ConstantesGrales.FECHA_HORA_MOSTRAR_PATTERN );
     });
-    this.ordenamientoServiciosAscendente( this.serviciosVta );
-    console.log( 'Servicios Vta' );
-    console.log( this.serviciosVta );
+    this.ordenamientoServiciosAscendente( this.serviciosVta );    
   } 
 
   getVehiculos$() {
@@ -211,9 +206,12 @@ export class VueltasService {
                           FuncionesGrales.fromFecha( this.locale, this.finVuelta, ConstantesGrales.FECHA_PATTERN) );                          
   }
 
+  getLineas$(){
+    return this._ivs.getLineasByEmpresa$( this._us.usuario.empresa );
+  }
+
   okChoferes( data ) {
-    this.choferesOcupacion = data;    
-    console.log('choferes', this.choferesOcupacion );
+    this.choferesOcupacion = data;        
   }
 
   getServRetorno( idServRetorno ) {
@@ -222,6 +220,12 @@ export class VueltasService {
 
   getChofer( choferSel ) {
       return this.choferesOcupacion.find( cho => JSON.stringify( cho.choferPK ) == choferSel );
+  }
+
+  getChoferByChoferPK( choferPK: ChoferPK ){   
+
+    return this.choferesOcupacion.find( cho => JSON.stringify( cho.choferPK ) 
+                                                == JSON.stringify( choferPK ) );
   }
 
   getChoferByNombreConTipo( choferNombre ) {
@@ -251,17 +255,19 @@ export class VueltasService {
     return vuelta;
   }
 
-  okVueltas( vueltas ){
-    console.log( vueltas );
+  okVueltas( vueltas ){    
     this.vueltas = vueltas;
   }
 
   okVehiculosOcupacion( vehiculos){
      this.vehiOcupacion = vehiculos;
      this.vehiOcupacion = 
-              this.vehiOcupacion.filter(  v => v.estado === CONSTANTES_VEHICULOS.HABILITADO );
-     console.log( 'okVehiculosOcupacion ');
-     console.log( this.vehiOcupacion );
+              this.vehiOcupacion.filter(  v => v.estado === CONSTANTES_VEHICULOS.HABILITADO );     
+  }
+
+  findVehiculosByVehiculoPK( vehiculoPK: VehiculoPK ){   
+    return this.vehiOcupacion.find( vehi => JSON.stringify( vehi.vehiculoPK ) 
+                                                === JSON.stringify( vehiculoPK ) );
   }
 
   errorVueltas( err ){

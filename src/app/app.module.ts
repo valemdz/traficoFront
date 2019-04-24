@@ -20,7 +20,7 @@ import { PagesModule } from './pages/pages.module';
 import { PagesComponent } from './pages/pages.component';
 import { NoPageFoundComponent } from './shared/no-page-found/no-page-found.component';
 import { DirectivesModule } from './directives/directives.module';
-import { UppercaseDirective } from './directives/uppercase.directive';
+
 
 
 
@@ -36,7 +36,7 @@ const appRoutes: Routes = [
   declarations: [
     AppComponent,    
     LoginComponent,    
-    PagesComponent    
+    PagesComponent,     
   ],
   imports: [
     BrowserModule,

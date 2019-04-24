@@ -26,6 +26,22 @@ export class ConstantesGrales {
     
     public static readonly HABILITADO_BOOLEAN = true;
     public static readonly DESHABILITADO_BOOLEAN = false;
+
+    public static readonly CON_SERVICIOS_BOTON = 'btn-danger';
+    public static readonly CON_INCIDENCIAS_BOTON = 'btn-warning';
+    public static readonly CON_VIAJES_BOTON = 'btn-danger';
+    public static readonly LIBRE_BOTON = 'btn-success';
+    public static readonly SIN_CHOFER_UNIDADES_BOTON = 'btn-default';
+
+    public static readonly CON_SERVICIOS = 1;
+    public static readonly CON_INCIDENCIAS = 2;
+    public static readonly CON_VIAJES = 3;
+    public static readonly LIBRE = 4;
+  
+    public static readonly CON_SERVICIOS_STR = 'alert alert-danger';
+    public static readonly CON_INCIDENCIAS_STR = 'alert alert-warning';
+    public static readonly CON_VIAJES_STR = 'alert alert-danger';
+    public static readonly LIBRE_STR = 'alert alert-success';  
     
 }
 

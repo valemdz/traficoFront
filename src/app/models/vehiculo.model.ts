@@ -1,7 +1,32 @@
-export interface VehiculoOcupacion{
+import { ServicioPK } from "./model.index";
+
+/*export interface VehiculoOcupacion{
     etaDesde: number;
     etaHasta: number;
     vehiculoPK: VehiculoPK;
+}*/
+
+export interface VehiculoOcupacion{
+    vehiculoPK: VehiculoPK;
+    patente: string;
+    estado: number;
+    servicios: VehiculoServ[];
+    incidencias: VehiculoIndicencia[];
+    viajes: VehiculoViajesEsp[];
+}
+
+export interface VehiculoServ {
+    servicioPK: ServicioPK;
+    estado:number;
+    fechaHoraSalida:Date;
+    fechaHoraLlegada:Date;  
+}
+
+
+export interface VehiculoViajesEsp{
+    idViaje:number;
+    inicio:Date
+    fin:Date;
 }
 
 export interface VehiculoPK {
@@ -56,3 +81,12 @@ export interface VehiculoPKConDet{
     interno:String;
     detalles:Array<String>;
 }
+
+
+export interface VehiCombo{
+    vehiculoPK: VehiculoPK,
+    vehiculoPKStr: string,                  
+    interno: number,
+    classObj: string; 
+}
+

@@ -1,0 +1,94 @@
+<ng-container *ngIf="servicio">
+    <h1 mat-dialog-title>Servicio Linea [{{servicio.servicioPK.serLinCodigo}}] - Fecha Hora {{servicio.servicioPK.serFechaHora| date:'dd/MM/yyyy EE HH:mm'}}</h1>
+    <div mat-dialog-content class="mat-typography">  
+        <section class="sample-app-content">
+            <div id="list" class="row animated fadeIn ">               
+                <table class="table table-striped table-hover table-condensed" cellspacing="0" cellpadding="0">
+                    <thead>
+                        <tr>
+                            <th>Etapa</th>
+                            <th>Hora</th>
+                            <th>1°Chofer</th>
+                            <th>2°Chofer</th>
+                            <th>1°Aux</th>
+                            <th>2°Aux</th>
+                            <th>Unidad</th>                            
+                        </tr>
+                    </thead>
+                    <tbody>                        
+                        <tr *ngFor="let h of horarios" >
+                            <td>{{h.etapa.nombre}}</td>
+                            <td>{{h.fechaHoraSalida | date:'EE HH:mm'}}</td>                                    
+                            <td>
+                                <app-chofer-combo-ocupacion 
+                                    (onRemoveChofer)="removeChofer( PRIMER_CHOFER, h )"
+                                    (onSeleccionarChofer)="seleccionoChofer( $event, PRIMER_CHOFER, h )"
+                                    (onDetalleChofer)="detOcupChofer(PRIMER_CHOFER, h.chofer1)"
+                                    [fechaInicio]="h.fechaHoraSalida"
+                                    [fechaFin]="h.fechaHoraLlegada"
+                                    [empresa]="empresa"
+                                    [codigo]="h.chofer1" 
+                                    [servicioPK]="servicio.servicioPK" >                                    
+                                </app-chofer-combo-ocupacion>
+                            </td>
+                            <td>
+                                <app-chofer-combo-ocupacion 
+                                    (onRemoveChofer)="removeChofer( SEGUNDO_CHOFER, h )"
+                                    (onSeleccionarChofer)="seleccionoChofer( $event, SEGUNDO_CHOFER, h )"
+                                    (onDetalleChofer)="detOcupChofer(SEGUNDO_CHOFER, h.chofer2 )"
+                                    [fechaInicio]="h.fechaHoraSalida"
+                                    [fechaFin]="h.fechaHoraLlegada"
+                                    [empresa]="empresa"
+                                    [codigo]="h.chofer2"
+                                    [servicioPK]="servicio.servicioPK" >                                    
+                                </app-chofer-combo-ocupacion>
+                            </td>
+                            <td>
+                                <app-chofer-combo-ocupacion 
+                                    (onRemoveChofer)="removeChofer( PRIMER_AUX, h )"
+                                    (onSeleccionarChofer)="seleccionoChofer( $event, PRIMER_AUX, h )"
+                                    (onDetalleChofer)="detOcupChofer(PRIMER_AUX, h.auxiliar1 )"
+                                    [fechaInicio]="h.fechaHoraSalida"
+                                    [fechaFin]="h.fechaHoraLlegada"
+                                    [empresa]="empresa"
+                                    [codigo]="h.auxiliar1"
+                                    [servicioPK]="servicio.servicioPK" >                                    
+                                </app-chofer-combo-ocupacion>                          
+                            </td>
+                            <td>
+                                <app-chofer-combo-ocupacion 
+                                    (onRemoveChofer)="removeChofer( SEGUNDO_AUX, h )"
+                                    (onSeleccionarChofer)="seleccionoChofer( $event, SEGUNDO_AUX, h )"
+                                    (onDetalleChofer)="detOcupChofer(SEGUNDO_AUX, h.auxiliar2)"
+                                    [fechaInicio]="h.fechaHoraSalida"
+                                    [fechaFin]="h.fechaHoraLlegada"
+                                    [empresa]="empresa"
+                                    [codigo]="h.auxiliar2"
+                                    [servicioPK]="servicio.servicioPK" >                                    
+                                </app-chofer-combo-ocupacion>
+                            </td>
+                            <td>
+                                <app-vehiculo-combo-ocupacion 
+                                    (onRemoveVehiculo)="removeVehiculo( h )"
+                                    (onSeleccionarVehiculo)="seleccionoVehiculo( $event, h )"
+                                    (onDetalleChofer)="onDetalleVehiculo( h )"
+                                    [fechaInicio]="h.fechaHoraSalida"
+                                    [fechaFin]="h.fechaHoraLlegada"
+                                    [empresa]="empresa"
+                                    [codigo]="h.interno"
+                                    [servicioPK]="servicio.servicioPK" >
+                                </app-vehiculo-combo-ocupacion>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>            
+            </div>
+        </section>     
+    </div>
+    <div mat-dialog-actions>
+        <button mat-button [mat-dialog-close]="null">Cancelar</button>       
+        <button mat-button (click)="enviarHorarios()" cdkFocusInitial>Ok</button>
+    </div>
+  
+</ng-container>  
+  

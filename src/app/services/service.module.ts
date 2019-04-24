@@ -20,7 +20,9 @@ import { VueltasService,
          VencimientoService,
          PaginationService,
          ErrorsHandler,
-         PermisoService} from './service.index';
+         PermisoService,
+         SubirArchivoService,
+         ModalUploadService} from './service.index';
          
 
 
@@ -47,7 +49,9 @@ import { VueltasService,
                 VencimientoService,
                 PaginationService,
                 ErrorsHandler,
-                PermisoService
+                PermisoService,
+                SubirArchivoService,
+                ModalUploadService
              ]
 })
 export class ServiceModule { }

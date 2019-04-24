@@ -1,0 +1,23 @@
+<div id="list" class="row animated fadeIn ">
+    <button  type="button"             
+            class="btn btn-xs btn-primary" >
+        <span *ngIf="codigo!=null" (click)="removeChofer()"	class="badge">x</span>
+        &nbsp;
+        <button type="button" class="btn btn-xs"
+            [appColorBotonEstadoChofer]="[choferSeleccionado!=null?choferSeleccionado.choferPK:null, fechaInicio, fechaFin , servicioPK]" 
+            (click)="verCombo=!verCombo" >
+            {{ choferSeleccionado?choferSeleccionado.nombreConTipo:SIN_PERSONAL}}
+        </button>
+        <span *ngIf="codigo!=null" class="test" (click)="detOcupChofer()" >&nbsp;&nbsp;</span>        
+    </button> 
+</div>
+<div id="list" class="row animated fadeIn" *ngIf="verCombo">        
+    <mat-form-field class="example-full-width">
+        <input type="text" placeholder="Seleccionar Chofer" aria-label="Number" matInput [formControl]="choferSeleccionadoControl" [matAutocomplete]="auto">
+        <mat-autocomplete #auto="matAutocomplete" (optionSelected)="seleccionarChofer( $event.option.value )">
+            <mat-option *ngFor="let option of filteredChoferes | async" [value]="option.nombreConTipo">
+                <span [class]="option.classCho" >{{option.nombreConTipo}} </span>
+            </mat-option>
+        </mat-autocomplete>
+    </mat-form-field>
+</div>
