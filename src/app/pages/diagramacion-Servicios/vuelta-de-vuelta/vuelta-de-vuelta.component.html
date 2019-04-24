@@ -31,6 +31,7 @@
                                     {{c.nombreConTipo}}
                             </button>
                             <button *ngIf="_vv.choferesIda.length===0"
+                                    type="button" 
                                     (click)="modificarChoferesEtapasIda(_vv.serv)"
                                     class="btn btn-primary btn-xs" > 
                                     Asignar Choferes 
@@ -45,6 +46,7 @@
                                     {{v.vehiculoPK.vehInterno}}
                             </button>
                             <button *ngIf="_vv.vehiculosIda.length===0"
+                                    type="button" 
                                     (click)="modificarChoferesEtapasIda(_vv.serv)"
                                     class="btn btn-primary btn-xs" > 
                                     Asignar Unidad 
@@ -87,6 +89,7 @@
                                     {{c.nombreConTipo}}
                             </button> 
                             <button *ngIf="_vv.choferesVta.length===0"
+                                    type="button" 
                                     (click)="modificarChoferesEtapasVta(_vv.servRet)"
                                     class="btn btn-primary btn-xs" > 
                                     Asignar Choferes 
@@ -101,6 +104,7 @@
                                     {{v.vehiculoPK.vehInterno}}
                             </button> 
                             <button *ngIf="_vv.vehiculosVta.length===0"
+                                    type="button" 
                                     (click)="modificarChoferesEtapasVta(_vv.servRet)"
                                     class="btn btn-primary btn-xs" > 
                                     Asignar Unidad 

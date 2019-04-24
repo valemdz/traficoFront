@@ -36,15 +36,15 @@ export class LoginComponent implements OnInit, AfterViewInit {
 
     crearForm(){        
 
-        /*this.loginForm = this.fb.group({
+        this.loginForm = this.fb.group({
             username: ['', [Validators.required, Validators.minLength(2)]],
             password: ['',Validators.required]
-        });*/
+        });
 
-        this.loginForm = this.fb.group({
+        /*this.loginForm = this.fb.group({
             username: ['cvp', [Validators.required, Validators.minLength(2)]],
             password: ['456', Validators.required]
-        });
+        });*/
 
         this.loginForm.valueChanges
         .subscribe( data => this.ctrolError.checkFormValidity(this.loginForm, this.errMsgs,  this.translations ) );
