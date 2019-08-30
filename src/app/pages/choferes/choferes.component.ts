@@ -115,7 +115,7 @@ export class ChoferesComponent implements OnInit, OnDestroy {
     deleteChofer( chofer: any ){
         swal({
          title: "Eliminación",
-         text: "Esta seguro que desea eliminar el chofer " + chofer.cho_nombre,
+         text: "Esta seguro que desea eliminar el Personal " + chofer.cho_nombre,
          icon: "warning",
          buttons: true,
          dangerMode: true,
@@ -183,7 +183,7 @@ export class ChoferesComponent implements OnInit, OnDestroy {
 
         swal({
             title: "Estado",
-            text: "El nuevo estado del chofer " 
+            text: "El nuevo estado del Personal " 
                    + updateEstChofer.cho_nombre
                    + " sera: " + ( estadoFuturo? estadoFuturo.descripcion: 'Sin definir' ) 
                    + " esta seguro? ",

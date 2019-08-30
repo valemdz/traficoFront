@@ -47,7 +47,7 @@ export class ChoferService {
                    .pipe(
                       map( (resp: any) => {
                          swal( "Actualizacón", 
-                               "El chofer fue actualizado con exito!",
+                               "El personal fue actualizado con exito!",
                                "success" );  
                       })  
                    );
@@ -59,7 +59,7 @@ export class ChoferService {
                    .pipe(
                       map( ( resp: any) => {
                          swal( "Creacion", 
-                               "El chofer " + chofer.cho_nombre + " fue creado con exito!",
+                               "El personal " + chofer.cho_nombre + " fue creado con exito!",
                                "success" );
                          return resp;      
                       })  
@@ -74,7 +74,7 @@ export class ChoferService {
                   return resp;
              }),
              catchError( err => {               
-               swal( 'Inconvenientes al eliminar chofer!!!', 
+               swal( 'Inconvenientes al eliminar el Personal!!!', 
                       err.error.errorCode + ' - ' + err.error.errorMessage ,
                       'error');
                 return throwError(err);

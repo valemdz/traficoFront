@@ -79,7 +79,7 @@ export class ChoferComponent implements OnInit, OnChanges, OnDestroy, TabChild {
       cho_doc_codigo:['',Validators.required],
       cho_documento: ['',[Validators.required, Validators.maxLength(11)]],
       cho_fecha_nacimiento:['',Validators.required],
-      cho_grupo_sanguineo:['',Validators.required],
+      cho_grupo_sanguineo:[''],
       cho_observaciones:['', Validators.maxLength(255)],
       cho_telefono:['',[Validators.required, Validators.maxLength(50)]],
       cho_telefono_emergencia: ['',[Validators.required, Validators.maxLength(50)]],
