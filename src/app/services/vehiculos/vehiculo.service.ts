@@ -61,7 +61,8 @@ export class VehiculoService {
         return this.http.post( url, vehiculo )
                    .pipe(
                         map( resp => {
-                            swal('Creación', 'El vehiculo fue creado con éxito', 'sucess');   
+                            swal('Creación', 'El vehiculo fue creado con éxito', 'sucess');  
+                            return resp; 
                         })
                    );
     }

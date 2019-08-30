@@ -20,3 +20,13 @@ export class VencimientosVehiculo{
     vencimiento:Vencimiento;
 	vehiculos: Vehiculo[];
 }
+
+export class VencimientoCalculado{
+    id: number;
+    cantidadAnticipacion: number;
+    nombreCampo: string;
+    descNombreCampo: string;
+    diasAntesVencer: number;
+    fechaVencimiento: Date;
+    vencido?:boolean;
+}

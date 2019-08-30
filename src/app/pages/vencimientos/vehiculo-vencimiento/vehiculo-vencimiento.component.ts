@@ -35,4 +35,10 @@ export class VehiculoVencimientoComponent implements OnInit, OnChanges {
       }          
   } 
 
+  getDiasProximoVencimiento( vencimientos, tipoVencimiento  ){
+    let vencimientoSelected = vencimientos.find( v => v.nombreCampo === tipoVencimiento);
+    return vencimientoSelected!= null? vencimientoSelected.diasAntesVencer:0;
+
+  }
+
 }

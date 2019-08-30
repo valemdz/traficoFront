@@ -42,7 +42,24 @@ export class ConstantesGrales {
     public static readonly CON_INCIDENCIAS_STR = 'alert alert-warning';
     public static readonly CON_VIAJES_STR = 'alert alert-danger';
     public static readonly LIBRE_STR = 'alert alert-success';  
+
+
+    /////
+
+    public static readonly LABEL_DANGER  = 'label-danger';
+    public static readonly LABEL_WARNING = 'label-warning';
+    public static readonly LABEL_OK = 'label-primary';
+
+    /*public static  COLORES_VENCIMIENTOS = [];
+    COLORES_VENCIMIENTOS['DANGER'] = ConstantesGrales.LABEL_DANGER;
+    COLORES_VENCIMIENTOS['WARNING'] = ConstantesGrales.LABEL_WARNING; 
+    COLORES_VENCIMIENTOS['OK'] = ConstantesGrales.LABEL_OK;*/
+
+    public static readonly COLORES_VENCIMIENTOS = { 'DANGER': ConstantesGrales.LABEL_DANGER,
+                                            'WARNING': ConstantesGrales.LABEL_WARNING,
+                                            'OK': ConstantesGrales.LABEL_OK };
     
+
 }
 
 

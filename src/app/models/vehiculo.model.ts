@@ -1,4 +1,4 @@
-import { ServicioPK } from "./model.index";
+import { ServicioPK, VencimientoCalculado } from "./model.index";
 
 /*export interface VehiculoOcupacion{
     etaDesde: number;
@@ -46,8 +46,7 @@ export interface Vehiculo{
     vehVerificacionTecnicaVto: Date,
     vehMpaDesc?:string,
     vehVencido?: boolean,    
-    diasVencerFechaVerificacion?:number,
-    mostrarDias?:boolean
+    vencimientos?:Array<VencimientoCalculado>;
 }
 
 export interface VehiculosArray{

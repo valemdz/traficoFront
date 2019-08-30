@@ -33,4 +33,5 @@ export interface PaginationPage<T> {
     itemsPerPage?: number;
     sort?: PaginationSort;
     totalElements?: number;
+    rowSelected?:number;
 }

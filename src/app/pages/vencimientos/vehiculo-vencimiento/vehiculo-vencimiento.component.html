@@ -18,15 +18,18 @@
                         <div class='col-md-2 col-xs-2 col-lg-2'>{{v.vehPatente}}</div>
                         <div class='col-md-2 col-xs-2 col-lg-2'>{{v.vehMpaDesc}}</div>                        
                         <div class='col-md-2 col-xs-2 col-lg-2'>
-                            <span class="label" [ngClass]="v.vehVencido?'label-danger':'label-warning'" >
+                            <!-- <span class="label" [ngClass]="v.vehVencido?'label-danger':'label-warning'" >
                                     {{v.vehVerificacionTecnicaVto | date:'dd/MM/yy'}}
-                            </span>    
+                            </span>     -->
+                            <span class="label"  [appColorVencimiento]="[v.vencimientos,'vehVerificacionTecnica']">
+                                    {{ v.vehVerificacionTecnicaVto | date:'dd/MM/yyyy' }}
+                            </span>   
                         </div>
                         <div class='col-md-2 col-xs-2 col-lg-2'>
                             <span class="label" [ngClass]="v.vehVencido?'label-danger':'label-warning'" >
                                 {{v.vehVencido?"Vencido":"Proximo"}}
-                                <span *ngIf= "v.mostrarDias">
-                                    [ faltan {{ v.diasVencerFechaVerificacion }} dias ]
+                                <span *ngIf= "!v.vehVencido">
+                                    [ faltan {{ getDiasProximoVencimiento( v.vencimientos, 'vehVerificacionTecnica') }} dias ]
                                 </span>    
                             </span>
                             

@@ -55,7 +55,7 @@ export class VencimientoService {
   }
 
   getVehiculosConVencimientos$( vehEmpCodigo:string, vehEstado: number ): Observable<any>{
-    const url = this.urlBase + `/vehiculos/empresa/${vehEmpCodigo}/estado/${vehEstado}/vencimientos`;
+    const url = this.urlBase + `/vencimientos/empresa/${vehEmpCodigo}/estado/${vehEstado}/vehiculos`;
     return this.http.get( url )
                 .pipe(
                     map( (veh:any) =>{

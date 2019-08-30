@@ -171,7 +171,7 @@ export class VehiculoComponent implements ComponenteBaseComponent, OnChanges, On
 
     if( this.nuevo ){
         this.addSubs = this.vehiculoService.create$(vehi).subscribe(result => {          
-          this.closeModalYMostrarGrilla();
+          this.closeModalYMostrarGrilla( result );
         }, err => {          
           this.ctrolError.tratarErroresBackEnd(err, this.vehiculoForm, this.errMsgs );
         }
@@ -179,7 +179,7 @@ export class VehiculoComponent implements ComponenteBaseComponent, OnChanges, On
     }else{
 
          this.updateSubs = this.vehiculoService.update$( vehi ).subscribe( result => {            
-            this.closeModalYMostrarGrilla();
+            this.closeModalYMostrarGrilla( result );
           }, err => {            
             this.ctrolError.tratarErroresBackEnd(err, this.vehiculoForm, this.errMsgs );
           }
@@ -222,8 +222,8 @@ export class VehiculoComponent implements ComponenteBaseComponent, OnChanges, On
     
   }
 
-  closeModalYMostrarGrilla(){
-    this._ms.sendRespuesta(true);   
+  closeModalYMostrarGrilla( vehi:Vehiculo ){
+    this._ms.sendRespuesta({ nuevo:this.nuevo, vehiculo:vehi});   
     this.soloCerrar();
   }
 

@@ -2,6 +2,20 @@
 <app-vehiculo-vencimiento  [vencimientosVeh]="vencimientosVeh" ></app-vehiculo-vencimiento>
 
 <ng-container *ngIf="vehiculoPage != null">
+
+    <div class='container'>
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-body">
+                        <input #busqueda type='text' 
+                                (keyup.enter)="buscarUsuarios( busqueda.value)" 
+                                placeholder="Buscar por numero de Interno"                           
+                                class="form-control" uppercase >
+                    </div>
+                </div>
+            </div>
+    </div>      
+
     <div id="list" class="row animated fadeIn">
         <div class="table-responsive col-md-12">
             <table class="table table-striped table-hover" cellspacing="0" cellpadding="0">
@@ -21,7 +35,7 @@
                             <app-table-sort [table]="self" [page]="vehiculoPage" [label]="'Estado'" [property]="'vehEstado'"></app-table-sort>
                         </th>
                         <th>
-                            <app-table-sort [table]="self" [page]="vehiculoPage" [label]="'Vto Verificacion'" [property]="'vehVerificacionTecnica'"></app-table-sort>
+                            <app-table-sort [table]="self" [page]="vehiculoPage" [label]="'Vto Verificacion'" [property]="'vehVerificacionTecnicaVto'"></app-table-sort>
                         </th>
 
                         <th class="actions"></th>
@@ -29,7 +43,9 @@
                 </thead>
 
                 <tbody>
-                    <tr *ngFor="let vehiculo of vehiculoPage.content">
+                    <tr *ngFor="let vehiculo of vehiculoPage.content;let i=index"
+                        [class.active]="i == vehiculoPage.rowSelected"  
+                        (click)="setRowSelected( i )" >
                         <td>{{vehiculo.vehiculoPK.vehInterno}}</td>
                         <td>{{vehiculo.vehPatente}}</td>                        
                         <td>{{vehiculo.vehMpaDesc}}</td>
@@ -44,26 +60,17 @@
                                                 <i class="fa fa-toggle-off fa-2x red" aria-hidden="true"></i>
                                             </a>
                                         </div>
-                            <!--label class="switch">
-                                <input type="checkbox" [checked]="vehiculo.vehEstado==estados[0].value"
-                                (change)="$event.target.checked? (vehiculo.vehEstado = estados[0].value) : (vehiculo.vehEstado = estados[1].value);cambiarEstado(vehiculo)"  >
-                                <span class="slider round"></span>
-                            </label-->
+                          
                         </td>
                         <td>
-                            <div *ngIf="vehiculo.vehEstado===HABILITADO">
-                                <span *ngIf="vehiculo.vehVencido" class="label" 
-                                        [ngClass]="'label-danger'" >                                        
-                                        {{ vehiculo.vehVerificacionTecnicaVto | date:'dd/MM/yyyy' }}
-                                </span>                              
-                                <span *ngIf="!vehiculo.vehVencido&&vehiculo.mostrarDias" class="label" 
-                                        [ngClass]="'label-warning'" >                                        
-                                        {{ vehiculo.vehVerificacionTecnicaVto | date:'dd/MM/yyyy' }}
-                                </span> 
-                                <div *ngIf="!vehiculo.vehVencido&&!vehiculo.mostrarDias" > 
-                                        {{ vehiculo.vehVerificacionTecnicaVto | date:'dd/MM/yyyy' }}
-                                </div>                             
-                            </div>    
+                            <div *ngIf="vehiculo.vehEstado===HABILITADO">                             
+                                <h5 *ngIf="vehiculo.vencimientos.length >0" ><span class="label"  [appColorVencimiento]="[vehiculo.vencimientos,'vehVerificacionTecnica']">
+                                    {{ vehiculo.vehVerificacionTecnicaVto | date:'dd/MM/yyyy' }}
+                                </span></h5>   
+                                <div *ngIf="vehiculo.vencimientos.length==0" >
+                                    {{ vehiculo.vehVerificacionTecnicaVto | date:'dd/MM/yyyy' }}
+                                </div>
+                            </div>                            
                         </td>
                         <td class="actions">
                             <a class="btn btn-xs" (click)="modificarVehiculo( vehiculo )" >

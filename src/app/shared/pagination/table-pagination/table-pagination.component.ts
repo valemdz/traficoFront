@@ -38,6 +38,11 @@ export class TablePaginationComponent implements OnInit, OnChanges {
 
     ngOnChanges(changes) {
         if (changes['page']) {
+
+            //desmarcamos alguna seleccion
+
+            this.page.rowSelected = -1;
+
             ///Se ven 10 paginas en la paginacion////            
             let inicio = 1;
             let fin = 10;

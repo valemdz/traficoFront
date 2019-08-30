@@ -18,7 +18,7 @@ declare var $;
     templateUrl: './vehiculos.component.html',
     styleUrls: ['./vehiculos.component.css']
 })
-export class VehiculosComponent implements OnInit, OnDestroy  {
+export class VehiculosComponent implements OnInit, OnDestroy  {    
 
     vehiculoPage: PaginationPage<any>;
     self: Table<any>;    
@@ -33,6 +33,8 @@ export class VehiculosComponent implements OnInit, OnDestroy  {
     readonly HABILITADO = CONSTANTES_VEHICULOS.HABILITADO;
     public estados = CONSTANTES_VEHICULOS.ESTADOS_VEHICULO;
 
+    busqueda:string;
+
     constructor(private vehiculoService: VehiculoService,
         private _vs: VencimientoService,
         private router: Router,
@@ -40,8 +42,12 @@ export class VehiculosComponent implements OnInit, OnDestroy  {
         private _ms: ModalService,        
         private ctrolError: ErrorService) {
 
-            this.modalSubs = this._ms.getRespuesta().subscribe( res => {
-                this.mostrarDetalle();
+            this.modalSubs = this._ms.getRespuesta().subscribe( res => {                
+
+                if(  !res.nuevo ){
+                    this.updateVehiculoEnPage( res.vehiculo);
+                }   
+                //this.mostrarDetalle();
                 this.getVehiculosVencimientos();
             });
     }
@@ -77,7 +83,12 @@ export class VehiculosComponent implements OnInit, OnDestroy  {
 
    fetchPage(pageNumber: number, pageSize: number, sort: PaginationPropertySort) {
 
-        const params = FuncionesGrales.toParams( pageNumber, pageSize, sort );
+        let params = FuncionesGrales.toParams( pageNumber, pageSize, sort );
+
+        if(  this.busqueda != null &&  this.busqueda.length > 0 ){
+            params = FuncionesGrales.toParamsWithBusqueda( this.busqueda, pageNumber, pageSize, sort );        
+        }
+
         this.listadoSubs =  this.vehiculoService.findVehiculos$( this._us.usuario.empresa, params )
         .subscribe( this.okVehiculo.bind( this), this.errorVehiculo.bind( this) );
         this.self = this;
@@ -181,6 +192,19 @@ export class VehiculosComponent implements OnInit, OnDestroy  {
                 }
                
             });    
-    }          
+    }    
+
+    updateVehiculoEnPage( vehi:Vehiculo ){     
+        this.vehiculoPage.content[this.vehiculoPage.rowSelected] = vehi;
+    }
+
+    setRowSelected( i ){
+        this.vehiculoPage.rowSelected = i;
+    }
+
+    buscarUsuarios( busqueda ){
+        this.busqueda =  busqueda;       
+        this.mostrarDetalle(); 
+    }
 
 }
