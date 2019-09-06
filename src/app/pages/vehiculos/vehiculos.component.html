@@ -8,7 +8,7 @@
                 <div class="card">
                     <div class="card-body">
                         <input #busqueda type='text' 
-                                (keyup.enter)="buscarUsuarios( busqueda.value)" 
+                                (keyup.enter)="buscarVehiculos( busqueda.value)" 
                                 placeholder="Buscar por numero de Interno"                           
                                 class="form-control" uppercase >
                     </div>
@@ -43,8 +43,7 @@
                 </thead>
 
                 <tbody>
-                    <tr *ngFor="let vehiculo of vehiculoPage.content;let i=index"
-                        [class.active]="i == vehiculoPage.rowSelected"  
+                    <tr *ngFor="let vehiculo of vehiculoPage.content;let i=index"                        
                         (click)="setRowSelected( i )" >
                         <td>{{vehiculo.vehiculoPK.vehInterno}}</td>
                         <td>{{vehiculo.vehPatente}}</td>                        
@@ -101,3 +100,4 @@
 </ng-container>
 
 
+<!-- [class.active]="i == vehiculoPage.rowSelected"   -->

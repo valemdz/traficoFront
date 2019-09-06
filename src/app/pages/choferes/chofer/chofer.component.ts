@@ -201,8 +201,8 @@ export class ChoferComponent implements OnInit, OnChanges, OnDestroy, TabChild {
 
   }
 
-  okChofer( ) {   
-    this._ms.sendRespuesta(true);    
+  okChofer( cho) {   
+    this._ms.sendRespuesta({ nuevo:this.nuevo, chofer:cho});    
     this.soloCerrar();
   }
 
@@ -221,6 +221,8 @@ export class ChoferComponent implements OnInit, OnChanges, OnDestroy, TabChild {
         //let fecha = moment(form.cho_fecha_nacimiento, 'DD-MM-YYYY');
         let fecha = moment(form.cho_fecha_nacimiento,  'YYYY-MM-DD' );
 
+        let foto = (this.chofer != null)?this.chofer.foto:null;
+
         const cho: Chofer = {
           choferPK:{  cho_emp_codigo:form.choferPK.cho_emp_codigo ,
                       cho_codigo:this.chofer.choferPK.cho_codigo},
@@ -235,7 +237,8 @@ export class ChoferComponent implements OnInit, OnChanges, OnDestroy, TabChild {
           cho_telefono: form.cho_telefono,
           cho_telefono_emergencia: form.cho_telefono_emergencia,
           cho_fecha_nacimiento: fecha.format() as any,
-          cho_id_aux: form.cho_id_aux
+          cho_id_aux: form.cho_id_aux,
+          foto: foto
        };
 
 

@@ -38,6 +38,8 @@ export class ChoferesComponent implements OnInit, OnDestroy {
 
    public estados = CONSTANTES_CHOFER.ESTADOS;
 
+   busqueda:string;
+
    constructor( private choferService: ChoferService,
                  private router: Router, public _vs: VencimientoService,
                  public _us: UsuarioService,                 
@@ -46,17 +48,22 @@ export class ChoferesComponent implements OnInit, OnDestroy {
                  public _imgs: ModalUploadService ) {
 
         this.subscriptionModal = this._ms.getRespuesta()
-        .subscribe( ( mostrar: boolean) => {
-                    if ( mostrar ) {
+        .subscribe( resp => {
+                    if(  !resp.nuevo ){
+                        this.updateChoferesEnPage( resp.chofer );
+                    }else{
                         this.mostrarDetalle();
-                    }
+                    }                     
+                    this.getVencimientos();
+                   
         } );            
    }
 
-   cambiarImagenModal( choferPK: ChoferPK ) {
-    //armar la url base upload/choferes
-    const url = `/upload/choferes/${choferPK.cho_emp_codigo}/${choferPK.cho_codigo}`;    
-    this._imgs.mostraModal( url );
+   cambiarImagenModal( chofer: Chofer ) {    
+    //const url = `/upload/choferes/${choferPK.cho_emp_codigo}/${choferPK.cho_codigo}`;      
+    const url = `/upload/choferes/${chofer.choferPK.cho_emp_codigo}/${chofer.choferPK.cho_codigo}/uploadImagen`;    
+    const titulo = `Personal  ${chofer.cho_id_aux} - ${chofer.cho_nombre}`
+    this._imgs.mostraModal( url, titulo );
    }
 
    suscripcionModalImagenes(){
@@ -82,7 +89,11 @@ export class ChoferesComponent implements OnInit, OnDestroy {
 
     fetchPage(pageNumber: number, pageSize: number, sort: PaginationPropertySort)  {
 
-        const params = FuncionesGrales.toParams( pageNumber, pageSize, sort );
+        let params = FuncionesGrales.toParams( pageNumber, pageSize, sort );
+
+        if(  this.busqueda != null &&  this.busqueda.length > 0 ){
+            params = FuncionesGrales.toParamsWithBusqueda( this.busqueda, pageNumber, pageSize, sort );        
+        }
 
         this.listadoSubscription
         = this.choferService.findChoferes$(  this._us.usuario.empresa, params )
@@ -206,6 +217,17 @@ export class ChoferesComponent implements OnInit, OnDestroy {
         
     }  
     
+    updateChoferesEnPage( chofer ){            
+        this.choferPage.content[this.choferPage.rowSelected] = chofer;
+    }
+
+    buscarPersonal( busqueda ){
+        this.busqueda =  busqueda;       
+        this.mostrarDetalle(); 
+    }   
    
+    setRowSelected( i ){
+        this.choferPage.rowSelected = i;
+    }
 
 }

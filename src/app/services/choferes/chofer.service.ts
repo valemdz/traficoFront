@@ -49,6 +49,7 @@ export class ChoferService {
                          swal( "Actualizacón", 
                                "El personal fue actualizado con exito!",
                                "success" );  
+                         return resp;      
                       })  
                    );
     }

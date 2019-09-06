@@ -38,11 +38,15 @@ export class IncidenciasComponent implements OnInit, OnDestroy  {
         private _ms: ModalService ) {
 
         this.subscription = this._ms.getRespuesta()
-                                .subscribe( ( mostrar: boolean) => {
-                                            if ( mostrar ) {
-                                                this.mostrarDetalle();
-                                            }
-                                } );
+                    .subscribe( resp => {                  
+
+                        if(  !resp.nuevo ){
+                            this.updateIncidenciasEnPage( resp.incidencia );
+                        }else{
+                            this.mostrarDetalle();
+                        }   
+                                
+                    } );
     }
 
     ngOnInit() {
@@ -125,6 +129,12 @@ export class IncidenciasComponent implements OnInit, OnDestroy  {
         
     }
 
+    setRowSelected( i ){
+        this.incidenciaPage.rowSelected = i;
+    }
 
+    updateIncidenciasEnPage( incidencia ){            
+        this.incidenciaPage.content[this.incidenciaPage.rowSelected] = incidencia;
+    }
 
 }

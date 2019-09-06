@@ -5,12 +5,11 @@ export class ModalUploadService {
  
   public oculto: string = 'oculto';
   public url:string='';
+  public titulo:string='';
 
   public notificacion = new EventEmitter<any>();
 
-
-  constructor() {
-    
+  constructor() {    
   }
 
   ocultarModal() {
@@ -18,9 +17,10 @@ export class ModalUploadService {
     this.url = null;    
   }
 
-  mostraModal( url ) {
+  mostraModal( url, titulo ) {
       this.oculto = '';
       this.url = url;      
-  }
+      this.titulo = titulo;
+  }  
 
 }

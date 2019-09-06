@@ -1,4 +1,4 @@
- import { Component, OnInit } from '@angular/core';
+ import { Component, OnInit, OnChanges, ViewChild, ElementRef } from '@angular/core';
  import { SubirArchivoService } from '../../services/subir-archivo/subir-archivo.service';
  import { ModalUploadService } from './modal-upload.service';
 
@@ -8,22 +8,26 @@
   styles: []
 })
 export class ModalUploadComponent implements OnInit {
+ 
 
   imagenSubir: File = null;
-  imgTemp: any;
+  imgTemp: any;  
 
+  @ViewChild('fileNombre')
+  fileNombre: ElementRef;
 
   constructor(  public _subirArcService: SubirArchivoService,
                 public _ms: ModalUploadService ) {     
   }
 
-  ngOnInit() {
-  }
+  ngOnInit() {    
+  } 
 
   cerrarModal() {
 
     this.imagenSubir = null;
     this.imgTemp = null;
+    this.fileNombre.nativeElement.value = "";
     this._ms.ocultarModal();
 
   }
@@ -45,7 +49,7 @@ export class ModalUploadComponent implements OnInit {
 
   }
 
-  subirImagen() {
+  subirImagen() {     
 
       this._subirArcService.subirArchivo( this.imagenSubir,
                                           this._ms.url )

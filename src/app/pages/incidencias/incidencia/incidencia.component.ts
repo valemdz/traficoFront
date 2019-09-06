@@ -158,7 +158,7 @@ export class IncidenciaComponent implements  ComponenteBaseComponent, OnInit,  O
 
     if ( !incid.id ) {
        this.incidenciaService.create$(incid).subscribe( result => {           
-           this.closeModalYMostrarGrilla();
+           this.closeModalYMostrarGrilla( result );
        }, err => {
 
          this.limpiarMensajes();
@@ -168,7 +168,7 @@ export class IncidenciaComponent implements  ComponenteBaseComponent, OnInit,  O
 
     } else {
        this.incidenciaService.update$(incid).subscribe( result => {          
-           this.closeModalYMostrarGrilla();
+           this.closeModalYMostrarGrilla( result );
          }, err => {
            this.limpiarMensajes();
            this.ctrolError.tratarErroresBackEnd(err, this.incidenciaForm, this.errMsgs );
@@ -196,8 +196,8 @@ export class IncidenciaComponent implements  ComponenteBaseComponent, OnInit,  O
 
  }
  
- closeModalYMostrarGrilla(){
-     this._ms.sendRespuesta(true);
+ closeModalYMostrarGrilla( incid: Incidencia ){
+     this._ms.sendRespuesta({nuevo:this.nuevo,incidencia:incid});
      this.ngOnDestroy();
      this.closeBtn.nativeElement.click();
  }

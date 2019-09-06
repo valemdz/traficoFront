@@ -1,6 +1,21 @@
 <br>
 <app-chofer-vencimiento [vencimientosCho]="vencimientosCho"></app-chofer-vencimiento>
 <ng-container *ngIf="choferPage != null">
+
+    <div class='container'>
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-body">
+                        <input #busqueda type='text' 
+                                (keyup.enter)="buscarPersonal( busqueda.value)" 
+                                placeholder="Buscar por nombre de Personal"                           
+                                class="form-control" uppercase >
+                    </div>
+                </div>
+            </div>
+    </div>      
+
+
     <div id="list" class="row animated fadeIn ">
         <div class="table-responsive col-md-12">
             <table class="table table-striped table-hover" cellspacing="0" cellpadding="0">
@@ -28,14 +43,15 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr *ngFor="let chofer of choferPage.content">
+                    <tr *ngFor="let chofer of choferPage.content;let i=index"
+                        (click)="setRowSelected( i )" >
                         <td class='w70'>     
                              <img *ngIf="!chofer.foto||chofer.foto.length===0" 
-                                  (click)="cambiarImagenModal( chofer.choferPK )" 
+                                  (click)="cambiarImagenModal( chofer )" 
                                   class="img-responsive" src="assets/img/no-img.jpg">                        
                              <img *ngIf="chofer.foto&&chofer.foto.length>0" 
-                                  (click)="cambiarImagenModal( chofer.choferPK )" 
-                                  [src]="chofer.foto | imagen:'choferes'" class="w50 img-circle pointer" /> 
+                                  (click)="cambiarImagenModal( chofer )" 
+                                  [src]="chofer.choferPK | imagen:'choferes'" class="w50 img-circle pointer" /> 
                         </td>
                         <td>{{ chofer.cho_chofer == 0 ? 'Conductor' : 'Auxiliar'}}</td>
                         <td>{{chofer.cho_legajo}}</td>

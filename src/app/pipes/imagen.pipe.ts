@@ -1,12 +1,23 @@
 import { Pipe, PipeTransform } from '@angular/core';
 import { environment } from 'src/environments/environment';
+import { ChoferPK } from '../models/model.index';
 
 @Pipe({
   name: 'imagen'
 })
 export class ImagenPipe implements PipeTransform {
 
-  urlBase =  environment.originSinApi + '/img';
+   urlBase =  environment.originSinApi + '/img/';
+
+  transform( choferPK: ChoferPK , tipo: string= 'choferes' ): any {
+
+    let url =  this.urlBase;   
+
+    return url + `choferes/${choferPK.cho_emp_codigo}/${choferPK.cho_codigo}/imagen`;
+
+  }
+
+  /*urlBase =  environment.originSinApi + '/img';
 
   transform(img: string, tipo: string= 'choferes' ): any {
 
@@ -30,6 +41,6 @@ export class ImagenPipe implements PipeTransform {
 
     return url;
 
-  }
+  }*/
 
 }

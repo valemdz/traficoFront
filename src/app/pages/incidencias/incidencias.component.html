@@ -20,7 +20,8 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr *ngFor="let incidencia of incidenciaPage.content">
+                    <tr *ngFor="let incidencia of incidenciaPage.content;let i=index"
+                        (click)="setRowSelected( i )" >
                         <td>{{incidencia.codigo}}</td>
                         <td>{{incidencia.in_descripcion}}</td>
                         <td>{{incidencia.in_tipoString}}</td>

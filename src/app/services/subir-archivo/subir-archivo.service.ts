@@ -30,7 +30,7 @@ export class SubirArchivoService {
         }
       }
 
-      const url = this.urlBackend + urlUpload;
+      const url = this.urlBackend + urlUpload;      
       xhr.open('PUT', url, true );
       xhr.send( formData );
     });

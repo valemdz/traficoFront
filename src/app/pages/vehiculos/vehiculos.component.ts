@@ -46,8 +46,10 @@ export class VehiculosComponent implements OnInit, OnDestroy  {
 
                 if(  !res.nuevo ){
                     this.updateVehiculoEnPage( res.vehiculo);
-                }   
-                //this.mostrarDetalle();
+                }else{
+                    this.mostrarDetalle();
+                }  
+                
                 this.getVehiculosVencimientos();
             });
     }
@@ -202,7 +204,7 @@ export class VehiculosComponent implements OnInit, OnDestroy  {
         this.vehiculoPage.rowSelected = i;
     }
 
-    buscarUsuarios( busqueda ){
+    buscarVehiculos( busqueda ){
         this.busqueda =  busqueda;       
         this.mostrarDetalle(); 
     }
