@@ -30,7 +30,9 @@
                            [appTienePermiso]="['ROLE_DIAGRAMACION_LISTAR']" >Diagramación</a></li>
                   
                     <li><a [routerLink]="['/vencimientos']"
-                           [appTienePermiso]="['ROLE_VENCIMIENTOS_LISTAR']" >Vencimientos</a></li>
+                           [appTienePermiso]="['ROLE_VENCIMIENTOS_LISTAR']" >Vencimientos
+                           <span   [ngClass]='oculto' class="glyphicon glyphicon-bell" style="color:red;font-size:15px" ></span>
+                        </a></li>
                            
                     <!--<li><a [routerLink]="['/grupos']"
                            [appTienePermiso]="['ROLE_GRUPOS_LISTAR','ROLE_GRUPOS_TODOS_LISTAR']" >

@@ -10,7 +10,7 @@ import { Observable } from 'rxjs';
 import { FuncionesGrales } from 'src/app/utiles/funciones.grales';
 
 import { ChoferService } from 'src/app/services/choferes/chofer.service';
-import { ErrorService } from 'src/app/services/service.index';
+import { ErrorService, ModalService } from 'src/app/services/service.index';
 import { Chofer, Carnet, ListaCarnet } from 'src/app/models/model.index';
 
 declare var $:any;
@@ -33,6 +33,7 @@ export class CarnetListComponent implements OnInit, OnChanges {
   constructor(  private choferService: ChoferService,
                 private ctrolError: ErrorService,
                 private  fb: FormBuilder,
+                private _ms: ModalService,
                 @Inject(LOCALE_ID) public locale: string  ) {
     this.crearForm();
   }
@@ -340,6 +341,7 @@ export class CarnetListComponent implements OnInit, OnChanges {
    }
 
    soloCerrar(){   
+    this._ms.sendRespuesta( true );
     $('#ventana').modal('hide'); 
   }
 

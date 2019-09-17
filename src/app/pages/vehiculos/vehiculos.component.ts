@@ -50,13 +50,13 @@ export class VehiculosComponent implements OnInit, OnDestroy  {
                     this.mostrarDetalle();
                 }  
                 
-                this.getVehiculosVencimientos();
+                //this.getVehiculosVencimientos();
             });
     }
 
     ngOnInit() {             
        this.mostrarDetalle();
-       this.getVehiculosVencimientos();
+       //this.getVehiculosVencimientos();
     }
 
     getVehiculosVencimientos(){

@@ -36,6 +36,8 @@ export class ChoferesComponent implements OnInit, OnDestroy {
    updateEstChofer: Chofer;
    vencimientosCho: VencimientosChoferes[]=[];
 
+   notificacionSubscription: Subscription;
+
    public estados = CONSTANTES_CHOFER.ESTADOS;
 
    busqueda:string;
@@ -49,32 +51,36 @@ export class ChoferesComponent implements OnInit, OnDestroy {
 
         this.subscriptionModal = this._ms.getRespuesta()
         .subscribe( resp => {
-                    if(  !resp.nuevo ){
-                        this.updateChoferesEnPage( resp.chofer );
-                    }else{
-                        this.mostrarDetalle();
+
+                    if( FuncionesGrales.tienePropiedad(resp, 'nuevo') ){
+                        if(  !resp.nuevo ){
+                            this.updateChoferesEnPage( resp.chofer );
+                        }else{
+                            this.mostrarDetalle();
+                        }       
                     }                     
-                    this.getVencimientos();
+                   
+                    //this.getVencimientos();
                    
         } );            
    }
 
-   cambiarImagenModal( chofer: Chofer ) {    
-    //const url = `/upload/choferes/${choferPK.cho_emp_codigo}/${choferPK.cho_codigo}`;      
+   cambiarImagenModal( chofer: Chofer ) {        
     const url = `/upload/choferes/${chofer.choferPK.cho_emp_codigo}/${chofer.choferPK.cho_codigo}/uploadImagen`;    
     const titulo = `Personal  ${chofer.cho_id_aux} - ${chofer.cho_nombre}`
     this._imgs.mostraModal( url, titulo );
    }
 
    suscripcionModalImagenes(){
-       this._imgs.notificacion.subscribe( resp =>   this.mostrarDetalle() );
+       this.notificacionSubscription = this._imgs.notificacion.subscribe( 
+                                resp =>   this.mostrarDetalle() );
    }
 
 
     ngOnInit() {
         this.suscripcionModalImagenes();
         this.mostrarDetalle();
-        this.getVencimientos();
+        //this.getVencimientos();
     }
 
     ngOnDestroy(): void {
@@ -84,6 +90,7 @@ export class ChoferesComponent implements OnInit, OnDestroy {
           if ( this.estadoSubs ) { this.estadoSubs.unsubscribe(); }
           if ( this.vencimientosSubs ){ this.vencimientosSubs.unsubscribe(); }
           if ( this.subscriptionModal ) { this.subscriptionModal.unsubscribe(); }
+          if(  this.notificacionSubscription ){  this.notificacionSubscription.unsubscribe(); }
 
     }
 

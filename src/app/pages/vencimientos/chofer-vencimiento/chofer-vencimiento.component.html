@@ -1,4 +1,4 @@
-<div *ngIf="vencimientosCho">        
+ <div *ngIf="vencimientosCho">        
   <div *ngFor="let venc of vencimientosCho">
       <div class="panel panel-danger" *ngIf="venc.choferes.length > 0">
           <div class="panel-heading" >
@@ -11,8 +11,7 @@
                   <div class='col-md-2  col-xs-2 col-lg-2'>Nombre</div> 
                   <div class='col-md-2 col-xs-2 col-lg-2'>Telefono</div>                         
                   <div class='col-md-7 col-xs-8 col-lg-7'> 
-                      <div class='row'>                                               
-                        <div class='col-md-4 col-xs-3 col-lg-4'>Tipo</div>                         
+                      <div class='row'>                                                                       
                         <div class='col-md-2 col-xs-3 col-lg-2'>Vto</div> 
                         <div class='col-md-2  col-xs-2 col-lg-2'>Vencido</div> 
                       </div>
@@ -23,21 +22,20 @@
                   <div class='col-md-2 col-xs-2 col-lg-2'>{{ch.cho_nombre}}</div>
                   <div class='col-md-2 col-xs-2 col-lg-2'>{{ch.cho_telefono}}</div>                                          
                   <div class='col-md-7 col-xs-8 col-lg-7'>                 
-                        <div class="row" *ngFor="let carnet of ch.carnets">
-                            <div class='col-md-4 col-xs-3 col-lg-4'>{{ carnet.descTipo}}</div>                         
-                            <div class='col-md-2 col-xs-3 col-lg-2'>
-                                <span class="label" [ngClass]="carnet.vencido?'label-danger':'label-warning'" >
-                                    {{ carnet.fechaVenc | date:'dd/MM/yy'}}
-                                </span> 
-                            </div> 
-                            <div class='col-md-2 col-xs-2 col-lg-2'>   
-                                <span class="label" [ngClass]="carnet.vencido?'label-danger':'label-warning'" >
-                                    {{carnet.vencido?"Vencido":"Proximo"}}
-                                    <span *ngIf= "carnet.mostrarDias">
-                                        [ faltan {{ carnet.diasVencerFechaVto }} dias ]
+                        <div class="row" *ngFor="let vencChofer of ch.vencimientos">                            
+                            <div class='col-md-2 col-xs-2 col-lg-2'>                               
+                                <span class="label"  [appColorVencimiento]="[ch.vencimientos,venc.vencimiento.tipoVencimiento.nombreCampo]">
+                                        {{ vencChofer.fechaVencimiento | date:'dd/MM/yyyy' }}
+                                </span>   
+                            </div>
+                            <div class='col-md-2 col-xs-2 col-lg-2'>
+                                <span class="label" [ngClass]="vencChofer.vehVencido?'label-danger':'label-warning'" >
+                                    {{vencChofer.vehVencido?"Vencido":"Proximo"}}
+                                    <span *ngIf= "!vencChofer.vehVencido">
+                                        [ faltan {{ getDiasProximoVencimiento( ch.vencimientos, venc.vencimiento.tipoVencimiento.nombreCampo ) }} dias ]
                                     </span>    
-                                </span>                             
-                            </div>                             
+                                </span>                            
+                            </div>                      
                         </div>                     
                   </div>               
               </div>    
@@ -49,4 +47,23 @@
                       => {{ venc.vencimiento.tipoVencimiento.descNombreCampo }} </strong>
       </div> 
   </div>    
-</div>    
+</div>  
+
+<!-- 
+
+<div id="accordion">  
+  <div class="card border-danger mb-3" >
+    <div class="card-header  bg-danger" id="headingChofer">
+      <h5 class="mb-0">
+        <button class="btn btn-link text-danger collapsed" data-toggle="collapse" data-target="#collapseChofer" aria-expanded="false" aria-controls="collapseChofer">
+          Collapsible Group Item #2
+        </button>
+      </h5>
+    </div>
+    <div id="collapseChofer" class="collapse" aria-labelledby="headingChofer" data-parent="#accordion">
+      <div class="card-body">
+        Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
+      </div>
+    </div>
+  </div> 
+</div> -->

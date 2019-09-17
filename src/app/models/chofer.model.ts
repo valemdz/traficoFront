@@ -1,4 +1,4 @@
-import { Vencimiento, Carnet, ServicioPK } from "./model.index";
+import { Vencimiento, Carnet, ServicioPK, VencimientoCalculado } from "./model.index";
 
 export class Chofer {
    constructor( public choferPK: ChoferPK,
@@ -16,7 +16,9 @@ export class Chofer {
                 public cho_funcion?:string, 
                 public cho_id_aux?:number,   
                 public carnets?:Carnet[],
-                public foto?:string ){}
+                public cho_vencido?:boolean,
+                public foto?:string,
+                public vencimientos?:Array<VencimientoCalculado> ){}
     
 }
 

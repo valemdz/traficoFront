@@ -114,5 +114,10 @@ export class FuncionesGrales {
     });
   }
 
+  public static tienePropiedad(objeto, propiedad){
+      return typeof objeto !== 'undefined' && objeto.hasOwnProperty(propiedad);
+  }
+
+
 
 }

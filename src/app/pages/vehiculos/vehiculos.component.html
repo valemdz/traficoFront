@@ -1,5 +1,6 @@
 <br>
-<app-vehiculo-vencimiento  [vencimientosVeh]="vencimientosVeh" ></app-vehiculo-vencimiento>
+
+<!-- <app-vehiculo-vencimiento  [vencimientosVeh]="vencimientosVeh" ></app-vehiculo-vencimiento> -->
 
 <ng-container *ngIf="vehiculoPage != null">
 
@@ -47,7 +48,7 @@
                         (click)="setRowSelected( i )" >
                         <td>{{vehiculo.vehiculoPK.vehInterno}}</td>
                         <td>{{vehiculo.vehPatente}}</td>                        
-                        <td>{{vehiculo.vehMpaDesc}}</td>
+                        <td>{{(vehiculo.mapaAsiento!=null)?vehiculo.mapaAsiento.descripcion:'S/E'}}</td>
                         <td>
                                 <div *ngIf="vehiculo.vehEstado == estados[0].codigo == 1">
                                         <a  (click)="cambiarEstado(vehiculo)" data-toggle="modal" data-target="#update-modal">
@@ -64,10 +65,10 @@
                         <td>
                             <div *ngIf="vehiculo.vehEstado===HABILITADO">                             
                                 <h5 *ngIf="vehiculo.vencimientos.length >0" ><span class="label"  [appColorVencimiento]="[vehiculo.vencimientos,'vehVerificacionTecnica']">
-                                    {{ vehiculo.vehVerificacionTecnicaVto | date:'dd/MM/yyyy' }}
+                                    {{ vehiculo.vehVerificacionTecnicaVto != null ?( vehiculo.vehVerificacionTecnicaVto | date:'dd/MM/yyyy' ) : 'S/E' }}
                                 </span></h5>   
                                 <div *ngIf="vehiculo.vencimientos.length==0" >
-                                    {{ vehiculo.vehVerificacionTecnicaVto | date:'dd/MM/yyyy' }}
+                                    {{ vehiculo.vehVerificacionTecnicaVto != null ?( vehiculo.vehVerificacionTecnicaVto | date:'dd/MM/yyyy' ) : 'S/E' }}                                    
                                 </div>
                             </div>                            
                         </td>

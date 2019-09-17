@@ -2,7 +2,7 @@ import { Component, Input, OnInit, OnChanges, OnDestroy, LOCALE_ID, Inject } fro
 import { FormBuilder, FormGroup, Validators  } from '@angular/forms';
 import * as moment from 'moment';
 import { UsuarioService, ErrorService, VehiculoService, ModalService } from 'src/app/services/service.index';
-import { Vehiculo, CONSTANTES_VEHICULOS, ConstantesGrales } from 'src/app/models/model.index';
+import { Vehiculo, CONSTANTES_VEHICULOS, ConstantesGrales, MapaAsiento } from 'src/app/models/model.index';
 import { ComponenteBaseComponent } from 'src/app/shared/modal/modal.index';
 import { Subscription } from 'rxjs';
 import { VehiculoCodigoValidator } from 'src/app/validators/vehiculoCodigo-validator';
@@ -148,7 +148,7 @@ export class VehiculoComponent implements ComponenteBaseComponent, OnChanges, On
       vehChasis: this.vehiculo.vehChasis,
       vehCarroceria: this.vehiculo.vehCarroceria,
       vehMovilGps: this.vehiculo.vehMovilGps,
-      vehMpaCodigo: this.vehiculo.vehMpaCodigo,
+      vehMpaCodigo: ( this.vehiculo.mapaAsiento != null )?this.vehiculo.mapaAsiento.mapaAsientoPK.codigo:'',
       vehVerificacionTecnicaVto: fecha
     });
 
@@ -194,6 +194,13 @@ export class VehiculoComponent implements ComponenteBaseComponent, OnChanges, On
     //let fecha = moment(formModel.vehVerificacionTecnica, 'DD/MM/YYYY');
     let fecha = moment(formModel.vehVerificacionTecnicaVto, 'YYYY-MM-DD');
 
+    const mapaAsiento:MapaAsiento={
+       mapaAsientoPK:{
+          empresa: formModel.vehiculoPK.vehEmpCodigo,
+          codigo: formModel.vehMpaCodigo
+       }
+    }
+
     const vehi:Vehiculo ={
       vehiculoPK: formModel.vehiculoPK,
       vehEstado: formModel.vehEstado,
@@ -201,8 +208,8 @@ export class VehiculoComponent implements ComponenteBaseComponent, OnChanges, On
       vehMotor: formModel.vehMotor,
       vehChasis: formModel.vehChasis,
       vehCarroceria: formModel.vehCarroceria,
-      vehMovilGps: formModel.vehMovilGps,
-      vehMpaCodigo: formModel.vehMpaCodigo,
+      vehMovilGps: formModel.vehMovilGps,      
+      mapaAsiento:mapaAsiento,
       vehVerificacionTecnicaVto: fecha.format() as any
     }
 

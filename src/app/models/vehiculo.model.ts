@@ -41,12 +41,21 @@ export interface Vehiculo{
     vehMotor: String,
     vehChasis: String,
     vehCarroceria: String,
-    vehMovilGps: String,
-    vehMpaCodigo: String,
-    vehVerificacionTecnicaVto: Date,
-    vehMpaDesc?:string,
+    vehMovilGps: String,    
+    vehVerificacionTecnicaVto: Date,        
     vehVencido?: boolean,    
     vencimientos?:Array<VencimientoCalculado>;
+    mapaAsiento?:MapaAsiento
+}
+
+export interface MapaAsiento{
+    mapaAsientoPK:MapaAsientoPK,
+    descripcion?:string
+}
+
+export interface MapaAsientoPK{
+    empresa: string,
+    codigo: number
 }
 
 export interface VehiculosArray{

@@ -26,8 +26,13 @@ export class VehiculoService {
                  .pipe(
                      map( (resp:any) => {
                         resp.content.forEach( ( v, k) => {
-                            v.vehVerificacionTecnicaVto = new Date( v.vehVerificacionTecnicaVto ) || new Date();
-                            v.vehVencido = v.vehVerificacionTecnicaVto.getTime() <= (new Date()).getTime();
+                            if(  v.vehVerificacionTecnicaVto ){
+                                v.vehVerificacionTecnicaVto = new Date( v.vehVerificacionTecnicaVto ) || new Date();
+                                v.vehVencido = v.vehVerificacionTecnicaVto.getTime() <= (new Date()).getTime();
+                            }else{
+                                v.vehVencido = false;
+                            }
+                          
                         });                         
                         return resp; 
                      })

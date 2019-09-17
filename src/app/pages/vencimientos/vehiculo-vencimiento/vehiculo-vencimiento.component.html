@@ -16,7 +16,7 @@
                     <div *ngFor="let v of venc.vehiculos" class='row'>
                         <div class='col-md-2 col-xs-2 col-lg-2'> {{v.vehiculoPK.vehInterno}}</div>
                         <div class='col-md-2 col-xs-2 col-lg-2'>{{v.vehPatente}}</div>
-                        <div class='col-md-2 col-xs-2 col-lg-2'>{{v.vehMpaDesc}}</div>                        
+                        <div class='col-md-2 col-xs-2 col-lg-2'>{{(v.mapaAsiento!=null)?v.mapaAsiento.descripcion:'S/E'}}</div>                        
                         <div class='col-md-2 col-xs-2 col-lg-2'>
                             <!-- <span class="label" [ngClass]="v.vehVencido?'label-danger':'label-warning'" >
                                     {{v.vehVerificacionTecnicaVto | date:'dd/MM/yy'}}
@@ -31,8 +31,7 @@
                                 <span *ngIf= "!v.vehVencido">
                                     [ faltan {{ getDiasProximoVencimiento( v.vencimientos, 'vehVerificacionTecnica') }} dias ]
                                 </span>    
-                            </span>
-                            
+                            </span>                            
                         </div> 
                     </div>    
                 </div>

@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, OnChanges } from '@angular/core';
-import { VencimientosChoferes, CONSTANTES_CHOFER } from 'src/app/models/model.index';
+import { VencimientosChoferes, CONSTANTES_CHOFER, Chofer } from 'src/app/models/model.index';
 
 @Component({
   selector: 'app-chofer-vencimiento',
@@ -17,25 +17,18 @@ export class ChoferVencimientoComponent implements OnInit, OnChanges {
   ngOnInit() {  
   }
 
-  ngOnChanges( ): void {  
-    this.mostrarVencimientos();
-  }
-
-  mostrarVencimientos(){      
-    for( let venc of this.vencimientosCho ){      
-      venc.choferes.forEach( cho => {
-          cho.carnets.forEach( carnet =>{
-              let hoy = new Date();    
-              carnet.vencido = carnet.fechaVenc.getTime() <= hoy.getTime();          
-              carnet.descTipo = this.getDescTipo( carnet.tipo );    
-          });          
-      });
-    }          
-  } 
+  ngOnChanges( ): void {      
+  }  
 
   getDescTipo( tipo: number ){      
       const estado = this.estados.find( c => c.codigo === tipo );
       return estado? estado.descripcion:'Sin definir';
+  }
+
+  getDiasProximoVencimiento( vencimientos, tipoVencimiento  ){
+    let vencimientoSelected = vencimientos.find( v => v.nombreCampo === tipoVencimiento);    
+    return vencimientoSelected!= null? vencimientoSelected.diasAntesVencer:0;
+
   }
 
 }

@@ -5,7 +5,7 @@ import { Vencimiento } from 'src/app/models/model.index';
 import { map } from 'rxjs/operators';
 import swal from 'sweetalert';
 import { Observable } from 'rxjs';
-import { V } from '@angular/core/src/render3';
+
 
 @Injectable()
 export class VencimientoService {
@@ -76,21 +76,25 @@ export class VencimientoService {
 
   getChoferesConVencimientos$( cho_emp_codigo:string, cho_estado: number ): Observable<any>{
 
-    const url = this.urlBase + `/choferes/empresa/${cho_emp_codigo}/estado/${cho_estado}/vencimientos`;
+    const url = this.urlBase + `/vencimientos/empresa/${cho_emp_codigo}/estado/${cho_estado}/choferes`;
     return this.http.get( url )
                 .pipe(
                     map( (vencChoferes:any) =>{                        
                         for ( let ch of vencChoferes ) {
                             ch.choferes.forEach( ( v:any, k ) =>{                                
-                                v.carnets.forEach( car => {                                    
-                                    car.fechaVenc = new Date( car.fechaVenc );
-                                    car.fechaEmision = new Date( car.fechaEmision );
+                                v.vencimientos.forEach( venc => {                                    
+                                    venc.fechaVenc = new Date( venc.fechaVencimiento );                                   
                                 });
                             } )
                         }                                                                  
                         return vencChoferes;
                     })
                 );
+  }
+
+  existenVencimientos$( empresa:string ): Observable<any>{
+    const url = this.urlBase + `/vencimientos/empresa/${empresa}/existenVencimientos`;    
+    return this.http.get( url );               
   }
 
   

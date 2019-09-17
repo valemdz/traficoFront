@@ -11,8 +11,7 @@ export class ColorVencimientoDirective {
 
   vencimientos:VencimientoCalculado[];
   tipoVencimiento; 
-  vencimientoSelected:VencimientoCalculado; 
-  //claseCssVencimiento;
+  vencimientoSelected:VencimientoCalculado;   
 
   constructor(  private el: ElementRef,
     private renderer: Renderer2 ) {
