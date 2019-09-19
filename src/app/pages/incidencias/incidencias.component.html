@@ -8,10 +8,13 @@
                             <app-table-sort [table]="self" [page]="incidenciaPage" [label]="'Codigo'" [property]="'codigo'">Codigo</app-table-sort>
                         </th>
                         <th>
-                            <app-table-sort [table]="self" [page]="incidenciaPage" [label]="'Nombre'" [property]="'in_descripcion'"></app-table-sort>
+                            <app-table-sort [table]="self" [page]="incidenciaPage" [label]="'Nombre'" [property]="'descripcion'"></app-table-sort>
                         </th>
                         <th>
-                            <app-table-sort [table]="self" [page]="incidenciaPage" [label]="'Tipo'" [property]="'in_tipo'"></app-table-sort>
+                            <app-table-sort [table]="self" [page]="incidenciaPage" [label]="'Estado'" [property]="'activo'"></app-table-sort>
+                        </th>
+                        <th>
+                            <app-table-sort [table]="self" [page]="incidenciaPage" [label]="'Tipo'" [property]="'tipo'"></app-table-sort>
                         </th>
                         <!--th>
                             <app-table-sort [table]="self" [page]="incidenciaPage" [label]="''" [property]="'in_color'"></app-table-sort>
@@ -23,11 +26,25 @@
                     <tr *ngFor="let incidencia of incidenciaPage.content;let i=index"
                         (click)="setRowSelected( i )" >
                         <td>{{incidencia.codigo}}</td>
-                        <td>{{incidencia.in_descripcion}}</td>
-                        <td>{{incidencia.in_tipoString}}</td>
-                        <!--td>
-                            <input name="color" type="color" style="height: 25px" value={{incidencia.in_color}} />
-                        </td-->
+                        <td>{{incidencia.descripcion}}</td>
+
+                        <!-- <td>{{incidencia.activo}}</td> -->
+                        <td>
+                            <label>
+                                <div *ngIf="incidencia.activo">
+                                    <a  (click)="cambiarEstado( incidencia )" data-toggle="modal" data-target="#update-modal">
+                                        <i class="fa fa-toggle-on fa-2x green" aria-hidden="true"></i>
+                                    </a>
+                                </div>
+                                <div *ngIf="!incidencia.activo">
+                                        <a  (click)="cambiarEstado( incidencia )" data-toggle="modal" data-target="#update-modal"                                        >
+                                            <i class="fa fa-toggle-off fa-2x red" aria-hidden="true"></i>
+                                        </a>
+                                    </div>                                                                      
+                            </label>
+                        </td>    
+
+                        <td>{{incidencia.tipoString}}</td>                      
                         <td class="actions">
                             <a class="btn btn-xs" (click)="modificarDinam(incidencia)" data-toggle="modal" data-target="#nuevo-modal">
                                 <i title="Editar" data-toggle="tooltip" animation="true" data-placement="top" onmouseenter="$(this).tooltip('show')" class="fa fa-pencil fa-2x green" aria-hidden="true"></i>

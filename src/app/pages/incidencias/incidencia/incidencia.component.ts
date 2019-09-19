@@ -19,6 +19,7 @@ export class IncidenciaComponent implements  ComponenteBaseComponent, OnInit,  O
  incidencia: Incidencia; 
  incidenciaForm; FormGroup;
  comboTipos: any=[];
+ comboEstados: any = [];
 
  @ViewChild('closeBtn') closeBtn: ElementRef;
 
@@ -33,7 +34,8 @@ export class IncidenciaComponent implements  ComponenteBaseComponent, OnInit,  O
   ngOnInit() {
     this.incidencia = this.data.incidencia;    
     this.crearComboTipos();
-    this.cargarValores();     
+    this.cargarValores();  
+    this.comboEstados = ConstantesGrales.ESTADOS_BOOLEANOS;   
   }
  
 
@@ -44,7 +46,7 @@ export class IncidenciaComponent implements  ComponenteBaseComponent, OnInit,  O
   getDescripcion(){
 
     const tipoObject = this.comboTipos.find( ( tipo:any ) => 
-                                               tipo.codigo == this.incidencia.in_tipo );
+                                               tipo.codigo == this.incidencia.tipo );
     return  tipoObject? tipoObject.descripcion:'';                                         
   }
 
@@ -57,13 +59,14 @@ export class IncidenciaComponent implements  ComponenteBaseComponent, OnInit,  O
 
     this.incidenciaForm = this.fb.group({
        codigo: [ '', [ Validators.required,  Validators.maxLength(10)]],
-       in_descripcion: ['', [ Validators.required,  Validators.maxLength(60) ] ],
-       in_tipo:[ '', [ Validators.required, Validators.maxLength(1) ] ], /*0 unidades , 1 personal */
-       in_color:[''],
-       in_empresa: ['', [Validators.required, Validators.maxLength(4) ]]
+       descripcion: ['', [ Validators.required,  Validators.maxLength(60) ] ],
+       tipo:[ '', [ Validators.required, Validators.maxLength(1) ] ], /*0 unidades , 1 personal */
+       color:[''],
+       activo:[''],
+       empresa: ['', [Validators.required, Validators.maxLength(4) ]]
      }, {validator: IncidenciaValidator.createValidator( this.incidenciaService, this ) });
 
-     this.incidenciaForm.controls.in_empresa.disabled;
+     this.incidenciaForm.controls.empresa.disabled;
 
      this.incidenciaForm.valueChanges
          .subscribe( data => this.checkFormValidity() );
@@ -72,10 +75,11 @@ export class IncidenciaComponent implements  ComponenteBaseComponent, OnInit,  O
 
  errMsgs: any = {
    codigo: [],
-   in_descripcion: [],
-   in_tipo: [],
-   in_color: [],
-   in_empresa:[]
+   descripcion: [],
+   tipo: [],
+   color: [],
+   empresa:[],
+   activo:[]
  };
 
  translations: any = {
@@ -84,16 +88,16 @@ export class IncidenciaComponent implements  ComponenteBaseComponent, OnInit,  O
      maxlength:'La longitud maxima del campo es 10',
      codigoTomado: 'El codigo especificado ya ha sido ocupado'
    },
-   in_descripcion: {
+   descripcion: {
      required: 'Por favor especifique una descripcion.'
    },
-   in_tipo: {
+   tipo: {
      required: 'Por favor seleccione un tipo.'
    },
-   in_color: {
+   color: {
      required: 'Por favor seleccione un color.'
    },
-   in_empresa:{
+   empresa:{
      required: 'Por favor especifique la empresa.',
      maxlength:'La longitud maxima del campo es 4'
    },
@@ -105,10 +109,10 @@ export class IncidenciaComponent implements  ComponenteBaseComponent, OnInit,  O
  limpiarMensajes(){
 
    this.errMsgs.codigo.length =0;
-   this.errMsgs.in_descripcion.length =0;
-   this.errMsgs.in_tipo.length =0;
-   this.errMsgs.in_color.length =0;
-   this.errMsgs.in_empresa.length =0;
+   this.errMsgs.descripcion.length =0;
+   this.errMsgs.tipo.length =0;
+   this.errMsgs.color.length =0;
+   this.errMsgs.empresa.length =0;
  }
 
  
@@ -118,10 +122,11 @@ export class IncidenciaComponent implements  ComponenteBaseComponent, OnInit,  O
 
     this.incidenciaForm.reset({
        codigo: this.incidencia.codigo,
-       in_descripcion: this.incidencia.in_descripcion,
-       in_tipo: this.incidencia.in_tipo,
-       in_color: this.incidencia.in_color,
-       in_empresa: this.incidencia.in_empresa  || this._us.usuario.empresa
+       descripcion: this.incidencia.descripcion,
+       tipo: this.incidencia.tipo,
+       color: this.incidencia.color,
+       activo: this.incidencia.activo,
+       empresa: this.incidencia.empresa  || this._us.usuario.empresa
     });  
  }
 
@@ -129,10 +134,11 @@ export class IncidenciaComponent implements  ComponenteBaseComponent, OnInit,  O
 
    this.incidenciaForm.reset({
      codigo: this.incidencia.codigo,
-     in_descripcion: this.incidencia.in_descripcion,
-     in_tipo: this.incidencia.in_tipo,
-     in_color: this.incidencia.in_color,
-     in_empresa: this.incidencia.in_empresa || this._us.usuario.empresa
+     descripcion: this.incidencia.descripcion,
+     tipo: this.incidencia.tipo,
+     color: this.incidencia.color,
+     activo: this.incidencia.activo,
+     empresa: this.incidencia.empresa || this._us.usuario.empresa
 
    });
 
@@ -186,10 +192,11 @@ export class IncidenciaComponent implements  ComponenteBaseComponent, OnInit,  O
    const incid: Incidencia = {
      id: this.incidencia.id  || 0,
      codigo: form.codigo,
-     in_descripcion: form.in_descripcion,
-     in_tipo: form.in_tipo,
-     in_color: form.in_color,
-     in_empresa: form.in_empresa,
+     descripcion: form.descripcion,
+     tipo: form.tipo,
+     color: form.color,
+     empresa: form.empresa,
+     activo: form.activo
    }
 
    return incid;

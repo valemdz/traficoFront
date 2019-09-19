@@ -23,6 +23,10 @@ export class ConstantesGrales {
         { codigo: ConstantesGrales.DESHABILITADO, descripcion: ConstantesGrales.DESHABILITADO_STR },
     ]; 
     
+    public static readonly ESTADOS_BOOLEANOS = [
+        { codigo: true, descripcion: ConstantesGrales.HABILITADO_STR  },
+        { codigo: false, descripcion: ConstantesGrales.DESHABILITADO_STR },
+    ];     
     
     public static readonly HABILITADO_BOOLEAN = true;
     public static readonly DESHABILITADO_BOOLEAN = false;

@@ -16,10 +16,10 @@ export class IncidenciaValidator {
 
     return (AC: AbstractControl) => {
 
-        if( AC.get('codigo').value && AC.get('in_empresa').value && AC.get('in_tipo').value
+        if( AC.get('codigo').value && AC.get('empresa').value && AC.get('tipo').value
             && !incid.incidencia.id  ){
 
-            incidenciaService.checkCodigoIncidencia$( AC.get('in_empresa').value , AC.get('in_tipo').value, AC.get('codigo').value )
+            incidenciaService.checkCodigoIncidencia$( AC.get('empresa').value , AC.get('tipo').value, AC.get('codigo').value )
             .subscribe(flag => {
                 if (flag === true) {
                   AC.get('codigo').setErrors( {codigoTomado: true} );

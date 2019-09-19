@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { ErrorService, ModalService, UsuarioService, IncidenciaService } from 'src/app/services/service.index';
 import { IncidenciaComponent } from './incidencia/incidencia.component';
-import { Incidencia, ConstantesGrales } from 'src/app/models/model.index';
+import { Incidencia, ConstantesGrales, CONSTANTES_CHOFER } from 'src/app/models/model.index';
 import { PaginationPage, Table, PaginationPropertySort } from 'src/app/shared/pagination/pagination.index';
 import { FuncionesGrales } from 'src/app/utiles/funciones.grales';
 import { ComponenteItem } from 'src/app/shared/modal/componente-item';
@@ -30,6 +30,8 @@ export class IncidenciasComponent implements OnInit, OnDestroy  {
     comp: ComponenteItem;
 
     currentIncidencia;
+
+    public estados = ConstantesGrales.ESTADOS_BOOLEANOS;
 
     constructor( private incidenciaService: IncidenciaService,
         public _us: UsuarioService, 
@@ -136,5 +138,33 @@ export class IncidenciasComponent implements OnInit, OnDestroy  {
     updateIncidenciasEnPage( incidencia ){            
         this.incidenciaPage.content[this.incidenciaPage.rowSelected] = incidencia;
     }
+
+    cambiarEstado( incidencia:Incidencia ) {
+
+        let valueFuturo = !incidencia.activo;        
+        const estadoFuturo = this.estados.find( e => e.codigo === valueFuturo );
+
+        swal({
+            title: "Estado",
+            text: "El nuevo estado del Personal " 
+                   + incidencia.descripcion
+                   + " sera: " + ( estadoFuturo? estadoFuturo.descripcion: 'Sin definir' ) 
+                   + " esta seguro? ",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true,
+        })
+        .then( actualiza => {
+            if (actualiza ){
+                incidencia.activo = valueFuturo;
+                this.incidenciaService.update$(incidencia).subscribe( result => {                              
+                    this.updateIncidenciasEnPage( result );
+                }, err => {
+                    this.ctrolError.tratarErroresEliminaciones( err );   
+                });               
+            }
+        });    
+        
+    }  
 
 }

@@ -13,6 +13,7 @@ export class CONSTANTES_CHOFER {
   public static readonly SEGUNDO_AUX = 4;
 
   public static readonly CHOFER_SIN_PERSONAL_STR = 'Sin Personal';
+    static ESTADOS_BOOLEANOS: any;
 
   public static getTipoChoferStr( tipoChofer ): string {
     if ( tipoChofer === CONSTANTES_CHOFER.CHOFER ) {
