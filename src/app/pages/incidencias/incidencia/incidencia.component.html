@@ -45,12 +45,12 @@
                             <div class="form-group">
                                 <select class="form-control" data-toggle="tooltip" animation="true" data-placement="top" title="Estado" onmouseenter="$(this).tooltip('show')" formControlName="activo" placeholder="Estado">
                                     <option [selected]="incidenciaForm.controls.activo.value == null" value="null" >-- Seleccionar --</option>
-                                    <option *ngFor="let opt of comboEstados"  [value]="opt.codigo">
+                                    <option *ngFor="let opt of comboEstados"  [value]="opt.codigo" [selected]="opt.codigo == activo">
                                         {{opt.descripcion}}
                                     </option>
                                 </select>
                             </div>
-
+                            <control-mensajes [errores]="errMsgs.activo"></control-mensajes>
                             <div class="form-group">
                                 <input uppercase data-toggle="tooltip" animation="true" data-placement="top" onmouseenter="$(this).tooltip('show')" title="Descripción" type="text" placeholder="Descripcion" formControlName="descripcion" class="form-control">
                             </div>

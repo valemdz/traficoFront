@@ -28,9 +28,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
       if( this.vencimientosSubscription ){ this.vencimientosSubscription.unsubscribe(); }
   }
 
-  comprobarExistenciaVencimiento(){
-
-     console.log(  new Date() );
+  comprobarExistenciaVencimiento(){     
 
      this._vs.existenVencimientos$( this._us.usuario.empresa ).subscribe( resp =>{
           if( resp ){ 

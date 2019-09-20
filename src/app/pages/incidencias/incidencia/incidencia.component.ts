@@ -5,6 +5,7 @@ import { ErrorService, IncidenciaService, ModalService, UsuarioService } from 's
 import { Incidencia, ConstantesGrales } from 'src/app/models/model.index';
 import { ComponenteBaseComponent } from 'src/app/shared/modal/componente.base.component';
 import { IncidenciaValidator } from 'src/app/validators/incidencia-validator';
+import { Subject } from 'rxjs';
 
 
 @Component({
@@ -22,6 +23,8 @@ export class IncidenciaComponent implements  ComponenteBaseComponent, OnInit,  O
  comboEstados: any = [];
 
  @ViewChild('closeBtn') closeBtn: ElementRef;
+
+ subjectCheck: Subject<any> = new Subject();
 
  constructor( private incidenciaService:IncidenciaService,
               private fb: FormBuilder,
@@ -62,7 +65,7 @@ export class IncidenciaComponent implements  ComponenteBaseComponent, OnInit,  O
        descripcion: ['', [ Validators.required,  Validators.maxLength(60) ] ],
        tipo:[ '', [ Validators.required, Validators.maxLength(1) ] ], /*0 unidades , 1 personal */
        color:[''],
-       activo:[''],
+       activo:['', [ Validators.required ] ],
        empresa: ['', [Validators.required, Validators.maxLength(4) ]]
      }, {validator: IncidenciaValidator.createValidator( this.incidenciaService, this ) });
 
@@ -101,18 +104,21 @@ export class IncidenciaComponent implements  ComponenteBaseComponent, OnInit,  O
      required: 'Por favor especifique la empresa.',
      maxlength:'La longitud maxima del campo es 4'
    },
+   activo:{
+     required: 'Por favor especifique el estado.'
+   },
    gral: {
      codigoTomado: 'el codigo especificado ya ha sido ocupado'
    }
  };
 
  limpiarMensajes(){
-
    this.errMsgs.codigo.length =0;
    this.errMsgs.descripcion.length =0;
    this.errMsgs.tipo.length =0;
    this.errMsgs.color.length =0;
    this.errMsgs.empresa.length =0;
+   this.errMsgs.activo.length =0;   
  }
 
  

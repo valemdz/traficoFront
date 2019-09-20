@@ -214,8 +214,7 @@ export class ChoferesComponent implements OnInit, OnDestroy {
                 updateEstChofer.cho_estado = valueFuturo;
                 this.estadoSubs = this.choferService.update$(updateEstChofer)
                 .subscribe( result => {
-                    this.mostrarDetalle();        
-                    this.getVencimientos();    
+                    this.updateChoferesEnPage( result );   
                 }, err => {
                       this.ctrolError.tratarErroresEliminaciones( err );
                 } );

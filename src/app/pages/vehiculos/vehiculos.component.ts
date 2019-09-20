@@ -184,9 +184,7 @@ export class VehiculosComponent implements OnInit, OnDestroy  {
             if (actualiza ){
                 updateEstvehiculo.vehEstado =  valueFuturo;
                 this.vehiculoService.update$( updateEstvehiculo ).subscribe( result => {
-                    this.mostrarDetalle();
-                    this.getVehiculosVencimientos();
-                    
+                        this.updateVehiculoEnPage( result );                    
                     }, err => {
                         this.ctrolError.tratarErroresEliminaciones(err) ;
                     }
