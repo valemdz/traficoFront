@@ -64,7 +64,7 @@ export class IncidenciaByChoferComponent implements OnInit, OnChanges {
     this.chofer = this.data.chofer;
 
     setTimeout( () =>{
-        this.incidenciaService.findIncidenciasByEmpyTipo$(this.chofer.choferPK.cho_emp_codigo,1)
+        this.incidenciaService.findIncidenciasByEmpyTipo$(this.chofer.choferPK.empCodigo,1)
         .subscribe( data => {
             this.comboTipos = data;
 
@@ -86,8 +86,8 @@ export class IncidenciaByChoferComponent implements OnInit, OnChanges {
 
   getIncidenciasByChofer(){
     let incObservable :Observable<any> =
-    this.choferService.getIncidenciasByChofer$(  this.chofer.choferPK.cho_emp_codigo,
-                                                this.chofer.choferPK.cho_codigo );
+    this.choferService.getIncidenciasByChofer$(  this.chofer.choferPK.empCodigo,
+                                                this.chofer.choferPK.codigo );
      incObservable.subscribe( data => {
         this.choferIndicencias = data;
         this.setIncidencias(this.choferIndicencias);
@@ -235,8 +235,8 @@ export class IncidenciaByChoferComponent implements OnInit, OnChanges {
       choferIncidencias: this. prepararSalvarChoferIncid()
     }
 
-    this.choferService.saveIncidenciasByChofer$(  this.chofer.choferPK.cho_emp_codigo,
-                                                 this.chofer.choferPK.cho_codigo,
+    this.choferService.saveIncidenciasByChofer$(  this.chofer.choferPK.empCodigo,
+                                                 this.chofer.choferPK.codigo,
                                                  lista).subscribe(result => {
       //this.parent.mostrarDetalle();
       this.soloCerrar();

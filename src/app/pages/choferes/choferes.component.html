@@ -27,19 +27,19 @@
                             Imagen
                         </th>    
                         <th>
-                            <app-table-sort [table]="self" [page]="choferPage" [label]="'Rol'" [property]="'cho_chofer'"></app-table-sort>
+                            <app-table-sort [table]="self" [page]="choferPage" [label]="'Rol'" [property]="'tipoChofer'"></app-table-sort>
                         </th>
                         <th>
-                            <app-table-sort [table]="self" [page]="choferPage" [label]="'Legajo'" [property]="'cho_legajo'">Legajo</app-table-sort>
+                            <app-table-sort [table]="self" [page]="choferPage" [label]="'Legajo'" [property]="'legajo'">Legajo</app-table-sort>
                         </th>
                         <th>
-                            <app-table-sort [table]="self" [page]="choferPage" [label]="'Nombre'" [property]="'cho_nombre'"></app-table-sort>
+                            <app-table-sort [table]="self" [page]="choferPage" [label]="'Nombre'" [property]="'nombre'"></app-table-sort>
                         </th>
                         <th>
-                            <app-table-sort [table]="self" [page]="choferPage" [label]="'Estado'" [property]="'cho_estado'"></app-table-sort>
+                            <app-table-sort [table]="self" [page]="choferPage" [label]="'Estado'" [property]="'estado'"></app-table-sort>
                         </th>
                         <th>
-                            <app-table-sort [table]="self" [page]="choferPage" [label]="'Id Aux'" [property]="'cho_id_aux'"></app-table-sort>
+                            <app-table-sort [table]="self" [page]="choferPage" [label]="'Id Aux'" [property]="'idAux'"></app-table-sort>
                         </th>
                         <th class="actions"></th>
                     </tr>
@@ -55,18 +55,18 @@
                                   (click)="cambiarImagenModal( chofer )" 
                                   [src]="chofer.choferPK | imagen:'choferes'" class="w50 img-circle pointer" /> 
                         </td>
-                        <td>{{ chofer.cho_chofer == 0 ? 'Conductor' : 'Auxiliar'}}</td>
-                        <td>{{chofer.cho_legajo}}</td>
-                        <td>{{chofer.cho_nombre}}</td>
+                        <td>{{ chofer.tipoChofer == 0 ? 'Conductor' : 'Auxiliar'}}</td>
+                        <td>{{chofer.legajo}}</td>
+                        <td>{{chofer.nombre}}</td>
                         <td>
                             <label>
-                                <div *ngIf="chofer.cho_estado==estados[0].codigo == 1">
+                                <div *ngIf="chofer.estado==estados[0].codigo == 1">
                                     <a  (click)="cambiarEstado( chofer )" data-toggle="modal" data-target="#update-modal">
                                         <i class="fa fa-toggle-on fa-2x green" aria-hidden="true"></i>
                                     </a>
                                 </div>
-                                <div *ngIf="chofer.cho_estado==estados[0].codigo == 0">
-                                        <a  (click)="cambiarEstado( chofer )" data-toggle="modal" data-target="#update-modal"                                        >
+                                <div *ngIf="chofer.estado==estados[0].codigo == 0">
+                                        <a  (click)="cambiarEstado( chofer )" data-toggle="modal" data-target="#update-modal"    >
                                             <i class="fa fa-toggle-off fa-2x red" aria-hidden="true"></i>
                                         </a>
                                     </div>
@@ -75,7 +75,7 @@
                                     <span class="slider round"></span-->                                        
                             </label>
                         </td>
-                        <td>{{chofer.cho_id_aux}}</td>
+                        <td>{{chofer.idAux}}</td>
                         <td class="actions">
                             <a class="btn btn-xs" (click)="modificarChofer( chofer )" >
                                 <i title="Editar" data-toggle="tooltip" animation="true" data-placement="top" onmouseenter="$(this).tooltip('show')" class="fa fa-pencil fa-2x green" aria-hidden="true"></i>

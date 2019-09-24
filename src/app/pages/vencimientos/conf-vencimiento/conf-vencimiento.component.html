@@ -28,9 +28,22 @@
                         <td>{{v.tipoVencimiento.descNombreCampo}}</td>
                         <!-- <td>{{v.activo}}</td> -->
                         <td> 
-                            <i class="fa fa-2x"
+                            <!-- <i class="fa fa-2x"
                                [ngClass]="{ 'fa-toggle-on green':v.activo,
-                                            'fa-toggle-off red':!v.activo }"></i>                            
+                                            'fa-toggle-off red':!v.activo }"></i>                             -->
+
+                            <label>
+                                <div *ngIf="v.activo">
+                                    <a  (click)="cambiarEstado( v )" data-toggle="modal" data-target="#update-modal">
+                                        <i class="fa fa-toggle-on fa-2x green" aria-hidden="true"></i>
+                                    </a>
+                                </div>
+                                <div *ngIf="!v.activo">
+                                        <a  (click)="cambiarEstado( v )" data-toggle="modal" data-target="#update-modal" >
+                                            <i class="fa fa-toggle-off fa-2x red" aria-hidden="true"></i>
+                                        </a>
+                                    </div>                                                                      
+                            </label>                
                         </td>                        
                         <td>{{v.cantidadAnticipacion}}</td>
                         <td>                    
@@ -84,7 +97,7 @@
                                     <input type="text" placeholder="Estado"
                                     type="checkbox" 
                                     [checked]="toEstado()" 
-                                    (click)="cambiarEstado()" >                                        
+                                    (click)="cambiarEstadoUnitario()" >                                        
                                     <span class="slider round"></span>                                        
                             </label>
                         </div>                       

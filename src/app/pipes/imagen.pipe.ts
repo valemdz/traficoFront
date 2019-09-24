@@ -13,7 +13,7 @@ export class ImagenPipe implements PipeTransform {
 
     let url =  this.urlBase;   
 
-    return url + `choferes/${choferPK.cho_emp_codigo}/${choferPK.cho_codigo}/imagen`;
+    return url + `choferes/${choferPK.empCodigo}/${choferPK.codigo}/imagen`;
 
   }
 

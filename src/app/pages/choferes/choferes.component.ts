@@ -66,8 +66,8 @@ export class ChoferesComponent implements OnInit, OnDestroy {
    }
 
    cambiarImagenModal( chofer: Chofer ) {        
-    const url = `/upload/choferes/${chofer.choferPK.cho_emp_codigo}/${chofer.choferPK.cho_codigo}/uploadImagen`;    
-    const titulo = `Personal  ${chofer.cho_id_aux} - ${chofer.cho_nombre}`
+    const url = `/upload/choferes/${chofer.choferPK.empCodigo}/${chofer.choferPK.codigo}/uploadImagen`;    
+    const titulo = `Personal  ${chofer.idAux} - ${chofer.nombre}`
     this._imgs.mostraModal( url, titulo );
    }
 
@@ -163,8 +163,8 @@ export class ChoferesComponent implements OnInit, OnDestroy {
 
     crearNuevo() {  
         
-        let choferPK: ChoferPK = { cho_emp_codigo: this._us.usuario.empresa,
-                                cho_codigo:0};
+        let choferPK: ChoferPK = { empCodigo: this._us.usuario.empresa,
+                                    codigo:0};
 
         let choferNuevo = new Chofer( choferPK );        
 

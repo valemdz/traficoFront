@@ -61,23 +61,23 @@ export class ChofereEtapasComponent implements OnInit, OnDestroy {
       
       h.nombreChofer1 = CONSTANTES_CHOFER.CHOFER_SIN_PERSONAL_STR;
       if( h.chofer1 && h.chofer1 > 0 ){        
-        h.nombreChofer1 = this.getNombrePersonal( { cho_emp_codigo: emp_codigo, 
-                                                    cho_codigo: h.chofer1 } );
+        h.nombreChofer1 = this.getNombrePersonal( { empCodigo: emp_codigo, 
+                                                    codigo: h.chofer1 } );
       }
       h.nombreChofer2 = CONSTANTES_CHOFER.CHOFER_SIN_PERSONAL_STR;
       if( h.chofer2 && h.chofer2 > 0 ){             
-        h.nombreChofer2 = this.getNombrePersonal( { cho_emp_codigo: emp_codigo, 
-                                                    cho_codigo: h.chofer2 } );
+        h.nombreChofer2 = this.getNombrePersonal( { empCodigo: emp_codigo, 
+                                                    codigo: h.chofer2 } );
       }
       h.nombreAux1 = CONSTANTES_CHOFER.CHOFER_SIN_PERSONAL_STR;
       if( h.auxiliar1 && h.auxiliar1 > 0 ){        
-        h.nombreAux1 = this.getNombrePersonal( { cho_emp_codigo: emp_codigo, 
-                                                 cho_codigo: h.auxiliar1 } );
+        h.nombreAux1 = this.getNombrePersonal( { empCodigo: emp_codigo, 
+                                                 codigo: h.auxiliar1 } );
       }
       h.nombreAux2 = CONSTANTES_CHOFER.CHOFER_SIN_PERSONAL_STR;
       if( h.auxiliar2 && h.auxiliar2 > 0 ){                                                 
-        h.nombreAux2 = this.getNombrePersonal( { cho_emp_codigo: emp_codigo, 
-                                                 cho_codigo: h.auxiliar2 } );
+        h.nombreAux2 = this.getNombrePersonal( { empCodigo: emp_codigo, 
+                                                 codigo: h.auxiliar2 } );
       }
 
     });
@@ -111,28 +111,28 @@ export class ChofereEtapasComponent implements OnInit, OnDestroy {
 
   setChofer1( chofer:ChoferOcupacion, horarios: Horario[] ){        
     horarios.forEach( h =>{
-        h.chofer1 = chofer.choferPK.cho_codigo;
+        h.chofer1 = chofer.choferPK.codigo;
         h.nombreChofer1= chofer.nombreConTipo;    
     });    
   }
 
   setChofer2( chofer:ChoferOcupacion, horarios: Horario[] ){     
     horarios.forEach( h =>{
-      h.chofer2 = chofer.choferPK.cho_codigo;
+      h.chofer2 = chofer.choferPK.codigo;
       h.nombreChofer2 = chofer.nombreConTipo;    
     });    
   }
 
   setAux1( chofer:ChoferOcupacion, horarios: Horario[] ){      
     horarios.forEach( h =>{
-      h.auxiliar1 = chofer.choferPK.cho_codigo;
+      h.auxiliar1 = chofer.choferPK.codigo;
       h.nombreAux1 = chofer.nombreConTipo;
     });      
   }
 
   setAux2( chofer:ChoferOcupacion, horarios: Horario[] ){      
     horarios.forEach( h =>{
-      h.auxiliar2 = chofer.choferPK.cho_codigo;
+      h.auxiliar2 = chofer.choferPK.codigo;
       h.nombreAux2 =chofer.nombreConTipo;
     });        
   }  
@@ -188,8 +188,8 @@ export class ChofereEtapasComponent implements OnInit, OnDestroy {
     //ultima etapa
     let horarioFin:Horario = horariosByChofer[ horariosByChofer.length - 1 ];
 
-    const chofer:ChoferOcupacion = this._vs.getChoferByChoferPK( { cho_emp_codigo: this.empresa,
-                                                                   cho_codigo: codigoChofer } );
+    const chofer:ChoferOcupacion = this._vs.getChoferByChoferPK( { empCodigo: this.empresa,
+                                                                   codigo: codigoChofer } );
 
     const dialogRef = this.dialog.open( DetOcupacionChoferComponent, { 
       width: '600px',

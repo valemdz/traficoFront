@@ -2,19 +2,19 @@ import { Vencimiento, Carnet, ServicioPK, VencimientoCalculado } from "./model.i
 
 export class Chofer {
    constructor( public choferPK: ChoferPK,
-                public cho_estado?: number,
-                public cho_chofer?: number,
-                public cho_legajo?: number,
-                public cho_nombre?: string,
-                public cho_doc_codigo?: number,
-                public cho_documento?: String,
-                public cho_grupo_sanguineo?: String,
-                public cho_observaciones?: String,
-                public cho_telefono?: String,
-                public cho_telefono_emergencia?: String,
-                public cho_fecha_nacimiento?:Date,
-                public cho_funcion?:string, 
-                public cho_id_aux?:number,   
+                public estado?: number,
+                public tipoChofer?: number,
+                public legajo?: number,
+                public nombre?: string,
+                public codigoDoc?: number,
+                public documento?: String,
+                public grupoSanguineo?: String,
+                public observaciones?: String,
+                public telefono?: String,
+                public telefonoEmergencia?: String,
+                public fechaNacimiento?:Date,
+                public funcion?:string, 
+                public idAux?:number,   
                 public carnets?:Carnet[],
                 public cho_vencido?:boolean,
                 public foto?:string,
@@ -23,8 +23,8 @@ export class Chofer {
 }
 
 export interface ChoferPK {
-    cho_emp_codigo: string;
-    cho_codigo: number;
+    empCodigo: string;
+    codigo: number;
 }
 
 export class VencimientosChoferes{
@@ -71,7 +71,7 @@ export interface ChoferOcupacion {
     tipoChofer:number;
     estado:number;
     nombreConTipo:string;
-    cho_id_aux:number;
+    idAux:number;
     servicios:ChoferServ[];
     incidencias:ChoferIndicencia[];
     viajes:ChoferViajesEsp[];

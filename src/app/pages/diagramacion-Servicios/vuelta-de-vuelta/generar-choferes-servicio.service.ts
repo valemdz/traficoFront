@@ -70,10 +70,10 @@ export class GenerarChoferesServicioService {
           //ultima etapa
           let horarioFin:Horario = choferesByCodigo[ choferesByCodigo.length - 1 ];  
 
-          let chofer: ChoferOcupacion = this._vs.getChoferByChoferPK( { cho_emp_codigo: this.empresa,  cho_codigo: codigo } );
+          let chofer: ChoferOcupacion = this._vs.getChoferByChoferPK( { empCodigo: this.empresa,  codigo: codigo } );
           
           const unChofer:ChoferServicio = {
-            choferPK: { cho_emp_codigo: this.empresa,  cho_codigo: codigo },    
+            choferPK: { empCodigo: this.empresa,  codigo: codigo },    
             tipoChofer: chofer?chofer.tipoChofer:-1,
             etaDesde: horarioInicio.codigoEtapa,	
             etaHasta: horarioFin.codigoEtapa,
@@ -82,7 +82,7 @@ export class GenerarChoferesServicioService {
             nombre:	chofer?chofer.nombre:'*****',
             nombreConTipo:chofer?chofer.nombreConTipo:'',
             ordenChofer: CONSTANTES_CHOFER.PRIMER_CHOFER,
-            idAux:chofer?chofer.cho_id_aux:-1  
+            idAux:chofer?chofer.idAux:-1  
           };
           this.choferes.push( unChofer);                              
     } ); 
@@ -103,10 +103,11 @@ export class GenerarChoferesServicioService {
             //ultima etapa
             let horarioFin:Horario = choferesByCodigo[ choferesByCodigo.length - 1 ];  
   
-            let chofer: ChoferOcupacion = this._vs.getChoferByChoferPK( { cho_emp_codigo: this.empresa,  cho_codigo: codigo } );
+            let chofer: ChoferOcupacion = this._vs.getChoferByChoferPK( { empCodigo: this.empresa,  
+                                                                          codigo: codigo } );
             
             const unChofer:ChoferServicio = {
-              choferPK: { cho_emp_codigo: this.empresa,  cho_codigo: codigo },    
+              choferPK: { empCodigo: this.empresa, codigo: codigo },    
               tipoChofer: chofer?chofer.tipoChofer:-1,
               etaDesde: horarioInicio.codigoEtapa,	
               etaHasta: horarioFin.codigoEtapa,
@@ -115,7 +116,7 @@ export class GenerarChoferesServicioService {
               nombre:	chofer?chofer.nombre:'*****',
               nombreConTipo:chofer?chofer.nombreConTipo:'',
               ordenChofer: CONSTANTES_CHOFER.SEGUNDO_CHOFER,
-              idAux:chofer?chofer.cho_id_aux:-1  
+              idAux:chofer?chofer.idAux:-1  
             };  
             this.choferes.push( unChofer);                                
       } ); 
@@ -136,10 +137,11 @@ export class GenerarChoferesServicioService {
           //ultima etapa
           let horarioFin:Horario = choferesByCodigo[ choferesByCodigo.length - 1 ];  
 
-          let chofer: ChoferOcupacion = this._vs.getChoferByChoferPK( { cho_emp_codigo: this.empresa,  cho_codigo: codigo } );
+          let chofer: ChoferOcupacion = this._vs.getChoferByChoferPK( { empCodigo: this.empresa, 
+                                                                        codigo: codigo } );
           
           const unChofer:ChoferServicio = {
-            choferPK: { cho_emp_codigo: this.empresa,  cho_codigo: codigo },    
+            choferPK: { empCodigo: this.empresa,  codigo: codigo },    
             tipoChofer: chofer?chofer.tipoChofer:-1,
             etaDesde: horarioInicio.codigoEtapa,	
             etaHasta: horarioFin.codigoEtapa,
@@ -148,7 +150,7 @@ export class GenerarChoferesServicioService {
             nombre:	chofer?chofer.nombre:'*****',
             nombreConTipo:chofer?chofer.nombreConTipo:'',
             ordenChofer: CONSTANTES_CHOFER.PRIMER_AUX,
-            idAux:chofer?chofer.cho_id_aux:-1  
+            idAux:chofer?chofer.idAux:-1  
           };  
           this.choferes.push( unChofer);                                
     } ); 
@@ -169,10 +171,11 @@ export class GenerarChoferesServicioService {
         //ultima etapa
         let horarioFin:Horario = choferesByCodigo[ choferesByCodigo.length - 1 ];  
 
-        let chofer: ChoferOcupacion = this._vs.getChoferByChoferPK( { cho_emp_codigo: this.empresa,  cho_codigo: codigo } );
+        let chofer: ChoferOcupacion = this._vs.getChoferByChoferPK( { empCodigo: this.empresa,  
+                                                                      codigo: codigo } );
         
         const unChofer:ChoferServicio = {
-          choferPK: { cho_emp_codigo: this.empresa,  cho_codigo: codigo },    
+          choferPK: { empCodigo: this.empresa,  codigo: codigo },    
           tipoChofer: chofer?chofer.tipoChofer:-1,
           etaDesde: horarioInicio.codigoEtapa,	
           etaHasta: horarioFin.codigoEtapa,
@@ -181,7 +184,7 @@ export class GenerarChoferesServicioService {
           nombre:	chofer?chofer.nombre:'*****',
           nombreConTipo:chofer?chofer.nombreConTipo:'',
           ordenChofer: CONSTANTES_CHOFER.SEGUNDO_AUX,
-          idAux:chofer?chofer.cho_id_aux:-1  
+          idAux:chofer?chofer.idAux:-1  
         };  
         this.choferes.push( unChofer);                                
   } ); 

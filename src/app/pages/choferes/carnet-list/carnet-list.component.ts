@@ -190,8 +190,8 @@ export class CarnetListComponent implements OnInit, OnChanges {
 
   resetForm(){
     if( this.formCarnet ){
-      this.getCarnetsByChofer( this.chofer.choferPK.cho_emp_codigo,
-                               this.chofer.choferPK.cho_codigo );
+      this.getCarnetsByChofer( this.chofer.choferPK.empCodigo,
+                               this.chofer.choferPK.codigo );
     }
   }
 
@@ -279,8 +279,8 @@ export class CarnetListComponent implements OnInit, OnChanges {
           carnets: this.prepararSalvarCarnet()
         }
 
-        this.choferService.saveCarnetsByChofer$( this.chofer.choferPK.cho_emp_codigo,
-                                                this.chofer.choferPK.cho_codigo,  listaCarnet )
+        this.choferService.saveCarnetsByChofer$( this.chofer.choferPK.empCodigo,
+                                                this.chofer.choferPK.codigo,  listaCarnet )
         .subscribe(result => {
           //this.parent.mostrarDetalle();
           this. soloCerrar();

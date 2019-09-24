@@ -42,7 +42,7 @@ export class ChoferService {
 
 
     update$( chofer: Chofer ) {
-        const url = this.urlBase + `/choferes/empresa/${chofer.choferPK.cho_emp_codigo}/codigo/${chofer.choferPK.cho_codigo}`;
+        const url = this.urlBase + `/choferes/empresa/${chofer.choferPK.empCodigo}/codigo/${chofer.choferPK.codigo}`;
         return this.http.put( url, chofer )
                    .pipe(
                       map( (resp: any) => {
@@ -60,7 +60,7 @@ export class ChoferService {
                    .pipe(
                       map( ( resp: any) => {
                          swal( "Creacion", 
-                               "El personal " + chofer.cho_nombre + " fue creado con exito!",
+                               "El personal " + chofer.nombre + " fue creado con exito!",
                                "success" );
                          return resp;      
                       })  

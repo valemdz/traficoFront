@@ -27,6 +27,9 @@ export class ConfVencimientoComponent implements OnInit, OnDestroy {
   vencimientosLoaded=false;
   vencimientoEdit: Vencimiento= null;
 
+  public estados = ConstantesGrales.ESTADOS_BOOLEANOS;
+
+
   constructor( public _vs: VencimientoService,
                public _us: UsuarioService,
                public fb: FormBuilder,
@@ -87,7 +90,8 @@ export class ConfVencimientoComponent implements OnInit, OnDestroy {
   toEstado():boolean{  
     return ( this.vencimientosForm.controls.activo.value === ConstantesGrales.HABILITADO_BOOLEAN )?true:false;
   }
-  cambiarEstado(){
+
+  cambiarEstadoUnitario(){
     
     if( this.vencimientosForm.controls.activo.value === ConstantesGrales.HABILITADO_BOOLEAN ){
       this.vencimientosForm.get('activo').setValue( ConstantesGrales.DESHABILITADO_BOOLEAN );
@@ -159,6 +163,35 @@ export class ConfVencimientoComponent implements OnInit, OnDestroy {
       cantidadAnticipacion:  vencimiento.cantidadAnticipacion,
      });     
   }
+
+
+  cambiarEstado( venc:Vencimiento ) {
+
+    let valueFuturo = !venc.activo;        
+    const estadoFuturo = this.estados.find( e => e.codigo === valueFuturo );
+
+    swal({
+        title: "Estado",
+        text: "El nuevo estado del Vencimiento " 
+               + venc.tipoVencimiento.descNombreCampo
+               + " sera: " + ( estadoFuturo? estadoFuturo.descripcion: 'Sin definir' ) 
+               + " esta seguro? ",
+        icon: "warning",
+        buttons: true,
+        dangerMode: true,
+    })
+    .then( actualiza => {
+        if (actualiza ){
+            venc.activo = valueFuturo;
+            this._vs.saveVencimiento$( venc )
+            .subscribe( () =>  { 
+                    this.limpiar();
+                    this.getVencimientos();                                                                    
+                  });         
+        }
+    });    
+    
+}  
 
   ngOnDestroy(): void {
     if( this.vencimientosSubs )  { this.vencimientosSubs.unsubscribe(); }  

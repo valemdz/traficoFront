@@ -72,18 +72,18 @@ export class ChoferComponent implements OnInit, OnChanges, OnDestroy, TabChild {
 
     this.choferForm = this.fb.group({
       choferPK: this.fb.group({ cho_emp_codigo:['', Validators.required ] }),
-      cho_chofer: ['', Validators.required],
-      cho_estado:['',Validators.required],
-      cho_legajo:['',Validators.required],
-      cho_nombre:['',[Validators.required, Validators.maxLength(40)]],
-      cho_doc_codigo:['',Validators.required],
-      cho_documento: ['',[Validators.required, Validators.maxLength(11)]],
-      cho_fecha_nacimiento:['',Validators.required],
-      cho_grupo_sanguineo:[''],
-      cho_observaciones:['', Validators.maxLength(255)],
-      cho_telefono:['',[Validators.required, Validators.maxLength(50)]],
-      cho_telefono_emergencia: ['',[Validators.required, Validators.maxLength(50)]],
-      cho_id_aux: ['']
+      tipoChofer: ['', Validators.required],
+      estado:['',Validators.required],
+      legajo:['',Validators.required],
+      nombre:['',[Validators.required, Validators.maxLength(40)]],
+      codigoDoc:['',Validators.required],
+      documento: ['',[Validators.required, Validators.maxLength(11)]],
+      fechaNacimiento:['',Validators.required],
+      grupoSanguineo:[''],
+      observaciones:['', Validators.maxLength(255)],
+      telefono:['',[Validators.required, Validators.maxLength(50)]],
+      telefonoEmergencia: ['',[Validators.required, Validators.maxLength(50)]],
+      idAux: ['']
     });
 
     this.choferForm.valueChanges
@@ -93,22 +93,22 @@ export class ChoferComponent implements OnInit, OnChanges, OnDestroy, TabChild {
 
   resetForm(){
     let dp = new DatePipe( this.locale );
-    let fecha = dp.transform( this.chofer.cho_fecha_nacimiento, 'yyyy-MM-dd');
+    let fecha = dp.transform( this.chofer.fechaNacimiento, 'yyyy-MM-dd');
 
     this.choferForm.reset({
-      choferPK:{ cho_emp_codigo: this.chofer.choferPK.cho_emp_codigo },
-      cho_estado: this.chofer.cho_estado,
-      cho_chofer: this.chofer.cho_chofer,
-      cho_legajo:this.chofer.cho_legajo,
-      cho_nombre:this.chofer.cho_nombre,
-      cho_doc_codigo:this.chofer.cho_doc_codigo,
-      cho_documento: this.chofer.cho_documento,
-      cho_fecha_nacimiento:fecha,
-      cho_grupo_sanguineo:this.chofer.cho_grupo_sanguineo,
-      cho_observaciones:this.chofer.cho_observaciones,
-      cho_telefono:this.chofer.cho_telefono,
-      cho_telefono_emergencia:  this.chofer.cho_telefono_emergencia,
-      cho_id_aux: this.chofer.cho_id_aux
+      choferPK:{ cho_emp_codigo: this.chofer.choferPK.empCodigo },
+      estado: this.chofer.estado,
+      tipoChofer: this.chofer.tipoChofer,
+      legajo:this.chofer.legajo,
+      nombre:this.chofer.nombre,
+      codigoDoc:this.chofer.codigoDoc,
+      documento: this.chofer.documento,
+      fechaNacimiento:fecha,
+      grupoSanguineo:this.chofer.grupoSanguineo,
+      observaciones:this.chofer.observaciones,
+      telefono:this.chofer.telefono,
+      telefonoEmergencia:  this.chofer.telefonoEmergencia,
+      idAux: this.chofer.idAux
     });
  }
 
@@ -117,47 +117,47 @@ export class ChoferComponent implements OnInit, OnChanges, OnDestroy, TabChild {
   };
 
   errMsgsResto: any = {
-    cho_estado: [],
-    cho_chofer: [],
-    cho_legajo: [],
-    cho_nombre: [],
-    cho_doc_codigo: [],
-    cho_documento: [],
-    cho_fecha_nacimiento: [],
-    cho_grupo_sanguineo:[],
-    cho_observaciones:[],
-    cho_telefono:[],
-    cho_telefono_emergencia: []
+    estado: [],
+    tipoChofer: [],
+    legajo: [],
+    nombre: [],
+    codigoDoc: [],
+    documento: [],
+    fechaNacimiento: [],
+    grupoSanguineo:[],
+    observaciones:[],
+    telefono:[],
+    telefonoEmergencia: []
   };
 
   limpiarMensajes(){
 
-    this.errMsgsResto.cho_estado.length =0;
-    this.errMsgsResto.cho_chofer.length =0;
-    this.errMsgsResto.cho_legajo.length =0;
-    this.errMsgsResto.cho_nombre.length =0;
-    this.errMsgsResto.cho_doc_codigo.length =0;
-    this.errMsgsResto.cho_documento.length =0;
-    this.errMsgsResto.cho_fecha_nacimiento.length =0;
-    this.errMsgsResto.cho_grupo_sanguineo.length =0;
-    this.errMsgsResto.cho_observaciones.length =0;
-    this.errMsgsResto.cho_telefono.length =0;
-    this.errMsgsResto.cho_telefono_emergencia.length =0;
+    this.errMsgsResto.estado.length =0;
+    this.errMsgsResto.tipoChofer.length =0;
+    this.errMsgsResto.legajo.length =0;
+    this.errMsgsResto.nombre.length =0;
+    this.errMsgsResto.codigoDoc.length =0;
+    this.errMsgsResto.documento.length =0;
+    this.errMsgsResto.fechaNacimiento.length =0;
+    this.errMsgsResto.grupoSanguineo.length =0;
+    this.errMsgsResto.observaciones.length =0;
+    this.errMsgsResto.telefono.length =0;
+    this.errMsgsResto.telefonoEmergencia.length =0;
   }
 
   translations: any = {
     cho_emp_codigo:{ required: 'Por favor especifique una Empresa' },
-  cho_chofer: { required: 'Debe escificar la funcion del Personal'},
-    cho_estado: { required: 'Por favor especifique una estado'},
-    cho_legajo: { required: 'Por favor especifique el legajo' },
-    cho_nombre: { required: 'Por favor especifique el nombre'},
-    cho_doc_codigo: { required: 'Por favor especifique tipo doc'},
-    cho_documento: { required: 'Por favor especifique un documento' },
-    cho_fecha_nacimiento: { required: 'Por favor especifique Fecha Nac' },
-    cho_grupo_sanguineo: { required: 'Por favor especifique grupo sanguineo'},
-    cho_observaciones:{ required: 'Por favor especifique una observacion.'},
-    cho_telefono: { required: 'Por favor especifique un telefono.'},
-    cho_telefono_emergencia: { required: 'Por favor especifique un telefono de emergencia.'},
+    cho_chofer: { required: 'Debe escificar la funcion del Personal'},
+    estado: { required: 'Por favor especifique una estado'},
+    legajo: { required: 'Por favor especifique el legajo' },
+    nombre: { required: 'Por favor especifique el nombre'},
+    codigoDoc: { required: 'Por favor especifique tipo doc'},
+    documento: { required: 'Por favor especifique un documento' },
+    fechaNacimiento: { required: 'Por favor especifique Fecha Nac' },
+    grupoSanguineo: { required: 'Por favor especifique grupo sanguineo'},
+    observaciones:{ required: 'Por favor especifique una observacion.'},
+    telefono: { required: 'Por favor especifique un telefono.'},
+    telefonoEmergencia: { required: 'Por favor especifique un telefono de emergencia.'},
     gral:{}
   };
 
@@ -219,25 +219,25 @@ export class ChoferComponent implements OnInit, OnChanges, OnDestroy, TabChild {
         const form = this.choferForm.getRawValue();
 
         //let fecha = moment(form.cho_fecha_nacimiento, 'DD-MM-YYYY');
-        let fecha = moment(form.cho_fecha_nacimiento,  'YYYY-MM-DD' );
+        let fecha = moment(form.fechaNacimiento,  'YYYY-MM-DD' );
 
         let foto = (this.chofer != null)?this.chofer.foto:null;
 
         const cho: Chofer = {
-          choferPK:{  cho_emp_codigo:form.choferPK.cho_emp_codigo ,
-                      cho_codigo:this.chofer.choferPK.cho_codigo},
-          cho_estado: form.cho_estado,
-          cho_chofer: form.cho_chofer,
-          cho_legajo: form.cho_legajo,
-          cho_nombre: form.cho_nombre,
-          cho_doc_codigo: form.cho_doc_codigo,
-          cho_documento: form.cho_documento,
-          cho_grupo_sanguineo: form.cho_grupo_sanguineo,
-          cho_observaciones: form.cho_observaciones,
-          cho_telefono: form.cho_telefono,
-          cho_telefono_emergencia: form.cho_telefono_emergencia,
-          cho_fecha_nacimiento: fecha.format() as any,
-          cho_id_aux: form.cho_id_aux,
+          choferPK:{  empCodigo:form.choferPK.empCodigo ,
+                      codigo:this.chofer.choferPK.codigo},
+          estado: form.estado,
+          tipoChofer: form.tipoChofer,
+          legajo: form.legajo,
+          nombre: form.nombre,
+          codigoDoc: form.codigoDoc,
+          documento: form.documento,
+          grupoSanguineo: form.grupoSanguineo,
+          observaciones: form.observaciones,
+          telefono: form.telefono,
+          telefonoEmergencia: form.telefonoEmergencia,
+          fechaNacimiento: fecha.format() as any,
+          idAux: form.idAux,
           foto: foto
        };
 

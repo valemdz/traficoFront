@@ -57,14 +57,14 @@ export class ChoferComboOcupacionComponent implements OnInit, OnChanges {
                                                         this.fechaFin );
       this.escucharChoferes();       
       
-      const choferPK:ChoferPK = { cho_emp_codigo: this.empresa,cho_codigo: this.codigo };  
+      const choferPK:ChoferPK = { empCodigo: this.empresa, codigo: this.codigo };  
       this.choferSeleccionado = this._vs.getChoferByChoferPK( choferPK );
 
   }
 
   ngOnChanges(): void {        
-    this.choferSeleccionado = this._vs.getChoferByChoferPK( { cho_emp_codigo: this.empresa,
-                                                              cho_codigo: this.codigo, });
+    this.choferSeleccionado = this._vs.getChoferByChoferPK( { empCodigo: this.empresa,
+                                                              codigo: this.codigo, });
   }
 
   seleccionarChofer( choferSelNombre:any ){    
