@@ -7,7 +7,7 @@
             <button type="button" class="close" (click)="soloCerrar()">
                 <span aria-hidden="true">&times;</span>
             </button>
-            <h4 class="modal-title" id="modalLabel">{{nuevo?'Creación de Personal' :'Modificación de Personal: '+ chofer.cho_nombre}}</h4>
+            <h4 class="modal-title" id="modalLabel">{{nuevo?'Creación de Personal' :'Modificación de Personal: '+ chofer.nombre}}</h4>
         </div>
         <div class="modal-body">
             <section class="sample-app-content">
@@ -17,12 +17,12 @@
                             <div class="col-xs-12 col-md-6">
                                 <div formGroupName='choferPK'>
                                     <div class="form-group">
-                                        <input type="text" uppercase data-toggle="tooltip" animation="true" data-placement="top" title="Empresa" onmouseenter="$(this).tooltip('show')" class="form-control" formControlName='cho_emp_codigo' [readonly]="true">
+                                        <input type="text" uppercase data-toggle="tooltip" animation="true" data-placement="top" title="Empresa" onmouseenter="$(this).tooltip('show')" class="form-control" formControlName='empCodigo' [readonly]="true">
                                     </div>
                                 </div>
-                                <control-mensajes [errores]="errMsgsPK.cho_emp_codigo"></control-mensajes>
+                                <control-mensajes [errores]="errMsgsPK.empCodigo"></control-mensajes>
                                 <div class="form-group">
-                                    <select class="form-control" formControlName="cho_chofer" placeholder="Tipo Personal" data-toggle="tooltip" animation="true" data-placement="top" title="Tipo de personal" onmouseenter="$(this).tooltip('show')">
+                                    <select class="form-control" formControlName="tipoChofer" placeholder="Tipo Personal" data-toggle="tooltip" animation="true" data-placement="top" title="Tipo de personal" onmouseenter="$(this).tooltip('show')">
                                         <option [selected]="choferForm.controls.tipoChofer.value == null" value="null" >-- Seleccionar --</option>
                                         <option *ngFor="let opt of comboFuncion"  [value]="opt.codigo">
                                             {{opt.descripcion}}
@@ -43,11 +43,11 @@
                                 </div>
                                 <control-mensajes [errores]="errMsgsResto.legajo"></control-mensajes>
                                 <div class="form-group ">
-                                    <input type="text" uppercase placeholder="Nombre" formControlName="cho_nombre" class="form-control" data-toggle="tooltip" animation="true" data-placement="top" title="Nombre" onmouseenter="$(this).tooltip('show')">
+                                    <input type="text" uppercase placeholder="Nombre" formControlName="nombre" class="form-control" data-toggle="tooltip" animation="true" data-placement="top" title="Nombre" onmouseenter="$(this).tooltip('show')">
                                 </div>
                                 <control-mensajes [errores]="errMsgsResto.nombre"></control-mensajes>
                                 <div class="form-group">
-                                    <select class="form-control" formControlName="cho_doc_codigo" placeholder="Tipo de documento" data-toggle="tooltip" animation="true" data-placement="top" title="Tipo de documento" onmouseenter="$(this).tooltip('show')">
+                                    <select class="form-control" formControlName="codigoDoc" placeholder="Tipo de documento" data-toggle="tooltip" animation="true" data-placement="top" title="Tipo de documento" onmouseenter="$(this).tooltip('show')">
                                         <option [selected]="choferForm.controls.codigoDoc.value == null" value="null" >-- Seleccionar --</option>
                                         <option *ngFor="let opt of comboDocumentos"  [value]="opt.codigo">
                                             {{opt.descripcion}}

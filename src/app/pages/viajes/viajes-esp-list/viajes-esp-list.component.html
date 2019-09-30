@@ -98,7 +98,7 @@
                                 <tr *ngFor="let unChofer of viaje.choferes ">
                                     <td><span class="badge badge-pill" [ngClass]="unChofer.cho_estado === 1 ?
                                       'badge-warning' : 'badge-primary'">
-                                      {{ unChofer.cho_nombre }}</span></td>
+                                      {{ unChofer.nombre }}</span></td>
                                 </tr>
                                 <tr *ngIf="viaje.choferes.length==0 ">
                                     <td><span class="badge badge-pill badge-yellow">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></td>
@@ -107,7 +107,7 @@
                                 <tr *ngFor="let unAuxliar of viaje.auxiliares ">
                                     <td><span class="badge badge-pill" [ngClass]="unAuxliar.cho_estado === 1 ?
                                         'badge-warning' : 'badge-primary'">
-                                      {{ unAuxliar.cho_nombre }}</span></td>
+                                      {{ unAuxliar.nombre }}</span></td>
 
                                 </tr>
                                 <tr *ngIf="viaje.auxiliares.length==0 ||viaje.auxiliares==null ">

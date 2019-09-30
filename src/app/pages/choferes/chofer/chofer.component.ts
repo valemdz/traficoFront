@@ -71,7 +71,7 @@ export class ChoferComponent implements OnInit, OnChanges, OnDestroy, TabChild {
   crearForm(){
 
     this.choferForm = this.fb.group({
-      choferPK: this.fb.group({ cho_emp_codigo:['', Validators.required ] }),
+      choferPK: this.fb.group({ empCodigo:['', Validators.required ] }),
       tipoChofer: ['', Validators.required],
       estado:['',Validators.required],
       legajo:['',Validators.required],
@@ -96,7 +96,7 @@ export class ChoferComponent implements OnInit, OnChanges, OnDestroy, TabChild {
     let fecha = dp.transform( this.chofer.fechaNacimiento, 'yyyy-MM-dd');
 
     this.choferForm.reset({
-      choferPK:{ cho_emp_codigo: this.chofer.choferPK.empCodigo },
+      choferPK:{ empCodigo: this.chofer.choferPK.empCodigo },
       estado: this.chofer.estado,
       tipoChofer: this.chofer.tipoChofer,
       legajo:this.chofer.legajo,
@@ -113,7 +113,7 @@ export class ChoferComponent implements OnInit, OnChanges, OnDestroy, TabChild {
  }
 
   errMsgsPK: any = {
-    cho_emp_codigo:[],
+    empCodigo:[],
   };
 
   errMsgsResto: any = {
@@ -146,8 +146,8 @@ export class ChoferComponent implements OnInit, OnChanges, OnDestroy, TabChild {
   }
 
   translations: any = {
-    cho_emp_codigo:{ required: 'Por favor especifique una Empresa' },
-    cho_chofer: { required: 'Debe escificar la funcion del Personal'},
+    empCodigo:{ required: 'Por favor especifique una Empresa' },
+    tipoChofer: { required: 'Debe escificar la funcion del Personal'},
     estado: { required: 'Por favor especifique una estado'},
     legajo: { required: 'Por favor especifique el legajo' },
     nombre: { required: 'Por favor especifique el nombre'},

@@ -191,7 +191,7 @@ export class ChoferesComponent implements OnInit, OnDestroy {
 
         let valueFuturo;
 
-        if (updateEstChofer.cho_estado === 1) {
+        if (updateEstChofer.estado === 1) {
             valueFuturo = 0 ;
         } else {
             valueFuturo = 1 ;
@@ -202,7 +202,7 @@ export class ChoferesComponent implements OnInit, OnDestroy {
         swal({
             title: "Estado",
             text: "El nuevo estado del Personal " 
-                   + updateEstChofer.cho_nombre
+                   + updateEstChofer.nombre
                    + " sera: " + ( estadoFuturo? estadoFuturo.descripcion: 'Sin definir' ) 
                    + " esta seguro? ",
             icon: "warning",
@@ -211,7 +211,7 @@ export class ChoferesComponent implements OnInit, OnDestroy {
         })
         .then( actualiza => {
             if (actualiza ){
-                updateEstChofer.cho_estado = valueFuturo;
+                updateEstChofer.estado = valueFuturo;
                 this.estadoSubs = this.choferService.update$(updateEstChofer)
                 .subscribe( result => {
                     this.updateChoferesEnPage( result );   

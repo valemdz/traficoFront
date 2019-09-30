@@ -16,7 +16,7 @@ export class Chofer {
                 public funcion?:string, 
                 public idAux?:number,   
                 public carnets?:Carnet[],
-                public cho_vencido?:boolean,
+                public vencido?:boolean,
                 public foto?:string,
                 public vencimientos?:Array<VencimientoCalculado> ){}
     
@@ -44,8 +44,8 @@ export interface ChoferPKConDet{
 
 export interface ChoferMinDTO{
     choferPK: ChoferPK;
-    cho_nombre:String;
-    cho_estado: number;
+    nombre:String;
+    estado: number;
 }
 
 export interface ComboCho{
