@@ -73,7 +73,9 @@ export class ChoferesComponent implements OnInit, OnDestroy {
 
    suscripcionModalImagenes(){
        this.notificacionSubscription = this._imgs.notificacion.subscribe( 
-                                resp =>   this.mostrarDetalle() );
+            chofer =>  { 
+                this.choferPage.content[this.choferPage.rowSelected] = chofer;                
+            });
    }
 
 
