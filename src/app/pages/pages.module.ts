@@ -47,7 +47,8 @@ import { DetOcupacionChoferComponent } from './diagramacion-Servicios/det-ocupac
 import { ModalUploadComponent } from '../components/modal-upload/modal-upload.component';
 import { VehiculoComboOcupacionComponent } from './diagramacion-Servicios/vehiculo-combo-ocupacion/vehiculo-combo-ocupacion.component';
 import { ContraseniasComponent } from './permisos/contrasenias/contrasenias.component';
-import { MatFormFieldModule } from '@angular/material/form-field/typings/form-field-module';
+import { ActualizarPasswdComponent } from './permisos/actualizar-passwd/actualizar-passwd.component';
+
 
 
 
@@ -94,7 +95,8 @@ import { MatFormFieldModule } from '@angular/material/form-field/typings/form-fi
                   DetOcupacionChoferComponent,
                   ModalUploadComponent,
                   VehiculoComboOcupacionComponent,
-                  ContraseniasComponent ],
+                  ContraseniasComponent,
+                  ActualizarPasswdComponent ],
                   
   exports:[ WellcomeComponent, 
             ChoferesComponent, 
@@ -127,7 +129,8 @@ import { MatFormFieldModule } from '@angular/material/form-field/typings/form-fi
             ErrorAppComponent,
             GruposComponent,
             DetOcupacionChoferComponent,
-            ModalUploadComponent  ],
+            ModalUploadComponent,
+            ActualizarPasswdComponent  ],
   imports: [
     CommonModule,    
     SharedModule,

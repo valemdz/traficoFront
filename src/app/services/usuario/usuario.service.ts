@@ -121,4 +121,31 @@ export class UsuarioService{
 
     }
 
+    actualizarPass$( passwordChange: {  password:string;
+                                        confirmPassword:string;
+                                        oldPassword: string } ){
+        
+        let headers = new HttpHeaders({'Content-Type':  'application/x-www-form-urlencoded'});   
+
+        const body = new HttpParams()
+        .set('oldPassword', passwordChange.oldPassword)
+        .set('password', passwordChange.password )
+        .set('confirmPassword', passwordChange.confirmPassword );           
+
+        return this.http.post( this.originSinApi + '/api/usuarios/updatePassword', 
+                                body,
+                                {headers: headers} )
+                        .pipe(
+                        map( () =>{
+                            swal("Cambio de  Contraseña","La contraseña fue cambiada con exito!!!" , "success");                
+                        }),
+                        catchError( err => {                                           
+                                return throwError(err);
+                            })
+            
+                        ) ;                                            
+
+
+    }
+
 }

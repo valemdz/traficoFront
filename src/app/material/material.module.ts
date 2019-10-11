@@ -1,11 +1,13 @@
 import {NgModule} from '@angular/core';
 import {
   MatAutocompleteModule, MatFormFieldModule, 
-  MatInputModule, MatDialogModule, MatSnackBarModule,  MatSelectModule, MatIconModule, MatButtonModule
-} from '@angular/material';
+  MatInputModule, MatDialogModule, MatSnackBarModule,
+  MatSelectModule } from '@angular/material';
 
 
+import {MatIconModule} from '@angular/material/icon';
 
+import {MatButtonModule} from '@angular/material/button';
 
 
 @NgModule({ 

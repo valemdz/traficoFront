@@ -1,0 +1,39 @@
+<div class="modal-dialog container" id="changePass" role="document">
+    <div class="modal-content">
+            <div class="modal-header">
+                <!-- <button type="button" class="close" data-dismiss="modal" aria-label="Fechar"
+                #closeBtn >
+                    <span aria-hidden="true">&times;</span>
+                </button> -->
+                <h3 class="modal-title" id="modalLabel">Cambiar Contraseña </h3>
+            </div>
+            <div class="modal-body">    
+                    <section class="sample-app-content">                                                                                   
+                        <form  [formGroup]="changeForm" > 
+                            <div class="form-group">
+                                <input type="password"  class="form-control" placeholder="Contraseña Actual"
+                                    formControlName="oldPassword"
+                                    autocomplete="new-password" >                                                                                        
+                            </div> 
+                            <control-mensajes [errores]="errMsgs.password"></control-mensajes>                               
+                    <div class="form-group">
+                                <input type="password"  class="form-control" placeholder="Nueva Contraseña"
+                                formControlName="password" autocomplete="new-password"  >                                                                                        
+                            </div> 
+                            <control-mensajes [errores]="errMsgs.password"></control-mensajes> 
+                            <div class="form-group">
+                                    <input type="password"  class="form-control" placeholder="Confirmar nueva Contraseña"
+                                    formControlName="confirmPassword" autocomplete="new-password"  >                                                                                        
+                            </div>                                                           
+                            <control-mensajes [errores]="errMsgs.confirmPassword"></control-mensajes>  
+                            <div class="form-group">
+                                <button type="button" (click)="cambiarClave()" 
+                                 class="btn btn-primary btn-primary-orange btn-block"  >
+                                    Enviar</button>                              
+                            </div>                            
+                        </form>                  
+                    </section>               
+            </div>              
+     </div>       
+</div>        
+

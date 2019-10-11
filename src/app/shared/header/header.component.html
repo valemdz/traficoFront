@@ -73,6 +73,8 @@
                         <ul class="dropdown-menu">
                             <li><a href="#">Empresa {{_us.usuario.empresa}}</a></li>
                             <li><a href="#">Usuario {{_us.usuario.username}}</a></li>
+                            <li><a href="#" [routerLink]="['/actualizarPasswd']" class='nav-link pointer'>
+                                Cambiar Contraseña <span class="glyphicon glyphicon glyphicon-wrench"></span></a></li>
                             <li><a href="#" (click)="_us.logout()" class='nav-link pointer'>
                                     Salir <span class="glyphicon glyphicon-log-out"></span> </a></li>
                         </ul>

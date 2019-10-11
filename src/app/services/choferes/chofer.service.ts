@@ -67,8 +67,8 @@ export class ChoferService {
                    ) ;
     }
 
-   deleteChofer$( cho_emp_codigo: String ,  cho_codigo: number ): Observable<any> {
-        const url = this.urlBase + `/choferes/empresa/${cho_emp_codigo}/codigo/${cho_codigo}`;
+   deleteChofer$( empresa: String ,  codigo: number ): Observable<any> {
+        const url = this.urlBase + `/choferes/empresa/${empresa}/codigo/${codigo}`;
         return this.http.delete(url).pipe(
              map( resp =>{
                   swal("Eliminacion","La eliminacion fue exitosa!!!", "success");

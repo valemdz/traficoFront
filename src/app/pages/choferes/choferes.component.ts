@@ -126,16 +126,12 @@ export class ChoferesComponent implements OnInit, OnDestroy {
         this.vencimientosSubs = this._vs.getChoferesConVencimientos$( this._us.usuario.empresa,
             CONSTANTES_CHOFER.HABILITADO )
             .subscribe(  resp => this.vencimientosCho = resp, this.error.bind( this )  );
-    }
+    }    
 
-    goToDetails( chofer ) {
-        this.router.navigate(['chofer', chofer.id]);
-    }
-
-    deleteChofer( chofer: any ){
+    deleteChofer( chofer: Chofer ){
         swal({
          title: "Eliminación",
-         text: "Esta seguro que desea eliminar el Personal " + chofer.cho_nombre,
+         text: "Esta seguro que desea eliminar el Personal " + chofer.nombre,
          icon: "warning",
          buttons: true,
          dangerMode: true,
@@ -147,8 +143,8 @@ export class ChoferesComponent implements OnInit, OnDestroy {
        });        
     }
 
-    delete( chofer ) {
-        this.deleteChoferSubscription = this.choferService.deleteChofer$( chofer.choferPK.cho_emp_codigo, chofer.choferPK.cho_codigo )
+    delete( chofer: Chofer ) {
+        this.deleteChoferSubscription = this.choferService.deleteChofer$( chofer.choferPK.empCodigo, chofer.choferPK.codigo )
         .subscribe( this.okDeleteChofer.bind( this) );
 
     }

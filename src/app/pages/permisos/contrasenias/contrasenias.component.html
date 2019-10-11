@@ -9,6 +9,13 @@
         <input  matInput placeholder="email del Personal" formControlName="email" 
          uppercase  class="example-full-width" > 
          
+        <button mat-button  matSuffix mat-icon-button aria-label="Clear" 
+          (click)="clearEmail()">
+          <mat-icon>X</mat-icon>
+        </button> 
+
+        <!-- Mat-icon no funciona como debiera x eso le pinte la x en vez de close -->
+
         <mat-error *ngIf="contraseniaGrupo.get('email').hasError('email')  
           && !contraseniaGrupo.get('email').hasError('required')">
           Por favor ingrese un mail valido.

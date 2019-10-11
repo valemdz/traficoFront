@@ -38,6 +38,10 @@ export class ContraseniasComponent implements OnInit {
 
   }
 
+  clearEmail(){
+    this.contraseniaGrupo.get('email').setValue(null);
+  }
+
   onClick( ){     
 
     if( this.contraseniaGrupo.valid ){
