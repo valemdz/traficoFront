@@ -7,12 +7,14 @@ export interface UsuarioPk{
 }
 
 export interface Usuario{
+    usuarioPk?: UsuarioPk;
     empresa?: string;
-    agencia?: number;
+    agencia?: Agencia;
     nombre?:	string;
     username: string;
     password?: string;
     authorities?: Authority[];    
+    personal?:Personal
 }
 
 export interface Authority{
@@ -31,10 +33,41 @@ export interface UsuarioWithGrupo{
     legajo:	number;
     username: string;    
     nombre:	string;
-    agencia: number;
+    agencia: Agencia;
     estado: boolean;
     email:string;
     group: Grupo;	
 }
 
 
+export interface Agencia{
+    agenciaPK:AgenciaPK;
+    nombre: string;
+    estado: number;
+    estadoVta: number
+}
+
+export interface AgenciaPK{
+    empresa:string;
+    codigo:number
+}
+
+export interface Personal{
+    personalPK:PersonalPK;
+    estado: number;
+    nombre:string;
+    documento: string;
+    email?: string;
+    soloAgPropias: string;
+}
+
+export interface PersonalPK{
+    empresa: string;
+    legajo: number;
+}
+
+export interface  ResetPassword{
+    empresa:string;
+    legajo:number;    
+    emailRecuperacion:string;
+}

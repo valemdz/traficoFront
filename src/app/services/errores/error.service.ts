@@ -229,7 +229,7 @@ export class  ErrorService {
          let mensajes = '';
          errores.forEach( e => mensajes = mensajes + e );
         // swal('Error', mensajes,'error');
-        this.snackBar.open( 'Error!!!' + mensajes , 'X', {
+        this.snackBar.open( 'Error!!! ' + mensajes , 'X', {
           duration: 5000,
         });
     }

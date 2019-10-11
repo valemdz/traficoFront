@@ -33,6 +33,9 @@
                       </th>
                       <th>
                           <app-table-sort [table]="self" [page]="usuariosPage" [label]="'Nombre'" [property]="'nombre'"></app-table-sort>
+                      </th> 
+                      <th>
+                            <app-table-sort [table]="self" [page]="usuariosPage" [label]="'Email'" [property]="'personal.email'"></app-table-sort>
                       </th>  
                       <th>
                             <app-table-sort [table]="self" [page]="usuariosPage" [label]="'Perfil'" [property]="'group.id'"></app-table-sort>
@@ -46,9 +49,12 @@
               <tbody>
                   <tr *ngFor="let usuario of usuariosPage.content">  
                       <td>{{ usuario.usuarioPk.empresa }}</td>                    
-                      <td>{{ usuario.agencia   }}</td>
+                      <td *ngIf="usuario.agencia">
+                          {{usuario.agencia.agenciaPK.codigo}} - {{usuario.agencia.nombre}}</td>
+                      <td *ngIf="!usuario.agencia">Sin Especificar</td>
                       <td>{{ usuario.usuarioPk.legajo }}</td>
                       <td>{{ usuario.nombre }}</td>   
+                      <td>{{ usuario.personal.email?usuario.personal.email:'S/D' }}</td> 
                       <td>                          
                           {{ usuario.group?usuario.group.groupName:'Sin Perfil'}}
                        </td>                    
@@ -61,12 +67,12 @@
                           </div>                       
                       </td>                      
                       <td class="actions">
+                          <a class="btn btn-xs" (click)="openResetearContrasenia( usuario )" >
+                              <i title="Contraseñas" data-toggle="tooltip" animation="true" data-placement="top" onmouseenter="$(this).tooltip('show')" class="fa fa-key fa-2x yellow" aria-hidden="true"></i>
+                          </a>
                           <a class="btn btn-xs" (click)="openModificarGrupo( usuario )" >
                               <i title="Grupo" data-toggle="tooltip" animation="true" data-placement="top" onmouseenter="$(this).tooltip('show')" class="fa fa-pencil fa-2x green" aria-hidden="true"></i>
-                          </a>
-                          <!-- <a class="btn btn-xs" (click)="openPermisosGrupo( usuario.group )" >
-                              <i title="Permisos" data-toggle="tooltip" animation="true" data-placement="top" onmouseenter="$(this).tooltip('show')" class="fa fa-lock fa-2x green" aria-hidden="true"></i>
-                          </a>                         -->
+                          </a>                        
                       </td>
                   </tr>
               </tbody>

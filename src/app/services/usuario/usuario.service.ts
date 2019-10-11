@@ -1,12 +1,13 @@
 import {Injectable} from '@angular/core';
 
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { Router } from '@angular/router';
 import { map, catchError  } from 'rxjs/operators';
 import swal from 'sweetalert';
 import { of } from 'rxjs/internal/observable/of';
-import { Usuario, LoginResponse } from 'src/app/models/model.index';
+import { Usuario, LoginResponse, ResetPassword } from 'src/app/models/model.index';
+import { throwError } from 'rxjs';
 
 @Injectable()
 export class UsuarioService{
@@ -14,6 +15,7 @@ export class UsuarioService{
     usuario: Usuario;
     token: string;
     urlBackendLogin = environment.originLogin;
+    originSinApi = environment.originSinApi;
 
     // private headers = new Headers({'Content-Type': 'application/json'});
 
@@ -33,15 +35,17 @@ export class UsuarioService{
 
     logout() {
 
+        this.limpiarUsuario();
+        console.log('paso por logout');
+        this.router.navigate(['/login']);
+    }
+
+    limpiarUsuario(){
         localStorage.removeItem( 'token' );
         localStorage.removeItem( 'usuario' );
 
         this.usuario = null;
-        this.token = '';   
-
-        console.log('paso por logout');
-
-        this.router.navigate(['/login']);
+        this.token = '';  
     }
 
     estaLogueado() {
@@ -73,5 +77,48 @@ export class UsuarioService{
             return of(`Bad Promise: ${err}`)           
         })
         );
-    }    
+    } 
+    
+    resetPassword$( reset: ResetPassword ){
+        return this.http.post( this.originSinApi + '/resetPassword', reset )
+        .pipe(
+            map( () =>{
+                swal("Reseteo de  Contraseña","El mail para reseteo de clave fue enviado a " + reset.emailRecuperacion , "success");                
+           }),
+           catchError( err => {               
+             swal( 'Inconvenientes al enviar el mail!!!', 
+                    err.error.errorCode + ' - ' + err.error.errorMessage ,
+                    'error');
+              return throwError(err);
+           })
+
+        )       
+    }
+
+    saveReseteoPassword$( passwodReset: {  token:string;
+                                           password: string;
+                                           confirmPassword: string } ){
+
+        let headers = new HttpHeaders({'Content-Type':  'application/x-www-form-urlencoded'});   
+        
+        const body = new HttpParams()
+        .set('token', passwodReset.token)
+        .set('password', passwodReset.password )
+        .set('confirmPassword', passwodReset.confirmPassword );           
+
+        return this.http.post( this.originSinApi + '/changePassReseteada', 
+                               body,
+                               {headers: headers} )
+                        .pipe(
+                        map( () =>{
+                            swal("Reseteo de  Contraseña","La contraseña fue restablecida con exito!!!" , "success");                
+                        }),
+                        catchError( err => {                                           
+                                return throwError(err);
+                            })
+            
+                        ) ;        
+
+    }
+
 }

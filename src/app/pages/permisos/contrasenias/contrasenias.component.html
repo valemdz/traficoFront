@@ -1,0 +1,29 @@
+<form ngNativeValidate   (ngSubmit)="onClick()" [formGroup]="contraseniaGrupo" 
+      class="example-form">
+  <h4 mat-dialog-title>Reseteo de Contraseña</h4>
+  <h5>Usuario: {{ usuario.nombre }}</h5>
+  <h5>Agencia: {{ usuario.agencia.agenciaPK.codigo }} - {{ usuario.agencia.nombre }}</h5>
+  <h5>DNI: {{ usuario.personal.documento?usuario.personal.documento: 'Sin especificar' }}</h5>
+  <div mat-dialog-content>      
+    <mat-form-field  style="width:400px !important" >        
+        <input  matInput placeholder="email del Personal" formControlName="email" 
+         uppercase  class="example-full-width" > 
+         
+        <mat-error *ngIf="contraseniaGrupo.get('email').hasError('email')  
+          && !contraseniaGrupo.get('email').hasError('required')">
+          Por favor ingrese un mail valido.
+        </mat-error> 
+        <mat-error *ngIf="contraseniaGrupo.get('email').hasError('required')">
+          Email is <strong>requerido.</strong>
+        </mat-error>                
+
+    </mat-form-field>   
+  </div>
+  <div mat-dialog-actions>
+    <button mat-button [mat-dialog-close]="null">Cancelar</button>       
+    <button mat-button  type="submit" cdkFocusInitial>Ok</button>
+  </div>  
+</form>
+
+
+

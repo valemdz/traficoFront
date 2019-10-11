@@ -3,10 +3,10 @@ import { PermisoService, UsuarioService, ErrorService } from 'src/app/services/s
 import { Table, PaginationPage, PaginationPropertySort } from 'src/app/shared/pagination/pagination.index';
 import { FuncionesGrales } from 'src/app/utiles/funciones.grales';
 import { Subscription } from 'rxjs';
-import { ConstantesGrales, Grupo, Rol, Modulo, UsuarioWithGrupo } from 'src/app/models/model.index';
+import { ConstantesGrales, Grupo, Rol, Modulo, UsuarioWithGrupo, Usuario, ResetPassword } from 'src/app/models/model.index';
 import { MatDialog, MatSnackBar } from '@angular/material';
-import { RolesComponent } from './roles/roles.component';
 import { UsuarioComponent } from './usuario/usuario.component';
+import { ContraseniasComponent } from './contrasenias/contrasenias.component';
 
 @Component({
   selector: 'app-usuarios',
@@ -19,6 +19,7 @@ export class UsuariosComponent implements OnInit, OnDestroy {
   self: Table<any>; 
   listadoSubcription: Subscription;
   busqueda: string;
+  resetSubscription: Subscription;
 
   constructor( private _ps: PermisoService,
                private _us: UsuarioService,
@@ -67,7 +68,34 @@ export class UsuariosComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     if( this.listadoSubcription != null ){
       this.listadoSubcription.unsubscribe();
+    }
+    if( this.resetSubscription != null ){
+        this.resetSubscription.unsubscribe() ;
     }    
+  }
+
+
+  //=================== Restablecer Contrasenias =====================
+
+  openResetearContrasenia( usuario: Usuario ){
+
+      const dialogRef = this.dialog.open( ContraseniasComponent,{
+        width: '500px',            
+        data: { usuario: usuario }
+      });
+
+      dialogRef.afterClosed().subscribe( email => {
+        if( email ){          
+          const reset: ResetPassword={
+              empresa: usuario.usuarioPk.empresa,
+              legajo: usuario.usuarioPk.legajo,
+              emailRecuperacion: email
+          }
+          this.resetSubscription = this._us.resetPassword$( reset )
+                                       .subscribe();
+        }      
+      });    
+  
   }
 
 
@@ -97,39 +125,5 @@ export class UsuariosComponent implements OnInit, OnDestroy {
   }
 
 
-   // ============================ Roles ====================================
-
-   openPermisosGrupo( grupo: Grupo ){
-
-     if( grupo ){
-      this._ps.getModulos$()
-      .subscribe( modulos => { this.okRoles( modulos, grupo ) } );   
-     } else{
-        this.snackBar.open( 'No tiene grupo asignado', 'X', 
-        { duration: 5000  });
-     } 
-
-  }
-
-  okRoles( modulos,  grupo: Grupo ){
-
-    this.completarRolesconPermisoGrupo( grupo.roles , modulos); 
-
-    const dialogRef = this.dialog.open( RolesComponent,{
-      data: { modulos: modulos, idGrupo: grupo.id }
-    } );
-
-    dialogRef.afterClosed().subscribe();
-
-  }
-
-  completarRolesconPermisoGrupo( roles: Rol[], modulos: Modulo[]){   
-    
-    for( let modulo of modulos ){
-        for( let permiso of modulo.permisos ){
-            permiso.granted = roles.find( rol => rol.authority ===  permiso.authority )?true:false;
-        }
-    }     
-  }
-
+   
 }

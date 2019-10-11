@@ -46,6 +46,8 @@ import { ChoferComboOcupacionComponent } from './diagramacion-Servicios/chofer-c
 import { DetOcupacionChoferComponent } from './diagramacion-Servicios/det-ocupacion-chofer/det-ocupacion-chofer.component';
 import { ModalUploadComponent } from '../components/modal-upload/modal-upload.component';
 import { VehiculoComboOcupacionComponent } from './diagramacion-Servicios/vehiculo-combo-ocupacion/vehiculo-combo-ocupacion.component';
+import { ContraseniasComponent } from './permisos/contrasenias/contrasenias.component';
+import { MatFormFieldModule } from '@angular/material/form-field/typings/form-field-module';
 
 
 
@@ -91,7 +93,8 @@ import { VehiculoComboOcupacionComponent } from './diagramacion-Servicios/vehicu
                   ChoferComboOcupacionComponent,
                   DetOcupacionChoferComponent,
                   ModalUploadComponent,
-                  VehiculoComboOcupacionComponent ],
+                  VehiculoComboOcupacionComponent,
+                  ContraseniasComponent ],
                   
   exports:[ WellcomeComponent, 
             ChoferesComponent, 
@@ -133,7 +136,7 @@ import { VehiculoComboOcupacionComponent } from './diagramacion-Servicios/vehicu
     ReactiveFormsModule,
     PipesModule,
     MaterialModule,
-    DirectivesModule     
+    DirectivesModule    
   ], 
   entryComponents:[ IncidenciaComponent, 
                     VehiculoComponent, 
@@ -144,6 +147,7 @@ import { VehiculoComboOcupacionComponent } from './diagramacion-Servicios/vehicu
                     UsuarioComponent,
                     CarnetListComponent,
                     ChofereEtapasComponent,
-                    DetOcupacionChoferComponent ]  
+                    DetOcupacionChoferComponent,
+                    ContraseniasComponent ]  
 })
 export class PagesModule { }

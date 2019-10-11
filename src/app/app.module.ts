@@ -20,6 +20,7 @@ import { PagesModule } from './pages/pages.module';
 import { PagesComponent } from './pages/pages.component';
 import { NoPageFoundComponent } from './shared/no-page-found/no-page-found.component';
 import { DirectivesModule } from './directives/directives.module';
+import { ChangePasswordComponent } from './inicio/change-password/change-password.component';
 
 
 
@@ -28,6 +29,7 @@ import { DirectivesModule } from './directives/directives.module';
 const appRoutes: Routes = [  
   { path: 'login', component: LoginComponent },  
   { path: 'prueba', component: PruebaComponent },
+  { path: 'change-password/:token', component: ChangePasswordComponent },
   { path: '**', pathMatch: 'full', component: NoPageFoundComponent }
 ];
 
@@ -36,7 +38,8 @@ const appRoutes: Routes = [
   declarations: [
     AppComponent,    
     LoginComponent,    
-    PagesComponent,     
+    PagesComponent, 
+    ChangePasswordComponent    
   ],
   imports: [
     BrowserModule,
