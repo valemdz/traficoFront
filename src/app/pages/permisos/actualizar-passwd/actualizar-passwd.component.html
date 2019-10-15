@@ -1,39 +1,34 @@
-<div class="modal-dialog container" id="changePass" role="document">
-    <div class="modal-content">
-            <div class="modal-header">
-                <!-- <button type="button" class="close" data-dismiss="modal" aria-label="Fechar"
-                #closeBtn >
-                    <span aria-hidden="true">&times;</span>
-                </button> -->
-                <h3 class="modal-title" id="modalLabel">Cambiar Contraseña </h3>
-            </div>
-            <div class="modal-body">    
-                    <section class="sample-app-content">                                                                                   
-                        <form  [formGroup]="changeForm" > 
-                            <div class="form-group">
-                                <input type="password"  class="form-control" placeholder="Contraseña Actual"
-                                    formControlName="oldPassword"
-                                    autocomplete="new-password" >                                                                                        
-                            </div> 
-                            <control-mensajes [errores]="errMsgs.password"></control-mensajes>                               
-                    <div class="form-group">
-                                <input type="password"  class="form-control" placeholder="Nueva Contraseña"
-                                formControlName="password" autocomplete="new-password"  >                                                                                        
-                            </div> 
-                            <control-mensajes [errores]="errMsgs.password"></control-mensajes> 
-                            <div class="form-group">
-                                    <input type="password"  class="form-control" placeholder="Confirmar nueva Contraseña"
-                                    formControlName="confirmPassword" autocomplete="new-password"  >                                                                                        
-                            </div>                                                           
-                            <control-mensajes [errores]="errMsgs.confirmPassword"></control-mensajes>  
-                            <div class="form-group">
-                                <button type="button" (click)="cambiarClave()" 
-                                 class="btn btn-primary btn-primary-orange btn-block"  >
-                                    Enviar</button>                              
-                            </div>                            
-                        </form>                  
-                    </section>               
-            </div>              
-     </div>       
-</div>        
+<form ngNativeValidate   (ngSubmit)="onClick()" [formGroup]="changeForm" >
+    <h1 mat-dialog-title>Cambiar Contraseña</h1>
+    <div mat-dialog-content>          
+      <mat-form-field>
+          <input  matInput placeholder="Contraseña Actual" formControlName="oldPassword" 
+                  type="password" uppercase autocomplete="new-password" />             
+           <mat-error *ngIf="changeForm.get('oldPassword').hasError('required')">
+                Contraseña Actual es <strong>requerida.</strong>
+           </mat-error>  
+      </mat-form-field>
+      <mat-form-field>
+        <input  matInput placeholder="Nueva Contraseña" formControlName="password" 
+                type="password" uppercase autocomplete="new-password" />             
+         <mat-error *ngIf="changeForm.get('password').hasError('required')">
+                Nueva Contraseña es <strong>requerida.</strong>
+         </mat-error>  
+      </mat-form-field>
+      <mat-form-field>
+        <input  matInput placeholder="Confirmar Contraseña" formControlName="confirmPassword" 
+                type="password" uppercase autocomplete="new-password" />             
+         <mat-error *ngIf="changeForm.get('confirmPassword').hasError('required')">
+                La confirmacion es <strong>requerida.</strong>
+         </mat-error>  
+         <mat-error *ngIf="changeForm.get('confirmPassword').hasError('notEquals')">
+                La contraseña y confirmacion deben coincidir.
+         </mat-error>  
+       </mat-form-field>      
+    </div>    
+    <div mat-dialog-actions>
+      <button mat-button [mat-dialog-close]="null">Cancelar</button>       
+      <button mat-button  type="submit" cdkFocusInitial>Guardar</button>
+    </div>
+</form>
 

@@ -16,7 +16,7 @@ import { ConfVencimientoComponent } from './vencimientos/conf-vencimiento/conf-v
 import { ErrorAppComponent } from './error-app/error-app.component';
 import { GruposComponent } from './permisos/grupos/grupos.component';
 import { UsuariosComponent } from './permisos/usuarios.component';
-import { ActualizarPasswdComponent } from './permisos/actualizar-passwd/actualizar-passwd.component';
+import { ActualizarPasswdComponent, DialogActualizarContraseniaComponent } from './permisos/actualizar-passwd/actualizar-passwd.component';
 
 
 
@@ -36,7 +36,7 @@ const pagesRoutes: Routes = [
       { path: 'grupos', component:GruposComponent },  
       { path: 'usuarios', component:UsuariosComponent },  
       { path: 'vencimientos', component:VencimientosComponent },  
-      { path: 'actualizarPasswd', component: ActualizarPasswdComponent }, 
+      { path: 'actualizarPasswd', component: DialogActualizarContraseniaComponent }, 
       { path: '', pathMatch: 'full', redirectTo: '/welcome' },       
       { 
         path:'diagr',

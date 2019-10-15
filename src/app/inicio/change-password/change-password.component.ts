@@ -2,6 +2,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormBuilder, Validators, FormGroup } from '../../../../node_modules/@angular/forms';
 import { ActivatedRoute, Router } from '../../../../node_modules/@angular/router';
 import { UsuarioService, ErrorService } from 'src/app/services/service.index';
+import { CustomValidators } from 'src/app/utiles/funciones.grales';
 
 @Component({
   selector: 'pd-change-password',
@@ -22,7 +23,7 @@ export class ChangePasswordComponent implements OnInit, OnDestroy {
 
   errMsgs: any = {password:[], confirmPassword: [] };
   translations: any = { password: { required: 'requerido.' }, 
-                        confirmPassword: { required: 'requerido.' }  };
+                        confirmPassword: { required: 'requerido.', notEquals:'Contraseña y confirmacion son distintas.' }  };
 
   checkFormValidity(){
     this.ctrolError.checkFormValidity(this.changeForm, this.errMsgs,  this.translations);
@@ -33,6 +34,12 @@ export class ChangePasswordComponent implements OnInit, OnDestroy {
       password:['',[Validators.required]],
       confirmPassword:['', [Validators.required]]
     });
+
+    this.changeForm.get('confirmPassword').setValidators(
+      [ Validators.required,
+        CustomValidators.equals( this.changeForm.get('password') ) ] 
+    );
+
     this.changeForm.valueChanges
     .subscribe( data => this.checkFormValidity() );
 

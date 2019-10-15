@@ -47,7 +47,7 @@ import { DetOcupacionChoferComponent } from './diagramacion-Servicios/det-ocupac
 import { ModalUploadComponent } from '../components/modal-upload/modal-upload.component';
 import { VehiculoComboOcupacionComponent } from './diagramacion-Servicios/vehiculo-combo-ocupacion/vehiculo-combo-ocupacion.component';
 import { ContraseniasComponent } from './permisos/contrasenias/contrasenias.component';
-import { ActualizarPasswdComponent } from './permisos/actualizar-passwd/actualizar-passwd.component';
+import { ActualizarPasswdComponent, DialogActualizarContraseniaComponent } from './permisos/actualizar-passwd/actualizar-passwd.component';
 
 
 
@@ -96,7 +96,8 @@ import { ActualizarPasswdComponent } from './permisos/actualizar-passwd/actualiz
                   ModalUploadComponent,
                   VehiculoComboOcupacionComponent,
                   ContraseniasComponent,
-                  ActualizarPasswdComponent ],
+                  ActualizarPasswdComponent,
+                  DialogActualizarContraseniaComponent ],
                   
   exports:[ WellcomeComponent, 
             ChoferesComponent, 
@@ -130,7 +131,8 @@ import { ActualizarPasswdComponent } from './permisos/actualizar-passwd/actualiz
             GruposComponent,
             DetOcupacionChoferComponent,
             ModalUploadComponent,
-            ActualizarPasswdComponent  ],
+            ActualizarPasswdComponent,
+            DialogActualizarContraseniaComponent  ],
   imports: [
     CommonModule,    
     SharedModule,
@@ -151,6 +153,7 @@ import { ActualizarPasswdComponent } from './permisos/actualizar-passwd/actualiz
                     CarnetListComponent,
                     ChofereEtapasComponent,
                     DetOcupacionChoferComponent,
-                    ContraseniasComponent ]  
+                    ContraseniasComponent,
+                    ActualizarPasswdComponent ]  
 })
 export class PagesModule { }
