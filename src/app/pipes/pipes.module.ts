@@ -4,6 +4,7 @@ import { FilterByFechaPipe } from './filter-by-fecha.pipe';
 import { SerMayoIgualPipe } from './ser-mayo-igual.pipe';
 import { VehiculosConColoresPipe } from './vehiculos-con-colores.pipe';
 import { ImagenPipe } from './imagen.pipe';
+import { PropIgualAPipe } from './prop-igual-a.pipe';
 
 @NgModule({
   imports: [    
@@ -12,11 +13,13 @@ import { ImagenPipe } from './imagen.pipe';
                   FilterByFechaPipe,
                   SerMayoIgualPipe,
                   VehiculosConColoresPipe,
-                  ImagenPipe ],
+                  ImagenPipe,
+                  PropIgualAPipe ],
   exports:[ ChoferesConEstadoPipe,
             FilterByFechaPipe,
             SerMayoIgualPipe,
             VehiculosConColoresPipe,
-            ImagenPipe ]                
+            ImagenPipe,
+            PropIgualAPipe ]                
 })
 export class PipesModule { }

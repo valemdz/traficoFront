@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Subscription } from 'rxjs';
 import { Router } from '@angular/router';
 import { IdaVtaListService, UsuarioService, ErrorService } from 'src/app/services/service.index';
+import { CustomValidators } from 'src/app/utiles/funciones.grales';
 
 
 @Component({
@@ -36,6 +37,12 @@ export class EnlaceLineasComponent implements OnInit, OnDestroy {
        lineaPKVta: [null, [ Validators.required ] ]
     });
 
+
+    this.formIdaVuelta.get('lineaPKVta').setValidators(
+      [ Validators.required,
+        CustomValidators.equals( this.formIdaVuelta.get('lineaPKIda') ) ] 
+    );
+
     this.formIdaVuelta.valueChanges
     .subscribe( data => this.ctrolError.checkFormValidity( this.formIdaVuelta,
                                                            this.errMsgs,
@@ -50,7 +57,8 @@ export class EnlaceLineasComponent implements OnInit, OnDestroy {
   };
 
   translations: any = { lineaPKIda:{ required: 'Por favor especifique un Linea de ida.' },
-                        lineaPKVta: { required: 'Por favor especifique una Linea de regreso.' },
+                        lineaPKVta: { required: 'Por favor especifique una Linea de regreso.',
+                                      equals:'La linea ida no debe ser igual a la linea de regreso' },
                         gral:{}};
 
   ngOnDestroy(): void {
@@ -85,8 +93,8 @@ export class EnlaceLineasComponent implements OnInit, OnDestroy {
     this.actualizarPadre.emit();
   }
 
-  errorLlamada( err ) {
-    this.ctrolError.tratarErrores( err, null, null, null );
+  errorLlamada( err ) {    
+    this.ctrolError.tratarErroresBackEnd( err, null, null );
   }
 
 

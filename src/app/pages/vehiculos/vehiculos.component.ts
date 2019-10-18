@@ -112,7 +112,7 @@ export class VehiculosComponent implements OnInit, OnDestroy  {
 
         swal({
             title: "Eliminacion",
-            text: "Esta seguro que desea eliminar el Vehiculo " 
+            text: "Esta seguro que desea eliminar la Unidad " 
                    + vehiculo.vehiculoPK.vehInterno                   
                    + " ? ",
             icon: "warning",
@@ -172,7 +172,7 @@ export class VehiculosComponent implements OnInit, OnDestroy  {
 
         swal({
             title: "Estado",
-            text: "El nuevo estado del Vehiculo " 
+            text: "El nuevo estado la Unidad " 
                    + updateEstvehiculo.vehiculoPK.vehInterno
                    + " sera: " + ( estadoFuturo? estadoFuturo.descripcion: 'Sin definir' ) 
                    + " esta seguro? ",

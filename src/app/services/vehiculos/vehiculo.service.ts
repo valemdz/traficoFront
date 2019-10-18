@@ -55,7 +55,7 @@ export class VehiculoService {
         .put( url, vehiculo )
         .pipe(
             map( resp =>{
-                swal('Actualización', 'El Vehiculo fue actualizado con éxito','success');
+                swal('Actualización', 'La unidad fue actualizada con éxito','success');
                 return resp;
             } )
         );
@@ -66,7 +66,7 @@ export class VehiculoService {
         return this.http.post( url, vehiculo )
                    .pipe(
                         map( resp => {
-                            swal('Creación', 'El vehiculo fue creado con éxito', 'sucess');  
+                            swal('Creación', 'La unidad fue creada con éxito', 'sucess');  
                             return resp; 
                         })
                    );
@@ -76,12 +76,12 @@ export class VehiculoService {
         const url = this.urlBase + `/vehiculos/empresa/${vehEmpCodigo}/interno/${vehInterno}`
         return this.http.delete(url).pipe(
             map( resp => {
-                swal('Anulación', 'El vehiculo fue eliminado con éxito', 'success');
+                swal('Anulación', 'La unidad fue eliminada con éxito', 'success');
                 return resp;
             }),
             catchError( err => {
-                swal( 'Inconvenientes al eliminar Vehiculo!!!', 
-                err.error.errorCode + ' - ' + err.error.errorMessage ,
+                swal( 'Inconvenientes al eliminar la unidad!!!', 
+                      'El Unidad tiene informacion asociada no es posible eliminarla!!!.'  ,
                 'error');
                 return throwError(err);
             })

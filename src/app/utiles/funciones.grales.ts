@@ -7,7 +7,7 @@ import { PaginationPropertySort } from '../shared/pagination/pagination.index';
 
 import { ValidatorFn, AbstractControl} from '@angular/forms';
 
-function equalsValidator(otherControl: AbstractControl): ValidatorFn {
+function notEqualsValidator(otherControl: AbstractControl): ValidatorFn {
   return (control: AbstractControl): {[key: string]: any} => {
     const value: any = control.value;
     const otherValue: any = otherControl.value;
@@ -15,7 +15,16 @@ function equalsValidator(otherControl: AbstractControl): ValidatorFn {
   };
 }
 
+function equalsValidator(otherControl: AbstractControl): ValidatorFn {
+  return (control: AbstractControl): {[key: string]: any} => {
+    const value: any = control.value;
+    const otherValue: any = otherControl.value;
+    return otherValue !== value ? null : { 'equals': { value, otherValue } };
+  };
+}
+
 export const CustomValidators = {
+  notEquals: notEqualsValidator,
   equals: equalsValidator
 };
 

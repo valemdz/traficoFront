@@ -24,8 +24,10 @@ export class IncidenciaByChoferComponent implements OnInit, OnChanges {
   choferIndicencias:any=[];
 
   incByChoferForm:FormGroup;
-  comboTipos:any=[];
+  tiposIncidencia:any;  
   todosErrores:any=[];
+
+  incidHabilitada = true;
 
   constructor( private incidenciaService:IncidenciaService,
                private fb: FormBuilder,
@@ -66,8 +68,7 @@ export class IncidenciaByChoferComponent implements OnInit, OnChanges {
     setTimeout( () =>{
         this.incidenciaService.findIncidenciasByEmpyTipo$(this.chofer.choferPK.empCodigo,1)
         .subscribe( data => {
-            this.comboTipos = data;
-
+            this.tiposIncidencia = data;
         });
         this.resetForm();  
     });
@@ -145,18 +146,12 @@ export class IncidenciaByChoferComponent implements OnInit, OnChanges {
     return formModel.incidencias[ index ].id == 0;
   }
 
-  getDescripcion( index:number){
+  getDescripcion( index:number){    
 
     const formModel = this.incByChoferForm.value;
     const idInc = formModel.incidencias[ index ].idIncidencia;
-
-    let object:any;
-    for (var i = 0; i <  this.comboTipos.length; i++) {
-      object = this.comboTipos[i];
-      if( object.codigo == idInc){
-        return  object.descripcion;
-      }
-    }
+    const incidencia = this.tiposIncidencia.find( i => i.id == idInc);    
+    return ( incidencia )?incidencia.descripcion:'Sin Definir'    
  }
 
   erroresGrales:any=[];

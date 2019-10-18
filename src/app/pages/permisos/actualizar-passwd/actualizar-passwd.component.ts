@@ -59,7 +59,7 @@ export class ActualizarPasswdComponent {
     
     this.changeForm.get('confirmPassword').setValidators(
       [ Validators.required,
-        CustomValidators.equals( this.changeForm.get('password') ) ] 
+        CustomValidators.notEquals( this.changeForm.get('password') ) ] 
     );
     
   }  

@@ -6,7 +6,7 @@ import 'rxjs/add/observable/forkJoin';
 import { DiagrService } from './diagr.service';
 import { LoaderService } from '../mensajes/loader.service';
 import { UsuarioService } from '../usuario/usuario.service';
-import { Servicio, Vuelta, CONSTANTES_VIAJE, ConstantesGrales, CONSTANTES_VEHICULOS, ChoferPK, VehiculoPK, Linea } from 'src/app/models/model.index';
+import { Servicio, Vuelta, CONSTANTES_VIAJE, ConstantesGrales, CONSTANTES_VEHICULOS, ChoferPK, VehiculoPK, Linea, CONSTANTES_CHOFER } from 'src/app/models/model.index';
 import { map, catchError } from 'rxjs/operators';
 import { IdaVtaListService } from '../service.index';
 
@@ -210,8 +210,8 @@ export class VueltasService {
     return this._ivs.getLineasByEmpresa$( this._us.usuario.empresa );
   }
 
-  okChoferes( data ) {
-    this.choferesOcupacion = data;        
+  okChoferes( choferes ) {
+    this.choferesOcupacion = choferes.filter( cho => cho.estado === CONSTANTES_CHOFER.HABILITADO );        
   }
 
   getServRetorno( idServRetorno ) {

@@ -27,7 +27,7 @@
                                         <div class="form-group col-md-3">
                                             <select class="form-control" formControlName="idIncidencia" title="Tipo" placeholder="Tipo" data-toggle="tooltip" animation="true" data-placement="top" onmouseenter="$(this).tooltip('show')">
                                                 <option [selected]="tipoByIndex(i) == null" value="">-- Seleccionar --</option>
-                                                <option *ngFor="let opt of comboTipos" [selected]="opt.codigo == tipoByIndex(i)" [value]="opt.codigo">
+                                                <option *ngFor="let opt of tiposIncidencia|propIgualA:['activo',true]" [selected]="opt.id == tipoByIndex(i)" [value]="opt.codigo">
                                                     {{opt.descripcion}}
                                                 </option>
                                             </select>

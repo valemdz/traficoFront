@@ -23,7 +23,7 @@ export class ChangePasswordComponent implements OnInit, OnDestroy {
 
   errMsgs: any = {password:[], confirmPassword: [] };
   translations: any = { password: { required: 'requerido.' }, 
-                        confirmPassword: { required: 'requerido.', notEquals:'Contraseña y confirmacion son distintas.' }  };
+                        confirmPassword: { required: 'requerido.', notEquals:'Contraseña y confirmación no coinciden.' }  };
 
   checkFormValidity(){
     this.ctrolError.checkFormValidity(this.changeForm, this.errMsgs,  this.translations);
@@ -37,7 +37,7 @@ export class ChangePasswordComponent implements OnInit, OnDestroy {
 
     this.changeForm.get('confirmPassword').setValidators(
       [ Validators.required,
-        CustomValidators.equals( this.changeForm.get('password') ) ] 
+        CustomValidators.notEquals( this.changeForm.get('password') ) ] 
     );
 
     this.changeForm.valueChanges

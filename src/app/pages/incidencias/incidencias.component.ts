@@ -146,7 +146,7 @@ export class IncidenciasComponent implements OnInit, OnDestroy  {
 
         swal({
             title: "Estado",
-            text: "El nuevo estado del Personal " 
+            text: "El nuevo estado de la Incidencia " 
                    + incidencia.descripcion
                    + " sera: " + ( estadoFuturo? estadoFuturo.descripcion: 'Sin definir' ) 
                    + " esta seguro? ",

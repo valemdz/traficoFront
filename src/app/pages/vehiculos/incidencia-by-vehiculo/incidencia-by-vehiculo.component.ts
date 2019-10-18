@@ -20,7 +20,7 @@ export class IncidenciaByVehiculoComponent implements ComponenteBaseComponent, O
   data: any;
   vehiculo:Vehiculo;  
   incByVehiculoForm: FormGroup;
-  comboTipos:any=[];
+  tiposIncidencia;
   vehiculoIndicencias:any=[];
   todosErrores:any=[];
 
@@ -54,7 +54,7 @@ export class IncidenciaByVehiculoComponent implements ComponenteBaseComponent, O
       this.incidenciaService.findIncidenciasByEmpyTipo$(this.vehiculo.vehiculoPK.vehEmpCodigo,
         TIPO_INCIDENCIA_VEHICULO)
         .subscribe( data => {
-        this.comboTipos = data;
+        this.tiposIncidencia = data;
         });
 
         this.getIncidenciasByVehiculo();
@@ -71,13 +71,8 @@ export class IncidenciaByVehiculoComponent implements ComponenteBaseComponent, O
     const formModel = this.incByVehiculoForm.value;
     const idInc = formModel.incidencias[ index ].idIncidencia;
 
-    let object:any;
-    for (var i = 0; i <  this.comboTipos.length; i++) {
-      object = this.comboTipos[i];
-      if( object.codigo == idInc){
-        return  object.descripcion;
-      }
-    }
+    const incidencia = this.tiposIncidencia.find( i => i.id === idInc);
+    return ( incidencia != null) ? incidencia.descripcion:'Sin Definir';
  }
 
   getIncidenciasByVehiculo(){
