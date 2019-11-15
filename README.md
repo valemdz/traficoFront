@@ -1,3 +1,15 @@
+## CLiente para diagramacion
+
+* Tecnologia
+  * Angular 
+  * Css 
+* Contribuidores  
+
+> Diagramacion de Horarios de acuerdo  a la politica de la empresa
+
+\*Las tecnologias se iran actualizando a medida que se liberen nuevas releases\*
+
+
 # TraficoFront
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 6.2.6.
