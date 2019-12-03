@@ -1,46 +1,23 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import { environment } from 'src/environments/environment';
-import { ChoferPK } from '../models/model.index';
+import { Chofer } from '../models/model.index';
+import { ChoferService } from '../services/service.index';
+
 
 @Pipe({
   name: 'imagen'
 })
-export class ImagenPipe implements PipeTransform {
+export class ImagenPipe implements PipeTransform { 
 
-   urlBase =  environment.originSinApi + '/img/';
+  constructor( private choferService: ChoferService ){ }  
 
-  transform( choferPK: ChoferPK , tipo: string= 'choferes' ): any {
-
-    let url =  this.urlBase;   
-
-    return url + `choferes/${choferPK.empCodigo}/${choferPK.codigo}/imagen`;
-
+  transform( chofer: Chofer , tipo: string= 'choferes' ): any {     
+    var urlImagen = '';    
+    if( chofer.foto === null ){
+      urlImagen ='assets/img/no-img.jpg';
+    } else{   
+      urlImagen =  this.choferService.getUrlImagenChofer( chofer );
+    }     
+    return urlImagen;
   }
-
-  /*urlBase =  environment.originSinApi + '/img';
-
-  transform(img: string, tipo: string= 'choferes' ): any {
-
-    let url =  this.urlBase;
-
-    if ( !img || img.length === 0) {
-      return url + 'choferes/XXX';
-    }
-
-    if ( img.indexOf('https') >= 0 ) {
-        return img;
-    }
-
-    switch ( tipo ) {
-      case 'choferes':
-         url += '/choferes/' + img;
-      break;     
-      default:
-      console.log('Los tipos correctos son choferes');
-    }
-
-    return url;
-
-  }*/
-
+  
 }

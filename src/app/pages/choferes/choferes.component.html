@@ -46,14 +46,10 @@
                 </thead>
                 <tbody>
                     <tr *ngFor="let chofer of choferPage.content;let i=index"
-                        (click)="setRowSelected( i )" >
-                        <td class='w70'>     
-                             <img *ngIf="!chofer.foto||chofer.foto.length===0" 
-                                  (click)="cambiarImagenModal( chofer )" 
-                                  class="img-responsive" src="assets/img/no-img.jpg">                        
-                             <img *ngIf="chofer.foto&&chofer.foto.length>0" 
-                                  (click)="cambiarImagenModal( chofer )" 
-                                  [src]="chofer.choferPK | imagen:'choferes'" class="w50 img-circle pointer" /> 
+                        (click)="setRowSelected( i )" >                       
+                         <td class='w70'>                                                        
+                             <img (click)="cambiarImagenModal( chofer )" 
+                                  [src]="chofer | imagen:'choferes'" class="w50 img-circle pointer img-responsive" /> 
                         </td>
                         <td>{{ chofer.tipoChofer == 0 ? 'Conductor' : 'Auxiliar'}}</td>
                         <td>{{chofer.legajo}}</td>

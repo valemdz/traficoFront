@@ -103,4 +103,9 @@ export class ChoferService {
         return this.http.put( url, listaCarnets);
    }
 
+   getUrlImagenChofer( chofer: Chofer ){
+     return   environment.originSinApi 
+            + `/imagen/choferes/empresa/${chofer.choferPK.empCodigo}/codigo/${chofer.choferPK.codigo}`;         
+   }    
+
 }

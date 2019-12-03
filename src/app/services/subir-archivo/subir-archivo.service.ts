@@ -4,7 +4,7 @@ import { environment } from 'src/environments/environment';
 @Injectable()
 export class SubirArchivoService {
 
-  urlBackend = environment.originSinApi;
+  
   constructor() { }
 
 
@@ -30,7 +30,7 @@ export class SubirArchivoService {
         }
       }
 
-      const url = this.urlBackend + urlUpload;      
+      const url = urlUpload;      
       xhr.open('PUT', url, true );
       xhr.send( formData );
     });

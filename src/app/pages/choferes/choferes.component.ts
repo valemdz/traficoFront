@@ -51,24 +51,24 @@ export class ChoferesComponent implements OnInit, OnDestroy {
 
         this.subscriptionModal = this._ms.getRespuesta()
         .subscribe( resp => {
-
-                    if( FuncionesGrales.tienePropiedad(resp, 'nuevo') ){
+                if( FuncionesGrales.tienePropiedad(resp, 'nuevo') ){                   
                         if(  !resp.nuevo ){
                             this.updateChoferesEnPage( resp.chofer );
                         }else{
                             this.mostrarDetalle();
+                    
                         }       
-                    }                     
+                }                                                                            
+                //this.getVencimientos();               
                    
-                    //this.getVencimientos();
-                   
-        } );            
+        });            
    }
 
    cambiarImagenModal( chofer: Chofer ) {        
-    const url = `/upload/choferes/${chofer.choferPK.empCodigo}/${chofer.choferPK.codigo}/uploadImagen`;    
+    const url = this.choferService.getUrlImagenChofer( chofer );
     const titulo = `Personal  ${chofer.idAux} - ${chofer.nombre}`
-    this._imgs.mostraModal( url, titulo );
+    const existe  = chofer.foto != null && chofer.foto.length> 0;
+    this._imgs.mostraModal( url, titulo, existe );
    }
 
    suscripcionModalImagenes(){
