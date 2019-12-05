@@ -29,9 +29,9 @@
                                 </span>   
                             </div>
                             <div class='col-md-2 col-xs-2 col-lg-2'>
-                                <span class="label" [ngClass]="vencChofer.vehVencido?'label-danger':'label-warning'" >
-                                    {{vencChofer.vehVencido?"Vencido":"Proximo"}}
-                                    <span *ngIf= "!vencChofer.vehVencido">
+                                <span class="label" [ngClass]="vencChofer.vencido?'label-danger':'label-warning'" >
+                                    {{vencChofer.vencido?"Vencido":"Proximo"}}
+                                    <span *ngIf= "!vencChofer.vencido">
                                         [ faltan {{ getDiasProximoVencimiento( ch.vencimientos, venc.vencimiento.tipoVencimiento.nombreCampo ) }} dias ]
                                     </span>    
                                 </span>                            

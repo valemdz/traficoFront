@@ -97,11 +97,11 @@ export class  ErrorService {
                 const serverErrors = data[fieldName];
 
                 let control = form.get(fieldName);
-                if( control ){
+                if( control && errMsgs[fieldName] ){
                   errMsgs[fieldName].push( serverErrors );
                   control.markAsDirty();
                 }else{
-                  errores.push(serverErrors);
+                  errores.push( fieldName + ' - ' + serverErrors );
                 }
               }
             }

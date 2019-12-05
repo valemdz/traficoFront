@@ -127,7 +127,8 @@ export class ChoferComponent implements OnInit, OnChanges, OnDestroy, TabChild {
     grupoSanguineo:[],
     observaciones:[],
     telefono:[],
-    telefonoEmergencia: []
+    telefonoEmergencia: [],
+    idAux:[]
   };
 
   limpiarMensajes(){
@@ -143,6 +144,7 @@ export class ChoferComponent implements OnInit, OnChanges, OnDestroy, TabChild {
     this.errMsgsResto.observaciones.length =0;
     this.errMsgsResto.telefono.length =0;
     this.errMsgsResto.telefonoEmergencia.length =0;
+    this.errMsgsResto.idAux.length=0;
   }
 
   translations: any = {
