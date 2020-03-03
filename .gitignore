@@ -43,3 +43,5 @@ Thumbs.db
 /src/enviroments/environment.ts
 /nbproject/private/
 src/environments/environment.prod.ts
+e2e/
+nbproject/
