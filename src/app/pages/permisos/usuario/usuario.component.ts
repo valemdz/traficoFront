@@ -3,9 +3,9 @@ import { FormControl, Validators } from '@angular/forms';
 import { Grupo, Modulo, Rol, UsuarioWithGrupo } from 'src/app/models/model.index';
 import { PermisoService, UsuarioService } from 'src/app/services/service.index';
 import { FuncionesGrales } from 'src/app/utiles/funciones.grales';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { Observable, of } from 'rxjs';
 import { map, catchError } from 'rxjs/operators';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-usuario',

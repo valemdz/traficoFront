@@ -6,9 +6,13 @@ import { VueltaDeVueltaService } from './vuelta-de-vuelta.service';
 import { ChoferesConEstadoPipe } from 'src/app/pipes/choferes-con-estado.pipe';
 import { Servicio, Vuelta, ModalSiNo  } from '../../../models/model.index';
 import { ChofereEtapasComponent } from '../chofere-etapas/chofere-etapas.component';
-import { MatDialog } from '@angular/material';
-import { GenerarChoferesServicioService } from './generar-choferes-servicio.service';
 
+import { GenerarChoferesServicioService } from './generar-choferes-servicio.service';
+import * as _swal from 'sweetalert';
+import { SweetAlert } from 'sweetalert/typings/core';
+import { MatDialog } from '@angular/material/dialog';
+
+const swal: SweetAlert = _swal as any;
 
 
 
@@ -100,7 +104,7 @@ export class VueltaDeVueltaComponent implements OnInit, OnDestroy {
   }
 
 
-  salvarForm( f: NgForm) {    
+  salvarForm() {    
     if ( this.formVueltas.valid ) {
         let idLlamada ='nuevo'; 
         let id = -1;

@@ -58,6 +58,8 @@ export class ChoferComponent implements OnInit, OnChanges, OnDestroy, TabChild {
 
     this. resetForm();
 
+    console.log('paso por ngOnInit');
+
   }
 
   tabActivated():void{
@@ -165,6 +167,7 @@ export class ChoferComponent implements OnInit, OnChanges, OnDestroy, TabChild {
 
 
    ngOnChanges() {
+      console.log('paso por Changesssssssssssssss');
       this.resetForm();    
    }
 

@@ -9,7 +9,6 @@ registerLocaleData(localeEs);
 
 import { AppComponent } from './app.component';
 import { LoginComponent } from './inicio/login/login.component';
-import { Ng2DatetimePickerModule } from 'ng2-datetime-picker';
 import { RouterModule, Routes } from '@angular/router';
 import { SharedModule } from './shared/shared.module';
 import { PruebaComponent } from './shared/prueba/prueba.component';
@@ -21,17 +20,19 @@ import { PagesComponent } from './pages/pages.component';
 import { NoPageFoundComponent } from './shared/no-page-found/no-page-found.component';
 import { DirectivesModule } from './directives/directives.module';
 import { ChangePasswordComponent } from './inicio/change-password/change-password.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { AppRoutingModule } from './app-routing.module';
 
 
 
 
 
-const appRoutes: Routes = [  
-  { path: 'login', component: LoginComponent },  
-  { path: 'prueba', component: PruebaComponent },
-  { path: 'change-password/:token', component: ChangePasswordComponent },
-  { path: '**', pathMatch: 'full', component: NoPageFoundComponent }
-];
+// const appRoutes: Routes = [  
+//   { path: 'login', component: LoginComponent },  
+//   { path: 'prueba', component: PruebaComponent },
+//   { path: 'change-password/:token', component: ChangePasswordComponent },
+//   { path: '**', pathMatch: 'full', component: NoPageFoundComponent }
+// ];
 
 
 @NgModule({
@@ -44,14 +45,14 @@ const appRoutes: Routes = [
   imports: [
     BrowserModule,
     HttpClientModule,
-    ReactiveFormsModule,
-    Ng2DatetimePickerModule,    
-    RouterModule.forRoot(appRoutes, {useHash:true}),            
+    ReactiveFormsModule,    
+    PagesModule,
+    AppRoutingModule,
     ServiceModule,
     MaterialModule,    
-    SharedModule,
-    PagesModule,
-    DirectivesModule   
+    SharedModule,   
+    DirectivesModule,
+    BrowserAnimationsModule   
   ],
   providers: [     
     {

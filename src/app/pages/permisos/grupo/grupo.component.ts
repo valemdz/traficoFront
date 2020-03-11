@@ -1,7 +1,8 @@
 import { Component, OnInit, Inject, Input } from '@angular/core';
 import { Grupo, Empresa } from 'src/app/models/model.index';
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
+
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-grupo',

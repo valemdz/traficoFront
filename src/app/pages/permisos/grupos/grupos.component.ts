@@ -3,11 +3,12 @@ import { PermisoService, UsuarioService } from 'src/app/services/service.index';
 import { PaginationPage, PaginationPropertySort } from 'src/app/shared/pagination/pagination';
 import { Table } from 'src/app/shared/pagination/table';
 import { Grupo, Modulo, Rol, ConstantesGrales, Empresa } from 'src/app/models/model.index';
-import { MatDialog } from '@angular/material';
+
 import { GrupoComponent } from '../grupo/grupo.component';
 import { ConfirmarDeleteComponent } from 'src/app/shared/confirmar-delete/confirmar-delete.component';
 import { RolesComponent } from '../roles/roles.component';
 import { FuncionesGrales } from 'src/app/utiles/funciones.grales';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-grupos',

@@ -2,8 +2,8 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { Grupo } from 'src/app/models/model.index';
-import { MatSnackBar } from '@angular/material';
 import { map, catchError } from 'rxjs/operators';
+import {MatSnackBar} from '@angular/material/snack-bar';
 import { throwError } from 'rxjs';
 
 @Injectable()

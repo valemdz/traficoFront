@@ -2,8 +2,8 @@ import { Component, OnInit, Inject, OnChanges } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ErrorService, UsuarioService } from 'src/app/services/service.index';
 import { Router, ActivatedRoute } from '@angular/router';
-import { MatDialogRef, MAT_DIALOG_DATA, MatDialog } from '@angular/material';
 import { CustomValidators } from 'src/app/utiles/funciones.grales';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 
 
 @Component({

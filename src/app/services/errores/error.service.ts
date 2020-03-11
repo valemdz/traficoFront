@@ -2,7 +2,8 @@ import { Injectable } from '@angular/core';
 import{ FormGroup, FormControl, FormArray } from '@angular/forms';
 import { AlertService } from '../mensajes/alert.service';
 import swal from 'sweetalert';
-import { MatSnackBar } from '@angular/material';
+import { MatSnackBar } from '@angular/material/snack-bar';
+
 
 
 @Injectable()

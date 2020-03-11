@@ -1,11 +1,11 @@
 import { Component, OnInit, OnDestroy, Input, Inject } from '@angular/core';
-import { MatDialogRef, MAT_DIALOG_DATA, MatDialog } from '@angular/material';
 import { Servicio, Horario, ChoferPK, ChoferOcupacion, CONSTANTES_CHOFER, ChoferServicio, VehiculoOcupacion } from 'src/app/models/model.index';
 import { VueltasService } from 'src/app/services/service.index';
 import { ChoferesConEstadoPipe } from 'src/app/pipes/choferes-con-estado.pipe';
 import { DetOcupacionChoferComponent } from '../det-ocupacion-chofer/det-ocupacion-chofer.component';
 import { FuncionesGrales } from 'src/app/utiles/funciones.grales';
 import { VehiculosConColoresPipe } from 'src/app/pipes/vehiculos-con-colores.pipe';
+import { MatDialogRef, MAT_DIALOG_DATA, MatDialog } from '@angular/material/dialog';
 
 
 @Component({

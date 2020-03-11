@@ -1,6 +1,6 @@
 <ng-container   *ngIf="!_vv.vuelta||_vv.editable">
 
-    <form #f="ngForm" [formGroup]="formVueltas" (ngSubmit)="salvarForm( f )" ngNativeValidate>
+    <form #f="ngForm" [formGroup]="formVueltas" (ngSubmit)="salvarForm()" ngNativeValidate>
         <div  data-html2canvas-ignore="true"  class="table-responsive tableexport-ignore">
             <table class="table" name="excel">
                 <thead>

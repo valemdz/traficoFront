@@ -15,6 +15,10 @@ export interface Servicio {
     horarios:Array<Horario>;
     servicioPKStr?:string;
     detalle?:string; 
+
+    escalaSalida?:string;
+    escalaLlegada?:string;
+
 }
 
 export interface ChoferServicio{

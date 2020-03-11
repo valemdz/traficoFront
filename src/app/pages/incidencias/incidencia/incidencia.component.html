@@ -1,7 +1,7 @@
 <div *ngIf="incidencia != null">
     <div class="modal fade" id="nuevo-modal" tabindex="-1" role="dialog" 
     aria-labelledby="modalLabel" data-backdrop="static" data-keyboard="false" 
-    (finalizarEventEmitter)="finalizar($event)" style="display: block;" >
+    style="display: block;" >
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
@@ -12,7 +12,7 @@
                 </div>
                 <div class="modal-body">
                     <section class="sample-app-content">
-                        <form [formGroup]="incidenciaForm" (ngSubmit)="onSubmitTemplateBased()" novalidate>
+                        <form [formGroup]="incidenciaForm"  novalidate>
                             <!-- <tabs>
                                     <tab [tabTitle]="'Datos de la incidencia'">  -->
                             <div class="form-group">
@@ -24,7 +24,7 @@
                                 <div class="form-group">
                                     <select class="form-control" formControlName="tipo" data-toggle="tooltip" animation="true" data-placement="top" onmouseenter="$(this).tooltip('show')" title="Tipo" placeholder="Tipo">
                                                     <option [selected]="incidenciaForm.controls.tipo.value == null" value="null" >-- Seleccionar --</option>
-                                                    <option *ngFor="let opt of comboTipos"  [value]="opt.codigo"  [selected]="opt.codigo == tipo"  >
+                                                    <option *ngFor="let opt of comboTipos"  [value]="opt.codigo"  [selected]="opt.codigo == incidenciaForm.controls.tipo.value"  >
                                                         {{opt.descripcion}}
                                                     </option>
                                                 </select>
@@ -45,7 +45,7 @@
                             <div class="form-group">
                                 <select class="form-control" data-toggle="tooltip" animation="true" data-placement="top" title="Estado" onmouseenter="$(this).tooltip('show')" formControlName="activo" placeholder="Estado">
                                     <option [selected]="incidenciaForm.controls.activo.value == null" value="null" >-- Seleccionar --</option>
-                                    <option *ngFor="let opt of comboEstados"  [value]="opt.codigo" [selected]="opt.codigo == activo">
+                                    <option *ngFor="let opt of comboEstados"  [value]="opt.codigo" [selected]="opt.codigo == incidenciaForm.controls.activo.value">
                                         {{opt.descripcion}}
                                     </option>
                                 </select>
@@ -56,7 +56,7 @@
                             </div>
                             <control-mensajes [errores]="errMsgs.descripcion"></control-mensajes>
                         
-                            <control-mensajes [errores]="erroresGrales"></control-mensajes>
+                            <!-- <control-mensajes [errores]="erroresGrales"></control-mensajes> -->
 
                         </form>
                     </section>

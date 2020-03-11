@@ -4,9 +4,10 @@ import { Table, PaginationPage, PaginationPropertySort } from 'src/app/shared/pa
 import { FuncionesGrales } from 'src/app/utiles/funciones.grales';
 import { Subscription } from 'rxjs';
 import { ConstantesGrales, Grupo, Rol, Modulo, UsuarioWithGrupo, Usuario, ResetPassword } from 'src/app/models/model.index';
-import { MatDialog, MatSnackBar } from '@angular/material';
 import { UsuarioComponent } from './usuario/usuario.component';
 import { ContraseniasComponent } from './contrasenias/contrasenias.component';
+import { MatDialog } from '@angular/material/dialog';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-usuarios',

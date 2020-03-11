@@ -4,8 +4,10 @@
 import { HttpClient } from '@angular/common/http';
 import { map, catchError } from 'rxjs/operators';
 import { Observable, of, throwError } from 'rxjs';
-import { MatSnackBar, MatDialog } from '@angular/material';
+
 import { ModalService } from 'src/app/services/service.index';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { MatDialog } from '@angular/material/dialog';
 
 declare var swal;
 

@@ -76,7 +76,7 @@
                                         <select class="form-control" formControlName="vehMpaCodigo" data-toggle="tooltip" animation="true" data-placement="top"
                                         onmouseenter="$(this).tooltip('show')" title="Mapa" placeholder="Mapa">   
                                             <option [selected]="vehiculoForm.controls.vehMpaCodigo.value == null"  [value]="null" >--Seleccionar--</option>                                         
-                                            <option *ngFor="let opt of comboVeh"  [value]="opt.codigo" [selected]="opt.codigo == vehMpaCodigo" >
+                                            <option *ngFor="let opt of comboVeh"  [value]="opt.codigo" [selected]="opt.codigo == vehiculoForm.controls.vehMpaCodigo.value" >
                                                     {{opt.descripcion}}
                                             </option>          	
                                         </select>                            

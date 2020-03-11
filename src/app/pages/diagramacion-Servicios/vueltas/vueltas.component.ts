@@ -5,7 +5,8 @@ import { Servicio } from 'src/app/models/servicio.model';
 import { VueltasService } from 'src/app/services/service.index';
 // para generar pdfs
 import * as jspdf from 'jspdf';
-import * as html2canvas from 'html2canvas';
+//import * as html2canvas from 'html2canvas';
+//import html2canvas from 'html2canvas';
 import { ignoreElements } from 'rxjs/operators';
 // para generar xls
 import { saveAs } from 'file-saver';
@@ -64,14 +65,10 @@ export class VueltasComponent implements OnInit, OnDestroy {
   public captureScreen() {
     const data = this.getCanvas();
 
-    html2canvas(data).then(canvas => {
+   /* const canvas = html2canvas(data).then(canvas => {
 const contentDataURL = canvas.toDataURL('image/png');
 
-      /*
-      Here are the numbers (paper width and height) that I found to work.
-      It still creates a little overlap part between the pages, but good enough for me.
-      if you can find an official number from jsPDF, use them.
-      */
+     
       const imgWidth = 210;
       const pageHeight = 295;
       const imgHeight = canvas.height * imgWidth / canvas.width;
@@ -91,7 +88,7 @@ const contentDataURL = canvas.toDataURL('image/png');
       doc.save('Diagramacion.pdf');
 
 
-    });
+    });*/
   }
 
   public generateExcel() {
