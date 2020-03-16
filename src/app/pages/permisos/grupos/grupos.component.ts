@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { PermisoService, UsuarioService } from 'src/app/services/service.index';
 import { PaginationPage, PaginationPropertySort } from 'src/app/shared/pagination/pagination';
 import { Table } from 'src/app/shared/pagination/table';
-import { Grupo, Modulo, Rol, ConstantesGrales, Empresa } from 'src/app/models/model.index';
+import { Grupo, Modulo, Rol, ConstantesGrales, Empresa, DialogData } from 'src/app/models/model.index';
 
 import { GrupoComponent } from '../grupo/grupo.component';
 import { ConfirmarDeleteComponent } from 'src/app/shared/confirmar-delete/confirmar-delete.component';
@@ -81,9 +81,14 @@ export class GruposComponent implements OnInit {
 
   deleteGrupo( grupo: Grupo ){
 
+    const data: DialogData = {
+      titulo: 'Eliminación de Perfil',
+      mensajes: [`Esta seguro que desea eliminar el perfil nombre = [ ${grupo.groupName} ]`]
+    }
+
     const confirmDelete = this.dialog.open( ConfirmarDeleteComponent, {
       width: '300px',
-      data: { titulo:`Esta seguro que desea eliminar el perfil nombre = [ ${grupo.groupName} ]`}      
+      data: data    
     });
 
     confirmDelete.afterClosed().subscribe( siDelete => {      

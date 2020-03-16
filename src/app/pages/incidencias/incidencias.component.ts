@@ -3,10 +3,12 @@ import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { ErrorService, ModalService, UsuarioService, IncidenciaService } from 'src/app/services/service.index';
 import { IncidenciaComponent } from './incidencia/incidencia.component';
-import { Incidencia, ConstantesGrales, CONSTANTES_CHOFER } from 'src/app/models/model.index';
+import { Incidencia, ConstantesGrales, CONSTANTES_CHOFER, DialogData } from 'src/app/models/model.index';
 import { PaginationPage, Table, PaginationPropertySort } from 'src/app/shared/pagination/pagination.index';
 import { FuncionesGrales } from 'src/app/utiles/funciones.grales';
 import { ComponenteItem } from 'src/app/shared/modal/componente-item';
+import { ConfirmarDeleteComponent } from 'src/app/shared/confirmar-delete/confirmar-delete.component';
+import { MatDialog } from '@angular/material/dialog';
 
 declare var swal;
 
@@ -37,7 +39,8 @@ export class IncidenciasComponent implements OnInit, OnDestroy  {
         public _us: UsuarioService, 
         private router: Router,                
         private ctrolError: ErrorService,
-        private _ms: ModalService ) {
+        private _ms: ModalService,
+        public dialog: MatDialog, ) {
 
         this.subscription = this._ms.getRespuesta()
                     .subscribe( resp => {                  
@@ -92,30 +95,34 @@ export class IncidenciasComponent implements OnInit, OnDestroy  {
         this.router.navigate(['incidencia', incidencia.id]);
     }
 
-    delete( incidencia ) {
+    delete( incidencia ) {        
+        
+        const data: DialogData = { 
+            titulo:'Eliminación', 
+            mensajes:[`Esta seguro que desea eliminar la incidencia ${incidencia.descripcion}?`] 
+        }
 
-        swal({
-        title: "Eliminación",
-        text: "Esta seguro que desea eliminar la incidencia: " + incidencia.in_descripcion ,
-        icon: "warning",
-        buttons: true,
-        dangerMode: true,
-        })
-        .then(willDelete => {
-            if (willDelete) {
+        const dialogRef = this.dialog.open(ConfirmarDeleteComponent, {
+            width: '450px',
+            data: data
+        });
+
+        dialogRef.afterClosed().subscribe(result => {        
+            result = result || false;            
+            if (result) {
                 this.deleteIncSubscription = this.incidenciaService.deleteIncidencia$(incidencia.id)
-                    .subscribe( this.okDeleteInc.bind( this ), this.errorDeleteInc.bind(this) );   
+                                .subscribe( this.okDeleteInc.bind( this ) );   
             }
-        });         
-    }
-
+        });
+    }    
+   
     okDeleteInc( okDelete){
       this.mostrarDetalle();      
     }
 
-    errorDeleteInc( err ) {
+    /*errorDeleteInc( err ) {
        this.ctrolError.tratarErroresEliminaciones(err);
-    }   
+    } */  
 
     crearNuevoDinam() {            
         this._ms.sendComponent( this.getComponente( new Incidencia() , true) );

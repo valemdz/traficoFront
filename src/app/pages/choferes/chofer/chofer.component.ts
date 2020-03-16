@@ -33,7 +33,7 @@ export class ChoferComponent implements OnInit, OnChanges, OnDestroy, TabChild {
 
   choferForm: FormGroup;
 
-  //@ViewChild('closeBtn') closeBtn: ElementRef;
+  @ViewChild('closeBtn') closeBtn: ElementRef;
 
   constructor(  private choferService: ChoferService,
                 private  fb: FormBuilder,                
@@ -44,9 +44,7 @@ export class ChoferComponent implements OnInit, OnChanges, OnDestroy, TabChild {
    }
 
 
-  ngOnInit() {   
-
-    $('#ventana').modal('show'); 
+  ngOnInit() {       
 
     this.comboDocumentos = CONSTANTES_CHOFER.DOCUMENTOS;
     this.comboFuncion = CONSTANTES_CHOFER.FUNCION;
@@ -260,7 +258,7 @@ export class ChoferComponent implements OnInit, OnChanges, OnDestroy, TabChild {
 
   soloCerrar(){
     this.ngOnDestroy();
-    $('#ventana').modal('hide'); 
+    this.closeBtn.nativeElement.click();
   }
 
 

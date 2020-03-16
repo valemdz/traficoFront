@@ -1,4 +1,123 @@
-<div class="modal fade" id="ventana" tabindex="-1" role="dialog" aria-labelledby="modalLabel" 
+
+<div class="modal fade" id="nuevo-modal" tabindex="-1" role="dialog" 
+        aria-labelledby="modalLabel" data-backdrop="static" data-keyboard="false" 
+        style="display: block;" >
+    <div class="modal-dialog" role="document">
+    <div class="modal-content">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Fechar" #closeBtn>
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title" id="modalLabel">{{nuevo?'Creación de Personal' :'Modificación de Personal: '+ chofer.nombre}}</h4>
+        </div>
+        <div class="modal-body">
+            <section class="sample-app-content">
+                <form [formGroup]='choferForm' novalidate>
+                    <tabs>
+                        <tab [tabTitle]="'Datos Personales'">
+                            <div class="col-xs-12 col-md-6">
+                                <div formGroupName='choferPK'>
+                                    <div class="form-group">
+                                        <input type="text" uppercase data-toggle="tooltip" animation="true" data-placement="top" title="Empresa" onmouseenter="$(this).tooltip('show')" class="form-control" formControlName='empCodigo' [readonly]="true">
+                                    </div>
+                                </div>
+                                <control-mensajes [errores]="errMsgsPK.empCodigo"></control-mensajes>
+                                <div class="form-group">
+                                    <select class="form-control" formControlName="tipoChofer" placeholder="Tipo Personal" data-toggle="tooltip" animation="true" data-placement="top" title="Tipo de personal" onmouseenter="$(this).tooltip('show')">
+                                        <option [selected]="choferForm.controls.tipoChofer.value == null" value="null" >-- Seleccionar --</option>
+                                        <option *ngFor="let opt of comboFuncion"  [value]="opt.codigo">
+                                            {{opt.descripcion}}
+                                        </option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <select class="form-control" data-toggle="tooltip" animation="true" data-placement="top" title="Estado" onmouseenter="$(this).tooltip('show')" formControlName="estado" placeholder="Estado">
+                                        <option [selected]="choferForm.controls.estado.value == null" value="null" >-- Seleccionar --</option>
+                                        <option *ngFor="let opt of comboEstados"  [value]="opt.codigo">
+                                            {{opt.descripcion}}
+                                        </option>
+                                    </select>
+                                </div>
+                                <control-mensajes [errores]="errMsgsResto.estado"></control-mensajes>
+                                <div class="form-group">
+                                    <input type="text" uppercase placeholder="Legajo" formControlName="legajo" class="form-control" data-toggle="tooltip" animation="true" data-placement="top" title="Legajo" onmouseenter="$(this).tooltip('show')">
+                                </div>
+                                <control-mensajes [errores]="errMsgsResto.legajo"></control-mensajes>
+                                <div class="form-group ">
+                                    <input type="text" uppercase placeholder="Nombre" formControlName="nombre" class="form-control" data-toggle="tooltip" animation="true" data-placement="top" title="Nombre" onmouseenter="$(this).tooltip('show')">
+                                </div>
+                                <control-mensajes [errores]="errMsgsResto.nombre"></control-mensajes>
+                                <div class="form-group">
+                                    <select class="form-control" formControlName="codigoDoc" placeholder="Tipo de documento" data-toggle="tooltip" animation="true" data-placement="top" title="Tipo de documento" onmouseenter="$(this).tooltip('show')">
+                                        <option [selected]="choferForm.controls.codigoDoc.value == null" value="null" >-- Seleccionar --</option>
+                                        <option *ngFor="let opt of comboDocumentos"  [value]="opt.codigo">
+                                            {{opt.descripcion}}
+                                        </option>
+                                    </select>
+                                </div>
+
+                                <control-mensajes [errores]="errMsgsResto.codigoDoc"></control-mensajes>
+                                <div class="form-group">
+                                    <input type="text" uppercase data-toggle="tooltip" animation="true" data-placement="top" title="Numero de documento" onmouseenter="$(this).tooltip('show')" placeholder="Numero documento" formControlName="documento" class="form-control">
+                                </div>
+                                <control-mensajes [errores]="errMsgsResto.documento"></control-mensajes>
+                            </div>
+                            <div class="col-xs-12 col-md-6">
+                                <div class="form-group">
+                                    <input type="date" class="form-control" placeholder="Fecha de nacimiento" title="Fecha de nacimiento" formControlName="fechaNacimiento" data-toggle="tooltip" animation="true" data-placement="top" onmouseenter="$(this).tooltip('show')">
+                                </div>
+                                <control-mensajes [errores]="errMsgsResto.fechaNacimiento"></control-mensajes>
+                                <div class="form-group">
+                                    <select class="form-control" formControlName="grupoSanguineo" data-toggle="tooltip" animation="true" data-placement="top" onmouseenter="$(this).tooltip('show')" title="Grupo sanguíneo" placeholder="Grupo sanguíneo">
+                                            <option [selected]="choferForm.controls.grupoSanguineo.value == null" value="null" >-- Seleccionar --</option>
+                                        <option *ngFor="let opt of comboSanguineo"  [value]="opt.codigo">
+                                            {{opt.descripcion}}
+                                        </option>
+                                    </select>
+                                </div>
+                                <control-mensajes [errores]="errMsgsResto.grupoSanguineo"></control-mensajes>
+                                <div class="form-group">
+                                    <textarea data-toggle="tooltip" uppercase animation="true" data-placement="top" onmouseenter="$(this).tooltip('show')" title="Observaciones" placeholder="Observaciones" formControlName="observaciones" class="form-control">
+                                    </textarea>
+                                </div>
+                                <control-mensajes [errores]="errMsgsResto.observaciones"></control-mensajes>
+
+
+
+                                <div class="form-group">
+                                    <input placeholder="Teléfono" uppercase onmouseenter="$(this).tooltip('show')" data-toggle="tooltip" animation="true" data-placement="top" title="Telefono" type="tel" class="form-control" formControlName="telefono">
+                                </div>
+                                <control-mensajes [errores]="errMsgsResto.telefono"></control-mensajes>
+                                <div class="form-group">
+
+                                    <input type="tel" data-toggle="tooltip"  uppercase animation="true" data-placement="top" title="Telefono de emergencia" onmouseenter="$(this).tooltip('show')" placeholder="Teléfono de emergencia" class="form-control" formControlName="telefonoEmergencia">
+                                </div>
+                                <control-mensajes [errores]="errMsgsResto.telefonoEmergencia"></control-mensajes>
+                                <div class="form-group">
+                                    <input type="number" data-toggle="tooltip"  uppercase animation="true" data-placement="top" title="Id Auxiliar" onmouseenter="$(this).tooltip('show')" placeholder="Id Auxiliar" class="form-control" formControlName="idAux">
+                                </div>
+                                <control-mensajes [errores]="errMsgsResto.idAux"></control-mensajes>                                
+                            </div>
+                        </tab>
+                    </tabs>
+                </form>
+                
+            </section>
+        </div>
+        <div class="modal-footer">
+            <button type="button" (click)="salvarChofer()" class="btn btn-primary">Guardar</button>
+            <button type="button" class="btn btn-default" (click)="soloCerrar()" data-dismiss="modal">Volver</button>
+        </div>
+    </div>
+
+</div>
+
+</div>
+
+
+
+
+<!-- <div class="modal fade" id="ventana" tabindex="-1" role="dialog" aria-labelledby="modalLabel" 
     data-backdrop="static" data-keyboard="false" >
     <div class="modal-dialog" role="document">
          
@@ -95,14 +214,12 @@
                                 <div class="form-group">
                                     <input type="number" data-toggle="tooltip"  uppercase animation="true" data-placement="top" title="Id Auxiliar" onmouseenter="$(this).tooltip('show')" placeholder="Id Auxiliar" class="form-control" formControlName="idAux">
                                 </div>
-                                <control-mensajes [errores]="errMsgsResto.idAux"></control-mensajes>
-                                <!-- <control-mensajes [errores]="erroresGrales"></control-mensajes> -->
-                                <!--</tab>-->
+                                <control-mensajes [errores]="errMsgsResto.idAux"></control-mensajes>                                
                             </div>
                         </tab>
                     </tabs>
                 </form>
-                <!-- <p>{{choferForm.value|json}}</p>-->
+                
             </section>
         </div>
         <div class="modal-footer">
@@ -113,4 +230,4 @@
 
 </div>
 
-</div>
+</div> -->

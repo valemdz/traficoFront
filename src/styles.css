@@ -671,3 +671,19 @@ hr.style14 {
     z-index: 999999;
 }
 
+/* Estilos de Angular Material */
+
+.mat-dialog-actions {
+    justify-content: flex-end;
+}
+
+.blue-snackbar {
+    background-color: #28a745;
+    border-color: #28a745;
+    color: #fff;
+    font-family: inherit;
+}
+
+.red-icon {
+    color: #f44336;
+}

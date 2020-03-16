@@ -1,10 +1,9 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
 import {  Subscription } from 'rxjs';
-
 import { ChoferService } from 'src/app/services/choferes/chofer.service';
 import { UsuarioService, ErrorService, VencimientoService, ModalService, ModalUploadService } from 'src/app/services/service.index';
-import { Chofer, CONSTANTES_CHOFER, ConstantesGrales, VencimientosChoferes, ChoferPK } from 'src/app/models/model.index';
+import { Chofer, CONSTANTES_CHOFER, ConstantesGrales, VencimientosChoferes, ChoferPK, DialogData } from 'src/app/models/model.index';
 
 import { PaginationPage, Table, PaginationPropertySort } from 'src/app/shared/pagination/pagination.index';
 import { FuncionesGrales } from 'src/app/utiles/funciones.grales';
@@ -12,6 +11,9 @@ import { ComponenteItem } from 'src/app/shared/modal/modal.index';
 import { ChoferComponent } from './chofer/chofer.component';
 import { CarnetListComponent } from './carnet-list/carnet-list.component';
 import { IncidenciaByChoferComponent } from './incidencia-by-chofer/incidencia-by-chofer.component';
+import { MatDialog } from '@angular/material/dialog';
+import { ConfirmarDeleteComponent } from 'src/app/shared/confirmar-delete/confirmar-delete.component';
+import { YesNoDialogComponent } from 'src/app/shared/yes-no-dialog/yes-no-dialog.component';
 
 declare var swal;
 
@@ -47,7 +49,8 @@ export class ChoferesComponent implements OnInit, OnDestroy {
                  public _us: UsuarioService,                 
                  private ctrolError: ErrorService,
                  private _ms: ModalService,
-                 public _imgs: ModalUploadService ) {
+                 public _imgs: ModalUploadService,
+                 public dialog: MatDialog ) {
 
         this.subscriptionModal = this._ms.getRespuesta()
         .subscribe( resp => {
@@ -128,20 +131,26 @@ export class ChoferesComponent implements OnInit, OnDestroy {
             .subscribe(  resp => this.vencimientosCho = resp, this.error.bind( this )  );
     }    
 
+   
+
     deleteChofer( chofer: Chofer ){
-        swal({
-         title: "Eliminación",
-         text: "Esta seguro que desea eliminar el Personal " + chofer.nombre,
-         icon: "warning",
-         buttons: true,
-         dangerMode: true,
-       })
-       .then(willDelete => {
-         if (willDelete) {
-             this.delete( chofer );
-         }
-       });        
-    }
+        const data: DialogData = { 
+            titulo:'Eliminación', 
+            mensajes:[`Esta seguro que desea eliminar el Personal ${chofer.nombre}?`] 
+        }
+
+        const dialogRef = this.dialog.open(ConfirmarDeleteComponent, {
+        width: '450px',
+        data: data
+        });
+
+        dialogRef.afterClosed().subscribe(result => {        
+            result = result || false;            
+            if (result) {
+                this.delete( chofer );
+            }
+        });
+    }    
 
     delete( chofer: Chofer ) {
         this.deleteChoferSubscription = this.choferService.deleteChofer$( chofer.choferPK.empCodigo, chofer.choferPK.codigo )
@@ -187,40 +196,46 @@ export class ChoferesComponent implements OnInit, OnDestroy {
 
     cambiarEstado(updateEstChofer) {
 
-        let valueFuturo;
-
+        let valueFuturo = 1;
         if (updateEstChofer.estado === 1) {
             valueFuturo = 0 ;
-        } else {
-            valueFuturo = 1 ;
-        }
+        } 
 
         const estadoFuturo = this.estados.find( e => e.codigo === valueFuturo );
 
-        swal({
-            title: "Estado",
-            text: "El nuevo estado del Personal " 
-                   + updateEstChofer.nombre
-                   + " sera: " + ( estadoFuturo? estadoFuturo.descripcion: 'Sin definir' ) 
-                   + " esta seguro? ",
-            icon: "warning",
-            buttons: true,
-            dangerMode: true,
-        })
-        .then( actualiza => {
-            if (actualiza ){
+        const data: DialogData = { 
+            titulo:'Atención Cambio de estado', 
+            mensajes:["El nuevo estado del Personal " 
+                        + updateEstChofer.nombre
+                        + " sera: " + ( estadoFuturo? estadoFuturo.descripcion: 'Sin definir' ) 
+                        + " esta seguro? "] 
+                    }
+
+        const dialogRef = this.dialog.open(YesNoDialogComponent, {
+            width: '450px',
+            data: data
+        });
+
+        dialogRef.afterClosed().subscribe(result => {
+
+            result = result || false;
+
+            if ( result ){
+
                 updateEstChofer.estado = valueFuturo;
                 this.estadoSubs = this.choferService.update$(updateEstChofer)
                 .subscribe( result => {
                     this.updateChoferesEnPage( result );   
                 }, err => {
-                      this.ctrolError.tratarErroresEliminaciones( err );
+                        this.ctrolError.tratarErroresEliminaciones( err );
                 } );
-            }
-        });    
-        
-    }  
-    
+
+            }         
+        });         
+
+    }    
+
+   
     updateChoferesEnPage( chofer ){            
         this.choferPage.content[this.choferPage.rowSelected] = chofer;
     }

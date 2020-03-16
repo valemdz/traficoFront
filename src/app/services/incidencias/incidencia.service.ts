@@ -2,9 +2,13 @@ import {Injectable} from '@angular/core';
 import { Observable, throwError } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
-import { Incidencia } from 'src/app/models/model.index';
+import { Incidencia, DialogData } from 'src/app/models/model.index';
 import swal from 'sweetalert';
 import { map, catchError } from 'rxjs/operators';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { FuncionesGrales } from 'src/app/utiles/funciones.grales';
+import { ConfirmErrorDialogComponent } from 'src/app/shared/confirm-error-dialog/confirm-error-dialog.component';
+import { MatDialog } from '@angular/material/dialog';
 
 
 @Injectable()
@@ -12,7 +16,8 @@ export class IncidenciaService {
 
     private urlBase = environment.origin;
 
-    constructor( private http: HttpClient ) {
+    constructor( private http: HttpClient, private _snackBar: MatSnackBar,
+                 private dialog: MatDialog ) {
     }
 
     findIncidencias$(  idEmpresa: String, params ): Observable<any> {
@@ -35,7 +40,9 @@ export class IncidenciaService {
         return this.http.put(url, incidencia )
         .pipe( 
             map( resp => {
-              swal('Modificación', 'La incidencia se modifico con éxito','success');
+              FuncionesGrales.openSnackBar( this._snackBar,
+                'La incidencia se modifico con éxito',
+                'X');               
               return resp;
             })
         );
@@ -47,7 +54,10 @@ export class IncidenciaService {
         return this.http.post(url, incidencia )
                    .pipe( 
                        map( resp => {
-                         swal('Creación', 'La incidencia se agrego con éxito','success');
+
+                         FuncionesGrales.openSnackBar( this._snackBar,
+                              'La incidencia se agrego con éxito',
+                              'X');                          
                          return resp;
                        })
                    ) ;
@@ -58,14 +68,24 @@ export class IncidenciaService {
        const  url = this.urlBase +  `/incidencias/${id}`;
         return this.http.delete( url ).pipe(
           map( resp =>{
-               swal("Eliminacion","La eliminacion fue exitosa!!!", "success");
+
+              FuncionesGrales.openSnackBar( this._snackBar,
+                'La eliminacion fue éxitosa!!!',
+                'X');                 
                return resp;
           }),
-          catchError( err => {               
-            swal( 'Inconvenientes al eliminar Incidencia!!!', 
-                   err.error.errorCode + ' - ' + err.error.errorMessage ,
-                   'error');
-             return throwError(err);
+          catchError( err => {
+            
+            const data: DialogData = { titulo:'Inconvenientes al eliminar Incidencia!!!', 
+            mensajes:[ err.error.errorCode + ' - ' + err.error.errorMessage ] }         
+          
+            const dialogRef = this.dialog.open(ConfirmErrorDialogComponent, {
+                  width: '450px',
+                  data: data
+            });            
+            // Ya lo manejo aca al error
+            return throwError(err);
+
           })
           );
    }

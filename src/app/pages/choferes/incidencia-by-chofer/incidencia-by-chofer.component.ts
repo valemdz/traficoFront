@@ -7,6 +7,8 @@ import { Observable } from 'rxjs';
 
 import { IncidenciaService, ChoferService, ErrorService } from 'src/app/services/service.index';
 import { Chofer, ChoferIndicencia, ListaChoferIncidencia } from 'src/app/models/model.index';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { FuncionesGrales } from 'src/app/utiles/funciones.grales';
 
 declare var $:any;
 
@@ -17,6 +19,8 @@ declare var $:any;
   styleUrls: ['./incidencia-by-chofer.component.css']
 })
 export class IncidenciaByChoferComponent implements OnInit, OnChanges {
+
+  @ViewChild('closeBtn') closeBtn: ElementRef;
 
   @Input() data: any;
 
@@ -32,7 +36,8 @@ export class IncidenciaByChoferComponent implements OnInit, OnChanges {
   constructor( private incidenciaService:IncidenciaService,
                private fb: FormBuilder,
                private ctrolError: ErrorService,
-               private choferService: ChoferService  ){
+               private choferService: ChoferService,
+               private _snackBar: MatSnackBar  ){
       this.crearForm();
   }
 
@@ -60,9 +65,7 @@ export class IncidenciaByChoferComponent implements OnInit, OnChanges {
   }
 
 
-  ngOnInit() {
-
-    $('#ventana').modal('show'); 
+  ngOnInit() {    
     this.chofer = this.data.chofer;
 
     setTimeout( () =>{
@@ -234,6 +237,10 @@ export class IncidenciaByChoferComponent implements OnInit, OnChanges {
                                                  this.chofer.choferPK.codigo,
                                                  lista).subscribe(result => {
       //this.parent.mostrarDetalle();
+      FuncionesGrales.openSnackBar( this._snackBar, 
+        "Las incidencias se modificaron con exito!!!", 
+         'X' ); 
+
       this.soloCerrar();
 
     }, err => {
@@ -294,7 +301,7 @@ prepararSalvarChoferIncid():any {
 
   soloCerrar(){
     //this.ngOnDestroy();
-    $('#ventana').modal('hide'); 
+    this.closeBtn.nativeElement.click();    
   }
 
 

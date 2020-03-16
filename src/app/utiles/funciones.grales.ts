@@ -6,6 +6,7 @@ import { PaginationPropertySort } from '../shared/pagination/pagination.index';
 
 
 import { ValidatorFn, AbstractControl} from '@angular/forms';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 function notEqualsValidator(otherControl: AbstractControl): ValidatorFn {
   return (control: AbstractControl): {[key: string]: any} => {
@@ -22,6 +23,9 @@ function equalsValidator(otherControl: AbstractControl): ValidatorFn {
     return otherValue !== value ? null : { 'equals': { value, otherValue } };
   };
 }
+
+
+
 
 export const CustomValidators = {
   notEquals: notEqualsValidator,
@@ -142,6 +146,11 @@ export class FuncionesGrales {
       return typeof objeto !== 'undefined' && objeto.hasOwnProperty(propiedad);
   }
 
-
+  public static openSnackBar( _snackBar: MatSnackBar, message: string, action: string ) {
+    _snackBar.open(message, action, {
+      duration: 2000,
+      panelClass: ['blue-snackbar']
+    });
+  }
 
 }

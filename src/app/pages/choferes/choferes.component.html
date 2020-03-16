@@ -73,13 +73,13 @@
                         </td>
                         <td>{{chofer.idAux}}</td>
                         <td class="actions">
-                            <a class="btn btn-xs" (click)="modificarChofer( chofer )" >
+                            <a class="btn btn-xs" (click)="modificarChofer( chofer )" data-toggle="modal" data-target="#nuevo-modal" >
                                 <i title="Editar" data-toggle="tooltip" animation="true" data-placement="top" onmouseenter="$(this).tooltip('show')" class="fa fa-pencil fa-2x green" aria-hidden="true"></i>
                             </a>
-                            <a class="btn btn-xs" (click)="openCarnets( chofer )" >
+                            <a class="btn btn-xs" (click)="openCarnets( chofer )" data-toggle="modal" data-target="#carnet-modal" >
                                 <i title="Carnets" data-toggle="tooltip" animation="true" data-placement="top" onmouseenter="$(this).tooltip('show')" class="fa fa-id-card-o fa-2x green" aria-hidden="true"></i>
                             </a>
-                            <a class="btn btn-xs" (click)="openIncidencias( chofer )" >
+                            <a class="btn btn-xs" (click)="openIncidencias( chofer )" data-toggle="modal" data-target="#incidencias-modal">
                                 <i title="Incidencias" data-toggle="tooltip" animation="true" data-placement="top" onmouseenter="$(this).tooltip('show')" class="fa fa-calendar fa-2x red" aria-hidden="true"></i>
                             </a>
                             <a class="btn btn-xs" (click)="deleteChofer( chofer )" >
@@ -93,7 +93,7 @@
     </div>
     <!-- /#list -->
     <div class="col-md-12 text-left">
-        <a class="btn btn-primary" (click)="crearNuevo()" >Crear</a>
+        <a class="btn btn-primary" (click)="crearNuevo()" data-toggle="modal" data-target="#nuevo-modal" >Crear</a>
     </div>
     <app-table-pagination class="text-center" [table]="self" [page]="choferPage" >
 

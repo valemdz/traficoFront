@@ -1,15 +1,16 @@
 <br>
 
-<div class="modal fade" id="ventana" tabindex="-1" role="dialog" aria-labelledby="modalLabel" 
-     data-backdrop="static" data-keyboard="false" >
-    <div class="modal-lg" role="document">
-    <div class="modal-content">
-        <div class="modal-header">
-                <button type="button" class="close" (click)="soloCerrar()">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            <h4 class="modal-title" id="modalLabel">Incidencias para {{chofer.nombre}}</h4>
-        </div>
+<div class="modal fade" id="incidencias-modal" tabindex="-1" role="dialog" 
+		aria-labelledby="modalLabel" data-backdrop="static" data-keyboard="false" 
+		style="display: block;" >
+	<div class="modal-lg" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-label="Fechar" #closeBtn>
+						<span aria-hidden="true">&times;</span>
+					</button>
+				<h4 class="modal-title" id="modalLabel">Incidencias para {{chofer.nombre}}</h4>
+			</div>
         <div class="modal-body">
 
             <form [formGroup]="incByChoferForm" class="form-inline" novalidate>

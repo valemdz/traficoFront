@@ -6,6 +6,9 @@ import { ModalSiNo } from 'src/app/models/modalSiNo.model';
 import { Subscription, forkJoin } from 'rxjs';
 import { getSingleValueObservable, getDelayedValueObservable, getMultiValueObservable } from './prueba';
 import { map } from 'rxjs/operators';
+import { DialogData } from 'src/app/models/model.index';
+import { YesNoDialogComponent } from '../yes-no-dialog/yes-no-dialog.component';
+import { MatDialog } from '@angular/material/dialog';
 
 
 @Component({
@@ -16,7 +19,8 @@ import { map } from 'rxjs/operators';
 })
 export class PruebaComponent implements OnInit,  OnDestroy  {
 
-  constructor( private _us: UsuarioService ){
+  constructor( private _us: UsuarioService, 
+               public dialog: MatDialog ){
 
   }
 
@@ -24,7 +28,28 @@ export class PruebaComponent implements OnInit,  OnDestroy  {
               'ROLE_USUARIOS_TODOS_LISTAR', 'ROLE_ADMIN'];
 
 
-  usuarios = [ 'ROLE_USUARIOS_TODOS_LISTAR*', 'ROLE_ADMIN' ];            
+  usuarios = [ 'ROLE_USUARIOS_TODOS_LISTAR*', 'ROLE_ADMIN' ];           
+  
+  
+  openConfirm(){    
+
+      const data: DialogData = { titulo:'Advertencia', 
+                                 mensajes:['Esta seguro que desea cambiar el estado?'] }
+  
+      const dialogRef = this.dialog.open(YesNoDialogComponent, {
+        width: '450px',
+        data: data
+      });
+  
+      dialogRef.afterClosed().subscribe(result => {
+        
+        result = result || false;
+        
+        //this.openSnackBar( 'El resultado es ' + result, 'X')
+  
+      });    
+
+  }
 
   ngOnInit(): void {    
 

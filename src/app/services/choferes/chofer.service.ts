@@ -4,7 +4,11 @@ import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { map, catchError } from 'rxjs/operators';
 import swal from 'sweetalert';
-import { Chofer } from 'src/app/models/model.index';
+import { Chofer, DialogData } from 'src/app/models/model.index';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { FuncionesGrales } from 'src/app/utiles/funciones.grales';
+import { ConfirmErrorDialogComponent } from 'src/app/shared/confirm-error-dialog/confirm-error-dialog.component';
+import { MatDialog } from '@angular/material/dialog';
 
 
 @Injectable()
@@ -15,7 +19,8 @@ export class ChoferService {
     /* private headers = new Headers({'Content-Type': 'application/json',
        'Access-Control-Allow-Origin':'*'}); */
 
-    constructor( private http: HttpClient ) {
+    constructor( private http: HttpClient, private _snackBar: MatSnackBar,
+                 private dialog: MatDialog  ) {
     }
 
     findChoferes$(  cho_emp_codigo: String, params ): Observable<any> {
@@ -46,9 +51,13 @@ export class ChoferService {
         return this.http.put( url, chofer )
                    .pipe(
                       map( (resp: any) => {
-                         swal( "Actualizacón", 
-                               "El personal fue actualizado con exito!",
-                               "success" );  
+
+                         FuncionesGrales.openSnackBar( this._snackBar, 
+                              "El personal " + chofer.nombre + " fue actualizado con exito!", 
+                               'X' ) 
+                         // swal( "Actualizacón", 
+                         //       "El personal fue actualizado con exito!",
+                         //       "success" );  
                          return resp;      
                       })  
                    );
@@ -59,9 +68,14 @@ export class ChoferService {
         return this.http.post( url, chofer )
                    .pipe(
                       map( ( resp: any) => {
-                         swal( "Creacion", 
-                               "El personal " + chofer.nombre + " fue creado con exito!",
-                               "success" );
+
+                         FuncionesGrales.openSnackBar( this._snackBar, 
+                              "El personal " + chofer.nombre + " fue creado con exito!", 
+                               'X' ); 
+
+                         // swal( "Creacion", 
+                         //       "El personal " + chofer.nombre + " fue creado con exito!",
+                         //       "success" );
                          return resp;      
                       })  
                    ) ;
@@ -71,13 +85,23 @@ export class ChoferService {
         const url = this.urlBase + `/choferes/empresa/${empresa}/codigo/${codigo}`;
         return this.http.delete(url).pipe(
              map( resp =>{
-                  swal("Eliminacion","La eliminacion fue exitosa!!!", "success");
+
+               FuncionesGrales.openSnackBar( this._snackBar, 
+                    "La eliminacion del personal fue exitosa!!!", 
+                     'X' );                   
                   return resp;
              }),
-             catchError( err => {               
-               swal( 'Inconvenientes al eliminar el Personal!!!', 
-                      err.error.errorCode + ' - ' + err.error.errorMessage ,
-                      'error');
+             catchError( err => {   
+               
+               const data: DialogData = { titulo:'Inconvenientes al eliminar el Personal!!! ', 
+                    mensajes:[ err.error.errorCode + ' - ' + err.error.errorMessage ] }
+               
+                  
+               const dialogRef = this.dialog.open(ConfirmErrorDialogComponent, {
+                    width: '450px',
+                    data: data
+                    });
+             
                 return throwError(err);
              })
         );

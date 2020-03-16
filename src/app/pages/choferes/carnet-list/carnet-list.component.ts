@@ -1,17 +1,13 @@
 import { Component, OnInit, Input, OnChanges, ViewChild, ElementRef, Inject, LOCALE_ID  } from '@angular/core';
-
 import { FormArray , FormBuilder, FormGroup, Validators, FormGroupName, FormControl} from '@angular/forms';
 
 import * as moment from 'moment';
-import {Response} from '@angular/http';
-
-
-import { Observable } from 'rxjs';
 import { FuncionesGrales } from 'src/app/utiles/funciones.grales';
 
 import { ChoferService } from 'src/app/services/choferes/chofer.service';
 import { ErrorService, ModalService } from 'src/app/services/service.index';
 import { Chofer, Carnet, ListaCarnet } from 'src/app/models/model.index';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 declare var $:any;
 
@@ -21,6 +17,7 @@ declare var $:any;
 })
 export class CarnetListComponent implements OnInit, OnChanges {
 
+   @ViewChild('closeBtn') closeBtn: ElementRef;
    
    @Input() data: any;
    chofer: Chofer;
@@ -34,13 +31,13 @@ export class CarnetListComponent implements OnInit, OnChanges {
                 private ctrolError: ErrorService,
                 private  fb: FormBuilder,
                 private _ms: ModalService,
-                @Inject(LOCALE_ID) public locale: string  ) {
+                @Inject(LOCALE_ID) public locale: string,
+                private _snackBar: MatSnackBar  ) {
     this.crearForm();
   }
 
 
-  ngOnInit() {
-    $('#ventana').modal('show'); 
+  ngOnInit() {    
     this.chofer = this.data.chofer;
     this.crearComboTipo();
     this.resetForm();    
@@ -255,10 +252,7 @@ export class CarnetListComponent implements OnInit, OnChanges {
             carnetsDeepCopy.push(unCarnet);
     }
     return carnetsDeepCopy;
-
   }
-
-
 
   salvarCarnet() {
 
@@ -268,9 +262,7 @@ export class CarnetListComponent implements OnInit, OnChanges {
     if ( this.formCarnet.valid ) {
       this.salvar();
     }
-
   }
-
 
   salvar(){
 
@@ -284,6 +276,10 @@ export class CarnetListComponent implements OnInit, OnChanges {
         .subscribe(result => {
           //this.parent.mostrarDetalle();
           this. soloCerrar();
+
+          FuncionesGrales.openSnackBar( this._snackBar, 
+            "Los carnets se modificaron con exito!!!", 
+             'X' );     
 
         }, err => {
 
@@ -342,7 +338,7 @@ export class CarnetListComponent implements OnInit, OnChanges {
 
    soloCerrar(){   
     this._ms.sendRespuesta( true );
-    $('#ventana').modal('hide'); 
+    this.closeBtn.nativeElement.click();
   }
 
 }

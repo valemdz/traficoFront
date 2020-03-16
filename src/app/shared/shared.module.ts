@@ -25,6 +25,9 @@ import { ModalPlaceHolderComponent } from './modal/modal.place.holder.component'
 import { AddComponenteDirective } from './modal/add.componente.directive';
 import { ConfirmarDeleteComponent } from './confirmar-delete/confirmar-delete.component';
 import { DirectivesModule } from '../directives/directives.module';
+import { YesNoDialogComponent } from './yes-no-dialog/yes-no-dialog.component';
+import { ConfirmErrorDialogComponent } from './confirm-error-dialog/confirm-error-dialog.component';
+  
 
 
 @NgModule({
@@ -57,7 +60,10 @@ import { DirectivesModule } from '../directives/directives.module';
                   HeaderComponent,
                   NoPageFoundComponent,
                   AlertComponent,
-                  ConfirmarDeleteComponent ],
+                  ConfirmarDeleteComponent,
+                  YesNoDialogComponent,
+                  ConfirmErrorDialogComponent
+                   ],
   exports:[
     CommonModule,
     ReactiveFormsModule,
@@ -78,7 +84,9 @@ import { DirectivesModule } from '../directives/directives.module';
     ModalSiNoComponent,
     HeaderComponent,
     NoPageFoundComponent,
-    AlertComponent
+    AlertComponent,
+    YesNoDialogComponent,
+    ConfirmErrorDialogComponent    
   ],
   entryComponents:[ ConfirmarDeleteComponent],
   schemas: [
