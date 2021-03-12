@@ -29,7 +29,7 @@
         "core-js": "^2.5.4",
         "file-saver": "^2.0.1",
         "html2canvas": "^1.0.0-alpha.12",
-        "jspdf": "^1.5.3",
+        "jspdf": "^2.3.1",
         "moment": "^2.22.2",
         "ng2-datetime-picker": "^0.15.1",
         "rxjs": "~6.2.0",
